@@ -17,6 +17,7 @@
     "check": "astro check && pnpm typecheck && pnpm check:brand",
     "check:brand": "tsx scripts/check-brand.ts",
     "check:links": "tsx scripts/check-links.ts",
+    "import:evidence": "tsx scripts/import-evidence.ts",
     "validate:evidence": "tsx scripts/validate-evidence.ts && pnpm check:brand && pnpm test",
     "evidence:summary": "tsx scripts/generate-evidence-summary.ts",
     "capture:projects": "tsx scripts/capture-projects.ts"
