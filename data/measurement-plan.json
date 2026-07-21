@@ -1,0 +1,36 @@
+{
+  "privacy": {
+    "collectPersonalDataInEvents": false,
+    "collectFormContentInAnalytics": false,
+    "rawEventRetentionDays": 30,
+    "aggregateRetentionDays": 395,
+    "retentionDecision": "docs/architecture/adr/0002-analytics-privacy-and-retention.md"
+  },
+  "events": [
+    "explore_started",
+    "mode_changed",
+    "capability_viewed",
+    "project_opened",
+    "project_scene_engaged",
+    "live_demo_clicked",
+    "source_clicked",
+    "concept_viewed",
+    "diagnostic_started",
+    "diagnostic_completed",
+    "contact_channel_selected"
+  ],
+  "dimensions": [
+    "locale",
+    "sourceRoute",
+    "sourceProject",
+    "sourceCapability",
+    "sourceConcept"
+  ],
+  "forbiddenDimensions": [
+    "name",
+    "email",
+    "phone",
+    "message",
+    "organization"
+  ]
+}
