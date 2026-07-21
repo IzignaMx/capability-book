@@ -1,0 +1,62 @@
+---
+interface Props {
+  locale: "es" | "en";
+  active: "explore" | "evaluate";
+}
+
+const { locale, active } = Astro.props;
+const labels = locale === "es"
+  ? { nav: "Modo de experiencia", explore: "Explorar", evaluate: "Evaluar" }
+  : { nav: "Experience mode", explore: "Explore", evaluate: "Evaluate" };
+const exploreHref = `/${locale}/`;
+const evaluateHref = locale === "es" ? "/es/proyectos/" : "/en/projects/";
+---
+
+<nav class="mode-switch" aria-label={labels.nav}>
+  <a href={exploreHref} aria-current={active === "explore" ? "page" : undefined}>
+    {labels.explore}
+  </a>
+  <a href={evaluateHref} aria-current={active === "evaluate" ? "page" : undefined}>
+    {labels.evaluate}
+  </a>
+</nav>
+
+<style>
+  .mode-switch {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-1);
+    padding: var(--space-1);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    background: rgb(2 6 23 / 68%);
+  }
+
+  a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-pill);
+    color: var(--color-text-muted);
+    font-family: var(--font-data);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+      background var(--motion-fast),
+      color var(--motion-fast);
+  }
+
+  a:hover {
+    color: var(--color-white);
+  }
+
+  a[aria-current="page"] {
+    background: var(--color-brand);
+    color: var(--color-space);
+    font-weight: 700;
+  }
+</style>

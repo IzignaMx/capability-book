@@ -1,0 +1,56 @@
+---
+import SkipLink from "../components/accessibility/SkipLink.astro";
+import SiteHeader from "../components/navigation/SiteHeader.astro";
+import "../styles/global.scss";
+
+interface Props {
+  locale: "es" | "en";
+  title: string;
+  description: string;
+  canonicalPath: string;
+  alternatePath: string;
+  mode?: "explore" | "evaluate";
+}
+
+const {
+  locale,
+  title,
+  description,
+  canonicalPath,
+  alternatePath,
+  mode = "explore"
+} = Astro.props;
+const alternateLocale = locale === "es" ? "en" : "es";
+const site = Astro.site;
+
+if (!site) {
+  throw new Error("BaseLayout requires Astro.site to generate canonical language metadata.");
+}
+
+const canonicalUrl = new URL(canonicalPath, site).toString();
+const alternateUrl = new URL(alternatePath, site).toString();
+const defaultUrl = new URL("/", site).toString();
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang={locale} href={canonicalUrl} />
+    <link rel="alternate" hreflang={alternateLocale} href={alternateUrl} />
+    <link rel="alternate" hreflang="x-default" href={defaultUrl} />
+  </head>
+  <body>
+    <SkipLink locale={locale} />
+    <SiteHeader locale={locale} mode={mode} />
+    <main id="main-content">
+      <slot />
+    </main>
+  </body>
+</html>
