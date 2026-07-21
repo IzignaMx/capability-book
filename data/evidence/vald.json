@@ -1,0 +1,77 @@
+{
+  "project": {
+    "slug": "vald",
+    "title": "VALD",
+    "owner": "IzignaMx",
+    "summary": "Experiencia digital de ultraciclismo que organiza ruta, elevación, cronología, resultados, galería y patrocinadores en una entrega estática."
+  },
+  "classification": "real",
+  "publication": {
+    "confidentiality": "public",
+    "publishable": true,
+    "reviewedAt": "2026-07-20",
+    "notes": "El sitio y el repositorio son públicos; las afirmaciones se limitan a comportamiento observable."
+  },
+  "proofPoints": [
+    {
+      "kind": "demonstrated-capability",
+      "label": "Narrativa de ruta",
+      "description": "La experiencia integra cronología, elevación, puntos de control y resultados en una estructura editorial modular.",
+      "sourceIds": [
+        "repository",
+        "live"
+      ]
+    },
+    {
+      "kind": "demonstrated-capability",
+      "label": "Arquitectura estática",
+      "description": "Astro, estilos modulares y generación estática reducen dependencias de ejecución y favorecen despliegues simples.",
+      "sourceIds": [
+        "repository"
+      ]
+    },
+    {
+      "kind": "demonstrated-capability",
+      "label": "Continuidad móvil",
+      "description": "La interfaz se diseñó con enfoque mobile-first, soporte PWA y contenido utilizable sin animaciones avanzadas.",
+      "sourceIds": [
+        "repository",
+        "live"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "repository",
+      "label": "Repositorio VALD",
+      "type": "repository",
+      "url": "https://github.com/IzignaMx/vald-landing"
+    },
+    {
+      "id": "live",
+      "label": "Sitio VALD",
+      "type": "live",
+      "url": "https://vald.izignamx.com/"
+    }
+  ],
+  "links": [
+    {
+      "label": "Sitio público",
+      "url": "https://vald.izignamx.com/",
+      "public": true
+    },
+    {
+      "label": "Código fuente",
+      "url": "https://github.com/IzignaMx/vald-landing",
+      "public": true
+    }
+  ],
+  "media": [
+    {
+      "id": "fallback-poster",
+      "role": "fallback-poster",
+      "path": "/media/vald/poster.avif",
+      "license": "owned"
+    }
+  ]
+}

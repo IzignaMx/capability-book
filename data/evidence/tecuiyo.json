@@ -1,0 +1,76 @@
+{
+  "project": {
+    "slug": "tecuiyo",
+    "title": "Tecuiyo",
+    "owner": "Edgar Zorrilla",
+    "summary": "Plataforma cívica abierta que organiza información, búsquedas, cálculos y documentos para comprender derechos laborales en México."
+  },
+  "classification": "real",
+  "publication": {
+    "confidentiality": "public",
+    "publishable": true,
+    "reviewedAt": "2026-07-20",
+    "notes": "La plataforma informa y orienta; no debe presentarse como sustituto de asesoría jurídica profesional."
+  },
+  "proofPoints": [
+    {
+      "kind": "demonstrated-capability",
+      "label": "Consulta estructurada",
+      "description": "Búsqueda y navegación temática conectan preguntas laborales con contenido y herramientas relevantes.",
+      "sourceIds": [
+        "repository",
+        "live"
+      ]
+    },
+    {
+      "kind": "demonstrated-capability",
+      "label": "Cálculos y documentos",
+      "description": "La plataforma integra calculadoras y generación de documentos dentro de una experiencia accesible.",
+      "sourceIds": [
+        "repository"
+      ]
+    },
+    {
+      "kind": "demonstrated-capability",
+      "label": "Arquitectura de producto",
+      "description": "React, TypeScript y componentes accesibles separan contenido, datos, navegación y estados de interfaz.",
+      "sourceIds": [
+        "repository"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "repository",
+      "label": "Repositorio Tecuiyo",
+      "type": "repository",
+      "url": "https://github.com/CripterHack/tecuiyo-derechos-mx"
+    },
+    {
+      "id": "live",
+      "label": "Sitio Tecuiyo",
+      "type": "live",
+      "url": "https://tecuiyo.izignamx.com/"
+    }
+  ],
+  "links": [
+    {
+      "label": "Sitio público",
+      "url": "https://tecuiyo.izignamx.com/",
+      "public": true
+    },
+    {
+      "label": "Código fuente",
+      "url": "https://github.com/CripterHack/tecuiyo-derechos-mx",
+      "public": true
+    }
+  ],
+  "media": [
+    {
+      "id": "fallback-poster",
+      "role": "fallback-poster",
+      "path": "/media/tecuiyo/poster.avif",
+      "license": "owned"
+    }
+  ]
+}

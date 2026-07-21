@@ -1,0 +1,121 @@
+{
+  "project": {
+    "slug": "developer-tools",
+    "title": "Developer Tools Collection",
+    "owner": "Edgar Zorrilla",
+    "summary": "Colección abierta de herramientas para commits asistidos por IA, descarga autenticada de contenido y edición visual dentro de BigCommerce."
+  },
+  "classification": "open-source",
+  "publication": {
+    "confidentiality": "public",
+    "publishable": true,
+    "reviewedAt": "2026-07-20",
+    "notes": "Cada herramienta conserva su licencia, límites de uso, privacidad y documentación pública."
+  },
+  "proofPoints": [
+    {
+      "kind": "demonstrated-capability",
+      "label": "Smart Git Commit",
+      "description": "CLI que analiza cambios, propone agrupaciones atómicas y genera mensajes compatibles con Conventional Commits mediante modelos locales.",
+      "sourceIds": [
+        "smart-git",
+        "smart-git-pypi"
+      ]
+    },
+    {
+      "kind": "demonstrated-capability",
+      "label": "Instagram Downloader Skill",
+      "description": "Skill y CLI que coordinan sesión autenticada, automatización de navegador y rutas de recuperación sin solicitar contraseñas.",
+      "sourceIds": [
+        "instagram-skill"
+      ]
+    },
+    {
+      "kind": "demonstrated-capability",
+      "label": "BigCommerce WYSIWYG Extension",
+      "description": "Extensión que incorpora edición visual local en Page Builder respetando restricciones de seguridad del navegador.",
+      "sourceIds": [
+        "bigcommerce-extension",
+        "bigcommerce-demo"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "smart-git",
+      "label": "Repositorio Smart Git Commit",
+      "type": "repository",
+      "url": "https://github.com/CripterHack/smart-git-commit"
+    },
+    {
+      "id": "smart-git-pypi",
+      "label": "Paquete Smart Git Commit en PyPI",
+      "type": "documentation",
+      "url": "https://pypi.org/project/smart-git-commit/"
+    },
+    {
+      "id": "instagram-skill",
+      "label": "Repositorio Instagram Downloader Skill",
+      "type": "repository",
+      "url": "https://github.com/CripterHack/ig-downloader-skill"
+    },
+    {
+      "id": "bigcommerce-extension",
+      "label": "Repositorio BigCommerce WYSIWYG Extension",
+      "type": "repository",
+      "url": "https://github.com/CripterHack/bigcommerce-wysiwyg-extension"
+    },
+    {
+      "id": "bigcommerce-demo",
+      "label": "Presentación BigCommerce WYSIWYG Extension",
+      "type": "live",
+      "url": "https://cripterhack.github.io/bigcommerce-wysiwyg-extension/"
+    },
+    {
+      "id": "live",
+      "label": "Catálogo de aplicaciones IzignaMx",
+      "type": "live",
+      "url": "https://apps.izignamx.com/"
+    }
+  ],
+  "links": [
+    {
+      "label": "Catálogo de aplicaciones",
+      "url": "https://apps.izignamx.com/",
+      "public": true
+    },
+    {
+      "label": "Smart Git Commit",
+      "url": "https://github.com/CripterHack/smart-git-commit",
+      "public": true
+    },
+    {
+      "label": "Smart Git Commit en PyPI",
+      "url": "https://pypi.org/project/smart-git-commit/",
+      "public": true
+    },
+    {
+      "label": "Instagram Downloader Skill",
+      "url": "https://github.com/CripterHack/ig-downloader-skill",
+      "public": true
+    },
+    {
+      "label": "BigCommerce WYSIWYG Extension",
+      "url": "https://github.com/CripterHack/bigcommerce-wysiwyg-extension",
+      "public": true
+    },
+    {
+      "label": "Demostración BigCommerce WYSIWYG",
+      "url": "https://cripterhack.github.io/bigcommerce-wysiwyg-extension/",
+      "public": true
+    }
+  ],
+  "media": [
+    {
+      "id": "fallback-poster",
+      "role": "fallback-poster",
+      "path": "/media/developer-tools/poster.avif",
+      "license": "owned"
+    }
+  ]
+}
