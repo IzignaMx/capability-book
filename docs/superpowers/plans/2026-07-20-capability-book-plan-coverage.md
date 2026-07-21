@@ -40,7 +40,7 @@ Each deferred subsystem requires its own reviewed plan after the Phase 2 vertica
 
 ## Self-review result
 
-- No unresolved `TBD`, `TODO`, replacement marker, or unspecified repository path remains.
+- No unresolved implementation markers or unspecified repository paths remain.
 - Canonical naming and accent constraints are implemented as automated gates.
 - Evidence records use concrete public and authenticated repository URLs.
 - The plans preserve static and reduced-motion parity before introducing WebGL.
