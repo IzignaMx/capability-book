@@ -371,7 +371,13 @@ export function DiagnosticWizard({
           </div>
         </details>
 
-        <input className="diagnostic-wizard__honeypot" name="website" tabIndex={-1} autoComplete="off" />
+        <input
+          className="diagnostic-wizard__honeypot"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+        />
 
         <label className="diagnostic-wizard__consent" htmlFor={`${fieldPrefix}-consent`}>
           <input

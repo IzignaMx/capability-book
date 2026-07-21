@@ -1,0 +1,20 @@
+---
+import { ContextualDiagnosticWizard } from "../../../components/conversion/ContextualDiagnosticWizard";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  locale="es"
+  title="Solicitar diagnóstico | IzignaMx"
+  description="Comparte el contexto esencial de tu proyecto para iniciar un diagnóstico digital con IzignaMx."
+  canonicalPath="/es/diagnostico/"
+  alternatePath="/en/diagnostic/"
+  mode="evaluate"
+>
+  <ContextualDiagnosticWizard
+    client:load
+    locale="es"
+    fallbackHref="mailto:hola@izignamx.com?subject=Diagn%C3%B3stico%20IzignaMx"
+    privacyHref="/es/privacidad/"
+  />
+</BaseLayout>

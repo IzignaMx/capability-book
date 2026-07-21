@@ -52,11 +52,12 @@ describe("DiagnosticWizard", () => {
   });
 
   it("focuses the first field after the wizard mounts", async () => {
-    renderWizard();
+    const { container } = renderWizard();
 
     await waitFor(() => {
       expect(screen.getByRole("textbox", { name: "Nombre" })).toHaveFocus();
     });
+    expect(container.querySelector('[name="website"]')).toHaveAttribute("aria-hidden", "true");
   });
 
   it("uses native required validation before requesting delivery", async () => {
