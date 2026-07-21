@@ -1,0 +1,40 @@
+{
+  "viewports": [
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    }
+  ],
+  "projects": [
+    {
+      "slug": "omnisync",
+      "url": "https://omnisync.izignamx.com/"
+    },
+    {
+      "slug": "hamburguesa-nomada",
+      "url": "https://nomada.izignamx.com/"
+    },
+    {
+      "slug": "vald",
+      "url": "https://vald.izignamx.com/"
+    },
+    {
+      "slug": "nutrichilango",
+      "url": "https://nutrichilango.izignamx.com/"
+    },
+    {
+      "slug": "tecuiyo",
+      "url": "https://tecuiyo.izignamx.com/"
+    },
+    {
+      "slug": "developer-tools",
+      "url": "https://apps.izignamx.com/"
+    }
+  ]
+}
