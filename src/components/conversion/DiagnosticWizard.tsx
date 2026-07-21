@@ -71,7 +71,8 @@ const copy = {
     unavailable: "El envío directo aún no está configurado. Tu información no ha salido de este navegador.",
     failed: "No pudimos entregar tu solicitud. Conservamos el borrador en esta pestaña para que puedas reintentar.",
     succeeded: "Solicitud entregada. Te contactaremos con los siguientes pasos.",
-    fallback: "Contactar por correo"
+    fallback: "Contactar por correo",
+    contextProject: "Proyecto relacionado"
   },
   en: {
     heading: "Tell us what you need to build",
@@ -97,7 +98,8 @@ const copy = {
     unavailable: "Direct delivery is not configured yet. Your information has not left this browser.",
     failed: "We could not deliver your request. The draft remains in this tab so you can retry.",
     succeeded: "Request delivered. We will contact you with the next steps.",
-    fallback: "Contact us by email"
+    fallback: "Contact us by email",
+    contextProject: "Related project"
   }
 } as const;
 
@@ -250,6 +252,11 @@ export function DiagnosticWizard({
         <p className="diagnostic-wizard__eyebrow">IzignaMx · Evaluate</p>
         <h1 id={`${fieldPrefix}-heading`}>{labels.heading}</h1>
         <p>{labels.intro}</p>
+        {context.sourceProject ? (
+          <p className="diagnostic-wizard__context" data-diagnostic-context>
+            {labels.contextProject}: <strong>{context.sourceProject}</strong>
+          </p>
+        ) : null}
       </div>
 
       <form onSubmit={submit} className="diagnostic-wizard__form">
@@ -259,6 +266,7 @@ export function DiagnosticWizard({
             ref={nameRef}
             id={`${fieldPrefix}-name`}
             name="name"
+            type="text"
             value={draft.name}
             onChange={(event) => updateField("name", event.currentTarget.value)}
             autoComplete="name"
@@ -283,6 +291,7 @@ export function DiagnosticWizard({
           <input
             id={`${fieldPrefix}-organization`}
             name="organization"
+            type="text"
             value={draft.organization}
             onChange={(event) => updateField("organization", event.currentTarget.value)}
             autoComplete="organization"
@@ -313,7 +322,6 @@ export function DiagnosticWizard({
                 type="url"
                 value={draft.currentUrl}
                 onChange={(event) => updateField("currentUrl", event.currentTarget.value)}
-                autoComplete="url"
               />
             </label>
 

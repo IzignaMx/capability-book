@@ -4,21 +4,24 @@ import ModeSwitch from "../core/ModeSwitch.astro";
 interface Props {
   locale: "es" | "en";
   mode: "explore" | "evaluate";
+  alternatePath: string;
 }
 
-const { locale, mode } = Astro.props;
+const { locale, mode, alternatePath } = Astro.props;
 const labels = locale === "es"
   ? {
       home: "Inicio de IzignaMx",
       navigation: "Navegación principal",
       projects: "Proyectos",
-      diagnostic: "Solicitar diagnóstico"
+      diagnostic: "Solicitar diagnóstico",
+      language: "English"
     }
   : {
       home: "IzignaMx home",
       navigation: "Primary navigation",
       projects: "Projects",
-      diagnostic: "Request a diagnostic"
+      diagnostic: "Request a diagnostic",
+      language: "Español"
     };
 const projectsHref = locale === "es" ? "/es/proyectos/" : "/en/projects/";
 const diagnosticHref = locale === "es" ? "/es/diagnostico/" : "/en/diagnostic/";
@@ -35,6 +38,7 @@ const diagnosticHref = locale === "es" ? "/es/diagnostico/" : "/en/diagnostic/";
   <nav class="primary-navigation" aria-label={labels.navigation}>
     <a href={projectsHref}>{labels.projects}</a>
     <a class="diagnostic-link" href={diagnosticHref}>{labels.diagnostic}</a>
+    <a href={alternatePath} hreflang={locale === "es" ? "en" : "es"}>{labels.language}</a>
   </nav>
 </header>
 

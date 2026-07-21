@@ -1,6 +1,8 @@
 ---
 import { ContextualDiagnosticWizard } from "../../../components/conversion/ContextualDiagnosticWizard";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const submissionEndpoint = import.meta.env.PUBLIC_DIAGNOSTIC_ENDPOINT;
 ---
 
 <BaseLayout
@@ -16,5 +18,6 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
     locale="es"
     fallbackHref="mailto:hola@izignamx.com?subject=Diagn%C3%B3stico%20IzignaMx"
     privacyHref="/es/privacidad/"
+    {...(submissionEndpoint ? { submissionEndpoint } : {})}
   />
 </BaseLayout>

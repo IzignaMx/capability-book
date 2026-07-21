@@ -57,6 +57,10 @@ describe("DiagnosticWizard", () => {
     await waitFor(() => {
       expect(screen.getByRole("textbox", { name: "Nombre" })).toHaveFocus();
     });
+    expect(screen.getByRole("textbox", { name: "Nombre" })).toHaveAttribute("type", "text");
+    expect(screen.getByRole("textbox", { name: "Organización o proyecto" })).toHaveAttribute("type", "text");
+    expect(screen.getByRole("textbox", { name: "URL actual" })).toHaveAttribute("type", "url");
+    expect(screen.getByRole("textbox", { name: "URL actual" })).not.toHaveAttribute("autocomplete");
     expect(container.querySelector('[name="website"]')).toHaveAttribute("aria-hidden", "true");
   });
 

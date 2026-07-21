@@ -77,7 +77,7 @@ const footer = locale === "es"
   </head>
   <body>
     <SkipLink locale={locale} />
-    <SiteHeader locale={locale} mode={mode} />
+    <SiteHeader locale={locale} mode={mode} alternatePath={alternatePath} />
     <main id="main-content">
       <slot />
     </main>
