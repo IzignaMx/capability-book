@@ -1,0 +1,106 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import "../../styles/information-page.scss";
+---
+
+<BaseLayout
+  locale="es"
+  title="Privacidad y tratamiento de datos | IzignaMx"
+  description="Información sobre los datos del diagnóstico, analítica, almacenamiento local y canales de privacidad de IzignaMx."
+  canonicalPath="/es/privacidad/"
+  alternatePath="/en/privacy/"
+>
+  <article class="information-page" data-pagefind-body>
+    <header class="information-page__header">
+      <p class="information-page__eyebrow">Privacidad</p>
+      <h1>Datos mínimos, decisiones explícitas.</h1>
+      <p class="information-page__intro">
+        Esta página describe el comportamiento técnico actual del Capability Book y las condiciones
+        que deben cumplirse antes de activar la entrega directa del diagnóstico.
+      </p>
+      <p class="information-page__status">Actualizado: 21 de julio de 2026</p>
+    </header>
+
+    <div class="information-page__sections">
+      <section aria-labelledby="current-state-title">
+        <h2 id="current-state-title">Estado actual</h2>
+        <div class="information-page__copy">
+          <p class="information-page__notice">
+            <strong>La entrega directa del formulario está desactivada.</strong> GitHub Pages sirve
+            este sitio como archivos estáticos y su HTTPS no crea un backend de formularios. Si
+            eliges el enlace de correo, los datos salen mediante tu cliente y proveedor de email.
+          </p>
+          <p>
+            Antes de habilitar un servicio externo se publicarán su identidad, ubicación,
+            subprocesadores, transferencias, plazos de conservación y procedimiento de eliminación.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="diagnostic-data-title">
+        <h2 id="diagnostic-data-title">Datos del diagnóstico</h2>
+        <div class="information-page__copy">
+          <p>El formulario puede solicitar:</p>
+          <ul>
+            <li>nombre, medio de contacto, organización o proyecto y solicitud;</li>
+            <li>de forma opcional: URL actual, plazo, presupuesto, integraciones y referencias;</li>
+            <li>consentimiento y contexto no personal de origen, como ruta, proyecto, capacidad, servicio y parámetros UTM permitidos;</li>
+            <li>un campo señuelo vacío para ayudar a detectar automatización.</li>
+          </ul>
+          <p>
+            Mientras no se envía, el borrador permanece únicamente en <code>sessionStorage</code>
+            de esa pestaña y se elimina tras una entrega confirmada. El contexto y las respuestas
+            del servidor no se guardan en ese borrador.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="analytics-title">
+        <h2 id="analytics-title">Datos excluidos de analítica</h2>
+        <div class="information-page__copy">
+          <p>
+            La analítica del producto no puede recibir nombre, email, teléfono, organización,
+            mensajes, contenido del formulario ni identificadores personales. El plan de medición
+            admite únicamente eventos y dimensiones de contexto no personal previamente definidos.
+          </p>
+          <p>
+            Actualmente el sitio no inicializa analítica de producto ni rastreadores publicitarios.
+            Si se activa analítica compatible con este plan, la retención prevista es de 30 días
+            para eventos sin datos personales y 395 días para agregados.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="infrastructure-title">
+        <h2 id="infrastructure-title">Infraestructura</h2>
+        <div class="information-page__copy">
+          <p>
+            El sitio se publica en GitHub Pages. Como proveedor de alojamiento, GitHub puede tratar
+            datos técnicos de solicitud conforme a sus propios términos y políticas. IzignaMx no
+            usa esos registros como contenido del diagnóstico ni como perfil publicitario.
+          </p>
+          <p>
+            El almacenamiento de sesión es local al navegador. No usamos cookies publicitarias en
+            la implementación actual.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="rights-title">
+        <h2 id="rights-title">Preguntas y derechos</h2>
+        <div class="information-page__copy">
+          <p>
+            Para preguntar por privacidad, solicitar acceso, rectificación, cancelación u oposición,
+            escribe a <a href="mailto:hola@izignamx.com?subject=Privacidad%20Capability%20Book">hola@izignamx.com</a>.
+            Describe tu solicitud sin añadir información que no sea necesaria.
+          </p>
+          <p>
+            Antes de activar la recepción directa, la revisión de producción deberá completar los
+            datos legales del responsable y del proveedor aplicable. Esta transparencia técnica no
+            sustituye esa revisión jurídica.
+          </p>
+        </div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

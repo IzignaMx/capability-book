@@ -1,5 +1,6 @@
 ---
 import SkipLink from "../components/accessibility/SkipLink.astro";
+import OrganizationSchema from "../components/core/OrganizationSchema.astro";
 import SiteHeader from "../components/navigation/SiteHeader.astro";
 import "../styles/global.scss";
 
@@ -30,6 +31,25 @@ if (!site) {
 const canonicalUrl = new URL(canonicalPath, site).toString();
 const alternateUrl = new URL(alternatePath, site).toString();
 const defaultUrl = new URL("/", site).toString();
+const metadataLocale = locale === "es" ? "es_MX" : "en_US";
+const alternateMetadataLocale = locale === "es" ? "en_US" : "es_MX";
+const footer = locale === "es"
+  ? {
+      label: "Información del sitio",
+      accessibility: "Accesibilidad",
+      privacy: "Privacidad",
+      accessibilityHref: "/es/accesibilidad/",
+      privacyHref: "/es/privacidad/",
+      contact: "Contacto"
+    }
+  : {
+      label: "Site information",
+      accessibility: "Accessibility",
+      privacy: "Privacy",
+      accessibilityHref: "/en/accessibility/",
+      privacyHref: "/en/privacy/",
+      contact: "Contact"
+    };
 ---
 
 <!doctype html>
@@ -45,6 +65,15 @@ const defaultUrl = new URL("/", site).toString();
     <link rel="alternate" hreflang={locale} href={canonicalUrl} />
     <link rel="alternate" hreflang={alternateLocale} href={alternateUrl} />
     <link rel="alternate" hreflang="x-default" href={defaultUrl} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="IzignaMx" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={metadataLocale} />
+    <meta property="og:locale:alternate" content={alternateMetadataLocale} />
+    <OrganizationSchema />
   </head>
   <body>
     <SkipLink locale={locale} />
@@ -52,5 +81,50 @@ const defaultUrl = new URL("/", site).toString();
     <main id="main-content">
       <slot />
     </main>
+    <footer class="site-footer container" data-pagefind-ignore>
+      <nav aria-label={footer.label}>
+        <a href={footer.accessibilityHref}>{footer.accessibility}</a>
+        <a href={footer.privacyHref}>{footer.privacy}</a>
+        <a href="mailto:hola@izignamx.com">{footer.contact}</a>
+      </nav>
+      <p>IzignaMx · {new Date().getUTCFullYear()}</p>
+    </footer>
   </body>
 </html>
+
+<style>
+  .site-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--color-line);
+    color: var(--color-text-muted);
+  }
+
+  .site-footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+  }
+
+  .site-footer a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .site-footer p {
+    margin: 0;
+    font-family: var(--font-data);
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 44rem) {
+    .site-footer {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

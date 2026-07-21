@@ -241,7 +241,11 @@ export function DiagnosticWizard({
         : labels.submit;
 
   return (
-    <section className="diagnostic-wizard" aria-labelledby={`${fieldPrefix}-heading`}>
+    <section
+      className="diagnostic-wizard"
+      aria-labelledby={`${fieldPrefix}-heading`}
+      data-pagefind-ignore
+    >
       <div className="diagnostic-wizard__intro">
         <p className="diagnostic-wizard__eyebrow">IzignaMx · Evaluate</p>
         <h1 id={`${fieldPrefix}-heading`}>{labels.heading}</h1>

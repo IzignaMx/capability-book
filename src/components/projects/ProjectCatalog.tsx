@@ -64,7 +64,7 @@ export function ProjectCatalog({ locale, projects }: ProjectCatalogProps) {
   );
 
   return (
-    <section className="project-catalog" aria-labelledby="catalog-title">
+    <section className="project-catalog" aria-labelledby="catalog-title" data-pagefind-body>
       <header className="project-catalog__header">
         <p className="project-catalog__eyebrow">{labels.eyebrow}</p>
         <h1 id="catalog-title">{labels.title}</h1>

@@ -1,0 +1,106 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import "../../styles/information-page.scss";
+---
+
+<BaseLayout
+  locale="en"
+  title="Privacy and data handling | IzignaMx"
+  description="Information about diagnostic data, analytics, local storage, and IzignaMx privacy channels."
+  canonicalPath="/en/privacy/"
+  alternatePath="/es/privacidad/"
+>
+  <article class="information-page" data-pagefind-body>
+    <header class="information-page__header">
+      <p class="information-page__eyebrow">Privacy</p>
+      <h1>Minimum data, explicit decisions.</h1>
+      <p class="information-page__intro">
+        This page describes the Capability Book’s current technical behavior and the conditions
+        that must be met before direct diagnostic delivery is enabled.
+      </p>
+      <p class="information-page__status">Updated: July 21, 2026</p>
+    </header>
+
+    <div class="information-page__sections">
+      <section aria-labelledby="current-state-title">
+        <h2 id="current-state-title">Current state</h2>
+        <div class="information-page__copy">
+          <p class="information-page__notice">
+            <strong>Direct form delivery is disabled.</strong> GitHub Pages serves this site as
+            static files, and its HTTPS does not create a form backend. If you choose the email
+            fallback, data leaves through your email client and provider.
+          </p>
+          <p>
+            Before an external service is enabled, its identity, location, subprocessors,
+            transfers, retention periods, and deletion procedure will be published.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="diagnostic-data-title">
+        <h2 id="diagnostic-data-title">Diagnostic data</h2>
+        <div class="information-page__copy">
+          <p>The form may request:</p>
+          <ul>
+            <li>name, contact method, organization or project, and request;</li>
+            <li>optionally: current URL, timing, budget, integrations, and references;</li>
+            <li>consent and non-personal source context such as route, project, capability, service, and approved UTM parameters;</li>
+            <li>an empty honeypot field to help detect automation.</li>
+          </ul>
+          <p>
+            Until sent, the draft remains only in that tab’s <code>sessionStorage</code> and is
+            removed after confirmed delivery. Context and server responses are not stored in the
+            draft.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="analytics-title">
+        <h2 id="analytics-title">Excluded from analytics</h2>
+        <div class="information-page__copy">
+          <p>
+            Product analytics must not receive names, email addresses, telephone numbers,
+            organizations, messages, form content, or personal identifiers. The measurement plan
+            permits only predefined events and non-personal context dimensions.
+          </p>
+          <p>
+            The site currently initializes no product analytics or advertising trackers. If
+            analytics compatible with this plan is activated, planned retention is 30 days for
+            non-personal raw events and 395 days for aggregates.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="infrastructure-title">
+        <h2 id="infrastructure-title">Infrastructure</h2>
+        <div class="information-page__copy">
+          <p>
+            The site is published on GitHub Pages. As the hosting provider, GitHub may process
+            technical request data under its own terms and policies. IzignaMx does not use those
+            logs as diagnostic content or for advertising profiles.
+          </p>
+          <p>
+            Session storage remains local to the browser. The current implementation uses no
+            advertising cookies.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="rights-title">
+        <h2 id="rights-title">Questions and rights</h2>
+        <div class="information-page__copy">
+          <p>
+            For privacy questions or access, correction, deletion, or objection requests, email
+            <a href="mailto:hola@izignamx.com?subject=Capability%20Book%20privacy">hola@izignamx.com</a>.
+            Describe the request without adding unnecessary information.
+          </p>
+          <p>
+            Before direct collection is enabled, production review must complete the responsible
+            party and applicable provider’s legal details. This technical transparency does not
+            replace that legal review.
+          </p>
+        </div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>
