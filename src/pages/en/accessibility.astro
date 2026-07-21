@@ -1,0 +1,78 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import "../../styles/information-page.scss";
+---
+
+<BaseLayout
+  locale="en"
+  title="Accessibility | IzignaMx"
+  description="Accessibility commitment, keyboard support, and equivalent content for the IzignaMx Capability Book."
+  canonicalPath="/en/accessibility/"
+  alternatePath="/es/accesibilidad/"
+>
+  <article class="information-page" data-pagefind-body>
+    <header class="information-page__header">
+      <p class="information-page__eyebrow">Barrier-free access</p>
+      <h1>Accessibility by design.</h1>
+      <p class="information-page__intro">
+        We target WCAG 2.2 Level AA and a useful experience when animation, canvas, or JavaScript
+        is unavailable.
+      </p>
+    </header>
+
+    <div class="information-page__sections">
+      <section aria-labelledby="motion-title">
+        <h2 id="motion-title">Motion under your control</h2>
+        <div class="information-page__copy">
+          <p>
+            The current static release respects <code>prefers-reduced-motion</code> and removes
+            non-essential motion. Before advanced experiences are enabled, the site will provide
+            a persistent control for static, reduced-motion, or advanced-motion modes.
+          </p>
+          <p>
+            Motion level will never change the available content, evidence, or ability to complete
+            a task.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="canvas-title">
+        <h2 id="canvas-title">Canvas alternative</h2>
+        <div class="information-page__copy">
+          <p>
+            Projects, capabilities, relationships, and calls to action remain available as semantic
+            HTML. Fallback images have stable dimensions and contextual alternative text.
+          </p>
+          <p>
+            If a future visual scene fails or is disabled, static navigation preserves the same
+            information and destinations.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="keyboard-title">
+        <h2 id="keyboard-title">Keyboard and focus</h2>
+        <div class="information-page__copy">
+          <ul>
+            <li>The “Skip to content” link appears when focused.</li>
+            <li>Controls and links support keyboard navigation and visible focus.</li>
+            <li>Forms use labels, native validation, and announceable messages.</li>
+            <li>Interactions do not depend only on hover, dragging, or color.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section aria-labelledby="feedback-title">
+        <h2 id="feedback-title">Report a barrier</h2>
+        <div class="information-page__copy">
+          <p>
+            If you encounter a barrier, email
+            <a href="mailto:hola@izignamx.com?subject=Capability%20Book%20accessibility">hola@izignamx.com</a>.
+            Include the URL, browser or assistive technology, and a description of the issue;
+            avoid unnecessary personal information.
+          </p>
+        </div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

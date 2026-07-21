@@ -800,10 +800,9 @@ pnpm build
 pnpm test:e2e
 pnpm exec pa11y-ci --config pa11yci.json
 pnpm exec tsx scripts/verify-3d-budgets.ts
-bash scripts/package-cpanel.sh
 ```
 
-Expected: every command exits `0` and the cPanel archive includes all deferred assets.
+Expected: every command exits `0` and the GitHub Pages artifact includes all deferred assets.
 
 - [ ] **Step 4: Commit and open a draft PR**
 
@@ -833,4 +832,4 @@ gh pr create \
 - [ ] Spanish and English content parity passes.
 - [ ] Keyboard and screen-reader smoke tests pass.
 - [ ] Diagnostic context remains intact.
-- [ ] CI and cPanel packaging pass.
+- [ ] CI and GitHub Pages deployment gates pass.

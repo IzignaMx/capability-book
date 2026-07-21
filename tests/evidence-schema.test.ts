@@ -1,9 +1,10 @@
+// @vitest-environment node
+
 import { readFile } from "node:fs/promises";
-import Ajv2020Module from "ajv/dist/2020.js";
+import Ajv2020 from "ajv/dist/2020.js";
 import AjvFormatsModule from "ajv-formats";
 import { describe, expect, it } from "vitest";
 
-const Ajv2020 = Ajv2020Module.default;
 const addFormats = AjvFormatsModule.default;
 
 const schema = JSON.parse(

@@ -1,0 +1,26 @@
+{
+  "defaults": {
+    "standard": "WCAG2AA",
+    "timeout": 30000,
+    "useIncognitoBrowserContext": true,
+    "chromeLaunchConfig": {
+      "args": ["--no-sandbox", "--disable-setuid-sandbox"]
+    }
+  },
+  "urls": [
+    "http://127.0.0.1:4321/es/",
+    "http://127.0.0.1:4321/en/",
+    "http://127.0.0.1:4321/es/proyectos/",
+    "http://127.0.0.1:4321/en/projects/",
+    "http://127.0.0.1:4321/es/proyectos/omnisync/",
+    "http://127.0.0.1:4321/en/projects/omnisync/",
+    "http://127.0.0.1:4321/es/proyectos/hamburguesa-nomada/",
+    "http://127.0.0.1:4321/en/projects/hamburguesa-nomada/",
+    "http://127.0.0.1:4321/es/diagnostico/",
+    "http://127.0.0.1:4321/en/diagnostic/",
+    "http://127.0.0.1:4321/es/privacidad/",
+    "http://127.0.0.1:4321/en/privacy/",
+    "http://127.0.0.1:4321/es/accesibilidad/",
+    "http://127.0.0.1:4321/en/accessibility/"
+  ]
+}

@@ -1,0 +1,102 @@
+---
+import "../styles/global.scss";
+
+const languages = [
+  { href: "/es/", label: "Continuar en español", lang: "es" },
+  { href: "/en/", label: "Continue in English", lang: "en" }
+];
+const siteUrl = "https://book.izignamx.com/";
+const description = "Selecciona un idioma para explorar las capacidades y proyectos de IzignaMx.";
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>IzignaMx Capability Book</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={siteUrl} />
+    <link rel="alternate" hreflang="es" href={`${siteUrl}es/`} />
+    <link rel="alternate" hreflang="en" href={`${siteUrl}en/`} />
+    <link rel="alternate" hreflang="x-default" href={siteUrl} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="IzignaMx" />
+    <meta property="og:title" content="IzignaMx Capability Book" />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={siteUrl} />
+  </head>
+  <body>
+    <main class="language-gateway">
+      <p class="eyebrow">Capability Book</p>
+      <h1>IzignaMx</h1>
+      <p class="instruction">Selecciona un idioma. Select a language.</p>
+      <nav aria-label="Language selection">
+        {languages.map((language) => (
+          <a href={language.href} lang={language.lang}>{language.label}</a>
+        ))}
+      </nav>
+    </main>
+  </body>
+</html>
+
+<style>
+  .language-gateway {
+    display: grid;
+    min-height: 100vh;
+    place-content: center;
+    padding: var(--space-8);
+    text-align: center;
+  }
+
+  .eyebrow {
+    margin: 0;
+    color: var(--color-cyan);
+    font-family: var(--font-data);
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: var(--space-2) 0;
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 16vw, 10rem);
+    font-weight: 700;
+    letter-spacing: -0.08em;
+    line-height: 0.92;
+  }
+
+  .instruction {
+    color: var(--color-text-muted);
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-3) var(--space-6);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    background: rgb(15 23 42 / 72%);
+    text-decoration: none;
+    transition:
+      border-color var(--motion-fast),
+      background var(--motion-fast);
+  }
+
+  a:hover {
+    border-color: var(--color-brand-bright);
+    background: rgb(59 130 246 / 18%);
+  }
+</style>

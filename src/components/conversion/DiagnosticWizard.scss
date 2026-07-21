@@ -1,0 +1,198 @@
+.diagnostic-wizard {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: clamp(2rem, 7vw, 7rem);
+  align-items: start;
+  max-width: var(--content-width);
+  margin-inline: auto;
+  padding: clamp(3rem, 8vw, 8rem) var(--space-6);
+}
+
+.diagnostic-wizard__intro {
+  position: sticky;
+  top: 8rem;
+}
+
+.diagnostic-wizard__eyebrow {
+  margin: 0 0 var(--space-4);
+  color: var(--color-cyan);
+  font-family: var(--font-data);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.diagnostic-wizard h1 {
+  max-width: 12ch;
+  margin: 0 0 var(--space-6);
+  font: 600 clamp(2.4rem, 6vw, 5.8rem) / 0.96 var(--font-display);
+  letter-spacing: -0.055em;
+}
+
+.diagnostic-wizard__intro > p:last-child {
+  max-width: 42rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.diagnostic-wizard__context {
+  width: fit-content;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-muted);
+  font: 700 0.78rem/1.4 var(--font-data);
+}
+
+.diagnostic-wizard__context strong {
+  color: var(--color-cyan);
+}
+
+.diagnostic-wizard__form {
+  display: grid;
+  gap: var(--space-6);
+  padding: clamp(1.25rem, 4vw, 3rem);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(145deg, rgb(59 130 246 / 10%), transparent 42%),
+    rgb(11 17 32 / 80%);
+}
+
+.diagnostic-wizard__form label:not(.diagnostic-wizard__consent) {
+  display: grid;
+  gap: var(--space-2);
+  color: var(--color-mist);
+  font-weight: 600;
+}
+
+.diagnostic-wizard input,
+.diagnostic-wizard textarea,
+.diagnostic-wizard select {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid rgb(148 163 184 / 38%);
+  border-radius: var(--radius-sm);
+  background: var(--color-space);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.diagnostic-wizard textarea {
+  resize: vertical;
+}
+
+.diagnostic-wizard input:focus-visible,
+.diagnostic-wizard textarea:focus-visible,
+.diagnostic-wizard select:focus-visible,
+.diagnostic-wizard summary:focus-visible,
+.diagnostic-wizard button:focus-visible,
+.diagnostic-wizard a:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.diagnostic-wizard__optional {
+  border-block: 1px solid var(--color-line);
+  padding-block: var(--space-4);
+}
+
+.diagnostic-wizard__optional summary {
+  min-height: 2.75rem;
+  padding-block: 0.7rem;
+  color: var(--color-brand-bright);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.diagnostic-wizard__optional-grid {
+  display: grid;
+  gap: var(--space-6);
+  padding-block: var(--space-6) var(--space-2);
+}
+
+.diagnostic-wizard__consent {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr;
+  gap: var(--space-3);
+  align-items: start;
+  line-height: 1.5;
+}
+
+.diagnostic-wizard__consent input {
+  width: 1.5rem;
+  min-height: 1.5rem;
+  margin: 0;
+}
+
+.diagnostic-wizard a {
+  color: var(--color-brand-bright);
+}
+
+.diagnostic-wizard__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.diagnostic-wizard button,
+.diagnostic-wizard__actions a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  font-weight: 800;
+}
+
+.diagnostic-wizard button {
+  border: 1px solid var(--color-brand-bright);
+  background: var(--color-brand-bright);
+  color: var(--color-space);
+  cursor: pointer;
+}
+
+.diagnostic-wizard button:disabled {
+  border-color: var(--color-line);
+  background: rgb(148 163 184 / 18%);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.diagnostic-wizard__status,
+.diagnostic-wizard__error {
+  min-height: 1.5rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.diagnostic-wizard__status {
+  color: var(--color-cyan);
+}
+
+.diagnostic-wizard__error {
+  color: #fda4af;
+}
+
+.diagnostic-wizard__honeypot {
+  position: absolute;
+  width: 1px !important;
+  height: 1px;
+  min-height: 0 !important;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (width <= 52rem) {
+  .diagnostic-wizard {
+    grid-template-columns: 1fr;
+  }
+
+  .diagnostic-wizard__intro {
+    position: static;
+  }
+}

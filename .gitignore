@@ -1,7 +1,11 @@
 .worktrees/
 .superpowers/
 node_modules/
+.astro/
+dist/
 coverage/
+test-results/
+playwright-report/
 artifacts/captures/
 artifacts/evidence-summary.md
 .env

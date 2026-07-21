@@ -1,0 +1,34 @@
+---
+interface Props {
+  locale: "es" | "en";
+}
+
+const { locale } = Astro.props;
+const label = locale === "es" ? "Saltar al contenido principal" : "Skip to main content";
+---
+
+<a class="skip-link" href="#main-content">{label}</a>
+
+<style>
+  .skip-link {
+    position: fixed;
+    inset: var(--space-3) auto auto var(--space-3);
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--color-brand);
+    color: var(--color-space);
+    font-family: var(--font-data);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+    transform: translateY(calc(-100% - var(--space-8)));
+    transition: transform var(--motion-fast);
+  }
+
+  .skip-link:focus-visible {
+    transform: translateY(0);
+  }
+</style>

@@ -1,0 +1,241 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const evaluateHref = "/en/projects/";
+const diagnosticHref = "/en/diagnostic/";
+---
+
+<BaseLayout
+  locale="en"
+  title="IzignaMx — Digital experiences designed to connect and scale"
+  description="Web, commerce, artificial intelligence, automation, and interactive products designed to connect, scale, and generate outcomes."
+  canonicalPath="/en/"
+  alternatePath="/es/"
+>
+  <section class="hero container" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow">Digital studio · Mexico / Latin America</p>
+      <h1 id="hero-title">We build digital experiences that do not exist yet.</h1>
+      <p class="lede">
+        Web, commerce, artificial intelligence, automation, and interactive products
+        designed to connect, scale, and generate outcomes.
+      </p>
+
+      <div class="hero-actions" aria-label="Next steps">
+        <a class="primary-action" href={evaluateHref}>Evaluate projects</a>
+        <a class="secondary-action" href={diagnosticHref}>Request a diagnostic</a>
+      </div>
+    </div>
+
+    <aside class="signal-panel" aria-label="Areas of expertise">
+      <p class="panel-index">IZG / 01</p>
+      <p class="panel-title">Systems with intent.</p>
+      <ul>
+        <li><span>01</span> Web experiences</li>
+        <li><span>02</span> Connected commerce</li>
+        <li><span>03</span> AI and automation</li>
+        <li><span>04</span> Interactive products</li>
+      </ul>
+      <p class="panel-note">Explore is the narrative. Evaluate is the evidence.</p>
+    </aside>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    min-height: calc(100vh - 9rem);
+    grid-template-columns: minmax(0, 1.45fr) minmax(17rem, 0.55fr);
+    align-items: center;
+    gap: clamp(var(--space-8), 8vw, 8rem);
+    padding-block: clamp(var(--space-12), 10vh, 8rem);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    position: absolute;
+    z-index: -1;
+    width: min(48vw, 38rem);
+    aspect-ratio: 1;
+    border: 1px solid rgb(96 165 250 / 24%);
+    border-radius: 50%;
+    content: "";
+    inset: 48% -18% auto auto;
+    transform: translateY(-50%);
+    box-shadow:
+      0 0 0 4rem rgb(59 130 246 / 4%),
+      0 0 0 9rem rgb(34 211 238 / 2%);
+  }
+
+  .hero-copy {
+    max-width: 58rem;
+    animation: reveal 700ms ease-out both;
+  }
+
+  .eyebrow,
+  .panel-index {
+    margin: 0 0 var(--space-4);
+    color: var(--color-cyan);
+    font-family: var(--font-data);
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    max-width: 13ch;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(3.2rem, 7vw, 7.5rem);
+    font-weight: 700;
+    letter-spacing: -0.065em;
+    line-height: 0.92;
+    text-wrap: balance;
+  }
+
+  .lede {
+    max-width: 43rem;
+    margin: var(--space-8) 0 0;
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 1.7vw, 1.3rem);
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+  }
+
+  .hero-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+      background var(--motion-fast),
+      border-color var(--motion-fast),
+      transform var(--motion-fast);
+  }
+
+  .hero-actions a:hover {
+    transform: translateY(-2px);
+  }
+
+  .primary-action {
+    background: var(--color-brand);
+    color: var(--color-space);
+  }
+
+  .primary-action:hover {
+    background: var(--color-brand-bright);
+  }
+
+  .secondary-action {
+    border: 1px solid var(--color-line);
+  }
+
+  .secondary-action:hover {
+    border-color: var(--color-cyan);
+    background: rgb(34 211 238 / 8%);
+  }
+
+  .signal-panel {
+    position: relative;
+    padding: var(--space-6);
+    border: 1px solid var(--color-line);
+    background:
+      linear-gradient(145deg, rgb(15 23 42 / 84%), rgb(2 6 23 / 58%));
+    box-shadow: 0 2rem 5rem rgb(0 0 0 / 28%);
+    animation: reveal 700ms 180ms ease-out both;
+    backdrop-filter: blur(1rem);
+  }
+
+  .signal-panel::before {
+    position: absolute;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-top: 1px solid var(--color-cyan);
+    border-left: 1px solid var(--color-cyan);
+    content: "";
+    inset: -1px auto auto -1px;
+  }
+
+  .panel-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+
+  ul {
+    display: grid;
+    gap: 0;
+    padding: 0;
+    margin: var(--space-8) 0;
+    list-style: none;
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: var(--space-3);
+    padding-block: var(--space-3);
+    border-top: 1px solid var(--color-line);
+    color: var(--color-text-muted);
+  }
+
+  li:last-child {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  li span {
+    color: var(--color-brand-bright);
+    font-family: var(--font-data);
+    font-size: 0.75rem;
+  }
+
+  .panel-note {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+  }
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+  }
+
+  @media (max-width: 54rem) {
+    .hero {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .signal-panel {
+      max-width: 34rem;
+    }
+  }
+
+  @media (max-width: 34rem) {
+    .hero {
+      padding-top: var(--space-12);
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 15vw, 4.25rem);
+    }
+
+    .hero-actions {
+      align-items: stretch;
+      flex-direction: column;
+    }
+  }
+</style>

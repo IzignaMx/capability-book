@@ -4,7 +4,9 @@ Immersive, evidence-backed capability book and verified portfolio for **IzignaMx
 
 ## Current status
 
-The approved design specification is moving into **Phase 0: evidence and validation**. Product UI and WebGL implementation remain intentionally blocked until the evidence gate passes.
+**Phase 0: evidence and validation** is complete. Six flagship records have passed the evidence, link, capture, and publication gates on `main`.
+
+**Phase 1: accessible static foundation** is now active. WebGL implementation remains intentionally blocked until the bilingual static product passes its accessibility, diagnostic, build, and deployment gates.
 
 ## Binding identity rules
 

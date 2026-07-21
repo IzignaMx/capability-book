@@ -1,0 +1,80 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import "../../styles/information-page.scss";
+---
+
+<BaseLayout
+  locale="es"
+  title="Accesibilidad | IzignaMx"
+  description="Compromiso, soporte de teclado y equivalencia de contenido accesible del Capability Book de IzignaMx."
+  canonicalPath="/es/accesibilidad/"
+  alternatePath="/en/accessibility/"
+>
+  <article class="information-page" data-pagefind-body>
+    <header class="information-page__header">
+      <p class="information-page__eyebrow">Acceso sin barreras</p>
+      <h1>Accesibilidad por diseño.</h1>
+      <p class="information-page__intro">
+        Buscamos conformidad con WCAG 2.2 nivel AA y una experiencia útil aunque la animación,
+        el canvas o JavaScript no estén disponibles.
+      </p>
+    </header>
+
+    <div class="information-page__sections">
+      <section aria-labelledby="motion-title">
+        <h2 id="motion-title">Movimiento bajo control</h2>
+        <div class="information-page__copy">
+          <p>
+            La versión estática actual respeta <code>prefers-reduced-motion</code> y elimina
+            movimiento no esencial. Antes de activar experiencias avanzadas, el sitio ofrecerá
+            un control persistente para elegir experiencia estática, movimiento reducido o
+            movimiento avanzado.
+          </p>
+          <p>
+            Ningún nivel de movimiento cambiará el contenido, la evidencia ni la capacidad de
+            completar una tarea.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="canvas-title">
+        <h2 id="canvas-title">Alternativa al canvas</h2>
+        <div class="information-page__copy">
+          <p>
+            Proyectos, capacidades, relaciones y llamadas a la acción permanecen disponibles como
+            HTML semántico. Las imágenes de respaldo incluyen dimensiones estables y texto
+            alternativo contextual.
+          </p>
+          <p>
+            Si una futura escena visual falla o se desactiva, la navegación estática conserva la
+            misma información y los mismos destinos.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="keyboard-title">
+        <h2 id="keyboard-title">Teclado y foco</h2>
+        <div class="information-page__copy">
+          <ul>
+            <li>El enlace “Saltar al contenido” aparece al recibir foco.</li>
+            <li>Controles y enlaces admiten navegación por teclado y foco visible.</li>
+            <li>Los formularios usan etiquetas, validación nativa y mensajes anunciables.</li>
+            <li>No diseñamos interacciones que dependan únicamente de hover, arrastre o color.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section aria-labelledby="feedback-title">
+        <h2 id="feedback-title">Reportar una barrera</h2>
+        <div class="information-page__copy">
+          <p>
+            Si encuentras una barrera, escribe a
+            <a href="mailto:hola@izignamx.com?subject=Accesibilidad%20Capability%20Book">hola@izignamx.com</a>.
+            Incluye la URL, el navegador o tecnología de apoyo y una descripción del problema;
+            evita compartir datos personales innecesarios.
+          </p>
+        </div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

@@ -2,11 +2,11 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Deliver a bilingual, static-first, accessible IzignaMx Capability Book that works without WebGL and includes Evaluate mode, six validated projects, contextual diagnostic routing, and cPanel-compatible deployment.
+**Goal:** Deliver a bilingual, static-first, accessible IzignaMx Capability Book that works without WebGL and includes Evaluate mode, six validated projects, contextual diagnostic routing, and GitHub Pages deployment at `book.izignamx.com`.
 
-**Architecture:** Astro owns routing, content, HTML, SEO, and static rendering. React islands are limited to project filtering and the diagnostic wizard. Domain ports isolate content, analytics, search, and form submission. A same-origin PHP endpoint provides accessible cPanel-compatible lead submission without placing secrets in client code.
+**Architecture:** Astro owns routing, content, HTML, SEO, and static rendering. React islands are limited to project filtering and the diagnostic wizard. Domain ports isolate content, analytics, search, and form submission. The fully static site accepts an optional public HTTPS form endpoint at build time; delivery, validation, rate limiting, spam controls, and secrets remain outside GitHub Pages.
 
-**Tech Stack:** Astro static output, TypeScript strict, React, Zod, Vitest, Testing Library, Playwright, Axe, Pagefind, SCSS Modules, PHP 8.2+, GitHub Actions.
+**Tech Stack:** Astro static output, TypeScript strict, React, Zod, Vitest, Testing Library, Playwright, Axe, Pagefind, SCSS Modules, GitHub Pages, GitHub Actions.
 
 ## Global Constraints
 
@@ -16,7 +16,7 @@
 - Root content remains useful without JavaScript, WebGL, animation, or forced language redirection.
 - WCAG 2.2 AA target with 44×44 CSS pixel touch targets.
 - LCP target below 2.5 seconds, CLS below 0.1, INP below 200 milliseconds.
-- Static output must deploy to cPanel.
+- Static output must deploy to GitHub Pages at the custom-domain root.
 - Project content must derive from validated Phase 0 evidence.
 - Every route must expose crawlable text, canonical metadata, language alternates, and fallback media.
 - Analytics event parameters must never contain personal or form content.
@@ -66,7 +66,7 @@ src/
 ├── content.config.ts
 └── env.d.ts
 public/
-├── api/diagnostic.php
+├── CNAME
 ├── media/projects/*
 ├── robots.txt
 └── _headers.example
@@ -892,7 +892,7 @@ export function parseLeadContext(url: URL, locale: "es" | "en"): LeadContext {
 
 - [ ] **Step 3: Create `DiagnosticWizard.tsx`**
 
-The component must render one form with these required controls: name, contact method, organization/project, and desired build or improvement. Progressive controls are current URL, timing, budget range, integrations, and reference projects. It stores only unsent form state in `sessionStorage`, posts JSON to `/api/diagnostic.php`, prevents double submission, and shows a plain-language fallback link after a failed request.
+The component must render one form with these required controls: name, contact method, organization/project, and desired build or improvement. Progressive controls are current URL, timing, budget range, integrations, and reference projects. It stores only unsent form state in `sessionStorage`, accepts an optional public HTTPS submission endpoint as a serializable prop, prevents double submission, and shows a plain-language fallback link when delivery is unavailable or fails. It must never claim successful delivery without a successful endpoint response.
 
 The JSON request shape must be:
 
@@ -931,116 +931,43 @@ git add src/features/diagnostic src/components/conversion tests/lead-context.tes
 git commit -m "feat: add contextual diagnostic wizard"
 ```
 
-### Task 10: Implement the cPanel PHP diagnostic endpoint
+### Task 10: Decide and configure the static-compatible diagnostic transport
 
 **Files:**
-- Create: `public/api/diagnostic.php`
-- Create: `docs/adr/0003-form-backend.md`
-- Create: `tests/php/diagnostic-smoke.sh`
+- Create: `docs/architecture/adr/0003-form-backend.md`
+- Create: `src/features/diagnostic/BrowserDiagnosticTransport.ts`
+- Create: `tests/browser-diagnostic-transport.test.ts`
+- Modify: `src/components/conversion/DiagnosticWizard.tsx`
 
 **Interfaces:**
-- Consumes: `DiagnosticSubmission` JSON.
-- Produces: JSON `{ "ok": true, "requestId": "..." }` or accessible error JSON.
+- Consumes: `DiagnosticSubmission` JSON and a public HTTPS endpoint.
+- Produces: a successful delivery result only after a successful external response.
 
 - [ ] **Step 1: Record ADR 0003**
 
-Decision: use same-origin PHP 8.2+ on cPanel, environment variables `IZIGNAMX_LEADS_TO` and `IZIGNAMX_LEADS_FROM`, filesystem rate limiting outside the public root, PHP `mail()` only when SMTP routing is configured by cPanel, and no analytics payload containing personal fields.
+Record the production activation gate for an external form processor or
+independently hosted endpoint. Provider selection remains blocked until CORS,
+server-side validation, rate limiting, spam controls, retention/deletion,
+data location, availability, and the fallback channel are verified. No provider
+secret may be present in the repository or browser bundle.
 
-- [ ] **Step 2: Create `public/api/diagnostic.php`**
+- [ ] **Step 2: Implement a browser transport**
 
-```php
-<?php
-declare(strict_types=1);
-header('Content-Type: application/json; charset=utf-8');
-header('Cache-Control: no-store');
-header('X-Content-Type-Options: nosniff');
+Accept only a configured `https:` endpoint, submit the hosting-neutral JSON
+contract, treat non-2xx responses as failures, and return no personal data to
+analytics or logs. The endpoint is public configuration, not authentication.
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['ok' => false, 'error' => 'method_not_allowed']);
-    exit;
-}
+- [ ] **Step 3: Test the boundary**
 
-$raw = file_get_contents('php://input');
-if ($raw === false || strlen($raw) > 20000) {
-    http_response_code(413);
-    echo json_encode(['ok' => false, 'error' => 'payload_too_large']);
-    exit;
-}
-
-$data = json_decode($raw, true);
-if (!is_array($data)) {
-    http_response_code(400);
-    echo json_encode(['ok' => false, 'error' => 'invalid_json']);
-    exit;
-}
-
-if (($data['website'] ?? '') !== '') {
-    echo json_encode(['ok' => true, 'requestId' => bin2hex(random_bytes(8))]);
-    exit;
-}
-
-$required = ['name', 'contactMethod', 'organization', 'request'];
-foreach ($required as $field) {
-    if (!isset($data[$field]) || !is_string($data[$field]) || trim($data[$field]) === '' || mb_strlen($data[$field]) > 2000) {
-        http_response_code(422);
-        echo json_encode(['ok' => false, 'error' => 'invalid_field', 'field' => $field]);
-        exit;
-    }
-}
-
-$ipHash = hash('sha256', ($_SERVER['REMOTE_ADDR'] ?? 'unknown') . (getenv('IZIGNAMX_RATE_SALT') ?: 'local'));
-$rateDir = dirname(__DIR__, 3) . '/private-rate-limit';
-if (!is_dir($rateDir)) mkdir($rateDir, 0700, true);
-$rateFile = $rateDir . '/' . $ipHash;
-$now = time();
-$events = file_exists($rateFile) ? array_filter(array_map('intval', file($rateFile, FILE_IGNORE_NEW_LINES)), fn($value) => $value > $now - 3600) : [];
-if (count($events) >= 5) {
-    http_response_code(429);
-    echo json_encode(['ok' => false, 'error' => 'rate_limited']);
-    exit;
-}
-$events[] = $now;
-file_put_contents($rateFile, implode(PHP_EOL, $events), LOCK_EX);
-
-$to = getenv('IZIGNAMX_LEADS_TO');
-$from = getenv('IZIGNAMX_LEADS_FROM');
-if (!$to || !$from) {
-    http_response_code(503);
-    echo json_encode(['ok' => false, 'error' => 'service_unconfigured']);
-    exit;
-}
-
-$requestId = bin2hex(random_bytes(8));
-$context = is_array($data['context'] ?? null) ? json_encode($data['context'], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) : '{}';
-$body = "Request ID: {$requestId}\nName: " . trim($data['name']) . "\nContact: " . trim($data['contactMethod']) . "\nOrganization: " . trim($data['organization']) . "\nRequest: " . trim($data['request']) . "\nContext:\n{$context}";
-$headers = "From: {$from}\r\nReply-To: {$from}\r\nContent-Type: text/plain; charset=UTF-8";
-
-if (!mail($to, "IzignaMx diagnostic {$requestId}", $body, $headers)) {
-    http_response_code(502);
-    echo json_encode(['ok' => false, 'error' => 'delivery_failed']);
-    exit;
-}
-
-echo json_encode(['ok' => true, 'requestId' => $requestId]);
-```
-
-- [ ] **Step 3: Add a shell smoke test**
-
-```bash
-#!/usr/bin/env bash
-set -euo pipefail
-php -l public/api/diagnostic.php
-! grep -Eq 'IZIGNAMX_LEADS_TO\s*=' public/api/diagnostic.php
-! grep -Eq 'sk-|password|secret' public/api/diagnostic.php
-```
+Verify invalid/non-HTTPS configuration fails loudly, non-2xx responses fail,
+successful responses resolve, and no automatic retry occurs.
 
 - [ ] **Step 4: Run and commit**
 
 ```bash
-bash tests/php/diagnostic-smoke.sh
-git add public/api/diagnostic.php docs/adr/0003-form-backend.md tests/php/diagnostic-smoke.sh
-git commit -m "feat: add secure cPanel diagnostic endpoint"
+pnpm test -- tests/browser-diagnostic-transport.test.ts
+git add docs/architecture/adr/0003-form-backend.md src/features/diagnostic/BrowserDiagnosticTransport.ts src/components/conversion/DiagnosticWizard.tsx tests/browser-diagnostic-transport.test.ts
+git commit -m "feat: configure static diagnostic transport"
 ```
 
 ### Task 11: Add accessibility, privacy, search, and metadata routes
@@ -1101,7 +1028,7 @@ git add src/pages public/robots.txt src/components/core/OrganizationSchema.astro
 git commit -m "feat: add discoverability privacy and accessibility routes"
 ```
 
-### Task 12: Add end-to-end, accessibility, budget, and cPanel deployment gates
+### Task 12: Add end-to-end, accessibility, budget, and GitHub Pages deployment gates
 
 **Files:**
 - Create: `playwright.config.ts`
@@ -1110,10 +1037,10 @@ git commit -m "feat: add discoverability privacy and accessibility routes"
 - Create: `scripts/verify-budgets.ts`
 - Create: `scripts/validate-built-html.ts`
 - Create: `.github/workflows/quality.yml`
-- Create: `scripts/package-cpanel.sh`
+- Create: `public/CNAME`
 
 **Interfaces:**
-- Produces: static release archive `artifacts/capability-book-dist.tar.gz`.
+- Produces: a validated GitHub Pages artifact for `book.izignamx.com`.
 
 - [ ] **Step 1: Create Playwright static-flow tests**
 
@@ -1144,19 +1071,11 @@ The script must scan `dist/**/*.html` and fail for:
 - images without `alt`, `width`, or `height`,
 - external `_blank` links without `noopener`.
 
-- [ ] **Step 4: Create `scripts/package-cpanel.sh`**
+- [ ] **Step 4: Configure the custom domain**
 
-```bash
-#!/usr/bin/env bash
-set -euo pipefail
-rm -rf artifacts/release
-mkdir -p artifacts/release
-cp -R dist/. artifacts/release/
-cp -R public/api artifacts/release/api
-find artifacts/release -name '*.map' -delete
-tar -C artifacts/release -czf artifacts/capability-book-dist.tar.gz .
-sha256sum artifacts/capability-book-dist.tar.gz > artifacts/capability-book-dist.tar.gz.sha256
-```
+Create `public/CNAME` containing only `book.izignamx.com`. Keep root-relative
+routes valid by deploying at the custom-domain root rather than a repository
+subpath.
 
 - [ ] **Step 5: Create CI workflow**
 
@@ -1165,7 +1084,7 @@ Jobs:
 1. `quality`: install, evidence validation, Astro check, unit/component tests, build, built HTML validation, budget checks.
 2. `e2e`: start preview, run Playwright in reduced motion and standard modes.
 3. `accessibility`: run Pa11y against Spanish and English home, catalogs, OmniSync, Nómada, diagnostic, privacy, and accessibility routes.
-4. `package`: upload cPanel archive and checksum only after all previous jobs pass.
+4. `deploy`: upload the Pages artifact and deploy through the protected `github-pages` environment only after all previous jobs pass.
 
 - [ ] **Step 6: Run, commit, and open PR**
 
@@ -1175,15 +1094,14 @@ pnpm test
 pnpm build
 pnpm test:e2e
 pnpm exec pa11y-ci --config pa11yci.json
-bash scripts/package-cpanel.sh
-git add playwright.config.ts tests/e2e pa11yci.json scripts .github/workflows/quality.yml
-git commit -m "ci: enforce static quality and cPanel release gates"
+git add playwright.config.ts tests/e2e pa11yci.json scripts public/CNAME .github/workflows/quality.yml
+git commit -m "ci: enforce static quality and GitHub Pages gates"
 git push -u origin feat/phase-1-foundation
 gh pr create \
   --base main \
   --head feat/phase-1-foundation \
   --title "Phase 1: deliver accessible static capability book" \
-  --body "Adds bilingual static routing, validated case studies, Evaluate mode, contextual diagnostics, accessible PHP submission, SEO, privacy, accessibility, Pagefind, automated testing, budgets, and cPanel packaging."
+  --body "Adds bilingual static routing, validated case studies, Evaluate mode, contextual diagnostics, configurable external form delivery, SEO, privacy, accessibility, Pagefind, automated testing, budgets, and GitHub Pages deployment."
 ```
 
 ## Phase 1 acceptance checklist
@@ -1195,8 +1113,8 @@ gh pr create \
 - [ ] Reduced-motion visitors lose no content or action.
 - [ ] Diagnostic context survives from project to form.
 - [ ] Failed submission preserves user data.
-- [ ] PHP endpoint passes syntax, validation, rate-limit, and configuration checks.
+- [ ] Static diagnostic transport passes HTTPS, failure, and configuration checks.
 - [ ] No orange global accent or invalid brand spelling exists.
 - [ ] Automated accessibility and keyboard flows pass.
 - [ ] Static budget gates pass.
-- [ ] cPanel release archive and checksum are generated.
+- [ ] GitHub Pages artifact deploys at `book.izignamx.com` after all quality gates pass.

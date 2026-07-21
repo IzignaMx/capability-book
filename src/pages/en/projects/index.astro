@@ -1,0 +1,44 @@
+---
+import { ProjectCatalog } from "../../../components/projects/ProjectCatalog";
+import { AstroProjectRepository } from "../../../infrastructure/content/AstroProjectRepository";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const repository = new AstroProjectRepository();
+const projects = await repository.list({ locale: "en" });
+const projectPath = (slug: string) => `/en/projects/${slug}/`;
+---
+
+<BaseLayout
+  locale="en"
+  title="Projects and capabilities | IzignaMx"
+  description="Compare IzignaMx digital projects, evidence, and capabilities."
+  canonicalPath="/en/projects/"
+  alternatePath="/es/proyectos/"
+  mode="evaluate"
+>
+  <ProjectCatalog client:visible locale="en" projects={projects} />
+  <noscript>
+    <section class="static-projects" aria-labelledby="static-projects-title">
+      <h2 id="static-projects-title">Available cases</h2>
+      <ul>
+        {projects.map((project) => (
+          <li><a href={projectPath(project.slug)}>{project.title}</a></li>
+        ))}
+      </ul>
+    </section>
+  </noscript>
+</BaseLayout>
+
+<style>
+  .static-projects {
+    width: min(calc(100% - 2rem), var(--content-width));
+    margin: 0 auto 4rem;
+    padding: 1.5rem;
+    border: 1px solid var(--color-line);
+  }
+
+  .static-projects a {
+    display: inline-flex;
+    align-items: center;
+  }
+</style>

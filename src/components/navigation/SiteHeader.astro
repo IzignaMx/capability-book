@@ -1,0 +1,142 @@
+---
+import ModeSwitch from "../core/ModeSwitch.astro";
+
+interface Props {
+  locale: "es" | "en";
+  mode: "explore" | "evaluate";
+  alternatePath: string;
+}
+
+const { locale, mode, alternatePath } = Astro.props;
+const labels = locale === "es"
+  ? {
+      home: "Inicio de IzignaMx",
+      navigation: "Navegación principal",
+      projects: "Proyectos",
+      diagnostic: "Solicitar diagnóstico",
+      language: "English"
+    }
+  : {
+      home: "IzignaMx home",
+      navigation: "Primary navigation",
+      projects: "Projects",
+      diagnostic: "Request a diagnostic",
+      language: "Español"
+    };
+const projectsHref = locale === "es" ? "/es/proyectos/" : "/en/projects/";
+const diagnosticHref = locale === "es" ? "/es/diagnostico/" : "/en/diagnostic/";
+---
+
+<header class="site-header container" data-pagefind-ignore>
+  <a class="brand" href={`/${locale}/`} aria-label={labels.home}>
+    <span class="brand-mark" aria-hidden="true"></span>
+    <span>IzignaMx</span>
+  </a>
+
+  <ModeSwitch locale={locale} active={mode} />
+
+  <nav class="primary-navigation" aria-label={labels.navigation}>
+    <a href={projectsHref}>{labels.projects}</a>
+    <a class="diagnostic-link" href={diagnosticHref}>{labels.diagnostic}</a>
+    <a href={alternatePath} hreflang={locale === "es" ? "en" : "es"}>{labels.language}</a>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: relative;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--space-6);
+    padding-block: var(--space-4);
+  }
+
+  .brand {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    text-decoration: none;
+  }
+
+  .brand-mark {
+    width: 0.75rem;
+    aspect-ratio: 1;
+    border: 2px solid var(--color-cyan);
+    transform: rotate(45deg);
+    box-shadow: 0 0 1rem rgb(34 211 238 / 52%);
+  }
+
+  .primary-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-4);
+  }
+
+  .primary-navigation a {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: color var(--motion-fast);
+  }
+
+  .primary-navigation a:hover {
+    color: var(--color-white);
+  }
+
+  .primary-navigation .diagnostic-link {
+    padding-inline: var(--space-4);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    color: var(--color-white);
+  }
+
+  .primary-navigation .diagnostic-link:hover {
+    border-color: var(--color-brand-bright);
+    background: rgb(59 130 246 / 14%);
+  }
+
+  @media (max-width: 56rem) {
+    .site-header {
+      grid-template-columns: 1fr auto;
+    }
+
+    .site-header :global(.mode-switch) {
+      justify-self: end;
+    }
+
+    .primary-navigation {
+      grid-column: 1 / -1;
+      justify-content: space-between;
+      border-top: 1px solid var(--color-line);
+      padding-top: var(--space-3);
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .site-header {
+      gap: var(--space-3);
+    }
+
+    .brand {
+      font-size: 1rem;
+    }
+
+    .primary-navigation {
+      gap: var(--space-2);
+    }
+
+    .primary-navigation a {
+      font-size: 0.78rem;
+    }
+  }
+</style>

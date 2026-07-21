@@ -1,0 +1,23 @@
+---
+import { ContextualDiagnosticWizard } from "../../../components/conversion/ContextualDiagnosticWizard";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const submissionEndpoint = import.meta.env.PUBLIC_DIAGNOSTIC_ENDPOINT;
+---
+
+<BaseLayout
+  locale="en"
+  title="Request a diagnostic | IzignaMx"
+  description="Share the essential context for your project to start a digital diagnostic with IzignaMx."
+  canonicalPath="/en/diagnostic/"
+  alternatePath="/es/diagnostico/"
+  mode="evaluate"
+>
+  <ContextualDiagnosticWizard
+    client:load
+    locale="en"
+    fallbackHref="mailto:hola@izignamx.com?subject=IzignaMx%20diagnostic"
+    privacyHref="/en/privacy/"
+    {...(submissionEndpoint ? { submissionEndpoint } : {})}
+  />
+</BaseLayout>
