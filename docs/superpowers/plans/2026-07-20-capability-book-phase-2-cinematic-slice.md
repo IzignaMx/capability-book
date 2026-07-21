@@ -50,15 +50,15 @@ src/
     └── e2e/explore-flow.spec.ts
 public/media/explore/*
 public/models/*
-docs/adr/{0004-gsap,0005-model-compression}.md
+docs/architecture/adr/{0004-gsap,0005-model-compression}.md
 ```
 
 ### Task 1: Install the rendering stack and record licensing decisions
 
 **Files:**
 - Modify: `package.json`
-- Create: `docs/adr/0004-gsap.md`
-- Create: `docs/adr/0005-model-compression.md`
+- Create: `docs/architecture/adr/0004-gsap.md`
+- Create: `docs/architecture/adr/0005-model-compression.md`
 
 **Interfaces:**
 - Produces: approved GSAP usage and model pipeline decisions.
@@ -69,22 +69,22 @@ docs/adr/{0004-gsap,0005-model-compression}.md
 git switch main
 git pull --ff-only
 git switch -c feat/phase-2-cinematic-slice
-pnpm add three @react-three/fiber @react-three/drei gsap
-pnpm add -D @types/three gltf-transform sharp
+pnpm add --save-exact three@0.185.1 @react-three/fiber@9.6.1 @react-three/drei@10.7.7 gsap@3.15.0
+pnpm add -D --save-exact @types/three@0.185.1 @gltf-transform/cli@4.4.1
 ```
 
 - [ ] **Step 2: Write ADR 0004**
 
-Decision: use GSAP core and ScrollTrigger only, isolate imports under `src/motion`, register the plugin once, do not use paid plugins without a documented license, and preserve a native static path when GSAP fails to load.
+Decision: use GSAP core and ScrollTrigger only under the Standard "No Charge" GSAP License, isolate imports under `src/motion`, register the plugin from browser-only lifecycle code, and preserve a native static path when GSAP fails to load. The capability book must not use GSAP to provide a competing no-code animation builder.
 
 - [ ] **Step 3: Write ADR 0005**
 
-Decision: author scenes from reusable primitives first, export custom geometry as GLB only when primitives are insufficient, optimize with glTF Transform, use Meshopt or Draco based on measured decode cost, use KTX2 for large textures, and enforce the budgets from the approved specification.
+Decision: author scenes from reusable primitives first, export custom geometry as GLB only when primitives are insufficient, inspect and validate assets with the glTF Transform CLI, use Meshopt by default and Draco only when measured geometry savings justify its decode cost, use KTX2 for large GPU-bound textures when KTX-Software is available, and enforce the budgets from the approved specification. Keep `three` and `@types/three` on the same release.
 
 - [ ] **Step 4: Commit**
 
 ```bash
-git add package.json pnpm-lock.yaml docs/adr/0004-gsap.md docs/adr/0005-model-compression.md
+git add package.json pnpm-lock.yaml docs/architecture/adr/0004-gsap.md docs/architecture/adr/0005-model-compression.md docs/superpowers/plans/2026-07-20-capability-book-phase-2-cinematic-slice.md
 git commit -m "chore: add approved cinematic rendering stack"
 ```
 
@@ -716,7 +716,7 @@ The script must fail when:
 - desktop poster exceeds 320 KB,
 - a `.png` larger than 200 KB exists under `public/media/explore`.
 
-It must output an explicit exception template path when a gate fails: `docs/adr/exceptions/<asset-name>.md`.
+It must output an explicit exception template path when a gate fails: `docs/architecture/adr/exceptions/<asset-name>.md`.
 
 - [ ] **Step 2: Add Explore flow E2E**
 
