@@ -1,2 +1,8 @@
-
 .worktrees/
+.superpowers/
+node_modules/
+coverage/
+artifacts/captures/
+artifacts/evidence-summary.md
+.env
+.DS_Store
