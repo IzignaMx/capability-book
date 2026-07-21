@@ -1,6 +1,11 @@
 import { useEffect, useId, useRef, useState } from "react";
 import type { SubmitEvent } from "react";
 import type { Locale } from "../../domain/projects/PortfolioProject";
+import {
+  deliverDiagnosticSubmission,
+  parseDiagnosticEndpoint
+} from "../../features/diagnostic/BrowserDiagnosticTransport";
+import type { DiagnosticSubmission } from "../../features/diagnostic/BrowserDiagnosticTransport";
 import type { LeadContext } from "../../features/diagnostic/LeadContext";
 import "./DiagnosticWizard.scss";
 
@@ -15,21 +20,6 @@ interface DiagnosticDraft {
   integrations: string;
   references: string;
   consent: boolean;
-}
-
-interface DiagnosticSubmission {
-  name: string;
-  contactMethod: string;
-  organization: string;
-  request: string;
-  currentUrl?: string;
-  timing?: string;
-  budgetRange?: string;
-  integrations?: string;
-  references?: string;
-  context: LeadContext;
-  consent: true;
-  website: "";
 }
 
 interface DiagnosticWizardProps {
@@ -147,15 +137,6 @@ function restoreDraft(locale: Locale): DiagnosticDraft {
   }
 }
 
-function isHttpsEndpoint(value: string | undefined): value is string {
-  if (!value) return false;
-  try {
-    return new URL(value).protocol === "https:";
-  } catch {
-    return false;
-  }
-}
-
 function optionalValue(value: string): string | undefined {
   const trimmed = value.trim();
   return trimmed || undefined;
@@ -199,7 +180,8 @@ export function DiagnosticWizard({
   const isSubmittingRef = useRef(false);
   const shouldPersistRef = useRef(true);
   const fieldPrefix = useId();
-  const canSubmit = isHttpsEndpoint(submissionEndpoint);
+  const configuredEndpoint = parseDiagnosticEndpoint(submissionEndpoint);
+  const canSubmit = configuredEndpoint !== undefined;
 
   useEffect(() => {
     setDraft(restoreDraft(locale));
@@ -222,18 +204,16 @@ export function DiagnosticWizard({
 
   async function submit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!canSubmit || isSubmittingRef.current || !draft.consent) return;
+    if (!configuredEndpoint || isSubmittingRef.current || !draft.consent) return;
 
     isSubmittingRef.current = true;
     setSubmissionState("submitting");
 
     try {
-      const response = await fetch(submissionEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(submissionFrom(draft, context))
-      });
-      if (!response.ok) throw new Error("Diagnostic delivery failed");
+      await deliverDiagnosticSubmission(
+        configuredEndpoint,
+        submissionFrom(draft, context)
+      );
 
       shouldPersistRef.current = false;
       window.sessionStorage.removeItem(storageKey(locale));

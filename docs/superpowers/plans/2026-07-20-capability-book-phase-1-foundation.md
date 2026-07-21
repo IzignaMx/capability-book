@@ -934,9 +934,10 @@ git commit -m "feat: add contextual diagnostic wizard"
 ### Task 10: Decide and configure the static-compatible diagnostic transport
 
 **Files:**
-- Create: `docs/adr/0003-form-backend.md`
+- Create: `docs/architecture/adr/0003-form-backend.md`
 - Create: `src/features/diagnostic/BrowserDiagnosticTransport.ts`
 - Create: `tests/browser-diagnostic-transport.test.ts`
+- Modify: `src/components/conversion/DiagnosticWizard.tsx`
 
 **Interfaces:**
 - Consumes: `DiagnosticSubmission` JSON and a public HTTPS endpoint.
@@ -944,10 +945,11 @@ git commit -m "feat: add contextual diagnostic wizard"
 
 - [ ] **Step 1: Record ADR 0003**
 
-Document the selected external form processor or independently hosted endpoint,
-including CORS behavior, server-side validation, rate limiting, spam controls,
-retention/deletion policy, data location, availability, and fallback channel.
-No provider secret may be present in the repository or browser bundle.
+Record the production activation gate for an external form processor or
+independently hosted endpoint. Provider selection remains blocked until CORS,
+server-side validation, rate limiting, spam controls, retention/deletion,
+data location, availability, and the fallback channel are verified. No provider
+secret may be present in the repository or browser bundle.
 
 - [ ] **Step 2: Implement a browser transport**
 
@@ -964,7 +966,7 @@ successful responses resolve, and no automatic retry occurs.
 
 ```bash
 pnpm test -- tests/browser-diagnostic-transport.test.ts
-git add docs/adr/0003-form-backend.md src/features/diagnostic/BrowserDiagnosticTransport.ts tests/browser-diagnostic-transport.test.ts
+git add docs/architecture/adr/0003-form-backend.md src/features/diagnostic/BrowserDiagnosticTransport.ts src/components/conversion/DiagnosticWizard.tsx tests/browser-diagnostic-transport.test.ts
 git commit -m "feat: configure static diagnostic transport"
 ```
 
