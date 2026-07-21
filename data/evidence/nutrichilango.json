@@ -1,0 +1,77 @@
+{
+  "project": {
+    "slug": "nutrichilango",
+    "title": "NutriChilango",
+    "owner": "IzignaMx",
+    "summary": "Plataforma de comparación de precios, nutrición, disponibilidad y recetas para facilitar decisiones informadas sobre alternativas vegetales en CDMX."
+  },
+  "classification": "real",
+  "publication": {
+    "confidentiality": "public",
+    "publishable": true,
+    "reviewedAt": "2026-07-20",
+    "notes": "Las fuentes, cálculos y actualizaciones deben conservar trazabilidad editorial."
+  },
+  "proofPoints": [
+    {
+      "kind": "demonstrated-capability",
+      "label": "Comparación multidimensional",
+      "description": "La plataforma relaciona precio, nutrición y disponibilidad mediante filtros, rankings y visualizaciones.",
+      "sourceIds": [
+        "repository",
+        "live"
+      ]
+    },
+    {
+      "kind": "demonstrated-capability",
+      "label": "Datos geográficos",
+      "description": "Mapas y ubicaciones permiten explorar alternativas vegetales según contexto territorial.",
+      "sourceIds": [
+        "repository",
+        "live"
+      ]
+    },
+    {
+      "kind": "demonstrated-capability",
+      "label": "Actualizaciones programadas",
+      "description": "Procesos automatizados mantienen información y contenido sin requerir una aplicación de servidor permanente.",
+      "sourceIds": [
+        "repository"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "repository",
+      "label": "Repositorio NutriChilango",
+      "type": "repository",
+      "url": "https://github.com/IzignaMx/nutrichilango"
+    },
+    {
+      "id": "live",
+      "label": "Sitio NutriChilango",
+      "type": "live",
+      "url": "https://nutrichilango.izignamx.com/"
+    }
+  ],
+  "links": [
+    {
+      "label": "Sitio público",
+      "url": "https://nutrichilango.izignamx.com/",
+      "public": true
+    },
+    {
+      "label": "Código fuente",
+      "url": "https://github.com/IzignaMx/nutrichilango",
+      "public": true
+    }
+  ],
+  "media": [
+    {
+      "id": "fallback-poster",
+      "role": "fallback-poster",
+      "path": "/media/nutrichilango/poster.avif",
+      "license": "owned"
+    }
+  ]
+}

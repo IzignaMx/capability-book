@@ -1,0 +1,71 @@
+name: evidence
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - feat/phase-0-evidence
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.13.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm validate:evidence
+      - run: pnpm evidence:summary
+      - uses: actions/upload-artifact@v4
+        with:
+          name: evidence-summary
+          path: artifacts/evidence-summary.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: generated-pnpm-lock
+          path: pnpm-lock.yaml
+
+  links:
+    name: links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.13.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm check:links
+
+  captures:
+    name: captures
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.13.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm capture:projects
+      - name: Verify capture count
+        run: test "$(find artifacts/captures -type f -name '*.png' | wc -l)" -eq 12
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phase-0-project-captures
+          path: artifacts/captures/

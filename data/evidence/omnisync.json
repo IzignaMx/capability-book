@@ -1,0 +1,75 @@
+{
+  "project": {
+    "slug": "omnisync",
+    "title": "OmniSync",
+    "owner": "IzignaMx",
+    "summary": "Plataforma multicanal que sincroniza inventario, precios, pedidos y estados operativos entre Shopify y canales externos."
+  },
+  "classification": "internal",
+  "publication": {
+    "confidentiality": "partial",
+    "publishable": true,
+    "reviewedAt": "2026-07-20",
+    "notes": "Publicar únicamente arquitectura y comportamiento visibles o revisados para difusión."
+  },
+  "proofPoints": [
+    {
+      "kind": "demonstrated-capability",
+      "label": "Arquitectura por adaptadores",
+      "description": "Los canales se integran mediante contratos desacoplados que permiten ampliar el sistema sin modificar el núcleo.",
+      "sourceIds": [
+        "repository"
+      ]
+    },
+    {
+      "kind": "demonstrated-capability",
+      "label": "Protección de precios",
+      "description": "El sistema distingue sincronización de inventario y reglas de precio para evitar sobrescrituras no deseadas.",
+      "sourceIds": [
+        "repository"
+      ]
+    },
+    {
+      "kind": "demonstrated-capability",
+      "label": "Procesamiento asíncrono",
+      "description": "Colas, webhooks y estados en tiempo real coordinan operaciones multicanal y recuperación ante fallos.",
+      "sourceIds": [
+        "repository"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "repository",
+      "label": "Repositorio privado OmniSync",
+      "type": "repository",
+      "url": "https://github.com/IzignaMx/OmniSync"
+    },
+    {
+      "id": "live",
+      "label": "Producto OmniSync",
+      "type": "live",
+      "url": "https://omnisync.izignamx.com/"
+    }
+  ],
+  "links": [
+    {
+      "label": "Producto OmniSync",
+      "url": "https://omnisync.izignamx.com/",
+      "public": true
+    },
+    {
+      "label": "Repositorio privado",
+      "url": "https://github.com/IzignaMx/OmniSync",
+      "public": false
+    }
+  ],
+  "media": [
+    {
+      "id": "fallback-poster",
+      "role": "fallback-poster",
+      "path": "/media/omnisync/poster.avif",
+      "license": "owned"
+    }
+  ]
+}
