@@ -197,6 +197,7 @@
       "if": {
         "properties": {
           "publication": {
+            "type": "object",
             "properties": {
               "confidentiality": {
                 "const": "private"
@@ -209,6 +210,7 @@
       "then": {
         "properties": {
           "publication": {
+            "type": "object",
             "properties": {
               "publishable": {
                 "const": false

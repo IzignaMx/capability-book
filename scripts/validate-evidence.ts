@@ -1,6 +1,9 @@
 import { readdir, readFile } from "node:fs/promises";
-import Ajv2020 from "ajv/dist/2020.js";
-import addFormats from "ajv-formats";
+import Ajv2020Module from "ajv/dist/2020.js";
+import AjvFormatsModule from "ajv-formats";
+
+const Ajv2020 = Ajv2020Module.default;
+const addFormats = AjvFormatsModule.default;
 
 type EvidenceSource = {
   id: string;

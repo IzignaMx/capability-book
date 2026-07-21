@@ -1,7 +1,10 @@
 import { readFile } from "node:fs/promises";
-import Ajv2020 from "ajv/dist/2020.js";
-import addFormats from "ajv-formats";
+import Ajv2020Module from "ajv/dist/2020.js";
+import AjvFormatsModule from "ajv-formats";
 import { describe, expect, it } from "vitest";
+
+const Ajv2020 = Ajv2020Module.default;
+const addFormats = AjvFormatsModule.default;
 
 const schema = JSON.parse(
   await readFile(new URL("../data/evidence.schema.json", import.meta.url), "utf8")
