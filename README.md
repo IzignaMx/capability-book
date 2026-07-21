@@ -1,14 +1,21 @@
-# IzignaMx Capability Book Design Package
+# IzignaMx Capability Book
 
-This repository seed contains the approved design specification and binding brand constraints for the proposed `IzignaMx/capability-book` project.
+Immersive, evidence-backed capability book and verified portfolio for **IzignaMx**.
 
-## Documents
+## Current status
 
-- `docs/brand/identity-constraints.md`
-- `docs/superpowers/specs/2026-07-20-izignamx-capability-book-design.md`
+The approved design specification is moving into **Phase 0: evidence and validation**. Product UI and WebGL implementation remain intentionally blocked until the evidence gate passes.
 
-## Current stage
+## Binding identity rules
 
-Design approved and documented. Implementation has not started.
+- Use the brand name exactly as `IzignaMx`.
+- Use IzignaMx Blue `#3b82f6` as the principal accent.
+- Do not use orange as a global accent, CTA, focus, active, progress, selection, or identity color.
+- Keep real work, open-source work, internal work, and concepts explicitly classified.
 
-The next required step is user review of the written specification, followed by a detailed implementation plan.
+## Delivery sequence
+
+1. Evidence and claims validation
+2. Accessible static foundation
+3. Cinematic 3D vertical slice
+4. Complete capability universe and launch hardening
