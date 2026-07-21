@@ -5,11 +5,16 @@
   "type": "module",
   "packageManager": "pnpm@10.13.1",
   "engines": {
-    "node": ">=22"
+    "node": ">=22.12.0 <23"
   },
   "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build && pagefind --site dist",
+    "preview": "astro preview",
     "test": "vitest run",
+    "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit",
+    "check": "astro check && pnpm typecheck && pnpm check:brand",
     "check:brand": "tsx scripts/check-brand.ts",
     "check:links": "tsx scripts/check-links.ts",
     "validate:evidence": "tsx scripts/validate-evidence.ts && pnpm check:brand && pnpm test",
@@ -17,12 +22,28 @@
     "capture:projects": "tsx scripts/capture-projects.ts"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.9",
     "@playwright/test": "1.55.0",
+    "@testing-library/jest-dom": "^7.0.0",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "24.3.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
     "ajv": "8.17.1",
     "ajv-formats": "3.0.1",
+    "jsdom": "^29.1.1",
+    "pagefind": "^1.5.2",
     "tsx": "4.20.5",
     "typescript": "5.9.2",
-    "vitest": "3.2.4"
+    "vitest": "4.1.10"
+  },
+  "dependencies": {
+    "@astrojs/react": "^6.0.1",
+    "astro": "^7.1.3",
+    "cookie": "^2.0.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "sass": "^1.101.3"
   }
 }

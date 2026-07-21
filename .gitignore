@@ -1,6 +1,8 @@
 .worktrees/
 .superpowers/
 node_modules/
+.astro/
+dist/
 coverage/
 artifacts/captures/
 artifacts/evidence-summary.md
