@@ -1,0 +1,28 @@
+{
+  "name": "@izignamx/capability-book",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.13.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "check:brand": "tsx scripts/check-brand.ts",
+    "check:links": "tsx scripts/check-links.ts",
+    "validate:evidence": "tsx scripts/validate-evidence.ts && pnpm check:brand && pnpm test",
+    "evidence:summary": "tsx scripts/generate-evidence-summary.ts",
+    "capture:projects": "tsx scripts/capture-projects.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.55.0",
+    "@types/node": "24.3.0",
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1",
+    "tsx": "4.20.5",
+    "typescript": "5.9.2",
+    "vitest": "3.2.4"
+  }
+}
