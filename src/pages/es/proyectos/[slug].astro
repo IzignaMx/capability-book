@@ -1,0 +1,322 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import ProofPoint from "../../../components/projects/ProofPoint.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+interface Props {
+  project: CollectionEntry<"projects">;
+  slug: string;
+}
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects", ({ data }) => data.locale === "es");
+  return projects.map((project) => {
+    const prefix = "es/";
+    if (!project.id.startsWith(prefix)) {
+      throw new Error(`Expected a Spanish project entry, received: ${project.id}`);
+    }
+
+    const slug = project.id.slice(prefix.length);
+    if (!slug || slug.includes("/")) {
+      throw new Error(`Cannot derive a single-segment project slug from: ${project.id}`);
+    }
+
+    return { params: { slug }, props: { project, slug } };
+  });
+}
+
+const { project, slug } = Astro.props;
+const { Content } = await render(project);
+const data = project.data;
+const site = Astro.site;
+
+if (!site) throw new Error("Project detail routes require Astro.site.");
+
+const canonicalPath = `/es/proyectos/${slug}/`;
+const alternatePath = `/en/projects/${slug}/`;
+const diagnosticHref = `/es/diagnostico/?project=${encodeURIComponent(slug)}&service=${encodeURIComponent(data.ctaPreset)}`;
+const classificationLabels = {
+  real: "Proyecto real",
+  "open-source": "Código abierto",
+  internal: "Sistema interno",
+  concept: "Concepto"
+} as const;
+const confidentialityLabels = {
+  public: "Evidencia pública",
+  partial: "Publicación parcial",
+  private: "Divulgación limitada"
+} as const;
+const sameAs = [data.liveUrl, data.sourceUrl].filter((url): url is string => Boolean(url));
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  name: data.title,
+  description: data.elevatorPitch,
+  inLanguage: "es",
+  url: new URL(canonicalPath, site).toString(),
+  image: new URL(data.fallbackPoster, site).toString(),
+  creator: { "@type": "Organization", name: "IzignaMx", url: site.toString() },
+  genre: classificationLabels[data.classification],
+  keywords: [...data.capabilities, ...data.technologies].join(", "),
+  ...(sameAs.length ? { sameAs } : {})
+};
+---
+
+<BaseLayout
+  locale="es"
+  title={`${data.title} — Caso de estudio | IzignaMx`}
+  description={data.elevatorPitch}
+  canonicalPath={canonicalPath}
+  alternatePath={alternatePath}
+  mode="evaluate"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <article class="case-study">
+    <header class="case-study__hero">
+      <div class="case-study__opening">
+        <p class="case-study__classification">
+          {classificationLabels[data.classification]} · {confidentialityLabels[data.confidentiality]}
+        </p>
+        <h1>{data.title}</h1>
+        <p class="case-study__claim">{data.elevatorPitch}</p>
+      </div>
+      <img
+        src={data.fallbackPoster}
+        alt={`Visual de apertura del proyecto ${data.title}`}
+        width="1280"
+        height="720"
+      />
+    </header>
+
+    <div class="case-study__solution" aria-labelledby="solution-title">
+      <p>El sistema</p>
+      <h2 id="solution-title">Solución</h2>
+      <p>{data.solution}</p>
+    </div>
+
+    <div class="case-study__narrative">
+      <Content />
+    </div>
+
+    <section class="case-study__evidence" aria-labelledby="evidence-title">
+      <header>
+        <p>Registro de evidencia</p>
+        <h2 id="evidence-title">Resultados con clasificación explícita</h2>
+      </header>
+      <div class="case-study__proof-grid">
+        {data.outcomes.map((point) => <ProofPoint point={point} locale="es" />)}
+      </div>
+    </section>
+
+    <section class="case-study__services" aria-labelledby="services-title">
+      <div>
+        <p>Capacidad transferible</p>
+        <h2 id="services-title">Servicios relacionados</h2>
+      </div>
+      <ul>
+        {data.relatedServices.map((service) => <li>{service}</li>)}
+      </ul>
+    </section>
+
+    <aside class="case-study__cta" aria-labelledby="cta-title">
+      <p>Siguiente paso</p>
+      <h2 id="cta-title">¿Necesitas un sistema con capacidades similares?</h2>
+      <a href={diagnosticHref}>Solicitar diagnóstico para {data.title}</a>
+    </aside>
+  </article>
+</BaseLayout>
+
+<style>
+  .case-study {
+    width: min(calc(100% - 2rem), var(--content-width));
+    margin-inline: auto;
+    padding: clamp(3rem, 7vw, 6rem) 0 6rem;
+  }
+
+  .case-study__hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: end;
+    gap: clamp(2rem, 5vw, 5rem);
+    min-height: min(48rem, 80vh);
+  }
+
+  .case-study__opening {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .case-study__classification,
+  .case-study__solution > p:first-child,
+  .case-study__evidence header p,
+  .case-study__services > div > p,
+  .case-study__cta > p {
+    margin: 0;
+    color: var(--color-cyan);
+    font: 700 0.72rem/1.2 var(--font-data);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    font: 650 clamp(3.5rem, 9vw, 8rem)/0.85 var(--font-display);
+    letter-spacing: -0.07em;
+  }
+
+  .case-study__claim {
+    max-width: 38rem;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+  }
+
+  .case-study__hero img {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--color-line);
+    background: var(--color-midnight);
+  }
+
+  .case-study__solution {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.35fr) minmax(10rem, 0.65fr) minmax(18rem, 1fr);
+    gap: 1.5rem;
+    margin: clamp(5rem, 10vw, 9rem) 0;
+    padding: 2rem 0;
+    border-block: 1px solid var(--color-line);
+  }
+
+  .case-study__solution h2,
+  .case-study__solution > p:last-child,
+  .case-study__evidence h2,
+  .case-study__services h2,
+  .case-study__cta h2 {
+    margin: 0;
+  }
+
+  .case-study__solution h2,
+  .case-study__evidence h2,
+  .case-study__services h2,
+  .case-study__cta h2 {
+    font: 650 clamp(2rem, 5vw, 4rem)/0.95 var(--font-display);
+    letter-spacing: -0.045em;
+  }
+
+  .case-study__solution > p:last-child {
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+  }
+
+  .case-study__narrative {
+    max-width: 56rem;
+    margin-inline: auto;
+  }
+
+  .case-study__narrative :global(h2) {
+    margin: 5rem 0 1.25rem;
+    font: 650 clamp(2rem, 5vw, 3.75rem)/1 var(--font-display);
+    letter-spacing: -0.04em;
+  }
+
+  .case-study__narrative :global(p),
+  .case-study__narrative :global(li) {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+  }
+
+  .case-study__narrative :global(a) {
+    color: var(--color-brand-bright);
+  }
+
+  .case-study__evidence,
+  .case-study__services,
+  .case-study__cta {
+    margin-top: clamp(5rem, 10vw, 9rem);
+  }
+
+  .case-study__evidence > header {
+    display: grid;
+    gap: 1rem;
+    max-width: 48rem;
+    margin-bottom: 2rem;
+  }
+
+  .case-study__proof-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    padding: 1px;
+    background: var(--color-line);
+  }
+
+  .case-study__services {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 1fr);
+    gap: 2rem;
+    padding: clamp(2rem, 5vw, 4rem);
+    border: 1px solid var(--color-line);
+  }
+
+  .case-study__services > div {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .case-study__services ul {
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .case-study__services li {
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-text-muted);
+  }
+
+  .case-study__cta {
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(2rem, 7vw, 6rem);
+    background:
+      radial-gradient(circle at 85% 20%, rgb(34 211 238 / 20%), transparent 24rem),
+      var(--color-midnight);
+  }
+
+  .case-study__cta h2 {
+    max-width: 18ch;
+  }
+
+  .case-study__cta a {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    padding: 0.9rem 1.2rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-brand);
+    color: var(--color-space);
+    font-weight: 750;
+    text-decoration: none;
+  }
+
+  @media (max-width: 52rem) {
+    .case-study__hero,
+    .case-study__solution,
+    .case-study__services {
+      grid-template-columns: 1fr;
+    }
+
+    .case-study__hero {
+      min-height: 0;
+    }
+
+    .case-study__proof-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
