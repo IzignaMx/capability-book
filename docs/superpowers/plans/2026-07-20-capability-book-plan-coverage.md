@@ -10,7 +10,7 @@
 | Evaluate mode | Phase 1 Tasks 5 and 7 |
 | Diagnostic context and submission | Phase 1 Tasks 9 and 10 |
 | SEO, privacy, accessibility, and search | Phase 1 Tasks 6, 8, 11, and 12 |
-| cPanel packaging | Phase 1 Task 12 and Phase 2 Task 12 |
+| GitHub Pages deployment and custom domain | Phase 1 Task 12 and Phase 2 Task 12 |
 | Motion preference and reduced-motion parity | Phase 2 Tasks 2, 6, 8, 10, and 11 |
 | One-canvas scene architecture | Phase 2 Tasks 4, 5, and 6 |
 | Adaptive rendering quality | Phase 2 Tasks 3 and 11 |

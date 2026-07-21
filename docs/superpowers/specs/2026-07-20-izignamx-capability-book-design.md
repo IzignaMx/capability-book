@@ -679,7 +679,7 @@ Astro Content Collections and Zod must validate project records at build time.
 - TypeScript strict.
 - Astro Content Collections.
 - MDX only where rich project narratives require it.
-- Static generation compatible with cPanel and conventional static hosting.
+- Static generation compatible with GitHub Pages at the custom-domain root.
 
 ### Interactive islands
 
@@ -1319,7 +1319,10 @@ Before a project is published:
 
 ## 29.1 Primary deployment
 
-The first implementation must support static deployment to IzignaMx infrastructure and cPanel.
+The first implementation must deploy as a fully static GitHub Pages site at the
+custom-domain root `https://book.izignamx.com/`. GitHub Pages cannot execute PHP
+or any other request-time server code; form delivery must use a separately
+reviewed external HTTPS service.
 
 Recommended workflow:
 
@@ -1331,11 +1334,10 @@ Recommended workflow:
 6. Build static output.
 7. Run selected E2E and accessibility checks.
 8. Verify budgets.
-9. Package `dist`.
-10. Deploy to a versioned release directory.
-11. Run smoke tests.
-12. Atomically update the active release pointer where the hosting environment permits it.
-13. Preserve rollback release.
+9. Upload the Pages artifact.
+10. Deploy through the GitHub Pages environment.
+11. Run smoke tests against the custom domain.
+12. Preserve rollback through the previously successful Pages deployment and Git history.
 
 ## 29.2 Preview deployments
 
@@ -1535,7 +1537,7 @@ The implementation plan must create ADRs for:
 4. GSAP licensing and package usage for the selected deployment.
 5. 3D model compression pipeline.
 6. Preview deployment strategy.
-7. cPanel atomic deployment strategy.
+7. GitHub Pages deployment, custom-domain, and rollback strategy.
 8. Image and video hosting strategy.
 9. Search implementation.
 10. Optional sound system, if implemented.
@@ -1568,7 +1570,7 @@ No unresolved `TBD`, `TODO`, or unspecified required product behavior remains. I
 - The dual-mode architecture is supported by the route, content, motion, and accessibility designs.
 - The one-canvas policy aligns with dynamic scene loading.
 - Reduced-motion requirements align with content parity and release gates.
-- Static deployment aligns with Astro and cPanel constraints.
+- Static deployment aligns with Astro and GitHub Pages constraints.
 - The brand name and accent rules are repeated only where they operate as testable gates.
 
 ### Scope check
