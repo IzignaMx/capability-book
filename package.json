@@ -23,6 +23,7 @@
     "validate:evidence": "tsx scripts/validate-evidence.ts && pnpm check:brand && pnpm test",
     "validate:html": "tsx scripts/validate-built-html.ts",
     "verify:budgets": "tsx scripts/verify-budgets.ts",
+    "verify:3d-budgets": "tsx scripts/verify-3d-budgets.ts",
     "evidence:summary": "tsx scripts/generate-evidence-summary.ts",
     "capture:projects": "tsx scripts/capture-projects.ts"
   },

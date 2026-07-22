@@ -1,4 +1,4 @@
-const SAMPLE_WINDOW_SIZE = 120;
+export const FRAME_SAMPLE_WINDOW_SIZE = 120;
 
 function assertFrameDuration(milliseconds: number): void {
   if (!Number.isFinite(milliseconds) || milliseconds < 0) {
@@ -16,7 +16,7 @@ export class FrameSampler {
     this.sampleCount += 1;
     this.totalMilliseconds += milliseconds;
 
-    if (this.sampleCount < SAMPLE_WINDOW_SIZE) return null;
+    if (this.sampleCount < FRAME_SAMPLE_WINDOW_SIZE) return null;
 
     const average = this.totalMilliseconds / this.sampleCount;
     this.reset();

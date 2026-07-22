@@ -4,10 +4,20 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const canvasHarness = vi.hoisted(() => ({
   ready: true,
-  renders: vi.fn()
+  renders: vi.fn(),
+  invalidate: vi.fn(),
+  setDpr: vi.fn(),
+  frame: vi.fn()
 }));
 
 vi.mock("@react-three/fiber", () => ({
+  useFrame: (callback: unknown) => canvasHarness.frame(callback),
+  useThree: (selector: (state: unknown) => unknown) =>
+    selector({
+      invalidate: canvasHarness.invalidate,
+      setDpr: canvasHarness.setDpr,
+      gl: { domElement: document.createElement("canvas") }
+    }),
   Canvas: ({
     children,
     fallback,
@@ -39,6 +49,9 @@ describe("ExploreCanvas", () => {
   beforeEach(() => {
     canvasHarness.ready = true;
     canvasHarness.renders.mockClear();
+    canvasHarness.invalidate.mockClear();
+    canvasHarness.setDpr.mockClear();
+    canvasHarness.frame.mockClear();
   });
 
   afterEach(() => {

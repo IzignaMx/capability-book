@@ -46,8 +46,10 @@ test("completes the bilingual Evaluate and diagnostic flow without a keyboard tr
   await page.getByRole("link", { name: "English" }).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await expect(page.getByRole("heading", { name: "Tell us what you need to build" })).toBeVisible();
+  await expect(page.getByLabel("Name")).toBeFocused();
 
   await page.getByRole("link", { name: "IzignaMx home" }).focus();
+  await expect(page.getByRole("link", { name: "IzignaMx home" })).toBeFocused();
   const tabSequence = [
     page.getByRole("link", { name: "Explore", exact: true }),
     page.getByRole("link", { name: "Evaluate", exact: true }),

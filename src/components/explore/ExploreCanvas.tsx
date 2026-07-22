@@ -9,6 +9,7 @@ import {
   type ReactNode
 } from "react";
 import type { QualityProfile } from "../../3d/quality/RenderQualityController";
+import { AdaptiveQualityProbe } from "../../3d/quality/AdaptiveQualityProbe";
 import type { MotionLevel } from "../../motion/preferences/MotionPreferenceService";
 import { ExploreFallback } from "./ExploreFallback";
 
@@ -17,6 +18,7 @@ export interface ExploreCanvasProps {
   readonly quality: QualityProfile;
   readonly poster: string;
   readonly fallbackLabel: string;
+  readonly onQualityChange?: (quality: QualityProfile) => void;
   readonly children?: ReactNode;
 }
 
@@ -66,6 +68,7 @@ export function ExploreCanvas({
   quality,
   poster,
   fallbackLabel,
+  onQualityChange,
   children
 }: ExploreCanvasProps) {
   const [attempt, setAttempt] = useState<0 | 1>(0);
@@ -123,6 +126,10 @@ export function ExploreCanvas({
         }}
         fallback={fallback}
       >
+        <AdaptiveQualityProbe
+          initialQuality={quality}
+          onQualityChange={onQualityChange ?? (() => undefined)}
+        />
         {children}
       </Canvas>
     </CanvasErrorBoundary>

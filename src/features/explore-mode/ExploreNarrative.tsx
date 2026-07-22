@@ -96,6 +96,42 @@ function normalizeProgress(progress: number): number {
   return Math.min(1, Math.max(0, progress));
 }
 
+export interface ChapterViewportPosition {
+  readonly chapter: ChapterId;
+  readonly top: number;
+  readonly bottom: number;
+}
+
+export function resolveNearestChapter(
+  positions: readonly ChapterViewportPosition[],
+  viewportHeight: number
+): ChapterId | null {
+  if (!Number.isFinite(viewportHeight) || viewportHeight <= 0) return null;
+
+  const viewportCenter = viewportHeight / 2;
+  let nearestChapter: ChapterId | null = null;
+  let nearestDistance = Number.POSITIVE_INFINITY;
+
+  for (const position of positions) {
+    if (
+      !Number.isFinite(position.top) ||
+      !Number.isFinite(position.bottom) ||
+      position.bottom < position.top
+    ) {
+      continue;
+    }
+
+    const chapterCenter = (position.top + position.bottom) / 2;
+    const distance = Math.abs(chapterCenter - viewportCenter);
+    if (distance >= nearestDistance) continue;
+
+    nearestChapter = position.chapter;
+    nearestDistance = distance;
+  }
+
+  return nearestChapter;
+}
+
 export function composeSceneProgress(
   chapter: NarrativeSceneState["chapter"],
   progress: number
@@ -211,6 +247,7 @@ export function ExploreNarrative({
 
     let disposed = false;
     let controller: ScrollNarrativeController | null = null;
+    let pendingFrame: number | null = null;
 
     void ScrollNarrativeController.createForBrowser().then((createdController) => {
       if (disposed) {
@@ -227,10 +264,9 @@ export function ExploreNarrative({
         if (element !== null) elements.set(chapter, element);
       }
 
-      controller.mount(elements, (chapter, progress) => {
-        if (!ACTIVE_CHAPTER_IDS.includes(chapter)) return;
+      const chapterProgress = new Map<ChapterId, number>();
 
-        const activeChapter = chapter;
+      const commitActiveChapter = (activeChapter: ChapterId, progress: number) => {
         setSceneState((current) => {
           const next = composeSceneProgress(activeChapter, progress);
           if (
@@ -265,12 +301,38 @@ export function ExploreNarrative({
             )
           );
         }
+      };
+
+      const scheduleActiveChapter = () => {
+        if (pendingFrame !== null) return;
+
+        pendingFrame = window.requestAnimationFrame(() => {
+          pendingFrame = null;
+          if (disposed) return;
+
+          const positions = Array.from(elements, ([chapter, element]) => {
+            const bounds = element.getBoundingClientRect();
+            return { chapter, top: bounds.top, bottom: bounds.bottom };
+          });
+          const activeChapter = resolveNearestChapter(positions, window.innerHeight);
+          if (activeChapter === null) return;
+
+          commitActiveChapter(activeChapter, chapterProgress.get(activeChapter) ?? 0);
+        });
+      };
+
+      controller.mount(elements, (chapter, progress) => {
+        if (!ACTIVE_CHAPTER_IDS.includes(chapter)) return;
+        chapterProgress.set(chapter, progress);
+        scheduleActiveChapter();
       });
       controller.refresh();
+      scheduleActiveChapter();
     });
 
     return () => {
       disposed = true;
+      if (pendingFrame !== null) window.cancelAnimationFrame(pendingFrame);
       controller?.dispose();
     };
   }, [locale, motionLevel]);
@@ -306,6 +368,12 @@ export function ExploreNarrative({
     systemAllowsAdvanced
   ]);
 
+  const handleQualityChange = useCallback((nextQuality: QualityProfile) => {
+    setQuality((currentQuality) =>
+      currentQuality === nextQuality ? currentQuality : nextQuality
+    );
+  }, []);
+
   const visual = motionLevel < 2 ? (
     <ExploreFallback poster={poster} label={fallbackLabel} />
   ) : (
@@ -315,6 +383,7 @@ export function ExploreNarrative({
         quality={quality}
         poster={poster}
         fallbackLabel={fallbackLabel}
+        onQualityChange={handleQualityChange}
       >
         <Suspense fallback={null}>
           {sceneState.scene === "hero-signal" ? (
@@ -339,6 +408,7 @@ export function ExploreNarrative({
     <div
       className="explore-visual"
       data-motion-level={motionLevel}
+      data-quality-profile={quality}
       data-active-chapter={sceneState.chapter}
     >
       <div className="explore-controls" data-pagefind-ignore>

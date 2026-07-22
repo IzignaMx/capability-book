@@ -9,7 +9,8 @@ import {
 import { resolveHeroSignalState } from "../../src/3d/scenes/HeroSignalScene";
 import {
   composeSceneProgress,
-  createExploreEvent
+  createExploreEvent,
+  resolveNearestChapter
 } from "../../src/features/explore-mode/ExploreNarrative";
 import { resolveMotionControlState } from "../../src/components/accessibility/MotionControl";
 
@@ -99,6 +100,26 @@ describe("Explore cinematic scenes", () => {
       scene: "hero-signal",
       progress: 1
     });
+  });
+
+  it("selects the chapter nearest the viewport center independent of callback order", () => {
+    expect(
+      resolveNearestChapter(
+        [
+          { chapter: "assembly", top: -360, bottom: 320 },
+          { chapter: "capabilities", top: 320, bottom: 1000 },
+          { chapter: "omnisync", top: 1000, bottom: 1680 }
+        ],
+        1000
+      )
+    ).toBe("capabilities");
+
+    expect(
+      resolveNearestChapter(
+        [{ chapter: "signal", top: Number.NaN, bottom: 100 }],
+        1000
+      )
+    ).toBeNull();
   });
 
   it("emits an allowlisted non-personal event shape", () => {
