@@ -1,5 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { ExploreNarrative } from "../../features/explore-mode/ExploreNarrative";
+import "../../styles/explore.scss";
 
 const evaluateHref = "/en/projects/";
 const diagnosticHref = "/en/diagnostic/";
@@ -38,6 +40,110 @@ const diagnosticHref = "/en/diagnostic/";
       </ul>
       <p class="panel-note">Explore is the narrative. Evaluate is the evidence.</p>
     </aside>
+  </section>
+
+  <section class="explore-shell container" aria-labelledby="explore-title">
+    <header class="explore-intro">
+      <p class="explore-kicker">Explore / Sequence 01</p>
+      <h2 id="explore-title">From a distributed signal to a connected system.</h2>
+      <p>
+        The visualization accompanies a complete HTML narrative. You can inspect the evidence,
+        reduce advanced motion, or continue without WebGL without losing content or actions.
+      </p>
+      <a class="explore-evaluate-link" href={evaluateHref}>
+        View evidence in Evaluate
+      </a>
+    </header>
+
+    <div class="explore-layout">
+      <ExploreNarrative
+        client:only="react"
+        locale="en"
+        poster="/media/explore/hero.avif"
+        fallbackLabel="Static diagram of the modular IZ core and its six connected systems."
+        evaluateHref={evaluateHref}
+      >
+        <figure slot="fallback" class="explore-fallback" data-explore-fallback>
+          <img
+            src="/media/explore/hero.avif"
+            alt=""
+            width="1600"
+            height="900"
+            fetchpriority="high"
+          />
+          <figcaption>
+            Static diagram of the modular IZ core and its six connected systems.
+          </figcaption>
+        </figure>
+      </ExploreNarrative>
+
+      <div class="explore-chapters" data-pagefind-body>
+        <article id="explore-signal" class="explore-chapter" aria-labelledby="signal-title">
+          <p class="explore-chapter-index">01 / Signal acquisition</p>
+          <h3 id="signal-title">We listen before we design.</h3>
+          <p>
+            Needs, constraints, and opportunities first appear as distributed signals. We
+            organize them without turning a visual metaphor into a scientific claim.
+          </p>
+          <ul>
+            <li>Business and user context.</li>
+            <li>Technical, operational, and access constraints.</li>
+            <li>A measurable direction before selecting technology.</li>
+          </ul>
+        </article>
+
+        <article id="explore-assembly" class="explore-chapter" aria-labelledby="assembly-title">
+          <p class="explore-chapter-index">02 / System assembly</p>
+          <h3 id="assembly-title">The pieces become an architecture.</h3>
+          <p>
+            The modular IZ core represents a way of working: strategy, experience, engineering,
+            and operations assemble around the outcome that must endure.
+          </p>
+          <p>
+            The symbol is interpretive and does not modify the official IzignaMx logo.
+          </p>
+        </article>
+
+        <article
+          id="explore-capabilities"
+          class="explore-chapter explore-chapter--capabilities"
+          aria-labelledby="capabilities-title"
+        >
+          <p class="explore-chapter-index">03 / Capability systems</p>
+          <h3 id="capabilities-title">Six capabilities, one direction.</h3>
+          <p>
+            Every orbit corresponds to a capability described here, outside the canvas. They can
+            combine around the problem without hiding information in the visualization.
+          </p>
+          <ol class="capability-list">
+            <li id="capability-web-experiences" data-capability-id="web-experiences">
+              <span>01</span><strong>Web experiences</strong>
+              <p>Distinctive, accessible interfaces designed around outcomes.</p>
+            </li>
+            <li id="capability-commerce-systems" data-capability-id="commerce-systems">
+              <span>02</span><strong>Commerce systems</strong>
+              <p>Catalog, operations, integrations, and sales as one flow.</p>
+            </li>
+            <li id="capability-ai-automation" data-capability-id="ai-automation">
+              <span>03</span><strong>AI and automation</strong>
+              <p>Assisted processes with boundaries, traceability, and human oversight.</p>
+            </li>
+            <li id="capability-data-visualization" data-capability-id="data-visualization">
+              <span>04</span><strong>Data visualization</strong>
+              <p>Complex information translated into understandable decisions.</p>
+            </li>
+            <li id="capability-developer-products" data-capability-id="developer-products">
+              <span>05</span><strong>Developer products</strong>
+              <p>Tools and platforms that reduce technical friction.</p>
+            </li>
+            <li id="capability-impact-technology" data-capability-id="impact-technology">
+              <span>06</span><strong>Impact technology</strong>
+              <p>Useful systems for communities, culture, and access.</p>
+            </li>
+          </ol>
+        </article>
+      </div>
+    </div>
   </section>
 </BaseLayout>
 
@@ -173,7 +279,7 @@ const diagnosticHref = "/en/diagnostic/";
     font-weight: 700;
   }
 
-  ul {
+  .signal-panel ul {
     display: grid;
     gap: 0;
     padding: 0;
@@ -181,7 +287,7 @@ const diagnosticHref = "/en/diagnostic/";
     list-style: none;
   }
 
-  li {
+  .signal-panel li {
     display: grid;
     grid-template-columns: 2rem 1fr;
     gap: var(--space-3);
@@ -190,11 +296,11 @@ const diagnosticHref = "/en/diagnostic/";
     color: var(--color-text-muted);
   }
 
-  li:last-child {
+  .signal-panel li:last-child {
     border-bottom: 1px solid var(--color-line);
   }
 
-  li span {
+  .signal-panel li span {
     color: var(--color-brand-bright);
     font-family: var(--font-data);
     font-size: 0.75rem;

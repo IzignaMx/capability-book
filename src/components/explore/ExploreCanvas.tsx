@@ -10,10 +10,7 @@ import {
 } from "react";
 import type { QualityProfile } from "../../3d/quality/RenderQualityController";
 import type { MotionLevel } from "../../motion/preferences/MotionPreferenceService";
-import {
-  ExploreFallback,
-  type ExploreFallbackProps
-} from "./ExploreFallback";
+import { ExploreFallback } from "./ExploreFallback";
 
 export interface ExploreCanvasProps {
   readonly motionLevel: MotionLevel;
@@ -40,6 +37,8 @@ const DPR_BY_QUALITY: Record<QualityProfile, [number, number]> = {
   high: [1, 2]
 };
 
+const CANVAS_INITIALIZATION_TIMEOUT_MS = 1_500;
+
 class CanvasErrorBoundary extends Component<CanvasBoundaryProps, CanvasBoundaryState> {
   state: CanvasBoundaryState = { failed: false };
 
@@ -62,15 +61,6 @@ class CanvasErrorBoundary extends Component<CanvasBoundaryProps, CanvasBoundaryS
   }
 }
 
-function CanvasUnavailable({
-  poster,
-  label,
-  onFailure
-}: ExploreFallbackProps & { readonly onFailure: () => void }) {
-  useEffect(() => onFailure(), [onFailure]);
-  return <ExploreFallback poster={poster} label={label} />;
-}
-
 export function ExploreCanvas({
   motionLevel,
   quality,
@@ -81,6 +71,7 @@ export function ExploreCanvas({
   const [attempt, setAttempt] = useState<0 | 1>(0);
   const [terminalFailure, setTerminalFailure] = useState(false);
   const failedAttempts = useRef(new Set<number>());
+  const readyAttempts = useRef(new Set<number>());
 
   const handleFailure = useCallback(() => {
     if (failedAttempts.current.has(attempt)) return;
@@ -89,6 +80,20 @@ export function ExploreCanvas({
     if (attempt === 0) setAttempt(1);
     else setTerminalFailure(true);
   }, [attempt]);
+
+  const handleCreated = useCallback(() => {
+    readyAttempts.current.add(attempt);
+  }, [attempt]);
+
+  useEffect(() => {
+    if (motionLevel < 2 || terminalFailure || readyAttempts.current.has(attempt)) return;
+
+    const timeout = window.setTimeout(() => {
+      if (!readyAttempts.current.has(attempt)) handleFailure();
+    }, CANVAS_INITIALIZATION_TIMEOUT_MS);
+
+    return () => window.clearTimeout(timeout);
+  }, [attempt, handleFailure, motionLevel, terminalFailure]);
 
   if (motionLevel < 2 || terminalFailure) {
     return <ExploreFallback poster={poster} label={fallbackLabel} />;
@@ -104,9 +109,11 @@ export function ExploreCanvas({
     >
       <Canvas
         key={attempt}
+        role="img"
         aria-label="Visualización espacial de capacidades de IzignaMx"
         dpr={DPR_BY_QUALITY[quality]}
         frameloop="demand"
+        onCreated={handleCreated}
         gl={{
           antialias: quality !== "low",
           stencil: false,
@@ -114,13 +121,7 @@ export function ExploreCanvas({
           powerPreference: "high-performance",
           failIfMajorPerformanceCaveat: true
         }}
-        fallback={
-          <CanvasUnavailable
-            poster={poster}
-            label={fallbackLabel}
-            onFailure={handleFailure}
-          />
-        }
+        fallback={fallback}
       >
         {children}
       </Canvas>
