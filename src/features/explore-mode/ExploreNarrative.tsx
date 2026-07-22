@@ -1,6 +1,10 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import type { QualityProfile } from "../../3d/quality/RenderQualityController";
 import { selectInitialQuality } from "../../3d/quality/RenderQualityController";
+import {
+  MotionControl,
+  resolveMotionControlState
+} from "../../components/accessibility/MotionControl";
 import { ExploreFallback } from "../../components/explore/ExploreFallback";
 import { ScrollNarrativeController } from "../../motion/orchestration/ScrollNarrativeController";
 import {
@@ -9,7 +13,7 @@ import {
   type MotionLevel,
   type MotionSignals
 } from "../../motion/preferences/MotionPreferenceService";
-import type { ChapterId } from "./chapterDefinitions";
+import { chapters, type ChapterId } from "./chapterDefinitions";
 
 export interface ExploreNarrativeProps {
   readonly locale: "es" | "en";
@@ -32,43 +36,31 @@ export interface ExploreEvent {
 }
 
 interface NarrativeSceneState {
-  readonly chapter: "signal" | "assembly" | "capabilities" | "omnisync" | "nomada";
+  readonly chapter: ChapterId;
   readonly scene: "hero-signal" | "capability-orbits" | "omnisync" | "nomada";
   readonly progress: number;
 }
 
-export type MotionControlState = "reduce" | "restore" | "unavailable";
-
 const MOTION_PREFERENCE_KEY = "izignamx:reduce-advanced-motion";
-const ACTIVE_CHAPTER_IDS = [
-  "signal",
-  "assembly",
-  "capabilities",
-  "omnisync",
-  "nomada"
-] as const;
-const CHAPTER_ELEMENT_IDS: Record<(typeof ACTIVE_CHAPTER_IDS)[number], string> = {
+const ACTIVE_CHAPTER_IDS: readonly ChapterId[] = chapters.map(({ id }) => id);
+const CHAPTER_ELEMENT_IDS: Record<ChapterId, string> = {
   signal: "explore-signal",
   assembly: "explore-assembly",
   capabilities: "explore-capabilities",
   omnisync: "explore-omnisync",
-  nomada: "explore-nomada"
+  nomada: "explore-nomada",
+  quality: "explore-quality",
+  uplink: "explore-uplink"
 };
 
 const COPY = {
   es: {
     evaluate: "Explorar evidencia en Evaluate",
-    reduce: "Reducir movimiento avanzado",
-    restore: "Restaurar movimiento avanzado",
-    unavailable: "Movimiento avanzado no disponible",
     reducedStatus: "La visualización avanzada fue reemplazada por su composición estática.",
     restoredStatus: "La política de movimiento del dispositivo fue restaurada."
   },
   en: {
     evaluate: "Explore evidence in Evaluate",
-    reduce: "Reduce advanced motion",
-    restore: "Restore advanced motion",
-    unavailable: "Advanced motion unavailable",
     reducedStatus: "The advanced visualization was replaced by its static composition.",
     restoredStatus: "The device motion policy was restored."
   }
@@ -122,6 +114,10 @@ export function composeSceneProgress(
     return { chapter, scene: "capability-orbits", progress: normalized };
   }
 
+  if (chapter === "quality" || chapter === "uplink") {
+    return { chapter, scene: "hero-signal", progress: 1 };
+  }
+
   return { chapter, scene: chapter, progress: normalized };
 }
 
@@ -140,15 +136,6 @@ export function createExploreEvent(
     ...(sourceConcept === undefined ? {} : { sourceConcept }),
     ...(sourceProject === undefined ? {} : { sourceProject })
   };
-}
-
-export function resolveMotionControlState(
-  explicitlyReduced: boolean,
-  systemAllowsAdvanced: boolean
-): MotionControlState {
-  if (explicitlyReduced) return "restore";
-  if (!systemAllowsAdvanced) return "unavailable";
-  return "reduce";
 }
 
 function dispatchExploreEvent(event: ExploreEvent): void {
@@ -241,9 +228,9 @@ export function ExploreNarrative({
       }
 
       controller.mount(elements, (chapter, progress) => {
-        if (!ACTIVE_CHAPTER_IDS.includes(chapter as (typeof ACTIVE_CHAPTER_IDS)[number])) return;
+        if (!ACTIVE_CHAPTER_IDS.includes(chapter)) return;
 
-        const activeChapter = chapter as NarrativeSceneState["chapter"];
+        const activeChapter = chapter;
         setSceneState((current) => {
           const next = composeSceneProgress(activeChapter, progress);
           if (
@@ -356,14 +343,7 @@ export function ExploreNarrative({
     >
       <div className="explore-controls" data-pagefind-ignore>
         <a href={evaluateHref}>{copy.evaluate}</a>
-        <button
-          type="button"
-          aria-pressed={motionControlState !== "reduce"}
-          disabled={motionControlState === "unavailable"}
-          onClick={toggleMotion}
-        >
-          {copy[motionControlState]}
-        </button>
+        <MotionControl locale={locale} state={motionControlState} onToggle={toggleMotion} />
       </div>
       <div className="explore-canvas-frame">{visual}</div>
       <p className="visually-hidden" aria-live="polite">

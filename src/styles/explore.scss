@@ -245,6 +245,145 @@
   line-height: 1.55;
 }
 
+.quality-scan {
+  align-content: start;
+  padding-block: clamp(var(--space-10), 10vh, 7rem);
+}
+
+.quality-scan h3 {
+  max-width: 13ch;
+}
+
+.quality-scan__ledger {
+  display: grid;
+  padding: 0;
+  margin: var(--space-6) 0 0;
+  border-top: 1px solid rgb(96 165 250 / 36%);
+  list-style: none;
+}
+
+.quality-scan__ledger li {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr) auto;
+  gap: var(--space-5);
+  align-items: center;
+  padding-block: var(--space-6);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.quality-scan__number {
+  margin: 0;
+  color: rgb(34 211 238 / 62%);
+  font-family: var(--font-data);
+  font-size: clamp(1.8rem, 3.5vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 0.8;
+}
+
+.quality-scan__finding h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+}
+
+.quality-scan__finding p,
+.uplink-cta__actions p {
+  margin: var(--space-2) 0 0;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+
+.quality-scan__ledger a,
+.uplink-cta__actions > a {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 44px;
+  align-items: center;
+  color: var(--color-cyan);
+  font-family: var(--font-data);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-underline-offset: 0.25em;
+}
+
+.uplink-cta {
+  position: relative;
+  min-height: 62vh;
+  padding: clamp(var(--space-8), 7vw, 5.5rem);
+  border: 1px solid rgb(34 211 238 / 30%);
+  background:
+    linear-gradient(135deg, rgb(59 130 246 / 13%), transparent 42%),
+    rgb(2 6 23 / 78%);
+  overflow: hidden;
+}
+
+.uplink-cta::after {
+  position: absolute;
+  width: min(22rem, 55%);
+  aspect-ratio: 1;
+  border: 1px solid rgb(34 211 238 / 16%);
+  border-radius: 50%;
+  content: "";
+  inset: auto -9rem -12rem auto;
+  box-shadow:
+    0 0 0 4rem rgb(59 130 246 / 4%),
+    0 0 5rem rgb(34 211 238 / 8%);
+}
+
+.uplink-cta__layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(15rem, 0.75fr);
+  gap: clamp(var(--space-8), 7vw, 6rem);
+  align-items: end;
+}
+
+.uplink-cta__layout > div:first-child > p {
+  max-width: 38rem;
+  margin: var(--space-5) 0 0;
+  color: var(--color-text-muted);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 1.7;
+}
+
+.uplink-cta__actions {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+}
+
+.uplink-cta__actions > a {
+  padding-inline: var(--space-1);
+}
+
+.uplink-cta__actions > .uplink-cta__primary {
+  min-height: 48px;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-pill);
+  background: var(--color-brand);
+  color: var(--color-space);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  letter-spacing: 0;
+  text-decoration: none;
+}
+
+.uplink-cta__actions > .uplink-cta__primary:hover {
+  background: var(--color-brand-bright);
+}
+
+.uplink-cta__actions p {
+  max-width: 27rem;
+  font-size: 0.84rem;
+}
+
+.uplink-cta__actions p a {
+  color: var(--color-cyan);
+}
+
 @media (max-width: 64rem) {
   .explore-layout {
     grid-template-columns: minmax(16rem, 0.78fr) minmax(0, 1.22fr);
@@ -258,6 +397,18 @@
   .capability-list li,
   .capability-list li:nth-child(even) {
     border-right: 0;
+  }
+
+  .quality-scan__ledger li {
+    grid-template-columns: 3.25rem minmax(0, 1fr);
+  }
+
+  .quality-scan__ledger a {
+    grid-column: 2;
+  }
+
+  .uplink-cta__layout {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -278,6 +429,16 @@
   .explore-chapter {
     min-height: auto;
   }
+
+  .quality-scan,
+  .uplink-cta {
+    padding: var(--space-8) var(--space-5);
+  }
+
+  .quality-scan__ledger li {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: var(--space-4);
+  }
 }
 
 @media (max-width: 34rem) {
@@ -291,5 +452,14 @@
   .explore-canvas-frame,
   .explore-fallback {
     min-height: 13rem;
+  }
+
+  .uplink-cta__actions,
+  .uplink-cta__actions > a {
+    width: 100%;
+  }
+
+  .uplink-cta__actions > a {
+    justify-content: center;
   }
 }

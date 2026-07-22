@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProjectEncounter from "../../components/explore/ProjectEncounter.astro";
+import QualityScan from "../../components/explore/QualityScan.astro";
+import UplinkCTA from "../../components/explore/UplinkCTA.astro";
 import { ExploreNarrative } from "../../features/explore-mode/ExploreNarrative";
 import { AstroProjectRepository } from "../../infrastructure/content/AstroProjectRepository";
 import "../../styles/explore.scss";
@@ -156,6 +158,8 @@ if (omniSyncProject === null || nomadaProject === null) {
 
         <ProjectEncounter locale="es" project={omniSyncProject} chapterId="omnisync" />
         <ProjectEncounter locale="es" project={nomadaProject} chapterId="nomada" />
+        <QualityScan locale="es" />
+        <UplinkCTA locale="es" evaluateHref={evaluateHref} />
       </div>
     </div>
   </section>

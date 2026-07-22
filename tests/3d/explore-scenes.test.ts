@@ -9,9 +9,9 @@ import {
 import { resolveHeroSignalState } from "../../src/3d/scenes/HeroSignalScene";
 import {
   composeSceneProgress,
-  createExploreEvent,
-  resolveMotionControlState
+  createExploreEvent
 } from "../../src/features/explore-mode/ExploreNarrative";
+import { resolveMotionControlState } from "../../src/components/accessibility/MotionControl";
 
 const CAPABILITY_IDS = [
   "web-experiences",
@@ -88,6 +88,16 @@ describe("Explore cinematic scenes", () => {
       chapter: "capabilities",
       scene: "capability-orbits",
       progress: 0.5
+    });
+    expect(composeSceneProgress("quality", 0.2)).toEqual({
+      chapter: "quality",
+      scene: "hero-signal",
+      progress: 1
+    });
+    expect(composeSceneProgress("uplink", 0.8)).toEqual({
+      chapter: "uplink",
+      scene: "hero-signal",
+      progress: 1
     });
   });
 

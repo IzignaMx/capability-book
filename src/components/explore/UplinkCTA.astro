@@ -1,0 +1,52 @@
+---
+import type { Locale } from "../../domain/projects/PortfolioProject";
+
+interface Props {
+  locale: Locale;
+  evaluateHref: string;
+}
+
+const { locale, evaluateHref } = Astro.props;
+const diagnosticPath = locale === "es" ? "/es/diagnostico/" : "/en/diagnostic/";
+const diagnosticHref = `${diagnosticPath}?concept=quality-scan&service=web-experiences`;
+const privacyHref = locale === "es" ? "/es/privacidad/" : "/en/privacy/";
+const copy = locale === "es"
+  ? {
+      index: "07 / Uplink de comunicación",
+      title: "Conectemos tu siguiente sistema.",
+      description: "Comparte el contexto, las restricciones y el resultado que necesitas sostener. El diagnóstico convierte esa señal en una conversación técnica.",
+      diagnostic: "Abrir diagnóstico contextual",
+      evaluate: "Revisar evidencia en Evaluate",
+      privacy: "Consulta qué datos solicita el diagnóstico y cómo se tratan.",
+      privacyLink: "Leer privacidad"
+    }
+  : {
+      index: "07 / Communication uplink",
+      title: "Let's connect your next system.",
+      description: "Share the context, constraints, and outcome you need to sustain. The diagnostic turns that signal into a technical conversation.",
+      diagnostic: "Open contextual diagnostic",
+      evaluate: "Review evidence in Evaluate",
+      privacy: "See which data the diagnostic requests and how it is handled.",
+      privacyLink: "Read privacy"
+    };
+---
+
+<section
+  id="explore-uplink"
+  class="explore-chapter uplink-cta"
+  aria-labelledby="uplink-title"
+>
+  <p class="explore-chapter-index">{copy.index}</p>
+  <div class="uplink-cta__layout">
+    <div>
+      <h3 id="uplink-title">{copy.title}</h3>
+      <p>{copy.description}</p>
+    </div>
+
+    <div class="uplink-cta__actions">
+      <a class="uplink-cta__primary" href={diagnosticHref}>{copy.diagnostic}</a>
+      <a href={evaluateHref}>{copy.evaluate}</a>
+      <p>{copy.privacy} <a href={privacyHref}>{copy.privacyLink}</a>.</p>
+    </div>
+  </div>
+</section>
