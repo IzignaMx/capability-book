@@ -1,0 +1,218 @@
+---
+import type {
+  Locale,
+  PortfolioProject,
+  ProjectClassification
+} from "../../domain/projects/PortfolioProject";
+
+interface Props {
+  locale: Locale;
+  project: PortfolioProject;
+  chapterId: "omnisync" | "nomada";
+}
+
+const { locale, project, chapterId } = Astro.props;
+
+if (project.locale !== locale) {
+  throw new Error(
+    `ProjectEncounter locale mismatch: expected ${locale}, received ${project.locale}`
+  );
+}
+
+if (project.outcomes.length !== 3) {
+  throw new Error(
+    `ProjectEncounter requires exactly three proof points: ${project.slug} has ${project.outcomes.length}`
+  );
+}
+
+const copy = locale === "es"
+  ? {
+      index: chapterId === "omnisync" ? "04 / Encuentro operativo" : "05 / Encuentro comunitario",
+      confidentiality: "Alcance",
+      proof: "Capacidad demostrada",
+      caseStudy: "Abrir caso completo",
+      diagnostic: "Iniciar diagnóstico relacionado",
+      posterAlt: `Vista visual de respaldo para ${project.title}`
+    }
+  : {
+      index: chapterId === "omnisync" ? "04 / Operational encounter" : "05 / Community encounter",
+      confidentiality: "Scope",
+      proof: "Demonstrated capability",
+      caseStudy: "Open full case study",
+      diagnostic: "Start related diagnostic",
+      posterAlt: `Fallback visual for ${project.title}`
+    };
+
+const classificationLabels: Record<ProjectClassification, { es: string; en: string }> = {
+  real: { es: "Implementación real", en: "Real implementation" },
+  "open-source": { es: "Código abierto", en: "Open source" },
+  internal: { es: "Sistema interno", en: "Internal system" },
+  concept: { es: "Concepto", en: "Concept" }
+};
+const classification = classificationLabels[project.classification][locale];
+const confidentialityLabels = {
+  public: { es: "Público", en: "Public" },
+  partial: { es: "Divulgación parcial", en: "Partial disclosure" },
+  private: { es: "Privado", en: "Private" }
+} as const;
+const confidentiality = confidentialityLabels[project.confidentiality][locale];
+const caseStudyHref = locale === "es"
+  ? `/es/proyectos/${project.slug}/`
+  : `/en/projects/${project.slug}/`;
+const diagnosticBase = locale === "es" ? "/es/diagnostico/" : "/en/diagnostic/";
+const diagnosticHref = `${diagnosticBase}?project=${encodeURIComponent(project.slug)}&service=${encodeURIComponent(project.ctaPreset)}`;
+---
+
+<article
+  id={`explore-${chapterId}`}
+  class="explore-chapter project-encounter"
+  data-project-encounter={chapterId}
+  data-project-classification={project.classification}
+>
+  <p class="project-encounter__classification">
+    <strong>{classification}</strong>
+    <span>{copy.confidentiality}: {confidentiality}</span>
+  </p>
+  <p class="explore-chapter-index">{copy.index}</p>
+  <h3>{project.title}</h3>
+  <p>{project.elevatorPitch}</p>
+
+  <figure class="project-encounter__poster">
+    <img
+      src={project.fallbackPoster}
+      alt={copy.posterAlt}
+      width="1280"
+      height="720"
+      loading="lazy"
+      decoding="async"
+    />
+  </figure>
+
+  <div class="project-encounter__proof" aria-label={copy.proof}>
+    {project.outcomes.map((point, index) => (
+      <article>
+        <p>{String(index + 1).padStart(2, "0")} · {copy.proof}</p>
+        <h4>{point.label}</h4>
+        <p>{point.description}</p>
+      </article>
+    ))}
+  </div>
+
+  <nav class="project-encounter__actions" aria-label={project.title}>
+    <a href={caseStudyHref}>{copy.caseStudy}</a>
+    <a href={diagnosticHref}>{copy.diagnostic}</a>
+  </nav>
+</article>
+
+<style>
+  .project-encounter {
+    gap: var(--space-5);
+  }
+
+  .project-encounter__classification {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    margin: 0;
+    font: 700 0.72rem/1.4 var(--font-data);
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+
+  .project-encounter__classification strong {
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--color-cyan);
+    color: var(--color-cyan);
+  }
+
+  .project-encounter__classification span {
+    color: var(--color-text-muted);
+  }
+
+  .project-encounter__poster {
+    aspect-ratio: 16 / 9;
+    max-width: 43rem;
+    margin: var(--space-3) 0 0;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    background: var(--color-midnight);
+  }
+
+  .project-encounter__poster img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-encounter__proof {
+    display: grid;
+    max-width: 43rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .project-encounter__proof article {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .project-encounter__proof p,
+  .project-encounter__proof h4 {
+    margin: 0;
+  }
+
+  .project-encounter__proof article > p:first-child {
+    color: var(--color-cyan);
+    font: 700 0.68rem/1.4 var(--font-data);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .project-encounter__proof h4 {
+    font: 650 clamp(1.1rem, 2vw, 1.45rem)/1.1 var(--font-display);
+  }
+
+  .project-encounter__proof article > p:last-child {
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+
+  .project-encounter__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .project-encounter__actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: var(--space-3) var(--space-5);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    color: var(--color-text);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .project-encounter__actions a:first-child {
+    border-color: var(--color-brand-bright);
+    color: var(--color-brand-bright);
+  }
+
+  .project-encounter__actions a:hover {
+    border-color: var(--color-cyan);
+    background: rgb(34 211 238 / 9%);
+  }
+
+  @media (max-width: 34rem) {
+    .project-encounter__actions,
+    .project-encounter__actions a {
+      width: 100%;
+    }
+  }
+</style>

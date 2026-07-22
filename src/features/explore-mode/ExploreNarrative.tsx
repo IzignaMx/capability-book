@@ -19,27 +19,40 @@ export interface ExploreNarrativeProps {
 }
 
 export interface ExploreEvent {
-  readonly name: "explore_started" | "mode_changed" | "capability_viewed";
+  readonly name:
+    | "explore_started"
+    | "mode_changed"
+    | "capability_viewed"
+    | "project_scene_engaged";
   readonly locale: "es" | "en";
   readonly sourceRoute: "/es/" | "/en/";
   readonly sourceCapability?: "capability-orbits";
   readonly sourceConcept?: "advanced-motion" | "static-motion";
+  readonly sourceProject?: "omnisync" | "hamburguesa-nomada";
 }
 
 interface NarrativeSceneState {
-  readonly chapter: "signal" | "assembly" | "capabilities";
-  readonly scene: "hero-signal" | "capability-orbits";
+  readonly chapter: "signal" | "assembly" | "capabilities" | "omnisync" | "nomada";
+  readonly scene: "hero-signal" | "capability-orbits" | "omnisync" | "nomada";
   readonly progress: number;
 }
 
 export type MotionControlState = "reduce" | "restore" | "unavailable";
 
 const MOTION_PREFERENCE_KEY = "izignamx:reduce-advanced-motion";
-const ACTIVE_CHAPTER_IDS = ["signal", "assembly", "capabilities"] as const;
+const ACTIVE_CHAPTER_IDS = [
+  "signal",
+  "assembly",
+  "capabilities",
+  "omnisync",
+  "nomada"
+] as const;
 const CHAPTER_ELEMENT_IDS: Record<(typeof ACTIVE_CHAPTER_IDS)[number], string> = {
   signal: "explore-signal",
   assembly: "explore-assembly",
-  capabilities: "explore-capabilities"
+  capabilities: "explore-capabilities",
+  omnisync: "explore-omnisync",
+  nomada: "explore-nomada"
 };
 
 const COPY = {
@@ -76,6 +89,16 @@ const LazyCapabilityOrbitScene = lazy(async () => {
   return { default: module.CapabilityOrbitScene };
 });
 
+const LazyOmniSyncScene = lazy(async () => {
+  const module = await import("../../3d/scenes/OmniSyncScene");
+  return { default: module.OmniSyncScene };
+});
+
+const LazyNomadaScene = lazy(async () => {
+  const module = await import("../../3d/scenes/NomadaScene");
+  return { default: module.NomadaScene };
+});
+
 function normalizeProgress(progress: number): number {
   if (!Number.isFinite(progress)) return 0;
   return Math.min(1, Math.max(0, progress));
@@ -95,21 +118,27 @@ export function composeSceneProgress(
     return { chapter, scene: "hero-signal", progress: 0.48 + normalized * 0.52 };
   }
 
-  return { chapter, scene: "capability-orbits", progress: normalized };
+  if (chapter === "capabilities") {
+    return { chapter, scene: "capability-orbits", progress: normalized };
+  }
+
+  return { chapter, scene: chapter, progress: normalized };
 }
 
 export function createExploreEvent(
   name: ExploreEvent["name"],
   locale: ExploreEvent["locale"],
   sourceCapability?: ExploreEvent["sourceCapability"],
-  sourceConcept?: ExploreEvent["sourceConcept"]
+  sourceConcept?: ExploreEvent["sourceConcept"],
+  sourceProject?: ExploreEvent["sourceProject"]
 ): ExploreEvent {
   return {
     name,
     locale,
     sourceRoute: locale === "es" ? "/es/" : "/en/",
     ...(sourceCapability === undefined ? {} : { sourceCapability }),
-    ...(sourceConcept === undefined ? {} : { sourceConcept })
+    ...(sourceConcept === undefined ? {} : { sourceConcept }),
+    ...(sourceProject === undefined ? {} : { sourceProject })
   };
 }
 
@@ -169,6 +198,7 @@ export function ExploreNarrative({
   );
   const [announcement, setAnnouncement] = useState("");
   const viewedCapabilities = useRef(false);
+  const viewedProjects = useRef(new Set<"omnisync" | "nomada">());
 
   const applyDevicePolicy = useCallback(() => {
     const signals = readMotionSignals();
@@ -232,6 +262,22 @@ export function ExploreNarrative({
             createExploreEvent("capability_viewed", locale, "capability-orbits")
           );
         }
+
+        if (
+          (activeChapter === "omnisync" || activeChapter === "nomada") &&
+          !viewedProjects.current.has(activeChapter)
+        ) {
+          viewedProjects.current.add(activeChapter);
+          dispatchExploreEvent(
+            createExploreEvent(
+              "project_scene_engaged",
+              locale,
+              undefined,
+              undefined,
+              activeChapter === "omnisync" ? "omnisync" : "hamburguesa-nomada"
+            )
+          );
+        }
       });
       controller.refresh();
     });
@@ -286,8 +332,12 @@ export function ExploreNarrative({
         <Suspense fallback={null}>
           {sceneState.scene === "hero-signal" ? (
             <LazyHeroSignalScene progress={sceneState.progress} quality={quality} />
-          ) : (
+          ) : sceneState.scene === "capability-orbits" ? (
             <LazyCapabilityOrbitScene progress={sceneState.progress} quality={quality} />
+          ) : sceneState.scene === "omnisync" ? (
+            <LazyOmniSyncScene progress={sceneState.progress} quality={quality} />
+          ) : (
+            <LazyNomadaScene progress={sceneState.progress} quality={quality} />
           )}
         </Suspense>
       </LazyExploreCanvas>

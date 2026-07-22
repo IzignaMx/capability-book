@@ -1,10 +1,21 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectEncounter from "../../components/explore/ProjectEncounter.astro";
 import { ExploreNarrative } from "../../features/explore-mode/ExploreNarrative";
+import { AstroProjectRepository } from "../../infrastructure/content/AstroProjectRepository";
 import "../../styles/explore.scss";
 
 const evaluateHref = "/en/projects/";
 const diagnosticHref = "/en/diagnostic/";
+const projectRepository = new AstroProjectRepository();
+const [omniSyncProject, nomadaProject] = await Promise.all([
+  projectRepository.getBySlug("omnisync", "en"),
+  projectRepository.getBySlug("hamburguesa-nomada", "en")
+]);
+
+if (omniSyncProject === null || nomadaProject === null) {
+  throw new Error("Explore requires localized OmniSync and Hamburguesa Nómada cases");
+}
 ---
 
 <BaseLayout
@@ -142,6 +153,9 @@ const diagnosticHref = "/en/diagnostic/";
             </li>
           </ol>
         </article>
+
+        <ProjectEncounter locale="en" project={omniSyncProject} chapterId="omnisync" />
+        <ProjectEncounter locale="en" project={nomadaProject} chapterId="nomada" />
       </div>
     </div>
   </section>
