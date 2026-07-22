@@ -1,0 +1,146 @@
+---
+import type { Locale } from "../../domain/projects/PortfolioProject";
+
+interface Props {
+  locale: Locale;
+}
+
+type QualityCategoryId =
+  | "accessibility"
+  | "performance"
+  | "security"
+  | "testing"
+  | "seo"
+  | "deployment";
+
+interface QualityCategory {
+  id: QualityCategoryId;
+  href: string;
+  copy: Record<Locale, { title: string; description: string }>;
+}
+
+const { locale } = Astro.props;
+const repository = "https://github.com/IzignaMx/capability-book";
+const categories: readonly QualityCategory[] = [
+  {
+    id: "accessibility",
+    href: locale === "es" ? "/es/accesibilidad/" : "/en/accessibility/",
+    copy: {
+      es: {
+        title: "Accesibilidad",
+        description: "Paridad semántica, navegación por teclado, foco visible, alternativas al canvas y movimiento bajo control."
+      },
+      en: {
+        title: "Accessibility",
+        description: "Semantic parity, keyboard navigation, visible focus, canvas alternatives, and motion under user control."
+      }
+    }
+  },
+  {
+    id: "performance",
+    href: `${repository}/blob/main/scripts/verify-budgets.ts`,
+    copy: {
+      es: {
+        title: "Rendimiento",
+        description: "Presupuestos de transferencia verifican HTML, CSS y JavaScript crítico durante cada build."
+      },
+      en: {
+        title: "Performance",
+        description: "Transfer budgets verify critical HTML, CSS, and JavaScript during every build."
+      }
+    }
+  },
+  {
+    id: "security",
+    href: locale === "es" ? "/es/privacidad/" : "/en/privacy/",
+    copy: {
+      es: {
+        title: "Seguridad",
+        description: "El diagnóstico limita el contexto, excluye datos personales de eventos y mantiene la entrega directa desactivada sin un proveedor revisado."
+      },
+      en: {
+        title: "Security",
+        description: "The diagnostic limits context, excludes personal data from events, and keeps direct delivery disabled without a reviewed provider."
+      }
+    }
+  },
+  {
+    id: "testing",
+    href: `${repository}/actions/workflows/quality.yml`,
+    copy: {
+      es: {
+        title: "Pruebas",
+        description: "Pruebas unitarias, de navegador y accesibilidad automatizada bloquean el despliegue cuando un gate falla."
+      },
+      en: {
+        title: "Testing",
+        description: "Unit, browser, and automated accessibility tests block deployment when a gate fails."
+      }
+    }
+  },
+  {
+    id: "seo",
+    href: "/sitemap-index.xml",
+    copy: {
+      es: {
+        title: "SEO",
+        description: "Contenido rastreable, canonicals, alternates, datos estructurados y sitemap se generan como salida estática."
+      },
+      en: {
+        title: "SEO",
+        description: "Crawlable content, canonicals, alternates, structured data, and the sitemap ship as static output."
+      }
+    }
+  },
+  {
+    id: "deployment",
+    href: `${repository}/blob/main/docs/superpowers/specs/2026-07-20-izignamx-capability-book-design.md#291-primary-deployment`,
+    copy: {
+      es: {
+        title: "Despliegue y reversión",
+        description: "GitHub Pages despliega solo después de los gates; la reversión parte de un commit y despliegue previo verificados."
+      },
+      en: {
+        title: "Deployment and rollback",
+        description: "GitHub Pages deploys only after the gates; rollback starts from a previously verified commit and deployment."
+      }
+    }
+  }
+];
+const copy = locale === "es"
+  ? {
+      index: "06 / Escaneo de calidad",
+      title: "La calidad deja rastros verificables.",
+      introduction: "Cada capa enlaza una práctica o evidencia pública. No publicamos puntuaciones que este sistema no haya producido.",
+      evidence: "Abrir evidencia"
+    }
+  : {
+      index: "06 / Quality scan",
+      title: "Quality leaves verifiable traces.",
+      introduction: "Every layer links to a public practice or evidence source. We do not publish scores this system did not produce.",
+      evidence: "Open evidence"
+    };
+---
+
+<article
+  id="explore-quality"
+  class="explore-chapter quality-scan"
+  aria-labelledby="quality-scan-title"
+>
+  <p class="explore-chapter-index">{copy.index}</p>
+  <h3 id="quality-scan-title">{copy.title}</h3>
+  <p>{copy.introduction}</p>
+
+  <ol class="quality-scan__ledger">
+    {categories.map((category, index) => (
+      <li data-quality-category={category.id}>
+        <p class="quality-scan__number">{String(index + 1).padStart(2, "0")}</p>
+        <div class="quality-scan__finding">
+          <h4>{category.copy[locale].title}</h4>
+          <p>{category.copy[locale].description}</p>
+        </div>
+        <a href={category.href}>{copy.evidence}<span aria-hidden="true"> ↗</span></a>
+      </li>
+    ))}
+  </ol>
+</article>

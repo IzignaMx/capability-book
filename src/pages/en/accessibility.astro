@@ -25,13 +25,15 @@ import "../../styles/information-page.scss";
         <h2 id="motion-title">Motion under your control</h2>
         <div class="information-page__copy">
           <p>
-            The current static release respects <code>prefers-reduced-motion</code> and removes
-            non-essential motion. Before advanced experiences are enabled, the site will provide
-            a persistent control for static, reduced-motion, or advanced-motion modes.
+            Explore checks <code>prefers-reduced-motion</code>, data-saving preferences, and device
+            capabilities before creating a canvas. When the advanced experience is available, the
+            persistent “Reduce advanced motion” control immediately replaces it with its static
+            composition.
           </p>
           <p>
-            Motion level will never change the available content, evidence, or ability to complete
-            a task.
+            “Restore advanced motion” recomputes the device policy; it never overrides a system
+            constraint. Motion level never changes the available content, evidence, or ability to
+            complete a task.
           </p>
         </div>
       </section>
@@ -44,7 +46,7 @@ import "../../styles/information-page.scss";
             HTML. Fallback images have stable dimensions and contextual alternative text.
           </p>
           <p>
-            If a future visual scene fails or is disabled, static navigation preserves the same
+            If a visual scene fails or is disabled, static navigation preserves the same
             information and destinations.
           </p>
         </div>

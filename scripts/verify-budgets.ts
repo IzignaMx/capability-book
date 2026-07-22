@@ -1,6 +1,11 @@
 import { readdir, readFile } from "node:fs/promises";
 import { extname, relative, resolve } from "node:path";
 import { gzipSync } from "node:zlib";
+import {
+  readBuiltModuleGraph,
+  resolveBuiltReference,
+  staticModuleClosure
+} from "./built-module-graph";
 
 const distDirectory = resolve("dist");
 const spanishHome = resolve(distDirectory, "es", "index.html");
@@ -33,6 +38,13 @@ function localAssetPaths(html: string, extension: ".css" | ".js"): string[] {
   return [...new Set(references)];
 }
 
+function islandJavaScriptPaths(html: string): string[] {
+  const references = [...html.matchAll(/(?:component-url|renderer-url)=["']([^"']+)["']/g)]
+    .flatMap((match) => match[1] ? [match[1]] : [])
+    .map((reference) => resolveBuiltReference(distDirectory, reference));
+  return [...new Set(references)];
+}
+
 async function gzipBytes(file: string): Promise<number> {
   return gzipSync(await readFile(file), { level: 9 }).byteLength;
 }
@@ -47,10 +59,15 @@ for (const file of assets) {
 
 const homeHtml = await readFile(spanishHome, "utf8");
 const homeCss = localAssetPaths(homeHtml, ".css");
-const homeJavascript = localAssetPaths(homeHtml, ".js");
+const homeJavascript = [
+  ...localAssetPaths(homeHtml, ".js"),
+  ...islandJavaScriptPaths(homeHtml)
+];
+const moduleGraph = await readBuiltModuleGraph(distDirectory);
+const initialJavaScript = staticModuleClosure(moduleGraph, [...new Set(homeJavascript)]);
 const criticalBytes = await gzipBytes(spanishHome) +
   (await Promise.all(homeCss.map(gzipBytes))).reduce((total, bytes) => total + bytes, 0);
-const javascriptBytes = (await Promise.all(homeJavascript.map(gzipBytes))).reduce(
+const javascriptBytes = (await Promise.all([...initialJavaScript].map(gzipBytes))).reduce(
   (total, bytes) => total + bytes,
   0
 );

@@ -1,8 +1,23 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectEncounter from "../../components/explore/ProjectEncounter.astro";
+import QualityScan from "../../components/explore/QualityScan.astro";
+import UplinkCTA from "../../components/explore/UplinkCTA.astro";
+import { ExploreNarrative } from "../../features/explore-mode/ExploreNarrative";
+import { AstroProjectRepository } from "../../infrastructure/content/AstroProjectRepository";
+import "../../styles/explore.scss";
 
 const evaluateHref = "/es/proyectos/";
 const diagnosticHref = "/es/diagnostico/";
+const projectRepository = new AstroProjectRepository();
+const [omniSyncProject, nomadaProject] = await Promise.all([
+  projectRepository.getBySlug("omnisync", "es"),
+  projectRepository.getBySlug("hamburguesa-nomada", "es")
+]);
+
+if (omniSyncProject === null || nomadaProject === null) {
+  throw new Error("Explore requiere los casos localizados de OmniSync y Hamburguesa Nómada");
+}
 ---
 
 <BaseLayout
@@ -38,6 +53,115 @@ const diagnosticHref = "/es/diagnostico/";
       </ul>
       <p class="panel-note">Explore es la narrativa. Evaluate es la evidencia.</p>
     </aside>
+  </section>
+
+  <section class="explore-shell container" aria-labelledby="explore-title">
+    <header class="explore-intro">
+      <p class="explore-kicker">Explore / Secuencia 01</p>
+      <h2 id="explore-title">De una señal distribuida a un sistema conectado.</h2>
+      <p>
+        La visualización acompaña una narrativa completa en HTML. Puedes recorrer la evidencia,
+        reducir el movimiento avanzado o continuar sin WebGL sin perder contenido ni acciones.
+      </p>
+      <a class="explore-evaluate-link" href={evaluateHref}>
+        Ver evidencia en Evaluate
+      </a>
+    </header>
+
+    <div class="explore-layout">
+      <ExploreNarrative
+        client:only="react"
+        locale="es"
+        poster="/media/explore/hero.avif"
+        fallbackLabel="Diagrama estático del núcleo modular IZ y sus seis sistemas conectados."
+        evaluateHref={evaluateHref}
+      >
+        <figure slot="fallback" class="explore-fallback" data-explore-fallback>
+          <img
+            src="/media/explore/hero.avif"
+            alt=""
+            width="1600"
+            height="900"
+            fetchpriority="high"
+          />
+          <figcaption>
+            Diagrama estático del núcleo modular IZ y sus seis sistemas conectados.
+          </figcaption>
+        </figure>
+      </ExploreNarrative>
+
+      <div class="explore-chapters" data-pagefind-body>
+        <article id="explore-signal" class="explore-chapter" aria-labelledby="signal-title">
+          <p class="explore-chapter-index">01 / Adquisición de señal</p>
+          <h3 id="signal-title">Escuchamos antes de diseñar.</h3>
+          <p>
+            Necesidades, restricciones y oportunidades aparecen primero como señales dispersas.
+            Las organizamos sin convertir la metáfora visual en una afirmación científica.
+          </p>
+          <ul>
+            <li>Contexto de negocio y personas usuarias.</li>
+            <li>Restricciones técnicas, operativas y de acceso.</li>
+            <li>Una dirección medible antes de elegir tecnología.</li>
+          </ul>
+        </article>
+
+        <article id="explore-assembly" class="explore-chapter" aria-labelledby="assembly-title">
+          <p class="explore-chapter-index">02 / Ensamble del sistema</p>
+          <h3 id="assembly-title">Las piezas se convierten en una arquitectura.</h3>
+          <p>
+            El núcleo modular IZ representa una forma de trabajo: estrategia, experiencia,
+            ingeniería y operación se ensamblan alrededor del resultado que debe sostenerse.
+          </p>
+          <p>
+            El símbolo es interpretativo y no modifica el logotipo oficial de IzignaMx.
+          </p>
+        </article>
+
+        <article
+          id="explore-capabilities"
+          class="explore-chapter explore-chapter--capabilities"
+          aria-labelledby="capabilities-title"
+        >
+          <p class="explore-chapter-index">03 / Sistemas de capacidad</p>
+          <h3 id="capabilities-title">Seis capacidades, una sola dirección.</h3>
+          <p>
+            Cada órbita corresponde a una capacidad legible aquí, fuera del canvas. Pueden
+            combinarse según el problema sin ocultar información dentro de la visualización.
+          </p>
+          <ol class="capability-list">
+            <li id="capability-web-experiences" data-capability-id="web-experiences">
+              <span>01</span><strong>Experiencias web</strong>
+              <p>Interfaces distintivas, accesibles y orientadas a resultados.</p>
+            </li>
+            <li id="capability-commerce-systems" data-capability-id="commerce-systems">
+              <span>02</span><strong>Sistemas de comercio</strong>
+              <p>Catálogo, operación, integraciones y venta como un solo flujo.</p>
+            </li>
+            <li id="capability-ai-automation" data-capability-id="ai-automation">
+              <span>03</span><strong>IA y automatización</strong>
+              <p>Procesos asistidos con límites, trazabilidad y supervisión humana.</p>
+            </li>
+            <li id="capability-data-visualization" data-capability-id="data-visualization">
+              <span>04</span><strong>Visualización de datos</strong>
+              <p>Información compleja convertida en decisiones comprensibles.</p>
+            </li>
+            <li id="capability-developer-products" data-capability-id="developer-products">
+              <span>05</span><strong>Productos para desarrollo</strong>
+              <p>Herramientas y plataformas que reducen fricción técnica.</p>
+            </li>
+            <li id="capability-impact-technology" data-capability-id="impact-technology">
+              <span>06</span><strong>Tecnología con impacto</strong>
+              <p>Sistemas útiles para comunidades, cultura y acceso.</p>
+            </li>
+          </ol>
+        </article>
+
+        <ProjectEncounter locale="es" project={omniSyncProject} chapterId="omnisync" />
+        <ProjectEncounter locale="es" project={nomadaProject} chapterId="nomada" />
+        <QualityScan locale="es" />
+        <UplinkCTA locale="es" evaluateHref={evaluateHref} />
+      </div>
+    </div>
   </section>
 </BaseLayout>
 
@@ -173,7 +297,7 @@ const diagnosticHref = "/es/diagnostico/";
     font-weight: 700;
   }
 
-  ul {
+  .signal-panel ul {
     display: grid;
     gap: 0;
     padding: 0;
@@ -181,7 +305,7 @@ const diagnosticHref = "/es/diagnostico/";
     list-style: none;
   }
 
-  li {
+  .signal-panel li {
     display: grid;
     grid-template-columns: 2rem 1fr;
     gap: var(--space-3);
@@ -190,11 +314,11 @@ const diagnosticHref = "/es/diagnostico/";
     color: var(--color-text-muted);
   }
 
-  li:last-child {
+  .signal-panel li:last-child {
     border-bottom: 1px solid var(--color-line);
   }
 
-  li span {
+  .signal-panel li span {
     color: var(--color-brand-bright);
     font-family: var(--font-data);
     font-size: 0.75rem;

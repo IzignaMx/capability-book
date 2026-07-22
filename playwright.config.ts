@@ -1,6 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const baseURL = process.env.TEST_BASE_URL ?? "http://127.0.0.1:4321";
+const baseURL = process.env.TEST_BASE_URL ?? "http://127.0.0.1:4333";
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -11,16 +11,20 @@ export default defineConfig({
   reporter: process.env.CI ? "github" : "list",
   use: {
     baseURL,
+    launchOptions: {
+      args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"]
+    },
     trace: "on-first-retry",
     screenshot: "only-on-failure"
   },
   webServer: {
-    command: "pnpm build && pnpm preview --host 127.0.0.1 --port 4321",
+    command: "pnpm build && pnpm preview --host 127.0.0.1 --port 4333",
     env: {
-      PUBLIC_DIAGNOSTIC_ENDPOINT: "https://forms.test/diagnostic"
+      PUBLIC_DIAGNOSTIC_ENDPOINT: "https://forms.test/diagnostic",
+      PUBLIC_ENABLE_TEST_HOOKS: "true"
     },
     url: baseURL,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     timeout: 120_000
   },
   projects: [
