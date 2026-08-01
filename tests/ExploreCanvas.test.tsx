@@ -7,7 +7,8 @@ const canvasHarness = vi.hoisted(() => ({
   renders: vi.fn(),
   invalidate: vi.fn(),
   setDpr: vi.fn(),
-  frame: vi.fn()
+  frame: vi.fn(),
+  domElement: null as HTMLCanvasElement | null
 }));
 
 vi.mock("@react-three/fiber", () => ({
@@ -16,7 +17,7 @@ vi.mock("@react-three/fiber", () => ({
     selector({
       invalidate: canvasHarness.invalidate,
       setDpr: canvasHarness.setDpr,
-      gl: { domElement: document.createElement("canvas") }
+      gl: { domElement: canvasHarness.domElement! }
     }),
   Canvas: ({
     children,
@@ -27,12 +28,14 @@ vi.mock("@react-three/fiber", () => ({
   }: {
     readonly children?: ReactNode;
     readonly fallback?: ReactNode;
-    readonly onCreated?: () => void;
+    readonly onCreated?: (state: { gl: { domElement: HTMLCanvasElement } }) => void;
     readonly role?: string;
     readonly "aria-label"?: string;
   }) => {
     canvasHarness.renders();
-    if (canvasHarness.ready) onCreated?.();
+    if (canvasHarness.ready) {
+      onCreated?.({ gl: { domElement: canvasHarness.domElement! } });
+    }
 
     return (
       <div data-testid="r3f-canvas" role={role} aria-label={ariaLabel}>
@@ -52,6 +55,7 @@ describe("ExploreCanvas", () => {
     canvasHarness.invalidate.mockClear();
     canvasHarness.setDpr.mockClear();
     canvasHarness.frame.mockClear();
+    canvasHarness.domElement = document.createElement("canvas");
   });
 
   afterEach(() => {
@@ -66,6 +70,7 @@ describe("ExploreCanvas", () => {
         quality="high"
         poster="/media/explore/hero.avif"
         fallbackLabel="Static fallback"
+        canvasLabel="Spatial visualization of IzignaMx capabilities"
       >
         <span>Spatial scene</span>
       </ExploreCanvas>
@@ -78,7 +83,7 @@ describe("ExploreCanvas", () => {
     expect(screen.getByTestId("r3f-canvas")).toBeInTheDocument();
     expect(
       screen.getByRole("img", {
-        name: "Visualización espacial de capacidades de IzignaMx"
+        name: "Spatial visualization of IzignaMx capabilities"
       })
     ).toBeInTheDocument();
     expect(screen.getByText("Spatial scene")).toBeInTheDocument();
@@ -96,6 +101,7 @@ describe("ExploreCanvas", () => {
         quality="high"
         poster="/media/explore/hero.avif"
         fallbackLabel="Static fallback"
+        canvasLabel="Spatial visualization of IzignaMx capabilities"
       />
     );
 
@@ -121,10 +127,57 @@ describe("ExploreCanvas", () => {
         quality="low"
         poster="/media/explore/hero.avif"
         fallbackLabel="Static fallback"
+        canvasLabel="Spatial visualization of IzignaMx capabilities"
       />
     );
 
     expect(screen.queryByTestId("r3f-canvas")).not.toBeInTheDocument();
     expect(screen.getByText("Static fallback")).toBeInTheDocument();
+  });
+
+  it("falls back when an initialized WebGL context is not restored", async () => {
+    vi.useFakeTimers();
+    render(
+      <ExploreCanvas
+        motionLevel={3}
+        quality="high"
+        poster="/media/explore/hero.avif"
+        fallbackLabel="Static fallback"
+        canvasLabel="Spatial visualization of IzignaMx capabilities"
+      />
+    );
+
+    canvasHarness.domElement?.dispatchEvent(
+      new Event("webglcontextlost", { cancelable: true })
+    );
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(2_000);
+    });
+
+    expect(screen.queryByTestId("r3f-canvas")).not.toBeInTheDocument();
+    expect(screen.getByText("Static fallback")).toBeInTheDocument();
+  });
+
+  it("keeps the canvas when its WebGL context restores before the deadline", async () => {
+    vi.useFakeTimers();
+    render(
+      <ExploreCanvas
+        motionLevel={3}
+        quality="high"
+        poster="/media/explore/hero.avif"
+        fallbackLabel="Static fallback"
+        canvasLabel="Spatial visualization of IzignaMx capabilities"
+      />
+    );
+
+    canvasHarness.domElement?.dispatchEvent(
+      new Event("webglcontextlost", { cancelable: true })
+    );
+    canvasHarness.domElement?.dispatchEvent(new Event("webglcontextrestored"));
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(2_000);
+    });
+
+    expect(screen.getByTestId("r3f-canvas")).toBeInTheDocument();
   });
 });

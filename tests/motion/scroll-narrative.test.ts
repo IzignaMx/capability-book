@@ -121,7 +121,7 @@ describe("ScrollNarrativeController", () => {
     const controller = new ScrollNarrativeController(port);
     const elements = createElementMap(...chapters.map(({ id }) => id));
 
-    controller.mount(elements, vi.fn());
+    expect(controller.mount(elements, vi.fn())).toBe(true);
 
     expect(records).toHaveLength(chapters.length);
     for (const record of records) {
@@ -196,10 +196,41 @@ describe("ScrollNarrativeController", () => {
     };
     const controller = new ScrollNarrativeController(port);
 
-    expect(() =>
-      controller.mount(createElementMap("signal", "assembly"), vi.fn()),
-    ).not.toThrow();
+    expect(controller.mount(createElementMap("signal", "assembly"), vi.fn())).toBe(false);
     expect(firstKill).toHaveBeenCalledTimes(1);
+  });
+
+  it("reports refresh failure and releases owned triggers", () => {
+    const kill = vi.fn();
+    const controller = new ScrollNarrativeController({
+      create: () => ({
+        refresh: () => {
+          throw new Error("Refresh failed");
+        },
+        kill
+      })
+    });
+
+    expect(controller.mount(createElementMap("signal"), vi.fn())).toBe(true);
+    expect(controller.refresh()).toBe(false);
+    expect(kill).toHaveBeenCalledTimes(1);
+  });
+
+  it("attempts every cleanup even when a third-party trigger throws", () => {
+    const firstKill = vi.fn(() => {
+      throw new Error("Kill failed");
+    });
+    const secondKill = vi.fn();
+    const create = vi
+      .fn()
+      .mockReturnValueOnce({ refresh: vi.fn(), kill: firstKill })
+      .mockReturnValueOnce({ refresh: vi.fn(), kill: secondKill });
+    const controller = new ScrollNarrativeController({ create });
+
+    expect(controller.mount(createElementMap("signal", "assembly"), vi.fn())).toBe(true);
+    expect(() => controller.dispose()).not.toThrow();
+    expect(firstKill).toHaveBeenCalledTimes(1);
+    expect(secondKill).toHaveBeenCalledTimes(1);
   });
 
   it("loads and registers ScrollTrigger only from a browser lifecycle", async () => {

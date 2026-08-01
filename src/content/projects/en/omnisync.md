@@ -48,7 +48,6 @@
       "verifiedAt": "2026-07-20"
     }
   ],
-  "liveUrl": "https://omnisync.izignamx.com/",
   "fallbackPoster": "/media/projects/omnisync/poster.avif",
   "confidentiality": "partial",
   "accessibilityNotes": [
@@ -109,10 +108,6 @@ Published outcomes are presented as demonstrated capabilities and linked to publ
 - Shopify
 - Webhooks
 - Background jobs
-
-## Public links
-
-- [Live product](https://omnisync.izignamx.com/)
 
 ## Related capabilities
 

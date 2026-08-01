@@ -62,3 +62,38 @@ test("retries one failed renderer before preserving the static narrative", async
   await expect(page.getByRole("link", { name: "Ver evidencia en Evaluate" })).toBeVisible();
   await expect(page.locator("main")).not.toContainText(/TypeError|WebGLRenderer|stack trace/i);
 });
+
+test("falls back when a live WebGL context does not restore", async ({ page }) => {
+  test.setTimeout(45_000);
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "deviceMemory", { configurable: true, value: 8 });
+    Object.defineProperty(navigator, "hardwareConcurrency", {
+      configurable: true,
+      value: 8
+    });
+  });
+
+  await page.goto("/en/", { waitUntil: "networkidle" });
+  const visual = page.locator(".explore-visual");
+  const canvas = visual.locator("canvas");
+  await expect(canvas).toHaveCount(1);
+  await expect(
+    visual.getByRole("img", { name: "Spatial visualization of IzignaMx capabilities" })
+  ).toBeVisible();
+
+  const contextWasLost = await canvas.evaluate((element) => {
+    const context =
+      (element as HTMLCanvasElement).getContext("webgl2") ??
+      (element as HTMLCanvasElement).getContext("webgl");
+    const extension = context?.getExtension("WEBGL_lose_context");
+    extension?.loseContext();
+    return extension !== null && extension !== undefined;
+  });
+  expect(contextWasLost).toBe(true);
+
+  await expect(canvas).toHaveCount(0, { timeout: 10_000 });
+  await expect(visual).toHaveAttribute("data-runtime-unavailable", "true");
+  await expect(page.locator(".explore-canvas-frame .explore-fallback")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "We listen before we design." }))
+    .toBeVisible();
+});

@@ -145,6 +145,16 @@ describe("Explore cinematic scenes", () => {
     ]);
   });
 
+  it("uses a non-empty spatial placeholder while lazy scenes load", () => {
+    const source = readFileSync(
+      new URL("../../src/features/explore-mode/ExploreNarrative.tsx", import.meta.url),
+      "utf8"
+    );
+
+    expect(source).toContain("fallback={<SceneTransitionFallback />}");
+    expect(source).not.toContain("<Suspense fallback={null}>");
+  });
+
   it("never offers to elevate a constrained system motion policy", () => {
     expect(resolveMotionControlState(false, false)).toBe("unavailable");
     expect(resolveMotionControlState(false, true)).toBe("reduce");

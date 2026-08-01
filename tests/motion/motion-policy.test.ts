@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import {
   readMotionSignals,
+  observeMotionSignalChanges,
   resolveMotionPolicy
 } from "../../src/motion/preferences/MotionPreferenceService";
 
@@ -112,5 +113,33 @@ describe("motion policy", () => {
     } finally {
       vi.unstubAllGlobals();
     }
+  });
+
+  it("observes live reduced-motion and viewport changes with cleanup", () => {
+    const addEventListener = vi.fn();
+    const removeEventListener = vi.fn();
+    const onChange = vi.fn();
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn().mockReturnValue({
+        matches: false,
+        addEventListener,
+        removeEventListener
+      } satisfies Pick<MediaQueryList, "matches" | "addEventListener" | "removeEventListener">)
+    );
+
+    const stopObserving = observeMotionSignalChanges(onChange);
+    const mediaListener = addEventListener.mock.calls.at(0)?.at(1) as
+      | EventListener
+      | undefined;
+    mediaListener?.(new Event("change"));
+    window.dispatchEvent(new Event("resize"));
+
+    expect(onChange.mock.calls).toEqual([["policy"], ["viewport"]]);
+    stopObserving();
+    window.dispatchEvent(new Event("resize"));
+    expect(onChange).toHaveBeenCalledTimes(2);
+    expect(removeEventListener).toHaveBeenCalledWith("change", mediaListener);
+    vi.unstubAllGlobals();
   });
 });
