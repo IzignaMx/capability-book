@@ -401,8 +401,11 @@ function renderBody(locale: Locale, content: LocalizedEditorial, links: PublicPr
     ...(links.liveUrl ? [`- [${locale === "es" ? "Producto en vivo" : "Live product"}](${links.liveUrl})`] : []),
     ...(links.sourceUrl ? [`- [${locale === "es" ? "Código fuente" : "Source code"}](${links.sourceUrl})`] : [])
   ].join("\n");
+  const publicLinksSection = publicLinks
+    ? `\n\n## ${labels.links}\n\n${publicLinks}`
+    : "";
 
-  return `## ${labels.context}\n\n${content.challenge}\n\n## ${labels.constraints}\n\n${bullets(content.constraints)}\n\n## ${labels.strategy}\n\n${content.strategy}\n\n## ${labels.architecture}\n\n${content.architecture}\n\n## ${labels.experience}\n\n${content.experience}\n\n## ${labels.features}\n\n${bullets(content.keyFeatures)}\n\n## ${labels.quality}\n\n${bullets([...content.quality, ...content.accessibilityNotes])}\n\n## ${labels.outcomes}\n\n${outcomeNote}\n\n## ${labels.technologies}\n\n${bullets(content.technologies)}\n\n## ${labels.links}\n\n${publicLinks}\n\n## ${labels.capabilities}\n\n${bullets(content.capabilities)}\n\n## ${labels.cta}\n\n${cta}\n`;
+  return `## ${labels.context}\n\n${content.challenge}\n\n## ${labels.constraints}\n\n${bullets(content.constraints)}\n\n## ${labels.strategy}\n\n${content.strategy}\n\n## ${labels.architecture}\n\n${content.architecture}\n\n## ${labels.experience}\n\n${content.experience}\n\n## ${labels.features}\n\n${bullets(content.keyFeatures)}\n\n## ${labels.quality}\n\n${bullets([...content.quality, ...content.accessibilityNotes])}\n\n## ${labels.outcomes}\n\n${outcomeNote}\n\n## ${labels.technologies}\n\n${bullets(content.technologies)}${publicLinksSection}\n\n## ${labels.capabilities}\n\n${bullets(content.capabilities)}\n\n## ${labels.cta}\n\n${cta}\n`;
 }
 
 async function writeLocalizedProject(record: EvidenceRecord, locale: Locale): Promise<void> {

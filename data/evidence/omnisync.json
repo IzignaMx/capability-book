@@ -44,20 +44,9 @@
       "label": "Repositorio privado OmniSync",
       "type": "repository",
       "url": "https://github.com/IzignaMx/OmniSync"
-    },
-    {
-      "id": "live",
-      "label": "Producto OmniSync",
-      "type": "live",
-      "url": "https://omnisync.izignamx.com/"
     }
   ],
   "links": [
-    {
-      "label": "Producto OmniSync",
-      "url": "https://omnisync.izignamx.com/",
-      "public": true
-    },
     {
       "label": "Repositorio privado",
       "url": "https://github.com/IzignaMx/OmniSync",
