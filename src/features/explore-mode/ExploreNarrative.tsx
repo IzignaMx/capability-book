@@ -1,4 +1,14 @@
-import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
+import {
+  Component,
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ErrorInfo,
+  type ReactNode
+} from "react";
 import type { QualityProfile } from "../../3d/quality/RenderQualityController";
 import { selectInitialQuality } from "../../3d/quality/RenderQualityController";
 import {
@@ -9,7 +19,9 @@ import { ExploreFallback } from "../../components/explore/ExploreFallback";
 import { ScrollNarrativeController } from "../../motion/orchestration/ScrollNarrativeController";
 import {
   readMotionSignals,
+  observeMotionSignalChanges,
   resolveMotionPolicy,
+  type MotionSignalChangeSource,
   type MotionLevel,
   type MotionSignals
 } from "../../motion/preferences/MotionPreferenceService";
@@ -56,15 +68,60 @@ const CHAPTER_ELEMENT_IDS: Record<ChapterId, string> = {
 const COPY = {
   es: {
     evaluate: "Explorar evidencia en Evaluate",
+    canvasLabel: "Visualización espacial de capacidades de IzignaMx",
     reducedStatus: "La visualización avanzada fue reemplazada por su composición estática.",
-    restoredStatus: "La política de movimiento del dispositivo fue restaurada."
+    restoredStatus: "La política de movimiento del dispositivo fue restaurada.",
+    unavailableStatus: "La visualización avanzada no está disponible. Se muestra la versión estática completa."
   },
   en: {
     evaluate: "Explore evidence in Evaluate",
+    canvasLabel: "Spatial visualization of IzignaMx capabilities",
     reducedStatus: "The advanced visualization was replaced by its static composition.",
-    restoredStatus: "The device motion policy was restored."
+    restoredStatus: "The device motion policy was restored.",
+    unavailableStatus: "The advanced visualization is unavailable. The complete static version is shown."
   }
 } as const;
+
+function SceneTransitionFallback() {
+  return (
+    <group>
+      <ambientLight intensity={0.4} />
+      <mesh>
+        <icosahedronGeometry args={[0.72, 1]} />
+        <meshBasicMaterial color="#3b82f6" wireframe transparent opacity={0.72} />
+      </mesh>
+    </group>
+  );
+}
+
+interface NarrativeEnhancementBoundaryProps {
+  readonly children: ReactNode;
+  readonly fallback: ReactNode;
+  readonly onFailure: () => void;
+}
+
+interface NarrativeEnhancementBoundaryState {
+  readonly failed: boolean;
+}
+
+export class NarrativeEnhancementBoundary extends Component<
+  NarrativeEnhancementBoundaryProps,
+  NarrativeEnhancementBoundaryState
+> {
+  state: NarrativeEnhancementBoundaryState = { failed: false };
+
+  static getDerivedStateFromError(): NarrativeEnhancementBoundaryState {
+    return { failed: true };
+  }
+
+  componentDidCatch(_error: Error, _info: ErrorInfo): void {
+    this.props.onFailure();
+  }
+
+  render(): ReactNode {
+    return this.state.failed ? this.props.fallback : this.props.children;
+  }
+}
 
 const LazyExploreCanvas = lazy(async () => {
   const module = await import("../../components/explore/ExploreCanvas");
@@ -188,6 +245,19 @@ function qualitySignals(signals: MotionSignals, motionLevel: MotionLevel) {
   };
 }
 
+const QUALITY_RANK: Readonly<Record<QualityProfile, number>> = {
+  low: 0,
+  medium: 1,
+  high: 2
+};
+
+function lowerQualityOnly(
+  current: QualityProfile,
+  candidate: QualityProfile
+): QualityProfile {
+  return QUALITY_RANK[candidate] < QUALITY_RANK[current] ? candidate : current;
+}
+
 function readExplicitReduction(): boolean {
   try {
     return window.localStorage.getItem(MOTION_PREFERENCE_KEY) === "true";
@@ -216,31 +286,84 @@ export function ExploreNarrative({
   const [quality, setQuality] = useState<QualityProfile>("low");
   const [explicitlyReduced, setExplicitlyReduced] = useState(false);
   const [systemAllowsAdvanced, setSystemAllowsAdvanced] = useState(false);
+  const [runtimeUnavailable, setRuntimeUnavailable] = useState(false);
   const [sceneState, setSceneState] = useState<NarrativeSceneState>(() =>
     composeSceneProgress("signal", 0)
   );
   const [announcement, setAnnouncement] = useState("");
   const viewedCapabilities = useRef(false);
   const viewedProjects = useRef(new Set<"omnisync" | "nomada">());
+  const explicitlyReducedRef = useRef(false);
+  const runtimeUnavailableRef = useRef(false);
+  const latestSignalsRef = useRef<MotionSignals | null>(null);
 
-  const applyDevicePolicy = useCallback(() => {
-    const signals = readMotionSignals();
+  const applyDevicePolicy = useCallback((source: MotionSignalChangeSource = "policy") => {
+    const signals =
+      source === "viewport" && latestSignalsRef.current !== null
+        ? latestSignalsRef.current
+        : readMotionSignals();
+    if (source === "policy") latestSignalsRef.current = signals;
     const resolvedMotion = resolveMotionPolicy(signals);
-    setSystemAllowsAdvanced(resolvedMotion >= 2);
-    setMotionLevel(resolvedMotion);
-    setQuality(selectInitialQuality(qualitySignals(signals, resolvedMotion)));
-  }, []);
+    const allowsAdvanced = resolvedMotion >= 2 && !runtimeUnavailableRef.current;
+    const effectiveMotion =
+      explicitlyReducedRef.current || runtimeUnavailableRef.current ? 0 : resolvedMotion;
+    setSystemAllowsAdvanced(allowsAdvanced);
+    setMotionLevel((currentMotion) => {
+      if (source === "policy" && currentMotion !== effectiveMotion) {
+        setAnnouncement(effectiveMotion < 2 ? copy.reducedStatus : copy.restoredStatus);
+      }
+      return effectiveMotion;
+    });
+    const candidateQuality = selectInitialQuality(qualitySignals(signals, effectiveMotion));
+    setQuality((currentQuality) =>
+      source === "viewport"
+        ? lowerQualityOnly(currentQuality, candidateQuality)
+        : candidateQuality
+    );
+  }, [copy.reducedStatus, copy.restoredStatus]);
+
+  const degradeToStatic = useCallback(() => {
+    runtimeUnavailableRef.current = true;
+    setRuntimeUnavailable(true);
+    setSystemAllowsAdvanced(false);
+    setMotionLevel(0);
+    setQuality("low");
+    setAnnouncement(copy.unavailableStatus);
+  }, [copy.unavailableStatus]);
 
   useEffect(() => {
     const reduced = readExplicitReduction();
     const signals = readMotionSignals();
     const resolvedMotion = resolveMotionPolicy(signals);
+    explicitlyReducedRef.current = reduced;
+    runtimeUnavailableRef.current = false;
+    latestSignalsRef.current = signals;
+    setRuntimeUnavailable(false);
     setSystemAllowsAdvanced(resolvedMotion >= 2);
     setExplicitlyReduced(reduced);
     setMotionLevel(reduced ? 0 : resolvedMotion);
     setQuality(selectInitialQuality(qualitySignals(signals, reduced ? 0 : resolvedMotion)));
     dispatchExploreEvent(createExploreEvent("explore_started", locale));
-  }, [locale]);
+
+    let pendingPolicyFrame: number | null = null;
+    let pendingSignalSource: MotionSignalChangeSource = "viewport";
+    const handleSignalChange = (source: MotionSignalChangeSource) => {
+      if (source === "policy") pendingSignalSource = "policy";
+      if (pendingPolicyFrame !== null) return;
+      pendingPolicyFrame = window.requestAnimationFrame(() => {
+        pendingPolicyFrame = null;
+        const signalSource = pendingSignalSource;
+        pendingSignalSource = "viewport";
+        applyDevicePolicy(signalSource);
+      });
+    };
+    const stopObserving = observeMotionSignalChanges(handleSignalChange);
+
+    return () => {
+      stopObserving();
+      if (pendingPolicyFrame !== null) window.cancelAnimationFrame(pendingPolicyFrame);
+    };
+  }, [applyDevicePolicy, locale]);
 
   useEffect(() => {
     if (motionLevel < 2) return;
@@ -256,12 +379,21 @@ export function ExploreNarrative({
       }
 
       controller = createdController;
-      if (controller === null) return;
+      if (controller === null) {
+        degradeToStatic();
+        return;
+      }
 
       const elements = new Map<ChapterId, HTMLElement>();
       for (const chapter of ACTIVE_CHAPTER_IDS) {
         const element = document.getElementById(CHAPTER_ELEMENT_IDS[chapter]);
         if (element !== null) elements.set(chapter, element);
+      }
+
+      if (elements.size !== ACTIVE_CHAPTER_IDS.length) {
+        controller.dispose();
+        degradeToStatic();
+        return;
       }
 
       const chapterProgress = new Map<ChapterId, number>();
@@ -321,12 +453,15 @@ export function ExploreNarrative({
         });
       };
 
-      controller.mount(elements, (chapter, progress) => {
+      const mounted = controller.mount(elements, (chapter, progress) => {
         if (!ACTIVE_CHAPTER_IDS.includes(chapter)) return;
         chapterProgress.set(chapter, progress);
         scheduleActiveChapter();
       });
-      controller.refresh();
+      if (!mounted || !controller.refresh()) {
+        degradeToStatic();
+        return;
+      }
       scheduleActiveChapter();
     });
 
@@ -335,13 +470,14 @@ export function ExploreNarrative({
       if (pendingFrame !== null) window.cancelAnimationFrame(pendingFrame);
       controller?.dispose();
     };
-  }, [locale, motionLevel]);
+  }, [degradeToStatic, locale, motionLevel]);
 
   const toggleMotion = useCallback(() => {
     if (!explicitlyReduced && !systemAllowsAdvanced) return;
 
     const nextReduced = !explicitlyReduced;
     persistExplicitReduction(nextReduced);
+    explicitlyReducedRef.current = nextReduced;
     setExplicitlyReduced(nextReduced);
 
     if (nextReduced) {
@@ -377,27 +513,34 @@ export function ExploreNarrative({
   const visual = motionLevel < 2 ? (
     <ExploreFallback poster={poster} label={fallbackLabel} />
   ) : (
-    <Suspense fallback={<ExploreFallback poster={poster} label={fallbackLabel} />}>
-      <LazyExploreCanvas
-        motionLevel={motionLevel}
-        quality={quality}
-        poster={poster}
-        fallbackLabel={fallbackLabel}
-        onQualityChange={handleQualityChange}
-      >
-        <Suspense fallback={null}>
-          {sceneState.scene === "hero-signal" ? (
-            <LazyHeroSignalScene progress={sceneState.progress} quality={quality} />
-          ) : sceneState.scene === "capability-orbits" ? (
-            <LazyCapabilityOrbitScene progress={sceneState.progress} quality={quality} />
-          ) : sceneState.scene === "omnisync" ? (
-            <LazyOmniSyncScene progress={sceneState.progress} quality={quality} />
-          ) : (
-            <LazyNomadaScene progress={sceneState.progress} quality={quality} />
-          )}
-        </Suspense>
-      </LazyExploreCanvas>
-    </Suspense>
+    <NarrativeEnhancementBoundary
+      fallback={<ExploreFallback poster={poster} label={fallbackLabel} />}
+      onFailure={degradeToStatic}
+    >
+      <Suspense fallback={<ExploreFallback poster={poster} label={fallbackLabel} />}>
+        <LazyExploreCanvas
+          motionLevel={motionLevel}
+          quality={quality}
+          poster={poster}
+          fallbackLabel={fallbackLabel}
+          canvasLabel={copy.canvasLabel}
+          onQualityChange={handleQualityChange}
+          onRuntimeFailure={degradeToStatic}
+        >
+          <Suspense fallback={<SceneTransitionFallback />}>
+            {sceneState.scene === "hero-signal" ? (
+              <LazyHeroSignalScene progress={sceneState.progress} quality={quality} />
+            ) : sceneState.scene === "capability-orbits" ? (
+              <LazyCapabilityOrbitScene progress={sceneState.progress} quality={quality} />
+            ) : sceneState.scene === "omnisync" ? (
+              <LazyOmniSyncScene progress={sceneState.progress} quality={quality} />
+            ) : (
+              <LazyNomadaScene progress={sceneState.progress} quality={quality} />
+            )}
+          </Suspense>
+        </LazyExploreCanvas>
+      </Suspense>
+    </NarrativeEnhancementBoundary>
   );
   const motionControlState = resolveMotionControlState(
     explicitlyReduced,
@@ -410,6 +553,7 @@ export function ExploreNarrative({
       data-motion-level={motionLevel}
       data-quality-profile={quality}
       data-active-chapter={sceneState.chapter}
+      data-runtime-unavailable={runtimeUnavailable ? "true" : "false"}
     >
       <div className="explore-controls" data-pagefind-ignore>
         <a href={evaluateHref}>{copy.evaluate}</a>

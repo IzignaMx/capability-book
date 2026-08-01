@@ -111,6 +111,16 @@ test("keeps the semantic Explore flow stable with one adaptive canvas", async ({
     await page.evaluate(() => (window as ExploreTestWindow).__IZIGNA_CONTEXT_COUNT__ ?? 0)
   ).toBe(contextCountAfterFirstPasses);
 
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(canvas).toHaveCount(0);
+  await expect(visual).toHaveAttribute("data-motion-level", "0");
+  await expect(page.getByRole("button", { name: "Movimiento avanzado no disponible" }))
+    .toBeDisabled();
+
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await expect(canvas).toHaveCount(1);
+  await expect(visual).toHaveAttribute("data-motion-level", /[23]/);
+
   await visual.evaluate((element) => {
     (element as HTMLElement).style.visibility = "hidden";
   });

@@ -76,7 +76,7 @@ export class ScrollNarrativeController {
   mount(
     elements: ReadonlyMap<ChapterId, HTMLElement>,
     onProgress: (chapter: ChapterId, progress: number) => void,
-  ): void {
+  ): boolean {
     this.dispose();
 
     try {
@@ -94,20 +94,32 @@ export class ScrollNarrativeController {
 
         this.triggers.push(trigger);
       }
+      return true;
     } catch {
       this.dispose();
+      return false;
     }
   }
 
-  refresh(): void {
-    for (const trigger of this.triggers) {
-      trigger.refresh();
+  refresh(): boolean {
+    try {
+      for (const trigger of this.triggers) {
+        trigger.refresh();
+      }
+      return true;
+    } catch {
+      this.dispose();
+      return false;
     }
   }
 
   dispose(): void {
     for (const trigger of this.triggers.splice(0)) {
-      trigger.kill();
+      try {
+        trigger.kill();
+      } catch {
+        // Third-party cleanup must never block the complete static fallback.
+      }
     }
   }
 }

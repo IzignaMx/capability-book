@@ -8,8 +8,12 @@ export interface MotionSignals {
   readonly cores?: number;
 }
 
+export type MotionSignalChangeSource = "policy" | "viewport";
+
 interface NetworkInformationLike {
   readonly saveData?: boolean;
+  addEventListener?(type: "change", listener: EventListener): void;
+  removeEventListener?(type: "change", listener: EventListener): void;
 }
 
 type NavigatorWithMotionHints = Navigator & {
@@ -112,5 +116,42 @@ export function readMotionSignals(): MotionSignals {
     saveData,
     webgl: detectTransientWebgl(document),
     ...resourceSignals
+  };
+}
+
+export function observeMotionSignalChanges(
+  onChange: (source: MotionSignalChangeSource) => void
+): () => void {
+  if (typeof window === "undefined") return () => undefined;
+
+  const cleanups: Array<() => void> = [];
+  const mediaQuery = window.matchMedia?.(REDUCED_MOTION_QUERY);
+  const runtimeNavigator = window.navigator as NavigatorWithMotionHints;
+  const connection = runtimeNavigator.connection;
+
+  if (
+    mediaQuery &&
+    typeof mediaQuery.addEventListener === "function" &&
+    typeof mediaQuery.removeEventListener === "function"
+  ) {
+    const handleMediaChange = () => onChange("policy");
+    mediaQuery.addEventListener("change", handleMediaChange);
+    cleanups.push(() => mediaQuery.removeEventListener("change", handleMediaChange));
+  }
+
+  if (connection?.addEventListener && connection.removeEventListener) {
+    const handleConnectionChange = () => onChange("policy");
+    connection.addEventListener("change", handleConnectionChange);
+    cleanups.push(() => connection.removeEventListener?.("change", handleConnectionChange));
+  }
+
+  const handleViewportChange = () => onChange("viewport");
+  window.addEventListener("resize", handleViewportChange);
+  window.addEventListener("orientationchange", handleViewportChange);
+  cleanups.push(() => window.removeEventListener("resize", handleViewportChange));
+  cleanups.push(() => window.removeEventListener("orientationchange", handleViewportChange));
+
+  return () => {
+    for (const cleanup of cleanups.splice(0)) cleanup();
   };
 }

@@ -1,4 +1,5 @@
 import { Canvas } from "@react-three/fiber";
+import type { RootState } from "@react-three/fiber";
 import {
   Component,
   useCallback,
@@ -18,7 +19,9 @@ export interface ExploreCanvasProps {
   readonly quality: QualityProfile;
   readonly poster: string;
   readonly fallbackLabel: string;
+  readonly canvasLabel: string;
   readonly onQualityChange?: (quality: QualityProfile) => void;
+  readonly onRuntimeFailure?: () => void;
   readonly children?: ReactNode;
 }
 
@@ -40,6 +43,7 @@ const DPR_BY_QUALITY: Record<QualityProfile, [number, number]> = {
 };
 
 const CANVAS_INITIALIZATION_TIMEOUT_MS = 1_500;
+export const WEBGL_CONTEXT_RESTORE_TIMEOUT_MS = 2_000;
 
 class CanvasErrorBoundary extends Component<CanvasBoundaryProps, CanvasBoundaryState> {
   state: CanvasBoundaryState = { failed: false };
@@ -68,25 +72,67 @@ export function ExploreCanvas({
   quality,
   poster,
   fallbackLabel,
+  canvasLabel,
   onQualityChange,
+  onRuntimeFailure,
   children
 }: ExploreCanvasProps) {
   const [attempt, setAttempt] = useState<0 | 1>(0);
   const [terminalFailure, setTerminalFailure] = useState(false);
   const failedAttempts = useRef(new Set<number>());
   const readyAttempts = useRef(new Set<number>());
+  const contextCleanupRef = useRef<(() => void) | null>(null);
 
   const handleFailure = useCallback(() => {
     if (failedAttempts.current.has(attempt)) return;
     failedAttempts.current.add(attempt);
 
     if (attempt === 0) setAttempt(1);
-    else setTerminalFailure(true);
-  }, [attempt]);
+    else {
+      setTerminalFailure(true);
+      onRuntimeFailure?.();
+    }
+  }, [attempt, onRuntimeFailure]);
 
-  const handleCreated = useCallback(() => {
-    readyAttempts.current.add(attempt);
-  }, [attempt]);
+  const handleRuntimeFailure = useCallback(() => {
+    contextCleanupRef.current?.();
+    contextCleanupRef.current = null;
+    setTerminalFailure(true);
+    onRuntimeFailure?.();
+  }, [onRuntimeFailure]);
+
+  const handleCreated = useCallback(
+    (state: RootState) => {
+      readyAttempts.current.add(attempt);
+      contextCleanupRef.current?.();
+
+      const canvas = state.gl.domElement;
+      let restoreTimeout: number | null = null;
+      const clearRestoreTimeout = () => {
+        if (restoreTimeout === null) return;
+        window.clearTimeout(restoreTimeout);
+        restoreTimeout = null;
+      };
+      const handleContextLost = (event: Event) => {
+        event.preventDefault();
+        clearRestoreTimeout();
+        restoreTimeout = window.setTimeout(
+          handleRuntimeFailure,
+          WEBGL_CONTEXT_RESTORE_TIMEOUT_MS
+        );
+      };
+      const handleContextRestored = () => clearRestoreTimeout();
+
+      canvas.addEventListener("webglcontextlost", handleContextLost);
+      canvas.addEventListener("webglcontextrestored", handleContextRestored);
+      contextCleanupRef.current = () => {
+        clearRestoreTimeout();
+        canvas.removeEventListener("webglcontextlost", handleContextLost);
+        canvas.removeEventListener("webglcontextrestored", handleContextRestored);
+      };
+    },
+    [attempt, handleRuntimeFailure]
+  );
 
   useEffect(() => {
     if (motionLevel < 2 || terminalFailure || readyAttempts.current.has(attempt)) return;
@@ -97,6 +143,20 @@ export function ExploreCanvas({
 
     return () => window.clearTimeout(timeout);
   }, [attempt, handleFailure, motionLevel, terminalFailure]);
+
+  useEffect(() => {
+    if (motionLevel >= 2 && !terminalFailure) return;
+    contextCleanupRef.current?.();
+    contextCleanupRef.current = null;
+  }, [motionLevel, terminalFailure]);
+
+  useEffect(
+    () => () => {
+      contextCleanupRef.current?.();
+      contextCleanupRef.current = null;
+    },
+    []
+  );
 
   if (motionLevel < 2 || terminalFailure) {
     return <ExploreFallback poster={poster} label={fallbackLabel} />;
@@ -113,7 +173,7 @@ export function ExploreCanvas({
       <Canvas
         key={attempt}
         role="img"
-        aria-label="Visualización espacial de capacidades de IzignaMx"
+        aria-label={canvasLabel}
         dpr={DPR_BY_QUALITY[quality]}
         frameloop="demand"
         onCreated={handleCreated}

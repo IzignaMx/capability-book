@@ -8,7 +8,7 @@ Immersive, evidence-backed capability book and verified portfolio for **IzignaMx
 
 **Phase 1: accessible static foundation** is complete and deployed at [book.izignamx.com](https://book.izignamx.com/).
 
-**Phase 2: cinematic vertical slice** is in review. Its deferred, single-canvas Explore layer preserves the bilingual static product, reduced-motion parity, evidence, navigation, and conversion paths when WebGL is unavailable.
+**Phase 2: cinematic vertical slice** is complete and deployed. Its deferred, single-canvas Explore layer preserves the bilingual static product, reduced-motion parity, evidence, navigation, and conversion paths when WebGL is unavailable.
 
 ## Binding identity rules
 
