@@ -97,7 +97,7 @@ function posterSvg(poster: PosterDefinition): string {
       <path d="M866 132 1094 264 866 396 638 264Z" fill="${poster.secondary}" fill-opacity=".08" stroke="${poster.secondary}" stroke-width="2"/>
       <circle cx="866" cy="264" r="14" fill="${poster.secondary}"/>
       <path d="M90 94H330" stroke="${poster.accent}" stroke-width="8"/>
-      <text x="90" y="160" fill="#cbd5e1" font-family="monospace" font-size="24" letter-spacing="6">IZIGNAMX / ${poster.index}</text>
+      <text x="90" y="160" fill="#cbd5e1" font-family="monospace" font-size="24" letter-spacing="6">IzignaMx / ${poster.index}</text>
       <text x="90" y="530" fill="#ffffff" font-family="Arial, sans-serif" font-size="70" font-weight="700" letter-spacing="-2">${title}</text>
       <text x="94" y="584" fill="${poster.secondary}" font-family="monospace" font-size="20" letter-spacing="4">${signal}</text>
       <text x="1110" y="646" fill="#cbd5e1" font-family="monospace" font-size="18">CASE_${poster.index}</text>
@@ -152,7 +152,7 @@ function explorePosterSvg(): string {
         <path d="M-34-112H108L-20 112H122"/>
       </g>
       <circle cx="800" cy="450" r="176" fill="none" stroke="#22d3ee" stroke-opacity=".72" stroke-width="2"/>
-      <text x="94" y="118" fill="#cbd5e1" font-family="monospace" font-size="22" letter-spacing="6">IZIGNAMX / EXPLORE_01</text>
+      <text x="94" y="118" fill="#cbd5e1" font-family="monospace" font-size="22" letter-spacing="6">IzignaMx / EXPLORE_01</text>
       <text x="94" y="770" fill="#ffffff" font-family="Arial, sans-serif" font-size="64" font-weight="700" letter-spacing="-2">SIGNAL → SYSTEM</text>
       <text x="98" y="818" fill="#22d3ee" font-family="monospace" font-size="18" letter-spacing="4">MODULAR CORE / SIX CAPABILITIES</text>
     </svg>
