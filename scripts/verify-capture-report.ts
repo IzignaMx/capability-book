@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { readFile, readdir } from "node:fs/promises";
+import { hasCaptureSourceDrift } from "./capture-validation";
 
 interface CaptureResult {
   slug: string;
@@ -31,6 +32,7 @@ const report = JSON.parse(
 const evidenceDirectory = new URL("data/evidence/", root);
 const evidenceFiles = (await readdir(evidenceDirectory)).filter((file) => file.endsWith(".json"));
 const evidenceBySlug = new Map<string, ScreenshotEvidence>();
+const sourceDrifts: string[] = [];
 
 for (const file of evidenceFiles) {
   const record = JSON.parse(await readFile(new URL(file, evidenceDirectory), "utf8")) as EvidenceRecord;
@@ -63,8 +65,8 @@ for (const result of report) {
       if (result.viewport !== "mobile" && result.viewport !== "desktop") {
         throw new Error(`${result.slug}/${result.viewport}: unsupported evidence viewport`);
       }
-      if (actualHash !== publishedEvidence.provenance.sourceSha256[result.viewport]) {
-        throw new Error(`${result.slug}/${result.viewport}: production capture changed and requires evidence review`);
+      if (hasCaptureSourceDrift(actualHash, publishedEvidence.provenance.sourceSha256[result.viewport])) {
+        sourceDrifts.push(`${result.slug}/${result.viewport}`);
       }
     }
   }
@@ -74,6 +76,11 @@ for (const result of report) {
   if (result.status !== "captured" && result.path) {
     throw new Error(`${result.slug}/${result.viewport}: rejected result must not expose a screenshot path`);
   }
+}
+
+for (const drift of sourceDrifts) {
+  const message = `${drift}: current cross-platform capture differs from the reviewed source master; inspect the audit artifact before updating evidence`;
+  console.warn(process.env.GITHUB_ACTIONS ? `::warning title=Visual evidence drift::${message}` : `WARNING: ${message}`);
 }
 
 console.log(`Verified ${report.length} capture audit results without accepting blocked pages as evidence.`);

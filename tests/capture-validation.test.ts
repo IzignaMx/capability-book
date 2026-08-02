@@ -1,7 +1,11 @@
 // @vitest-environment node
 
 import { describe, expect, it } from "vitest";
-import { detectCaptureBlock, detectCaptureChallenge } from "../scripts/capture-validation";
+import {
+  detectCaptureBlock,
+  detectCaptureChallenge,
+  hasCaptureSourceDrift
+} from "../scripts/capture-validation";
 
 describe("capture challenge validation", () => {
   it.each([
@@ -27,5 +31,10 @@ describe("capture challenge validation", () => {
 
   it("prefers a challenge marker when the response also has a blocked status", () => {
     expect(detectCaptureBlock("Verify you are human", 403)).toBe("verify you are human");
+  });
+
+  it("distinguishes reviewed-master drift from report file integrity", () => {
+    expect(hasCaptureSourceDrift("current-platform-hash", "reviewed-master-hash")).toBe(true);
+    expect(hasCaptureSourceDrift("same-hash", "same-hash")).toBe(false);
   });
 });

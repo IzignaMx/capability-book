@@ -23,3 +23,7 @@ export function detectCaptureBlock(bodyText: string, httpStatus?: number): Captu
   if (!blockedHttpStatuses.some((status) => status === httpStatus)) return null;
   return `http-${httpStatus}` as CaptureHttpBlockMarker;
 }
+
+export function hasCaptureSourceDrift(actualHash: string, reviewedSourceHash: string): boolean {
+  return actualHash !== reviewedSourceHash;
+}
