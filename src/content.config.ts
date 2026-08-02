@@ -17,6 +17,40 @@ const proofPoint = z.object({
   verifiedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional()
 });
 
+const mediaVariant = z.object({
+  avif: z.string().startsWith("/media/projects/"),
+  webp: z.string().startsWith("/media/projects/"),
+  width: z.number().int().positive(),
+  height: z.number().int().positive(),
+  avifSha256: z.string().regex(/^[a-f0-9]{64}$/),
+  webpSha256: z.string().regex(/^[a-f0-9]{64}$/)
+});
+
+const visualEvidence = z.object({
+  id: z.string().min(2),
+  role: z.literal("screenshot"),
+  path: z.string().startsWith("/media/projects/"),
+  width: z.number().int().positive(),
+  height: z.number().int().positive(),
+  alt: z.string().min(10),
+  caption: z.string().min(10),
+  license: z.enum(["owned", "client-authorized", "open-license"]),
+  variants: z.object({
+    mobile: mediaVariant,
+    desktop: mediaVariant
+  }),
+  provenance: z.object({
+    kind: z.enum(["deterministic-reconstruction", "direct-production-capture"]),
+    repository: z.url(),
+    commit: z.string().regex(/^[a-f0-9]{40}$/),
+    sourceUrl: z.url(),
+    capturedAt: z.iso.datetime(),
+    rightsBasis: z.string().min(10),
+    approvedBy: z.literal("IzignaMx"),
+    reviewedAt: z.iso.date()
+  })
+});
+
 const projects = defineCollection({
   loader: glob({
     base: "./src/content/projects",
@@ -38,6 +72,7 @@ const projects = defineCollection({
     liveUrl: z.url().optional(),
     sourceUrl: z.url().optional(),
     fallbackPoster: z.string().startsWith("/media/projects/"),
+    visualEvidence: z.array(visualEvidence),
     confidentiality: z.enum(["public", "partial", "private"]),
     accessibilityNotes: z.array(z.string()).min(1),
     relatedServices: z.array(z.string()).min(1),

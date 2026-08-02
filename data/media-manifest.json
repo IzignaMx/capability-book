@@ -1,40 +1,38 @@
 {
   "viewports": [
-    {
-      "name": "mobile",
-      "width": 390,
-      "height": 844
-    },
-    {
-      "name": "desktop",
-      "width": 1440,
-      "height": 900
-    }
+    { "name": "mobile", "width": 390, "height": 844 },
+    { "name": "desktop", "width": 1440, "height": 900 }
   ],
   "projects": [
     {
       "slug": "omnisync",
-      "url": "https://omnisync.izignamx.com/"
+      "policy": "skip",
+      "reason": "Private repository and no approved public capture source."
     },
     {
       "slug": "hamburguesa-nomada",
+      "policy": "best-effort",
       "url": "https://nomada.izignamx.com/"
     },
     {
       "slug": "vald",
+      "policy": "best-effort",
       "url": "https://vald.izignamx.com/"
     },
     {
       "slug": "nutrichilango",
+      "policy": "best-effort",
       "url": "https://nutrichilango.izignamx.com/"
     },
     {
       "slug": "tecuiyo",
+      "policy": "best-effort",
       "url": "https://tecuiyo.izignamx.com/"
     },
     {
       "slug": "developer-tools",
-      "url": "https://apps.izignamx.com/"
+      "policy": "best-effort",
+      "url": "https://cripterhack.github.io/bigcommerce-wysiwyg-extension/"
     }
   ]
 }

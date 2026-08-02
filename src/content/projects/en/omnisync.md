@@ -49,6 +49,7 @@
     }
   ],
   "fallbackPoster": "/media/projects/omnisync/poster.avif",
+  "visualEvidence": [],
   "confidentiality": "partial",
   "accessibilityNotes": [
     "The case retains a complete text narrative without relying on advanced visualization."

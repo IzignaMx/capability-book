@@ -2,7 +2,7 @@
 
 A project is publishable only when its JSON record validates, its public links pass, its ownership and confidentiality boundary are reviewed, every proof point cites at least one source, and a licensed fallback poster is listed.
 
-Raw captures are review artifacts. They do not become public media until approved, cropped, optimized, supplied with meaningful alternative text, and copied into `public/media/<project>/`.
+Raw captures are review artifacts. They do not become public media until approved, cropped, optimized, supplied with meaningful alternative text and provenance, and copied into `public/media/projects/<project>/evidence/`.
 
 Numeric claims are prohibited unless their `kind` and source support the wording used in the public case study. The accepted categories are:
 

@@ -1,5 +1,6 @@
 ---
 import { getCollection, render, type CollectionEntry } from "astro:content";
+import ProjectEvidenceFigure from "../../../components/projects/ProjectEvidenceFigure.astro";
 import ProofPoint from "../../../components/projects/ProofPoint.astro";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 
@@ -47,6 +48,7 @@ const confidentialityLabels = {
   private: "Divulgación limitada"
 } as const;
 const sameAs = [data.liveUrl, data.sourceUrl].filter((url): url is string => Boolean(url));
+const structuredImage = data.visualEvidence.at(0)?.path ?? data.fallbackPoster;
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "CreativeWork",
@@ -54,7 +56,7 @@ const structuredData = {
   description: data.elevatorPitch,
   inLanguage: "es",
   url: new URL(canonicalPath, site).toString(),
-  image: new URL(data.fallbackPoster, site).toString(),
+  image: new URL(structuredImage, site).toString(),
   creator: { "@type": "Organization", name: "IzignaMx", url: site.toString() },
   genre: classificationLabels[data.classification],
   keywords: [...data.capabilities, ...data.technologies].join(", "),
@@ -83,7 +85,7 @@ const structuredData = {
       </div>
       <img
         src={data.fallbackPoster}
-        alt={`Visual de apertura del proyecto ${data.title}`}
+        alt={`Visual ilustrativo de apertura del proyecto ${data.title}`}
         width="1280"
         height="720"
       />
@@ -94,6 +96,10 @@ const structuredData = {
       <h2 id="solution-title">Solución</h2>
       <p>{data.solution}</p>
     </div>
+
+    {data.visualEvidence.map((evidence) => (
+      <ProjectEvidenceFigure evidence={evidence} locale="es" />
+    ))}
 
     <div class="case-study__narrative">
       <Content />

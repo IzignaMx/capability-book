@@ -57,7 +57,7 @@
     {
       "id": "fallback-poster",
       "role": "fallback-poster",
-      "path": "/media/omnisync/poster.avif",
+      "path": "/media/projects/omnisync/poster.avif",
       "license": "owned"
     }
   ]

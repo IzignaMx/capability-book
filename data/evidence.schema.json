@@ -183,13 +183,173 @@
           },
           "path": {
             "type": "string",
-            "pattern": "^/media/"
+            "pattern": "^/media/projects/[a-z0-9-]+/"
           },
           "license": {
             "enum": ["owned", "client-authorized", "open-license"]
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "alt": {
+            "$ref": "#/$defs/localizedText"
+          },
+          "caption": {
+            "$ref": "#/$defs/localizedText"
+          },
+          "variants": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["mobile", "desktop"],
+            "properties": {
+              "mobile": {
+                "$ref": "#/$defs/mediaVariant"
+              },
+              "desktop": {
+                "$ref": "#/$defs/mediaVariant"
+              }
+            }
+          },
+          "provenance": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "repository",
+              "commit",
+              "sourceUrl",
+              "capturedAt",
+              "sourceSha256",
+              "rightsBasis",
+              "approvedBy",
+              "reviewedAt"
+            ],
+            "properties": {
+              "kind": {
+                "enum": ["deterministic-reconstruction", "direct-production-capture"]
+              },
+              "repository": {
+                "type": "string",
+                "format": "uri"
+              },
+              "commit": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              },
+              "sourceUrl": {
+                "type": "string",
+                "format": "uri"
+              },
+              "capturedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "sourceSha256": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["mobile", "desktop"],
+                "properties": {
+                  "mobile": {
+                    "$ref": "#/$defs/sha256"
+                  },
+                  "desktop": {
+                    "$ref": "#/$defs/sha256"
+                  }
+                }
+              },
+              "rightsBasis": {
+                "type": "string",
+                "minLength": 10
+              },
+              "approvedBy": {
+                "const": "IzignaMx"
+              },
+              "reviewedAt": {
+                "type": "string",
+                "format": "date"
+              }
+            }
           }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "role": {
+                  "const": "screenshot"
+                }
+              },
+              "required": ["role"]
+            },
+            "then": {
+              "required": ["width", "height", "alt", "caption", "variants", "provenance"],
+              "properties": {
+                "width": true,
+                "height": true,
+                "alt": true,
+                "caption": true,
+                "variants": true,
+                "provenance": true
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "localizedText": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["es", "en"],
+      "properties": {
+        "es": {
+          "type": "string",
+          "minLength": 10
+        },
+        "en": {
+          "type": "string",
+          "minLength": 10
         }
       }
+    },
+    "mediaVariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["avif", "webp", "width", "height", "avifSha256", "webpSha256"],
+      "properties": {
+        "avif": {
+          "type": "string",
+          "pattern": "^/media/projects/[a-z0-9-]+/evidence/[a-z0-9-]+\\.avif$"
+        },
+        "webp": {
+          "type": "string",
+          "pattern": "^/media/projects/[a-z0-9-]+/evidence/[a-z0-9-]+\\.webp$"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "avifSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "webpSha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
     }
   },
   "allOf": [

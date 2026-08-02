@@ -57,6 +57,7 @@
   "liveUrl": "https://tecuiyo.izignamx.com/",
   "sourceUrl": "https://github.com/CripterHack/tecuiyo-derechos-mx",
   "fallbackPoster": "/media/projects/tecuiyo/poster.avif",
+  "visualEvidence": [],
   "confidentiality": "public",
   "accessibilityNotes": [
     "Components and flows are designed for accessible navigation and comprehension."

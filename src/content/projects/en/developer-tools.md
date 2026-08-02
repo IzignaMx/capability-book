@@ -57,6 +57,50 @@
   "liveUrl": "https://apps.izignamx.com/",
   "sourceUrl": "https://github.com/CripterHack/smart-git-commit",
   "fallbackPoster": "/media/projects/developer-tools/poster.avif",
+  "visualEvidence": [
+    {
+      "id": "bigcommerce-demo-production",
+      "role": "screenshot",
+      "path": "/media/projects/developer-tools/evidence/home-desktop.avif",
+      "width": 1440,
+      "height": 900,
+      "alt": "Public production demo of the BigCommerce WYSIWYG extension with visual editing and documentation.",
+      "caption": "Reviewed direct capture of the public demo; it represents one tool in the collection maintained at commit fcabcea.",
+      "license": "client-authorized",
+      "variants": {
+        "mobile": {
+          "avif": "/media/projects/developer-tools/evidence/home-mobile.avif",
+          "webp": "/media/projects/developer-tools/evidence/home-mobile.webp",
+          "width": 390,
+          "height": 844,
+          "avifSha256": "2655d3623c3e7c6f85c0c27fff88d332e559679bd6e2bcbe5968a27e19dc8507",
+          "webpSha256": "3a9e3cbe416522157b1b9eaf7fd7898daeaf7350407159ff2a1d255194adb877"
+        },
+        "desktop": {
+          "avif": "/media/projects/developer-tools/evidence/home-desktop.avif",
+          "webp": "/media/projects/developer-tools/evidence/home-desktop.webp",
+          "width": 1440,
+          "height": 900,
+          "avifSha256": "d36d2466165213a8d3b48b2486a669505d3a91bd5f036124bf79bda64b545a54",
+          "webpSha256": "e83755ea5ce31b45661e2335285a625c3f2b811ac18a0c4d9e7731bb05a0a15e"
+        }
+      },
+      "provenance": {
+        "kind": "direct-production-capture",
+        "repository": "https://github.com/CripterHack/bigcommerce-wysiwyg-extension",
+        "commit": "fcabcea67d2fecc3f14f648eb2d833b9ab35452e",
+        "sourceUrl": "https://cripterhack.github.io/bigcommerce-wysiwyg-extension/",
+        "capturedAt": "2026-08-02T01:30:39.061Z",
+        "sourceSha256": {
+          "mobile": "30ee37b4489e9f7c920fb04afd3e906ed91f5aa53c9f7e58b440990e284b8207",
+          "desktop": "4c16373d62688ac233785c67a578bd1f0284618cc7cc64370634d235000b60d4"
+        },
+        "rightsBasis": "Publication of this direct production capture is authorized by IzignaMx for portfolio evidence; the reference implementation is maintained publicly by CripterHack.",
+        "approvedBy": "IzignaMx",
+        "reviewedAt": "2026-08-02"
+      }
+    }
+  ],
   "confidentiality": "public",
   "accessibilityNotes": [
     "Documentation and primary workflows do not depend on advanced visual presentation."

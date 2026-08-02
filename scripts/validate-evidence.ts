@@ -1,6 +1,8 @@
+import { createHash } from "node:crypto";
 import { readdir, readFile } from "node:fs/promises";
 import Ajv2020 from "ajv/dist/2020.js";
 import AjvFormatsModule from "ajv-formats";
+import sharp from "sharp";
 
 const addFormats = AjvFormatsModule.default;
 
@@ -16,6 +18,23 @@ type EvidenceRecord = {
   project: { slug: string };
   sources: EvidenceSource[];
   proofPoints: ProofPoint[];
+  media: EvidenceMedia[];
+};
+
+type MediaVariant = {
+  avif: string;
+  webp: string;
+  width: number;
+  height: number;
+  avifSha256: string;
+  webpSha256: string;
+};
+
+type EvidenceMedia = {
+  id: string;
+  role: string;
+  path: string;
+  variants?: { mobile: MediaVariant; desktop: MediaVariant };
 };
 
 const root = new URL("../", import.meta.url);
@@ -32,6 +51,37 @@ const files = (await readdir(directory))
 
 if (files.length !== 6) {
   throw new Error(`Expected exactly 6 flagship evidence files, found ${files.length}`);
+}
+
+function publicMediaUrl(path: string): URL {
+  return new URL(`public${path}`, root);
+}
+
+function sha256(value: Buffer): string {
+  return createHash("sha256").update(value).digest("hex");
+}
+
+async function validateVariant(projectSlug: string, viewport: string, variant: MediaVariant): Promise<void> {
+  for (const [format, path, expectedHash] of [
+    ["avif", variant.avif, variant.avifSha256],
+    ["webp", variant.webp, variant.webpSha256]
+  ] as const) {
+    const expectedPrefix = `/media/projects/${projectSlug}/evidence/`;
+    if (!path.startsWith(expectedPrefix)) {
+      throw new Error(`${projectSlug}: ${viewport} ${format} evidence must use ${expectedPrefix}`);
+    }
+    const file = await readFile(publicMediaUrl(path));
+    if (sha256(file) !== expectedHash) {
+      throw new Error(`${projectSlug}: ${viewport} ${format} evidence hash does not match its record`);
+    }
+
+    const metadata = await sharp(file).metadata();
+    if (metadata.width !== variant.width || metadata.height !== variant.height) {
+      throw new Error(
+        `${projectSlug}: ${viewport} ${format} expected ${variant.width}x${variant.height}, received ${metadata.width}x${metadata.height}`
+      );
+    }
+  }
 }
 
 for (const file of files) {
@@ -61,6 +111,20 @@ for (const file of files) {
           `${file}: proof point references missing source ${sourceId}`
         );
       }
+    }
+  }
+
+  const canonicalMediaPrefix = `/media/projects/${value.project.slug}/`;
+  for (const media of value.media) {
+    if (!media.path.startsWith(canonicalMediaPrefix)) {
+      throw new Error(`${file}: media ${media.id} must use ${canonicalMediaPrefix}`);
+    }
+    await readFile(publicMediaUrl(media.path));
+
+    if (media.role === "screenshot") {
+      if (!media.variants) throw new Error(`${file}: screenshot ${media.id} is missing variants`);
+      await validateVariant(value.project.slug, "mobile", media.variants.mobile);
+      await validateVariant(value.project.slug, "desktop", media.variants.desktop);
     }
   }
 }
