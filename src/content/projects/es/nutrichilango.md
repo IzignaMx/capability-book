@@ -57,7 +57,50 @@
   "liveUrl": "https://nutrichilango.izignamx.com/",
   "sourceUrl": "https://github.com/IzignaMx/nutrichilango",
   "fallbackPoster": "/media/projects/nutrichilango/poster.avif",
-  "visualEvidence": [],
+  "visualEvidence": [
+    {
+      "id": "home-production",
+      "role": "screenshot",
+      "path": "/media/projects/nutrichilango/evidence/home-desktop.avif",
+      "width": 1440,
+      "height": 900,
+      "alt": "Portada pública de NutriChilango con el mensaje Transforma Tu Salud con Plant-Based y fotografías de alimentos vegetales.",
+      "caption": "Captura directa y revisada de la portada pública de producción; el repositorio de referencia corresponde al commit a699c3a.",
+      "license": "owned",
+      "variants": {
+        "mobile": {
+          "avif": "/media/projects/nutrichilango/evidence/home-mobile.avif",
+          "webp": "/media/projects/nutrichilango/evidence/home-mobile.webp",
+          "width": 390,
+          "height": 844,
+          "avifSha256": "9ac0c9a8d1aa0f46030fc9a63aab48cfd0ee7886ab5dadf43ae96b5d2018797e",
+          "webpSha256": "de6603bbeaaf291cfbf094bc80737266e5b6ebc61e7fbfb8a815ab43a0f3974d"
+        },
+        "desktop": {
+          "avif": "/media/projects/nutrichilango/evidence/home-desktop.avif",
+          "webp": "/media/projects/nutrichilango/evidence/home-desktop.webp",
+          "width": 1440,
+          "height": 900,
+          "avifSha256": "317280265ac27fb75f04e9963ce5f256e89abc5ceb3dd4e38acedb016cdd3a65",
+          "webpSha256": "d8773fadf82213cc38a9c97a35299b90214582715157911410e1ab9b779ff452"
+        }
+      },
+      "provenance": {
+        "kind": "direct-production-capture",
+        "repository": "https://github.com/IzignaMx/nutrichilango",
+        "commit": "a699c3a509c3293ce19f42e2b64201471b2df66c",
+        "sourceUrl": "https://nutrichilango.izignamx.com/",
+        "capturedAt": "2026-08-02T04:11:11.274Z",
+        "sourceSha256": {
+          "mobile": "d10d4d86d256805ffc5bb9e9dd21cc895195df002923819864cc89d4198e1481",
+          "desktop": "c47b83652823440b2528e73b1e6d63d055b31accfbee9ed7d6795f4e61745704"
+        },
+        "rightsBasis": "Publication of this direct production capture is authorized by IzignaMx for portfolio evidence; the reference source code is available under MIT.",
+        "approvedBy": "IzignaMx",
+        "reviewedAt": "2026-08-02"
+      }
+    }
+  ],
   "confidentiality": "public",
   "accessibilityNotes": [
     "Las comparaciones ofrecen etiquetas y explicación textual además de sus representaciones visuales."

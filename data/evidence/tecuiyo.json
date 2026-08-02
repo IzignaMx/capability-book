@@ -71,6 +71,54 @@
       "role": "fallback-poster",
       "path": "/media/projects/tecuiyo/poster.avif",
       "license": "owned"
+    },
+    {
+      "id": "home-production",
+      "role": "screenshot",
+      "path": "/media/projects/tecuiyo/evidence/home-desktop.avif",
+      "license": "open-license",
+      "width": 1440,
+      "height": 900,
+      "alt": {
+        "es": "Portada pública de Tecuiyo con navegación de derechos laborales y accesos a información, cálculos y documentos.",
+        "en": "Public Tecuiyo homepage with labor-rights navigation and access to information, calculations, and documents."
+      },
+      "caption": {
+        "es": "Captura directa y revisada de la portada pública de producción; el repositorio de referencia corresponde al commit 4f91728.",
+        "en": "Reviewed direct capture of the public production homepage; the reference repository points to commit 4f91728."
+      },
+      "variants": {
+        "mobile": {
+          "avif": "/media/projects/tecuiyo/evidence/home-mobile.avif",
+          "webp": "/media/projects/tecuiyo/evidence/home-mobile.webp",
+          "width": 390,
+          "height": 844,
+          "avifSha256": "4bb347f882736b8627b9248966430e809a759163de57c3f9dd727481b4dbc219",
+          "webpSha256": "d19149d25d7fcf4a9464f9ed4a638c4654bfde669751d02c73b51b505a359beb"
+        },
+        "desktop": {
+          "avif": "/media/projects/tecuiyo/evidence/home-desktop.avif",
+          "webp": "/media/projects/tecuiyo/evidence/home-desktop.webp",
+          "width": 1440,
+          "height": 900,
+          "avifSha256": "afd77f882c109c9b76e83b13c5cbc4717b0e0a19230302067c0a08c9e39e1222",
+          "webpSha256": "fddc57c4410a148bec5690ae5d6b5b9f073c8b6e7a44e34f4527e1b5a780d083"
+        }
+      },
+      "provenance": {
+        "kind": "direct-production-capture",
+        "repository": "https://github.com/CripterHack/tecuiyo-derechos-mx",
+        "commit": "4f917283d867240144cb3ef34fe0a84c9018a70c",
+        "sourceUrl": "https://tecuiyo.izignamx.com/",
+        "capturedAt": "2026-08-02T04:11:13.826Z",
+        "sourceSha256": {
+          "mobile": "a523aec14cd659d0b038b81916d033f3e5e742aa64aa1df8408fce7455b8c286",
+          "desktop": "d55405f0aef236b7dd362deee98d4d866e5d30b0275fa15509ee3457961f49ab"
+        },
+        "rightsBasis": "Publication of this direct production capture is authorized by IzignaMx for portfolio evidence; the reference source code is available under MIT.",
+        "approvedBy": "IzignaMx",
+        "reviewedAt": "2026-08-02"
+      }
     }
   ]
 }
