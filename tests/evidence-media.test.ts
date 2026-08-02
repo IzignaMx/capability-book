@@ -10,7 +10,7 @@ const evidenceFigureSource = await readFile(
 );
 
 describe("published visual evidence", () => {
-  it("publishes only repeatably reviewable production captures and keeps unavailable projects illustrative", async () => {
+  it("publishes the approved production captures and keeps the private project illustrative", async () => {
     const files = (await readdir(evidenceDirectory)).filter((file) => file.endsWith(".json"));
     const records = await Promise.all(
       files.map(async (file) => JSON.parse(await readFile(new URL(file, evidenceDirectory), "utf8")) as {
@@ -28,9 +28,14 @@ describe("published visual evidence", () => {
     expect(captured.map((record) => record.project.slug).sort()).toEqual([
       "developer-tools",
       "hamburguesa-nomada",
+      "nutrichilango",
+      "tecuiyo",
       "vald"
     ]);
-    expect(records.find((record) => record.project.slug === "omnisync")?.media).toHaveLength(1);
+    const illustrativeOnly = records
+      .filter((record) => record.media.every((item) => item.role !== "screenshot"))
+      .map((record) => record.project.slug);
+    expect(illustrativeOnly).toEqual(["omnisync"]);
 
     for (const record of records) {
       expect(record.media.every((item) => item.path.startsWith(`/media/projects/${record.project.slug}/`))).toBe(true);
