@@ -37,6 +37,7 @@ function project(
       }
     ],
     fallbackPoster: `/media/projects/${slug}/poster.avif`,
+    visualEvidence: [],
     confidentiality: "public",
     accessibilityNotes: ["Static parity"],
     relatedServices: ["Engineering"],

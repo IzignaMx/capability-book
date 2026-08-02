@@ -26,7 +26,38 @@ interface EvidenceRecord {
   }>;
   sources: Array<{ id: string; label: string; url: string }>;
   links: Array<{ url: string; public: boolean }>;
-  media: Array<{ role: string; path: string }>;
+  media: EvidenceMedia[];
+}
+
+interface EvidenceMediaVariant {
+  avif: string;
+  webp: string;
+  width: number;
+  height: number;
+  avifSha256: string;
+  webpSha256: string;
+}
+
+interface EvidenceMedia {
+  id: string;
+  role: "fallback-poster" | "screenshot" | "video" | "diagram" | "logo";
+  path: string;
+  license: "owned" | "client-authorized" | "open-license";
+  width?: number;
+  height?: number;
+  alt?: Record<Locale, string>;
+  caption?: Record<Locale, string>;
+  variants?: { mobile: EvidenceMediaVariant; desktop: EvidenceMediaVariant };
+  provenance?: {
+    kind: "deterministic-reconstruction" | "direct-production-capture";
+    repository: string;
+    commit: string;
+    sourceUrl: string;
+    capturedAt: string;
+    rightsBasis: string;
+    approvedBy: "IzignaMx";
+    reviewedAt: string;
+  };
 }
 
 interface LocalizedEditorial {
@@ -357,7 +388,30 @@ function localizeOutcomes(record: EvidenceRecord, localized: LocalizedEditorial,
 function fallbackPosterFor(record: EvidenceRecord): string {
   const path = record.media.find((item) => item.role === "fallback-poster")?.path;
   if (!path) throw new Error(`Missing fallback poster for ${record.project.slug}`);
-  return path.replace(/^\/media\//, "/media/projects/");
+  return path;
+}
+
+function localizeVisualEvidence(record: EvidenceRecord, locale: Locale) {
+  return record.media
+    .filter((item) => item.role === "screenshot")
+    .map((item) => {
+      if (!item.alt || !item.caption || !item.variants || !item.provenance || !item.width || !item.height) {
+        throw new Error(`Incomplete screenshot evidence for ${record.project.slug}/${item.id}`);
+      }
+
+      return {
+        id: item.id,
+        role: item.role,
+        path: item.path,
+        width: item.width,
+        height: item.height,
+        alt: item.alt[locale],
+        caption: item.caption[locale],
+        license: item.license,
+        variants: item.variants,
+        provenance: item.provenance
+      };
+    });
 }
 
 function renderBody(locale: Locale, content: LocalizedEditorial, links: PublicProjectLinks): string {
@@ -432,6 +486,7 @@ async function writeLocalizedProject(record: EvidenceRecord, locale: Locale): Pr
     ...(liveUrl ? { liveUrl } : {}),
     ...(sourceUrl ? { sourceUrl } : {}),
     fallbackPoster: fallbackPosterFor(record),
+    visualEvidence: localizeVisualEvidence(record, locale),
     confidentiality: record.publication.confidentiality,
     accessibilityNotes: content.accessibilityNotes,
     relatedServices: content.relatedServices,

@@ -24,6 +24,7 @@ function project(
     technologies: ["TypeScript"],
     outcomes: [],
     fallbackPoster: `/media/projects/${slug}/poster.avif`,
+    visualEvidence: [],
     confidentiality: "public",
     accessibilityNotes: ["Static parity"],
     relatedServices: ["Engineering"],

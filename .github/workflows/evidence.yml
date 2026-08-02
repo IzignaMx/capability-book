@@ -62,9 +62,9 @@ jobs:
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm capture:projects
-      - name: Verify capture count
-        run: test "$(find artifacts/captures -type f -name '*.png' | wc -l)" -eq 12
+      - run: pnpm verify:capture-report
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: phase-0-project-captures
+          name: project-capture-audit
           path: artifacts/captures/

@@ -1,0 +1,152 @@
+---
+import type { Locale, ProjectVisualEvidence } from "../../domain/projects/PortfolioProject";
+
+interface Props {
+  evidence: ProjectVisualEvidence;
+  locale: Locale;
+}
+
+const { evidence, locale } = Astro.props;
+const labels = locale === "es"
+  ? {
+      eyebrow: "Evidencia visual",
+      direct: "Captura directa de producción",
+      reconstruction: "Reconstrucción reproducible",
+      source: "Abrir sitio capturado",
+      repository: "Ver código de referencia",
+      reviewed: "Revisada"
+    }
+  : {
+      eyebrow: "Visual evidence",
+      direct: "Direct production capture",
+      reconstruction: "Reproducible reconstruction",
+      source: "Open captured site",
+      repository: "View reference code",
+      reviewed: "Reviewed"
+    };
+const sourceLabel = evidence.provenance.kind === "direct-production-capture"
+  ? labels.direct
+  : labels.reconstruction;
+const repositoryHref = `${evidence.provenance.repository}/tree/${evidence.provenance.commit}`;
+const reviewedAt = new Intl.DateTimeFormat(locale === "es" ? "es-MX" : "en", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "UTC"
+}).format(new Date(`${evidence.provenance.reviewedAt}T00:00:00Z`));
+---
+
+<figure class="project-evidence">
+  <div class="project-evidence__frame">
+    <picture>
+      <source
+        media="(max-width: 40rem)"
+        srcset={evidence.variants.mobile.avif}
+        type="image/avif"
+        width={evidence.variants.mobile.width}
+        height={evidence.variants.mobile.height}
+      />
+      <source
+        media="(max-width: 40rem)"
+        srcset={evidence.variants.mobile.webp}
+        type="image/webp"
+        width={evidence.variants.mobile.width}
+        height={evidence.variants.mobile.height}
+      />
+      <source
+        srcset={evidence.variants.desktop.avif}
+        type="image/avif"
+        width={evidence.variants.desktop.width}
+        height={evidence.variants.desktop.height}
+      />
+      <img
+        src={evidence.variants.desktop.webp}
+        alt={evidence.alt}
+        width={evidence.variants.desktop.width}
+        height={evidence.variants.desktop.height}
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
+  </div>
+  <figcaption>
+    <p class="project-evidence__eyebrow">{labels.eyebrow} · {sourceLabel}</p>
+    <p class="project-evidence__caption">{evidence.caption}</p>
+    <p class="project-evidence__meta">
+      <a href={evidence.provenance.sourceUrl} target="_blank" rel="external noopener noreferrer">
+        {labels.source}
+      </a>
+      <a href={repositoryHref} target="_blank" rel="external noopener noreferrer">
+        {labels.repository} · {evidence.provenance.commit.slice(0, 7)}
+      </a>
+      <span>{labels.reviewed}: {reviewedAt}</span>
+    </p>
+  </figcaption>
+</figure>
+
+<style>
+  .project-evidence {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(16rem, 0.55fr);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: end;
+    margin: clamp(5rem, 10vw, 9rem) 0;
+  }
+
+  .project-evidence__frame {
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    background: var(--color-midnight);
+  }
+
+  .project-evidence img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .project-evidence figcaption {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .project-evidence__eyebrow,
+  .project-evidence__caption,
+  .project-evidence__meta {
+    margin: 0;
+  }
+
+  .project-evidence__eyebrow {
+    color: var(--color-cyan);
+    font: 700 0.72rem/1.2 var(--font-data);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .project-evidence__caption {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+  }
+
+  .project-evidence__meta {
+    display: grid;
+    gap: 0.65rem;
+    color: var(--color-text-muted);
+    font: 600 0.75rem/1.45 var(--font-data);
+  }
+
+  .project-evidence__meta a {
+    width: fit-content;
+    color: var(--color-brand-bright);
+  }
+
+  @media (max-width: 52rem) {
+    .project-evidence {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+  }
+</style>

@@ -7,7 +7,7 @@ const media = (slug: string) => [
   {
     id: "fallback-poster",
     role: "fallback-poster",
-    path: `/media/${slug}/poster.avif`,
+    path: `/media/projects/${slug}/poster.avif`,
     license: "owned"
   }
 ];

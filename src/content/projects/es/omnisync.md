@@ -49,6 +49,7 @@
     }
   ],
   "fallbackPoster": "/media/projects/omnisync/poster.avif",
+  "visualEvidence": [],
   "confidentiality": "partial",
   "accessibilityNotes": [
     "El caso conserva una narrativa textual completa sin depender de visualizaciones avanzadas."

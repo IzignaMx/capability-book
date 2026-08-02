@@ -19,13 +19,15 @@
     "check:brand": "tsx scripts/check-brand.ts",
     "check:links": "tsx scripts/check-links.ts",
     "generate:posters": "tsx scripts/generate-project-posters.ts",
+    "promote:evidence-media": "tsx scripts/promote-evidence-captures.ts",
     "import:evidence": "tsx scripts/import-evidence.ts",
     "validate:evidence": "tsx scripts/validate-evidence.ts && pnpm check:brand && pnpm test",
     "validate:html": "tsx scripts/validate-built-html.ts",
     "verify:budgets": "tsx scripts/verify-budgets.ts",
     "verify:3d-budgets": "tsx scripts/verify-3d-budgets.ts",
     "evidence:summary": "tsx scripts/generate-evidence-summary.ts",
-    "capture:projects": "tsx scripts/capture-projects.ts"
+    "capture:projects": "tsx scripts/capture-projects.ts",
+    "verify:capture-report": "tsx scripts/verify-capture-report.ts"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",

@@ -57,6 +57,7 @@
   "liveUrl": "https://nutrichilango.izignamx.com/",
   "sourceUrl": "https://github.com/IzignaMx/nutrichilango",
   "fallbackPoster": "/media/projects/nutrichilango/poster.avif",
+  "visualEvidence": [],
   "confidentiality": "public",
   "accessibilityNotes": [
     "Comparisons provide labels and text explanations alongside visual representations."
