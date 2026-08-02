@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { chromium, type Page, type ViewportSize } from "@playwright/test";
-import { detectCaptureChallenge } from "./capture-validation";
+import { detectCaptureBlock } from "./capture-validation";
 
 type CaptureViewport = ViewportSize & { name: string };
 type CapturePolicy = "best-effort" | "skip";
@@ -49,7 +49,7 @@ async function inspectPage(page: Page, url: string) {
   await page.emulateMedia({ colorScheme: "dark", reducedMotion: "reduce" });
   const response = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45_000 });
   const bodyText = await page.locator("body").innerText();
-  const marker = detectCaptureChallenge(bodyText);
+  const marker = detectCaptureBlock(bodyText, response?.status());
   if (marker) return { response, marker };
 
   if (!response?.ok()) {
