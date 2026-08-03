@@ -29,7 +29,7 @@ const diagnosticHref = locale === "es" ? "/es/diagnostico/" : "/en/diagnostic/";
 
 <header class="site-header container" data-pagefind-ignore>
   <a class="brand" href={`/${locale}/`} aria-label={labels.home}>
-    <span class="brand-mark" aria-hidden="true"></span>
+    <img class="brand-mark" src="https://izignamx.com/favicon.svg" alt="" width="20" height="20" />
     <span>IzignaMx</span>
   </a>
 
@@ -66,11 +66,9 @@ const diagnosticHref = locale === "es" ? "/es/diagnostico/" : "/en/diagnostic/";
   }
 
   .brand-mark {
-    width: 0.75rem;
-    aspect-ratio: 1;
-    border: 2px solid var(--color-cyan);
-    transform: rotate(45deg);
-    box-shadow: 0 0 1rem rgb(34 211 238 / 52%);
+    width: 1.25rem;
+    height: 1.25rem;
+    flex: none;
   }
 
   .primary-navigation {
