@@ -10,3 +10,4 @@ artifacts/captures/
 artifacts/evidence-summary.md
 .env
 .DS_Store
+.logs/
