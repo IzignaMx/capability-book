@@ -231,7 +231,7 @@
             ],
             "properties": {
               "kind": {
-                "enum": ["deterministic-reconstruction", "direct-production-capture"]
+                "enum": ["deterministic-reconstruction", "direct-production-capture", "local-development-capture"]
               },
               "repository": {
                 "type": "string",

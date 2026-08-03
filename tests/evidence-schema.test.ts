@@ -137,4 +137,49 @@ describe("evidence schema", () => {
 
     expect(validate(record)).toBe(true);
   });
+
+  it("accepts authorized local-development capture provenance", () => {
+    const localScreenshot = {
+      id: "home-local-demo",
+      role: "screenshot",
+      path: "/media/projects/sample-project/evidence/home-desktop.avif",
+      license: "owned",
+      width: 1440,
+      height: 900,
+      alt: { es: "Captura local autorizada.", en: "Authorized local capture." },
+      caption: { es: "Dashboard demo local.", en: "Local demo dashboard." },
+      variants: {
+        mobile: {
+          avif: "/media/projects/sample-project/evidence/home-mobile.avif",
+          webp: "/media/projects/sample-project/evidence/home-mobile.webp",
+          width: 390,
+          height: 844,
+          avifSha256: "a".repeat(64),
+          webpSha256: "b".repeat(64)
+        },
+        desktop: {
+          avif: "/media/projects/sample-project/evidence/home-desktop.avif",
+          webp: "/media/projects/sample-project/evidence/home-desktop.webp",
+          width: 1440,
+          height: 900,
+          avifSha256: "c".repeat(64),
+          webpSha256: "d".repeat(64)
+        }
+      },
+      provenance: {
+        kind: "local-development-capture",
+        repository: "https://github.com/IzignaMx/example",
+        commit: "e".repeat(40),
+        sourceUrl: "https://github.com/IzignaMx/example",
+        capturedAt: "2026-08-03T04:41:02Z",
+        sourceSha256: { mobile: "f".repeat(64), desktop: "0".repeat(64) },
+        rightsBasis: "IzignaMx approved this local demo capture for portfolio evidence.",
+        approvedBy: "IzignaMx",
+        reviewedAt: "2026-08-03"
+      }
+    };
+    const record = { ...structuredClone(validRecord), media: [...validRecord.media, localScreenshot] };
+
+    expect(validate(record)).toBe(true);
+  });
 });

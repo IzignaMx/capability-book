@@ -39,7 +39,7 @@ export interface ProjectVisualEvidence {
     desktop: ProjectMediaVariant;
   };
   provenance: {
-    kind: "deterministic-reconstruction" | "direct-production-capture";
+    kind: "deterministic-reconstruction" | "direct-production-capture" | "local-development-capture";
     repository: string;
     commit: string;
     sourceUrl: string;

@@ -2,12 +2,52 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { ProjectCatalog } from "../src/components/projects/ProjectCatalog";
-import type { PortfolioProject } from "../src/domain/projects/PortfolioProject";
+import type { PortfolioProject, ProjectVisualEvidence } from "../src/domain/projects/PortfolioProject";
+
+const visualEvidence: ProjectVisualEvidence = {
+  id: "home-production",
+  role: "screenshot",
+  path: "/media/projects/tecuiyo/evidence/home-desktop.avif",
+  width: 1440,
+  height: 900,
+  alt: "Portada de producción de Tecuiyo.",
+  caption: "Captura revisada.",
+  license: "owned",
+  variants: {
+    mobile: {
+      avif: "/media/projects/tecuiyo/evidence/home-mobile.avif",
+      webp: "/media/projects/tecuiyo/evidence/home-mobile.webp",
+      width: 390,
+      height: 844,
+      avifSha256: "a".repeat(64),
+      webpSha256: "b".repeat(64)
+    },
+    desktop: {
+      avif: "/media/projects/tecuiyo/evidence/home-desktop.avif",
+      webp: "/media/projects/tecuiyo/evidence/home-desktop.webp",
+      width: 1440,
+      height: 900,
+      avifSha256: "c".repeat(64),
+      webpSha256: "d".repeat(64)
+    }
+  },
+  provenance: {
+    kind: "direct-production-capture",
+    repository: "https://github.com/IzignaMx/tecuiyo",
+    commit: "a".repeat(40),
+    sourceUrl: "https://tecuiyo.izignamx.com/",
+    capturedAt: "2026-08-02T00:00:00.000Z",
+    rightsBasis: "IzignaMx-approved portfolio evidence.",
+    approvedBy: "IzignaMx",
+    reviewedAt: "2026-08-02"
+  }
+};
 
 function project(
   slug: string,
   title: string,
-  capabilities: string[]
+  capabilities: string[],
+  evidence: ProjectVisualEvidence[] = []
 ): PortfolioProject {
   return {
     slug,
@@ -24,7 +64,7 @@ function project(
     technologies: ["TypeScript"],
     outcomes: [],
     fallbackPoster: `/media/projects/${slug}/poster.avif`,
-    visualEvidence: [],
+    visualEvidence: evidence,
     confidentiality: "public",
     accessibilityNotes: ["Static parity"],
     relatedServices: ["Engineering"],
@@ -34,7 +74,7 @@ function project(
 
 const projects = [
   project("omnisync", "OmniSync", ["Commerce Systems"]),
-  project("tecuiyo", "Tecuiyo", ["Web Experiences"])
+  project("tecuiyo", "Tecuiyo", ["Web Experiences"], [visualEvidence])
 ];
 
 describe("ProjectCatalog", () => {
@@ -60,5 +100,24 @@ describe("ProjectCatalog", () => {
 
     expect(screen.getByRole("status")).toHaveTextContent("1 proyecto");
     expect(screen.getByRole("heading", { name: "Tecuiyo" })).toBeInTheDocument();
+  });
+
+  it("prioritizes responsive production evidence and retains an illustrative fallback", () => {
+    const { container } = render(<ProjectCatalog locale="es" projects={projects} />);
+
+    const productionCover = container.querySelector("[data-project-catalog-cover]");
+    expect(productionCover).toHaveAttribute("data-cover-kind", "production");
+    expect(productionCover?.querySelector("img")).toHaveAttribute(
+      "src",
+      "/media/projects/tecuiyo/evidence/home-desktop.webp"
+    );
+    expect(productionCover?.querySelector("img")).toHaveAttribute("alt", "Portada de producción de Tecuiyo.");
+    expect(productionCover?.querySelector('source[type="image/avif"]')).toHaveAttribute(
+      "srcset",
+      "/media/projects/tecuiyo/evidence/home-mobile.avif"
+    );
+
+    const fallback = container.querySelector('img[src="/media/projects/omnisync/poster.avif"]');
+    expect(fallback).toHaveAttribute("alt", "");
   });
 });

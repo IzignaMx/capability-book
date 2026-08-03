@@ -40,7 +40,7 @@ const visualEvidence = z.object({
     desktop: mediaVariant
   }),
   provenance: z.object({
-    kind: z.enum(["deterministic-reconstruction", "direct-production-capture"]),
+    kind: z.enum(["deterministic-reconstruction", "direct-production-capture", "local-development-capture"]),
     repository: z.url(),
     commit: z.string().regex(/^[a-f0-9]{40}$/),
     sourceUrl: z.url(),

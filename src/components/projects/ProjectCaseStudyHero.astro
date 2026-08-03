@@ -11,14 +11,17 @@ interface Props {
 }
 
 const { title, claim, openingLabel, fallbackPoster, evidence, locale } = Astro.props;
+const isLocalCapture = evidence?.provenance.kind === "local-development-capture";
 const labels = locale === "es"
   ? {
       evidence: "Portada de producción · evidencia completa más abajo",
+      local: "Portada de captura local autorizada · evidencia completa más abajo",
       fallback: "Portada ilustrativa · sin captura pública autorizada",
       fallbackAlt: `Visual ilustrativo de apertura del proyecto ${title}`
     }
   : {
       evidence: "Production cover · complete evidence below",
+      local: "Authorized local-capture cover · complete evidence below",
       fallback: "Illustrative cover · no authorized public capture",
       fallbackAlt: `Illustrative opening visual for the ${title} project`
     };
@@ -34,7 +37,7 @@ const labels = locale === "es"
   <figure
     class="project-hero__media"
     data-project-cover
-    data-cover-kind={evidence ? "production" : "illustrative"}
+    data-cover-kind={evidence ? isLocalCapture ? "local" : "production" : "illustrative"}
   >
     <div class="project-hero__frame">
       {evidence ? (
@@ -81,7 +84,7 @@ const labels = locale === "es"
         />
       )}
     </div>
-    <figcaption>{evidence ? labels.evidence : labels.fallback}</figcaption>
+    <figcaption>{evidence ? isLocalCapture ? labels.local : labels.evidence : labels.fallback}</figcaption>
   </figure>
 </header>
 
