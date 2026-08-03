@@ -7,7 +7,7 @@
     {
       "slug": "omnisync",
       "policy": "skip",
-      "reason": "Private repository and no approved public capture source."
+      "reason": "Authorized local demo capture from private repository commit a4368b8b50ee32f77d3c585a69563d2e64ca9535; do not capture absent or mutable production."
     },
     {
       "slug": "hamburguesa-nomada",
@@ -16,8 +16,8 @@
     },
     {
       "slug": "vald",
-      "policy": "best-effort",
-      "url": "https://vald.izignamx.com/"
+      "policy": "skip",
+      "reason": "Historical 2025 cover is captured from immutable repository commit 401c2862b2243bb203e5f0967ed86f2ce44e9c36; do not recapture mutable production."
     },
     {
       "slug": "nutrichilango",

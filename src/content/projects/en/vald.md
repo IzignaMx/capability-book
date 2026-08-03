@@ -33,29 +33,26 @@
       "kind": "demonstrated-capability",
       "label": "Route narrative",
       "description": "The experience combines timeline, elevation, checkpoints, and results in a modular editorial structure.",
-      "sourceLabel": "Repository: VALD",
-      "sourceUrl": "https://github.com/IzignaMx/vald-landing",
-      "verifiedAt": "2026-07-20"
+      "sourceLabel": "Sitio VALD",
+      "sourceUrl": "https://vald.izignamx.com/",
+      "verifiedAt": "2026-08-02"
     },
     {
       "kind": "demonstrated-capability",
       "label": "Static architecture",
       "description": "Astro, modular styles, and static generation reduce runtime dependencies and simplify deployment.",
-      "sourceLabel": "Repository: VALD",
-      "sourceUrl": "https://github.com/IzignaMx/vald-landing",
-      "verifiedAt": "2026-07-20"
+      "verifiedAt": "2026-08-02"
     },
     {
       "kind": "demonstrated-capability",
       "label": "Mobile continuity",
       "description": "The interface uses a mobile-first approach, PWA support, and content that works without advanced animation.",
-      "sourceLabel": "Repository: VALD",
-      "sourceUrl": "https://github.com/IzignaMx/vald-landing",
-      "verifiedAt": "2026-07-20"
+      "sourceLabel": "Sitio VALD",
+      "sourceUrl": "https://vald.izignamx.com/",
+      "verifiedAt": "2026-08-02"
     }
   ],
   "liveUrl": "https://vald.izignamx.com/",
-  "sourceUrl": "https://github.com/IzignaMx/vald-landing",
   "fallbackPoster": "/media/projects/vald/poster.avif",
   "visualEvidence": [
     {
@@ -64,8 +61,8 @@
       "path": "/media/projects/vald/evidence/home-desktop.avif",
       "width": 1440,
       "height": 900,
-      "alt": "Production homepage of VALD with its 2026 ultracycling identity, route, and primary event callout.",
-      "caption": "Reviewed direct capture of the public production site; the IzignaMx-owned repository points to commit 620dd20.",
+      "alt": "VALD: Vuelta a los Durmientes 2025 cover, with the 317 km route and ultracycling event details.",
+      "caption": "Reviewed capture of the 2025 edition, rendered from immutable commit 401c286 in the IzignaMx repository.",
       "license": "owned",
       "variants": {
         "mobile": {
@@ -73,29 +70,29 @@
           "webp": "/media/projects/vald/evidence/home-mobile.webp",
           "width": 390,
           "height": 844,
-          "avifSha256": "d4f3dde9e4e6cf0db26aae0c3b000e4841a5c57ab246bba95a0baa290216b69b",
-          "webpSha256": "c3af5fb68bfbd5155ea0761c22dc685a1d7c3807b73b4b7ed4e3b4f9c00cec60"
+          "avifSha256": "e2f1fe46ee9655a90ec2986d395078bbd8747e28386e0bf6f64fe841251be9a4",
+          "webpSha256": "30dfc5a7908d205d8c86bd8c2ddf8c764f70f30fd58992325cf0606cefbead57"
         },
         "desktop": {
           "avif": "/media/projects/vald/evidence/home-desktop.avif",
           "webp": "/media/projects/vald/evidence/home-desktop.webp",
           "width": 1440,
           "height": 900,
-          "avifSha256": "2c2633b3353000544fcae9e65ae6bbc35b48c65639f2c7909c369fcdf522e983",
-          "webpSha256": "88c1008e5b685fd0ab05c9ee6f3c122200cdfd8fd6399c9673d5e355a952059b"
+          "avifSha256": "7964654e45fdeed14c3be8a0069202a014a7b95417da59b25b31b8b7fa8644a1",
+          "webpSha256": "1105602529faaa50437153fccd5853e44c0c3a0097afca24d2eef027c68e93c1"
         }
       },
       "provenance": {
         "kind": "direct-production-capture",
         "repository": "https://github.com/IzignaMx/vald-landing",
-        "commit": "620dd20e0cb1c3710fab513b828265f072222a87",
-        "sourceUrl": "https://vald.izignamx.com/",
-        "capturedAt": "2026-08-02T01:30:33.877Z",
+        "commit": "401c2862b2243bb203e5f0967ed86f2ce44e9c36",
+        "sourceUrl": "https://github.com/IzignaMx/vald-landing/tree/401c2862b2243bb203e5f0967ed86f2ce44e9c36",
+        "capturedAt": "2026-08-02T23:30:06Z",
         "sourceSha256": {
-          "mobile": "e68e15b93ce5e635341138b32b7b2c694a60ca23f7a5fed15ef8c0072756ab39",
-          "desktop": "d725c1314a9f5a2fc8cc571182da6a304e044fde6ffe93e1d044b9fbf5816403"
+          "mobile": "7abf5767fbc19dfc95c5f061a6e24396a04ba4773a6851af6755afb1481dbb1e",
+          "desktop": "91523ebc2da86533a3083717e2b8a35e4981cbb908afcd85143e5ccfb3f3e037"
         },
-        "rightsBasis": "IzignaMx-owned repository with all rights reserved; approved by IzignaMx for portfolio evidence.",
+        "rightsBasis": "IzignaMx-authored repository with all rights reserved; IzignaMx approved this historical 2025 portfolio capture.",
         "approvedBy": "IzignaMx",
         "reviewedAt": "2026-08-02"
       }
@@ -164,7 +161,6 @@ Published outcomes are presented as demonstrated capabilities and linked to publ
 ## Public links
 
 - [Live product](https://vald.izignamx.com/)
-- [Source code](https://github.com/IzignaMx/vald-landing)
 
 ## Related capabilities
 

@@ -10,7 +10,7 @@ const evidenceFigureSource = await readFile(
 );
 
 describe("published visual evidence", () => {
-  it("publishes the approved production captures and keeps the private project illustrative", async () => {
+  it("publishes reviewed captures with provenance that distinguishes production from local development", async () => {
     const files = (await readdir(evidenceDirectory)).filter((file) => file.endsWith(".json"));
     const records = await Promise.all(
       files.map(async (file) => JSON.parse(await readFile(new URL(file, evidenceDirectory), "utf8")) as {
@@ -29,18 +29,24 @@ describe("published visual evidence", () => {
       "developer-tools",
       "hamburguesa-nomada",
       "nutrichilango",
+      "omnisync",
       "tecuiyo",
       "vald"
     ]);
-    const illustrativeOnly = records
-      .filter((record) => record.media.every((item) => item.role !== "screenshot"))
-      .map((record) => record.project.slug);
-    expect(illustrativeOnly).toEqual(["omnisync"]);
+
+    const expectedKinds: Record<string, string> = {
+      "developer-tools": "direct-production-capture",
+      "hamburguesa-nomada": "direct-production-capture",
+      nutrichilango: "direct-production-capture",
+      omnisync: "local-development-capture",
+      tecuiyo: "direct-production-capture",
+      vald: "direct-production-capture"
+    };
 
     for (const record of records) {
       expect(record.media.every((item) => item.path.startsWith(`/media/projects/${record.project.slug}/`))).toBe(true);
       for (const screenshot of record.media.filter((item) => item.role === "screenshot")) {
-        expect(screenshot.provenance?.kind).toBe("direct-production-capture");
+        expect(screenshot.provenance?.kind).toBe(expectedKinds[record.project.slug]);
         const expectedPrefix = `/media/projects/${record.project.slug}/evidence/`;
         for (const variant of Object.values(screenshot.variants ?? {})) {
           expect(variant.avif.startsWith(expectedPrefix)).toBe(true);

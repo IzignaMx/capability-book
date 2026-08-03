@@ -11,6 +11,7 @@ const labels = locale === "es"
   ? {
       eyebrow: "Evidencia visual",
       direct: "Captura directa de producción",
+      local: "Captura local autorizada",
       reconstruction: "Reconstrucción reproducible",
       source: "Abrir sitio capturado",
       repository: "Ver código de referencia",
@@ -19,6 +20,7 @@ const labels = locale === "es"
   : {
       eyebrow: "Visual evidence",
       direct: "Direct production capture",
+      local: "Authorized local capture",
       reconstruction: "Reproducible reconstruction",
       source: "Open captured site",
       repository: "View reference code",
@@ -26,7 +28,9 @@ const labels = locale === "es"
     };
 const sourceLabel = evidence.provenance.kind === "direct-production-capture"
   ? labels.direct
-  : labels.reconstruction;
+  : evidence.provenance.kind === "local-development-capture"
+    ? labels.local
+    : labels.reconstruction;
 const repositoryHref = `${evidence.provenance.repository}/tree/${evidence.provenance.commit}`;
 const reviewedAt = new Intl.DateTimeFormat(locale === "es" ? "es-MX" : "en", {
   year: "numeric",

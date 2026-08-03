@@ -38,6 +38,65 @@ function projectPath(locale: "es" | "en", slug: string): string {
   return locale === "es" ? `/es/proyectos/${slug}/` : `/en/projects/${slug}/`;
 }
 
+interface ProjectCardCoverProps {
+  project: PortfolioProject;
+  index: number;
+}
+
+function ProjectCardCover({ project, index }: ProjectCardCoverProps) {
+  const evidence = project.visualEvidence.at(0);
+  const loading = index < 2 ? "eager" : "lazy";
+
+  if (!evidence) {
+    return (
+      <img
+        src={project.fallbackPoster}
+        alt=""
+        width="640"
+        height="360"
+        loading={loading}
+        decoding="async"
+      />
+    );
+  }
+
+  return (
+    <picture
+      data-project-catalog-cover
+      data-cover-kind={evidence.provenance.kind === "local-development-capture" ? "local" : "production"}
+    >
+      <source
+        media="(max-width: 40rem)"
+        srcSet={evidence.variants.mobile.avif}
+        type="image/avif"
+        width={evidence.variants.mobile.width}
+        height={evidence.variants.mobile.height}
+      />
+      <source
+        media="(max-width: 40rem)"
+        srcSet={evidence.variants.mobile.webp}
+        type="image/webp"
+        width={evidence.variants.mobile.width}
+        height={evidence.variants.mobile.height}
+      />
+      <source
+        srcSet={evidence.variants.desktop.avif}
+        type="image/avif"
+        width={evidence.variants.desktop.width}
+        height={evidence.variants.desktop.height}
+      />
+      <img
+        src={evidence.variants.desktop.webp}
+        alt={evidence.alt}
+        width={evidence.variants.desktop.width}
+        height={evidence.variants.desktop.height}
+        loading={loading}
+        decoding="async"
+      />
+    </picture>
+  );
+}
+
 export function ProjectCatalog({ locale, projects }: ProjectCatalogProps) {
   const [text, setText] = useState("");
   const [capability, setCapability] = useState("");
@@ -109,13 +168,7 @@ export function ProjectCatalog({ locale, projects }: ProjectCatalogProps) {
           {filteredProjects.map((project, index) => (
             <li className="project-card" key={project.slug}>
               <div className="project-card__media">
-                <img
-                  src={project.fallbackPoster}
-                  alt=""
-                  width="640"
-                  height="360"
-                  loading={index < 2 ? "eager" : "lazy"}
-                />
+                <ProjectCardCover project={project} index={index} />
                 <span>{String(index + 1).padStart(2, "0")}</span>
               </div>
               <div className="project-card__body">
@@ -235,9 +288,14 @@ export function ProjectCatalog({ locale, projects }: ProjectCatalogProps) {
             var(--color-space);
         }
 
+        .project-card__media picture,
         .project-card__media img {
+          display: block;
           width: 100%;
           height: 100%;
+        }
+
+        .project-card__media img {
           object-fit: cover;
         }
 

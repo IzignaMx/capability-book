@@ -49,7 +49,7 @@ interface EvidenceMedia {
   caption?: Record<Locale, string>;
   variants?: { mobile: EvidenceMediaVariant; desktop: EvidenceMediaVariant };
   provenance?: {
-    kind: "deterministic-reconstruction" | "direct-production-capture";
+    kind: "deterministic-reconstruction" | "direct-production-capture" | "local-development-capture";
     repository: string;
     commit: string;
     sourceUrl: string;

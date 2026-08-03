@@ -1,15 +1,16 @@
 import { expect, test } from "@playwright/test";
 
-const publicEvidenceProjects = [
+const productionEvidenceProjects = [
   "hamburguesa-nomada",
   "vald",
   "nutrichilango",
   "tecuiyo",
   "developer-tools"
 ] as const;
+const evidenceProjects = [...productionEvidenceProjects, "omnisync"] as const;
 
-test("uses reviewed production captures as project covers and preserves the private fallback", async ({ page }) => {
-  for (const slug of publicEvidenceProjects) {
+test("uses reviewed evidence covers and distinguishes the authorized local capture", async ({ page }) => {
+  for (const slug of productionEvidenceProjects) {
     await page.goto(`/es/proyectos/${slug}/`);
     const cover = page.locator("[data-project-cover]");
     await expect(cover).toHaveAttribute("data-cover-kind", "production");
@@ -17,9 +18,20 @@ test("uses reviewed production captures as project covers and preserves the priv
   }
 
   await page.goto("/es/proyectos/omnisync/");
-  const privateCover = page.locator("[data-project-cover]");
-  await expect(privateCover).toHaveAttribute("data-cover-kind", "illustrative");
-  await expect(privateCover.locator("img")).toHaveAttribute("src", "/media/projects/omnisync/poster.avif");
+  const localCover = page.locator("[data-project-cover]");
+  await expect(localCover).toHaveAttribute("data-cover-kind", "local");
+  await expect(localCover.locator("img")).toHaveAttribute("src", /\/media\/projects\/omnisync\/evidence\/home-desktop\.webp$/);
+});
+
+test("uses the same evidence covers in Spanish and English project catalogs", async ({ page }) => {
+  for (const path of ["/es/proyectos/", "/en/projects/"]) {
+    await page.goto(path);
+
+    for (const slug of evidenceProjects) {
+      const cover = page.locator(`[data-project-catalog-cover]`).filter({ has: page.locator(`img[src$="/media/projects/${slug}/evidence/home-desktop.webp"]`) });
+      await expect(cover).toHaveAttribute("data-cover-kind", slug === "omnisync" ? "local" : "production");
+    }
+  }
 });
 
 test("keeps the longest bilingual project heroes clear at every responsive transition", async ({ page }) => {
