@@ -20,6 +20,7 @@
     "check:links": "tsx scripts/check-links.ts",
     "check:tokens": "tsx scripts/check-tokens.ts",
     "generate:posters": "tsx scripts/generate-project-posters.ts",
+    "generate:covers": "tsx scripts/generate-cover-derivatives.ts",
     "promote:evidence-media": "tsx scripts/promote-evidence-captures.ts",
     "import:evidence": "tsx scripts/import-evidence.ts",
     "validate:evidence": "tsx scripts/validate-evidence.ts && pnpm check:brand && pnpm test",
