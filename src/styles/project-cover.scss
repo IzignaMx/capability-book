@@ -1,0 +1,37 @@
+/**
+ * Shared project cover contract (ADR: unified-project-covers).
+ *
+ * Every cover renderer (Astro ProjectCover.astro and React ProjectCardCover)
+ * emits the same data attributes; this stylesheet is the single source of
+ * truth for how the canonical asset behaves inside its frame.
+ *
+ * Frames own their aspect-ratio (8:5 for cover contexts). The contract only
+ * governs the media element itself: no distortion, no CLS, object-fit driven
+ * by the resolver (never by the container).
+ */
+
+[data-project-cover] {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+[data-project-cover] picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+[data-project-cover] img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: var(--cover-object-fit, cover);
+  object-position: var(--cover-object-position, top center);
+}
+
+/* Full-evidence context: the image flows naturally (no forced crop). */
+[data-project-cover][data-cover-context="full-evidence"] img {
+  height: auto;
+  object-fit: cover;
+}
