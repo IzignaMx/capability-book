@@ -42,17 +42,16 @@ if (omniSyncProject === null || nomadaProject === null) {
       </div>
     </div>
 
-    <aside class="signal-panel" aria-label="Areas of expertise">
-      <p class="panel-index">IZG / 01</p>
-      <p class="panel-title">Systems with intent.</p>
-      <ul>
-        <li><span>01</span> Web experiences</li>
-        <li><span>02</span> Connected commerce</li>
-        <li><span>03</span> AI and automation</li>
-        <li><span>04</span> Interactive products</li>
-      </ul>
-      <p class="panel-note">Explore is the narrative. Evaluate is the evidence.</p>
-    </aside>
+    </section>
+
+  <section class="specialties-strip container">
+    <ul>
+      <li>Web experiences</li>
+      <li>Connected commerce</li>
+      <li>AI and automation</li>
+      <li>Interactive products</li>
+    </ul>
+    <p class="strip-note">Explore is the narrative. Evaluate is the evidence.</p>
   </section>
 
   <section class="explore-shell container" aria-labelledby="explore-title">
@@ -169,10 +168,8 @@ if (omniSyncProject === null || nomadaProject === null) {
   .hero {
     position: relative;
     display: grid;
-    min-height: calc(100vh - 9rem);
-    grid-template-columns: minmax(0, 1.45fr) minmax(17rem, 0.55fr);
-    align-items: center;
-    gap: clamp(var(--space-8), 8vw, 8rem);
+    min-height: 100dvh;
+    align-content: center;
     padding-block: clamp(var(--space-12), 10vh, 8rem);
     overflow: hidden;
   }
@@ -208,7 +205,7 @@ if (omniSyncProject === null || nomadaProject === null) {
   }
 
   h1 {
-    max-width: 13ch;
+    max-width: 16ch;
     margin: 0;
     font-family: var(--font-display);
     font-size: clamp(3.2rem, 7vw, 7.5rem);
@@ -277,62 +274,39 @@ if (omniSyncProject === null || nomadaProject === null) {
     transform: translateY(1px);
   }
 
-  .signal-panel {
-    position: relative;
-    padding: var(--space-6);
-    border: 1px solid var(--color-line);
-    background:
-      linear-gradient(145deg, rgb(15 23 42 / 84%), rgb(2 6 23 / 58%));
-    box-shadow: 0 2rem 5rem rgb(0 0 0 / 28%);
-    animation: reveal 700ms 180ms ease-out both;
-    backdrop-filter: blur(1rem);
+  .specialties-strip {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding-block: var(--space-8);
+    border-top: 1px solid var(--color-line);
   }
 
-  .signal-panel::before {
-    position: absolute;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-top: 1px solid var(--color-cyan);
-    border-left: 1px solid var(--color-cyan);
-    content: "";
-    inset: -1px auto auto -1px;
-  }
-
-  .panel-title {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: 1.6rem;
-    font-weight: 700;
-  }
-
-  .signal-panel ul {
-    display: grid;
-    gap: 0;
+  .specialties-strip ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
     padding: 0;
-    margin: var(--space-8) 0;
+    margin: 0;
     list-style: none;
   }
 
-  .signal-panel li {
-    display: grid;
-    grid-template-columns: 2rem 1fr;
-    gap: var(--space-3);
-    padding-block: var(--space-3);
-    border-top: 1px solid var(--color-line);
+  .specialties-strip li {
+    padding-inline: var(--space-5);
+    border-inline-start: 1px solid var(--color-line);
     color: var(--color-text-muted);
-  }
-
-  .signal-panel li:last-child {
-    border-bottom: 1px solid var(--color-line);
-  }
-
-  .signal-panel li span {
-    color: var(--color-brand-bright);
     font-family: var(--font-data);
-    font-size: 0.75rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
-  .panel-note {
+  .specialties-strip li:first-child {
+    border-inline-start: none;
+    padding-inline-start: 0;
+  }
+
+  .strip-note {
     margin: 0;
     color: var(--color-text-muted);
     font-size: 0.82rem;
@@ -345,22 +319,7 @@ if (omniSyncProject === null || nomadaProject === null) {
     }
   }
 
-  @media (max-width: 54rem) {
-    .hero {
-      grid-template-columns: 1fr;
-      align-items: start;
-    }
-
-    .signal-panel {
-      max-width: 34rem;
-    }
-  }
-
   @media (max-width: 34rem) {
-    .hero {
-      padding-top: var(--space-12);
-    }
-
     h1 {
       font-size: clamp(2.8rem, 15vw, 4.25rem);
     }
@@ -368,6 +327,17 @@ if (omniSyncProject === null || nomadaProject === null) {
     .hero-actions {
       align-items: stretch;
       flex-direction: column;
+    }
+
+    .specialties-strip li {
+      padding-inline: var(--space-3);
+      font-size: 0.75rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-copy {
+      animation: none;
     }
   }
 </style>

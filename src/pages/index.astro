@@ -1,12 +1,29 @@
 ---
 import "../styles/global.scss";
+import ProjectCover from "../components/projects/ProjectCover.astro";
+import { AstroProjectRepository } from "../infrastructure/content/AstroProjectRepository";
 
 const languages = [
   { href: "/es/", label: "Continuar en español", lang: "es" },
   { href: "/en/", label: "Continue in English", lang: "en" }
 ];
 const siteUrl = "https://book.izignamx.com/";
-const description = "Selecciona un idioma para explorar las capacidades y proyectos de IzignaMx.";
+const description =
+  "Selecciona un idioma para explorar las capacidades y proyectos de IzignaMx.";
+
+const repo = new AstroProjectRepository();
+const allProjects = await repo.list({ locale: "es" });
+const featuredSlugs = ["omnisync", "hamburguesa-nomada", "tecuiyo"];
+const featured = featuredSlugs
+  .map((slug) => allProjects.find((p) => p.slug === slug))
+  .filter((p): p is NonNullable<typeof p> => p !== undefined);
+
+const stateLabels: Record<string, { es: string }> = {
+  "direct-production-capture": { es: "Producción" },
+  "local-development-capture": { es: "Captura local" },
+  "deterministic-reconstruction": { es: "Reconstrucción" },
+  illustrative: { es: "Ilustrativa" }
+};
 ---
 
 <!doctype html>
@@ -30,29 +47,93 @@ const description = "Selecciona un idioma para explorar las capacidades y proyec
     <meta property="og:url" content={siteUrl} />
   </head>
   <body>
-    <main class="language-gateway">
-      <p class="eyebrow">Capability Book</p>
-      <h1>IzignaMx</h1>
-      <p class="instruction">Selecciona un idioma. Select a language.</p>
-      <nav aria-label="Language selection">
-        {languages.map((language) => (
-          <a href={language.href} lang={language.lang}>{language.label}</a>
-        ))}
-      </nav>
+    <main class="gateway">
+      <div class="gateway__content">
+        <svg
+          class="gateway__mark"
+          viewBox="0 0 64 64"
+          width="48"
+          height="48"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <rect width="64" height="64" rx="14" fill="#020617" />
+          <path d="M32 9 55 32 32 55 9 32Z" fill="#3b82f6" />
+          <path
+            d="m32 18 14 14-14 14-14-14Z"
+            fill="none"
+            stroke="#22d3ee"
+            stroke-width="4"
+          />
+        </svg>
+        <p class="gateway__eyebrow">Capability Book</p>
+        <h1 class="gateway__title">IzignaMx</h1>
+        <p class="gateway__intro">
+          Evidencia real de proyectos digitales · Real evidence of digital
+          projects
+        </p>
+        <nav class="gateway__languages" aria-label="Selección de idioma / Language selection">
+          {languages.map((language) => (
+            <a
+              href={language.href}
+              lang={language.lang}
+              class="gateway__language-link"
+            >
+              {language.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+
+      <div class="gateway__evidence" aria-hidden="true">
+        {featured.map((project) => {
+          const stateLabel =
+            stateLabels[project.visualEvidence[0]?.provenance.kind ?? "illustrative"]?.es ??
+            "Ilustrativa";
+          return (
+            <figure class="gateway__cover">
+              <div class="gateway__cover-frame">
+                <ProjectCover
+                  project={project}
+                  context="catalog-cover"
+                  loading="eager"
+                />
+              </div>
+              <figcaption class="gateway__cover-caption">
+                <span class="gateway__cover-title">{project.title}</span>
+                <span class="gateway__cover-state">{stateLabel}</span>
+              </figcaption>
+            </figure>
+          );
+        })}
+      </div>
     </main>
   </body>
 </html>
 
 <style>
-  .language-gateway {
+  .gateway {
     display: grid;
-    min-height: 100vh;
-    place-content: center;
-    padding: var(--space-8);
-    text-align: center;
+    grid-template-columns: 1.3fr 0.7fr;
+    align-items: center;
+    gap: var(--space-8);
+    min-height: 100dvh;
+    padding: var(--space-8) var(--page-gutter);
   }
 
-  .eyebrow {
+  .gateway__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    animation: gateway-reveal 700ms var(--motion-standard) both;
+  }
+
+  .gateway__mark {
+    width: 48px;
+    height: 48px;
+  }
+
+  .gateway__eyebrow {
     margin: 0;
     color: var(--color-cyan);
     font-family: var(--font-data);
@@ -61,42 +142,135 @@ const description = "Selecciona un idioma para explorar las capacidades y proyec
     text-transform: uppercase;
   }
 
-  h1 {
-    margin: var(--space-2) 0;
+  .gateway__title {
+    margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(4rem, 16vw, 10rem);
+    font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 700;
-    letter-spacing: -0.08em;
+    letter-spacing: -0.06em;
     line-height: 0.92;
   }
 
-  .instruction {
+  .gateway__intro {
+    max-width: 32rem;
+    margin: 0;
     color: var(--color-text-muted);
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    line-height: 1.6;
   }
 
-  nav {
+  .gateway__languages {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-3);
-    margin-top: var(--space-8);
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-6);
   }
 
-  a {
+  .gateway__language-link {
     display: inline-flex;
     align-items: center;
-    padding: var(--space-3) var(--space-6);
+    padding: var(--space-3) var(--space-5);
     border: 1px solid var(--color-line);
     border-radius: var(--radius-pill);
     background: rgb(15 23 42 / 72%);
+    color: var(--color-text);
+    font-size: 1.05rem;
+    font-weight: 600;
     text-decoration: none;
     transition:
       border-color var(--motion-fast),
-      background var(--motion-fast);
+      background var(--motion-fast),
+      transform var(--motion-fast);
   }
 
-  a:hover {
+  .gateway__language-link:hover {
     border-color: var(--color-brand-bright);
     background: rgb(59 130 246 / 18%);
+  }
+
+  .gateway__language-link:active {
+    transform: translateY(1px);
+  }
+
+  .gateway__language-link:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+
+  .gateway__evidence {
+    display: grid;
+    gap: var(--space-3);
+    align-content: center;
+    animation: gateway-reveal 700ms var(--motion-standard) 120ms both;
+  }
+
+  .gateway__cover {
+    margin: 0;
+  }
+
+  .gateway__cover-frame {
+    aspect-ratio: 8 / 5;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    background: var(--color-midnight);
+  }
+
+  .gateway__cover-caption {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+    font-family: var(--font-data);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+  }
+
+  .gateway__cover-title {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .gateway__cover-state {
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+  }
+
+  @keyframes gateway-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .gateway {
+      grid-template-columns: 1fr;
+      align-items: start;
+      gap: var(--space-6);
+      padding: var(--space-6) var(--page-gutter);
+    }
+
+    .gateway__evidence {
+      order: -1;
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .gateway__title {
+      font-size: clamp(2.5rem, 12vw, 4rem);
+    }
+
+    .gateway__language-link {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gateway__content,
+    .gateway__evidence {
+      animation: none;
+    }
   }
 </style>
