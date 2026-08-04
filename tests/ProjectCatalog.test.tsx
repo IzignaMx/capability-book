@@ -102,22 +102,32 @@ describe("ProjectCatalog", () => {
     expect(screen.getByRole("heading", { name: "Tecuiyo" })).toBeInTheDocument();
   });
 
-  it("prioritizes responsive production evidence and retains an illustrative fallback", () => {
+  it("prioritizes canonical landscape evidence and retains an illustrative fallback", () => {
     const { container } = render(<ProjectCatalog locale="es" projects={projects} />);
 
-    const productionCover = container.querySelector("[data-project-catalog-cover]");
-    expect(productionCover).toHaveAttribute("data-cover-kind", "production");
+    const productionCover = container
+      .querySelector(
+        '[data-project-cover][data-cover-context="catalog-cover"] img[src="/media/projects/tecuiyo/evidence/home-desktop.webp"]'
+      )
+      ?.closest('[data-project-cover]');
+    expect(productionCover).toHaveAttribute("data-cover-kind", "direct-production-capture");
+    expect(productionCover).toHaveAttribute("data-cover-src", "evidence");
     expect(productionCover?.querySelector("img")).toHaveAttribute(
       "src",
       "/media/projects/tecuiyo/evidence/home-desktop.webp"
     );
     expect(productionCover?.querySelector("img")).toHaveAttribute("alt", "Portada de producción de Tecuiyo.");
+    expect(productionCover?.querySelector("img")).toHaveAttribute("width", "1440");
+    expect(productionCover?.querySelector("img")).toHaveAttribute("height", "900");
     expect(productionCover?.querySelector('source[type="image/avif"]')).toHaveAttribute(
       "srcset",
-      "/media/projects/tecuiyo/evidence/home-mobile.avif"
+      "/media/projects/tecuiyo/evidence/home-desktop.avif"
     );
+    expect(productionCover?.querySelector('source[media*="40rem"]')).toBeNull();
 
-    const fallback = container.querySelector('img[src="/media/projects/omnisync/poster.avif"]');
-    expect(fallback).toHaveAttribute("alt", "");
+    const fallback = container.querySelector('img[src="/media/projects/omnisync/poster-cover.avif"]');
+    expect(fallback).toHaveAttribute("alt", "Portada ilustrativa de OmniSync");
+    expect(fallback).toHaveAttribute("width", "1280");
+    expect(fallback).toHaveAttribute("height", "800");
   });
 });
