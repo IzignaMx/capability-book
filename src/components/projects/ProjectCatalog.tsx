@@ -193,7 +193,7 @@ export function ProjectCatalog({ locale, projects }: ProjectCatalogProps) {
 
       <style>{`
         .project-catalog {
-          width: min(calc(100% - 2rem), var(--content-width));
+          width: min(calc(100% - 2 * var(--page-gutter)), var(--content-width));
           margin-inline: auto;
           padding: clamp(4rem, 9vw, 8rem) 0 6rem;
         }
@@ -255,7 +255,13 @@ export function ProjectCatalog({ locale, projects }: ProjectCatalogProps) {
           border-radius: var(--radius-sm);
           background: var(--color-space);
           color: var(--color-text);
-          padding: 0.75rem 1rem;
+          padding: var(--control-padding-block) var(--control-padding-inline);
+          transition: border-color var(--motion-fast);
+        }
+
+        .project-catalog__controls input:hover,
+        .project-catalog__controls select:hover {
+          border-color: var(--color-brand-bright);
         }
 
         .project-catalog__count {
@@ -309,7 +315,7 @@ export function ProjectCatalog({ locale, projects }: ProjectCatalogProps) {
 
         .project-card__body {
           display: grid;
-          gap: 1rem;
+          gap: var(--space-4);
           padding: clamp(1.25rem, 3vw, 2rem);
         }
 
@@ -345,14 +351,21 @@ export function ProjectCatalog({ locale, projects }: ProjectCatalogProps) {
         .project-card a {
           display: inline-flex;
           width: fit-content;
+          min-height: 44px;
           align-items: center;
+          flex-wrap: wrap;
+          column-gap: 0.35rem;
           border-bottom: 1px solid var(--color-brand-bright);
           color: var(--color-white);
           text-decoration: none;
+          transition: border-color var(--motion-fast);
+        }
+
+        .project-card a:hover {
+          border-color: var(--color-cyan);
         }
 
         .project-card a span {
-          margin-left: 0.35rem;
           color: var(--color-brand-bright);
         }
 

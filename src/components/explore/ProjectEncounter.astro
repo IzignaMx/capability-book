@@ -106,7 +106,7 @@ const diagnosticHref = `${diagnosticBase}?project=${encodeURIComponent(project.s
 
 <style>
   .project-encounter {
-    gap: var(--space-5);
+    gap: var(--content-gap);
   }
 
   .project-encounter__classification {
@@ -191,7 +191,7 @@ const diagnosticHref = `${diagnosticBase}?project=${encodeURIComponent(project.s
     align-items: center;
     justify-content: center;
     min-height: 44px;
-    padding: var(--space-3) var(--space-5);
+    padding: var(--control-padding-block) var(--control-padding-inline);
     border: 1px solid var(--color-line);
     border-radius: var(--radius-pill);
     color: var(--color-text);
@@ -207,6 +207,10 @@ const diagnosticHref = `${diagnosticBase}?project=${encodeURIComponent(project.s
   .project-encounter__actions a:hover {
     border-color: var(--color-cyan);
     background: rgb(34 211 238 / 9%);
+  }
+
+  .project-encounter__actions a:active {
+    transform: translateY(1px);
   }
 
   @media (max-width: 34rem) {

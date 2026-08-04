@@ -59,7 +59,7 @@ textarea {
 }
 
 .container {
-  width: min(calc(100% - 2rem), var(--content-width));
+  width: min(calc(100% - 2 * var(--page-gutter)), var(--content-width));
   margin-inline: auto;
 }
 
