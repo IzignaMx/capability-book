@@ -11,3 +11,5 @@ artifacts/evidence-summary.md
 .env
 .DS_Store
 .logs/
+audit/
+tests/e2e/visual-regression.spec.ts-snapshots/
