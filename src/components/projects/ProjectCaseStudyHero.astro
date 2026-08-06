@@ -1,7 +1,10 @@
 ---
 import type { Locale, ProjectVisualEvidence } from "../../domain/projects/PortfolioProject";
+import { resolveProjectVisual } from "../../domain/projects/projectVisualResolver";
+import ProjectCover from "./ProjectCover.astro";
 
 interface Props {
+  slug: string;
   title: string;
   claim: string;
   openingLabel: string;
@@ -10,21 +13,33 @@ interface Props {
   locale: Locale;
 }
 
-const { title, claim, openingLabel, fallbackPoster, evidence, locale } = Astro.props;
-const isLocalCapture = evidence?.provenance.kind === "local-development-capture";
+const { slug, title, claim, openingLabel, fallbackPoster, evidence, locale } = Astro.props;
+
+const visual = resolveProjectVisual(
+  { slug, locale, title, fallbackPoster, visualEvidence: evidence ? [evidence] : [] },
+  "case-study-cover",
+  { loading: "eager", fetchPriority: "high" },
+);
+
 const labels = locale === "es"
   ? {
       evidence: "Portada de producción · evidencia completa más abajo",
       local: "Portada de captura local autorizada · evidencia completa más abajo",
-      fallback: "Portada ilustrativa · sin captura pública autorizada",
-      fallbackAlt: `Visual ilustrativo de apertura del proyecto ${title}`
+      fallback: "Portada ilustrativa · sin captura pública autorizada"
     }
   : {
       evidence: "Production cover · complete evidence below",
       local: "Authorized local-capture cover · complete evidence below",
-      fallback: "Illustrative cover · no authorized public capture",
-      fallbackAlt: `Illustrative opening visual for the ${title} project`
+      fallback: "Illustrative cover · no authorized public capture"
     };
+
+const stateLabel =
+  visual.stateKind === "local-development-capture"
+    ? labels.local
+    : visual.stateKind === "direct-production-capture" ||
+        visual.stateKind === "deterministic-reconstruction"
+      ? labels.evidence
+      : labels.fallback;
 ---
 
 <header class="project-hero">
@@ -34,57 +49,11 @@ const labels = locale === "es"
     <p class="project-hero__claim">{claim}</p>
   </div>
 
-  <figure
-    class="project-hero__media"
-    data-project-cover
-    data-cover-kind={evidence ? isLocalCapture ? "local" : "production" : "illustrative"}
-  >
+  <figure class="project-hero__media">
     <div class="project-hero__frame">
-      {evidence ? (
-        <picture>
-          <source
-            media="(max-width: 40rem)"
-            srcset={evidence.variants.mobile.avif}
-            type="image/avif"
-            width={evidence.variants.mobile.width}
-            height={evidence.variants.mobile.height}
-          />
-          <source
-            media="(max-width: 40rem)"
-            srcset={evidence.variants.mobile.webp}
-            type="image/webp"
-            width={evidence.variants.mobile.width}
-            height={evidence.variants.mobile.height}
-          />
-          <source
-            srcset={evidence.variants.desktop.avif}
-            type="image/avif"
-            width={evidence.variants.desktop.width}
-            height={evidence.variants.desktop.height}
-          />
-          <img
-            src={evidence.variants.desktop.webp}
-            alt={evidence.alt}
-            width={evidence.variants.desktop.width}
-            height={evidence.variants.desktop.height}
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-          />
-        </picture>
-      ) : (
-        <img
-          src={fallbackPoster}
-          alt={labels.fallbackAlt}
-          width="1280"
-          height="720"
-          loading="eager"
-          fetchpriority="high"
-          decoding="async"
-        />
-      )}
+      <ProjectCover project={{ slug, locale, title, fallbackPoster, visualEvidence: evidence ? [evidence] : [] }} context="case-study-cover" loading="eager" fetchPriority="high" />
     </div>
-    <figcaption>{evidence ? isLocalCapture ? labels.local : labels.evidence : labels.fallback}</figcaption>
+    <figcaption>{stateLabel}</figcaption>
   </figure>
 </header>
 
@@ -143,18 +112,6 @@ const labels = locale === "es"
     overflow: hidden;
     border: 1px solid var(--color-line);
     background: var(--color-midnight);
-  }
-
-  .project-hero__frame picture,
-  .project-hero__frame img {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
-  .project-hero__frame img {
-    object-fit: cover;
-    object-position: top center;
   }
 
   .project-hero__media figcaption {

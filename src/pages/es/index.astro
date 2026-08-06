@@ -41,18 +41,16 @@ if (omniSyncProject === null || nomadaProject === null) {
         <a class="secondary-action" href={diagnosticHref}>Solicitar diagnóstico</a>
       </div>
     </div>
+  </section>
 
-    <aside class="signal-panel" aria-label="Áreas de especialidad">
-      <p class="panel-index">IZG / 01</p>
-      <p class="panel-title">Sistemas con intención.</p>
-      <ul>
-        <li><span>01</span> Experiencias web</li>
-        <li><span>02</span> Comercio conectado</li>
-        <li><span>03</span> IA y automatización</li>
-        <li><span>04</span> Productos interactivos</li>
-      </ul>
-      <p class="panel-note">Explore es la narrativa. Evaluate es la evidencia.</p>
-    </aside>
+  <section class="specialties-strip container" aria-label="Áreas de especialidad">
+    <ul>
+      <li>Experiencias web</li>
+      <li>Comercio conectado</li>
+      <li>IA y automatización</li>
+      <li>Productos interactivos</li>
+    </ul>
+    <p class="strip-note">Explore es la narrativa. Evaluate es la evidencia.</p>
   </section>
 
   <section class="explore-shell container" aria-labelledby="explore-title">
@@ -169,10 +167,8 @@ if (omniSyncProject === null || nomadaProject === null) {
   .hero {
     position: relative;
     display: grid;
-    min-height: calc(100vh - 9rem);
-    grid-template-columns: minmax(0, 1.45fr) minmax(17rem, 0.55fr);
-    align-items: center;
-    gap: clamp(var(--space-8), 8vw, 8rem);
+    align-content: center;
+    min-height: 100dvh;
     padding-block: clamp(var(--space-12), 10vh, 8rem);
     overflow: hidden;
   }
@@ -197,8 +193,7 @@ if (omniSyncProject === null || nomadaProject === null) {
     animation: reveal 700ms ease-out both;
   }
 
-  .eyebrow,
-  .panel-index {
+  .eyebrow {
     margin: 0 0 var(--space-4);
     color: var(--color-cyan);
     font-family: var(--font-data);
@@ -208,7 +203,7 @@ if (omniSyncProject === null || nomadaProject === null) {
   }
 
   h1 {
-    max-width: 13ch;
+    max-width: 16ch;
     margin: 0;
     font-family: var(--font-display);
     font-size: clamp(3.2rem, 7vw, 7.5rem);
@@ -260,6 +255,10 @@ if (omniSyncProject === null || nomadaProject === null) {
     background: var(--color-brand-bright);
   }
 
+  .primary-action:active {
+    transform: translateY(1px);
+  }
+
   .secondary-action {
     border: 1px solid var(--color-line);
   }
@@ -269,62 +268,43 @@ if (omniSyncProject === null || nomadaProject === null) {
     background: rgb(34 211 238 / 8%);
   }
 
-  .signal-panel {
-    position: relative;
-    padding: var(--space-6);
-    border: 1px solid var(--color-line);
-    background:
-      linear-gradient(145deg, rgb(15 23 42 / 84%), rgb(2 6 23 / 58%));
-    box-shadow: 0 2rem 5rem rgb(0 0 0 / 28%);
-    animation: reveal 700ms 180ms ease-out both;
-    backdrop-filter: blur(1rem);
+  .secondary-action:active {
+    transform: translateY(1px);
   }
 
-  .signal-panel::before {
-    position: absolute;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-top: 1px solid var(--color-cyan);
-    border-left: 1px solid var(--color-cyan);
-    content: "";
-    inset: -1px auto auto -1px;
+  .specialties-strip {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-block: var(--space-8);
+    border-top: 1px solid var(--color-line);
   }
 
-  .panel-title {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: 1.6rem;
-    font-weight: 700;
-  }
-
-  .signal-panel ul {
-    display: grid;
+  .specialties-strip ul {
+    display: flex;
+    flex-wrap: wrap;
     gap: 0;
     padding: 0;
-    margin: var(--space-8) 0;
+    margin: 0;
     list-style: none;
   }
 
-  .signal-panel li {
-    display: grid;
-    grid-template-columns: 2rem 1fr;
-    gap: var(--space-3);
-    padding-block: var(--space-3);
-    border-top: 1px solid var(--color-line);
+  .specialties-strip li {
+    padding-inline: var(--space-5);
+    border-inline-start: 1px solid var(--color-line);
     color: var(--color-text-muted);
-  }
-
-  .signal-panel li:last-child {
-    border-bottom: 1px solid var(--color-line);
-  }
-
-  .signal-panel li span {
-    color: var(--color-brand-bright);
     font-family: var(--font-data);
-    font-size: 0.75rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 
-  .panel-note {
+  .specialties-strip li:first-child {
+    padding-inline-start: 0;
+    border-inline-start: none;
+  }
+
+  .strip-note {
     margin: 0;
     color: var(--color-text-muted);
     font-size: 0.82rem;
@@ -337,22 +317,7 @@ if (omniSyncProject === null || nomadaProject === null) {
     }
   }
 
-  @media (max-width: 54rem) {
-    .hero {
-      grid-template-columns: 1fr;
-      align-items: start;
-    }
-
-    .signal-panel {
-      max-width: 34rem;
-    }
-  }
-
   @media (max-width: 34rem) {
-    .hero {
-      padding-top: var(--space-12);
-    }
-
     h1 {
       font-size: clamp(2.8rem, 15vw, 4.25rem);
     }
@@ -360,6 +325,17 @@ if (omniSyncProject === null || nomadaProject === null) {
     .hero-actions {
       align-items: stretch;
       flex-direction: column;
+    }
+
+    .specialties-strip li {
+      padding-inline: var(--space-3);
+      font-size: 0.75rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-copy {
+      animation: none;
     }
   }
 </style>

@@ -77,6 +77,7 @@ const structuredData = {
 
   <article class="case-study" data-pagefind-body>
     <ProjectCaseStudyHero
+      slug={slug}
       title={data.title}
       claim={data.elevatorPitch}
       openingLabel={`${classificationLabels[data.classification]} · ${confidentialityLabels[data.confidentiality]}`}
@@ -262,12 +263,22 @@ const structuredData = {
     display: inline-flex;
     width: fit-content;
     align-items: center;
-    padding: 0.9rem 1.2rem;
+    min-height: 44px;
+    padding: var(--control-padding-block) var(--control-padding-inline);
     border-radius: var(--radius-pill);
     background: var(--color-brand);
     color: var(--color-space);
     font-weight: 750;
     text-decoration: none;
+    transition: background-color var(--motion-fast);
+  }
+
+  .case-study__cta a:hover {
+    background: var(--color-brand-bright);
+  }
+
+  .case-study__cta a:active {
+    transform: translateY(1px);
   }
 
   @media (max-width: 52rem) {

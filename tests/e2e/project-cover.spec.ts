@@ -12,14 +12,14 @@ const evidenceProjects = [...productionEvidenceProjects, "omnisync"] as const;
 test("uses reviewed evidence covers and distinguishes the authorized local capture", async ({ page }) => {
   for (const slug of productionEvidenceProjects) {
     await page.goto(`/es/proyectos/${slug}/`);
-    const cover = page.locator("[data-project-cover]");
-    await expect(cover).toHaveAttribute("data-cover-kind", "production");
+    const cover = page.locator('[data-project-cover][data-cover-context="case-study-cover"]');
+    await expect(cover).toHaveAttribute("data-cover-kind", "direct-production-capture");
     await expect(cover.locator("img")).toHaveAttribute("src", new RegExp(`/media/projects/${slug}/evidence/home-desktop\\.webp$`));
   }
 
   await page.goto("/es/proyectos/omnisync/");
-  const localCover = page.locator("[data-project-cover]");
-  await expect(localCover).toHaveAttribute("data-cover-kind", "local");
+  const localCover = page.locator('[data-project-cover][data-cover-context="case-study-cover"]');
+  await expect(localCover).toHaveAttribute("data-cover-kind", "local-development-capture");
   await expect(localCover.locator("img")).toHaveAttribute("src", /\/media\/projects\/omnisync\/evidence\/home-desktop\.webp$/);
 });
 
@@ -28,8 +28,13 @@ test("uses the same evidence covers in Spanish and English project catalogs", as
     await page.goto(path);
 
     for (const slug of evidenceProjects) {
-      const cover = page.locator(`[data-project-catalog-cover]`).filter({ has: page.locator(`img[src$="/media/projects/${slug}/evidence/home-desktop.webp"]`) });
-      await expect(cover).toHaveAttribute("data-cover-kind", slug === "omnisync" ? "local" : "production");
+      const cover = page
+        .locator('[data-project-cover][data-cover-context="catalog-cover"]')
+        .filter({ has: page.locator(`img[src$="/media/projects/${slug}/evidence/home-desktop.webp"]`) });
+      await expect(cover).toHaveAttribute(
+        "data-cover-kind",
+        slug === "omnisync" ? "local-development-capture" : "direct-production-capture"
+      );
     }
   }
 });
@@ -46,12 +51,12 @@ test("keeps the longest bilingual project heroes clear at every responsive trans
     for (const width of [390, 833, 900, 1024, 1280, 1440]) {
       await page.setViewportSize({ width, height: 900 });
 
-      const coverImage = page.locator("[data-project-cover] img");
-      const expectedVariant = width <= 640 ? "mobile" : "desktop";
+      const coverImage = page.locator('[data-project-cover][data-cover-context="case-study-cover"] img');
+      // Rule 4: landscape desktop capture at ALL breakpoints — never the vertical mobile variant.
       await expect.poll(async () => {
         const currentSrc = await coverImage.evaluate((image: HTMLImageElement) => image.currentSrc);
         return currentSrc ? new URL(currentSrc).pathname : "";
-      }).toBe(`/media/projects/${project.slug}/evidence/home-${expectedVariant}.avif`);
+      }).toBe(`/media/projects/${project.slug}/evidence/home-desktop.avif`);
 
       const geometry = await page.locator(".project-hero").evaluate((hero) => {
         const opening = hero.querySelector<HTMLElement>(".project-hero__opening");

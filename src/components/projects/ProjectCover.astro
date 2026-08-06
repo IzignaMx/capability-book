@@ -1,0 +1,71 @@
+---
+import type { ProjectVisualSource } from "../../domain/projects/projectVisualResolver";
+import {
+  resolveProjectVisual,
+  type ProjectCoverContext,
+  type ResolvedProjectVisual,
+} from "../../domain/projects/projectVisualResolver";
+import { coverOverridesFor } from "../../domain/projects/coverVisualOverrides";
+
+interface Props {
+  project: ProjectVisualSource;
+  context: ProjectCoverContext;
+  loading?: "eager" | "lazy";
+  fetchPriority?: "high" | "auto";
+  /** Applied to the <picture> element (e.g. frame selectors). */
+  class?: string;
+  /** Exposed for tests: the resolved presentation contract. */
+  visual?: ResolvedProjectVisual;
+}
+
+const {
+  project,
+  context,
+  loading,
+  fetchPriority,
+  class: className,
+} = Astro.props;
+
+const visual: ResolvedProjectVisual = resolveProjectVisual(
+  project,
+  context,
+  {
+    ...(loading ? { loading } : {}),
+    ...(fetchPriority ? { fetchPriority } : {}),
+  },
+  coverOverridesFor(project.slug),
+);
+
+const { desktop, mobile, alt } = visual;
+const stateKind = visual.stateKind;
+const style = {
+  "--cover-object-fit": visual.objectFit,
+  "--cover-object-position": visual.objectPosition,
+} as Record<string, string>;
+---
+<picture
+  class:list={[className]}
+  data-project-cover
+  data-cover-context={context}
+  data-cover-kind={stateKind}
+  data-cover-src={visual.sourceKind}
+  style={style}
+>
+  {desktop.avif && <source type="image/avif" srcset={desktop.avif} />}
+  {desktop.webp && <source type="image/webp" srcset={desktop.webp} />}
+  {mobile && (
+    <>
+      {mobile.avif && <source type="image/avif" srcset={mobile.avif} media="(max-width: 40rem)" />}
+      {mobile.webp && <source type="image/webp" srcset={mobile.webp} media="(max-width: 40rem)" />}
+    </>
+  )}
+  <img
+    src={desktop.src}
+    alt={alt}
+    width={desktop.width}
+    height={desktop.height}
+    loading={visual.loading}
+    fetchpriority={visual.fetchPriority}
+    decoding="async"
+  />
+</picture>

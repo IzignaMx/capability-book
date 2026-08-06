@@ -50,7 +50,7 @@ const diagnosticHref = locale === "es" ? "/es/diagnostico/" : "/en/diagnostic/";
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     gap: var(--space-6);
-    padding-block: var(--space-4);
+    padding-block: var(--space-3);
   }
 
   .brand {
@@ -81,6 +81,8 @@ const diagnosticHref = locale === "es" ? "/es/diagnostico/" : "/en/diagnostic/";
   .primary-navigation a {
     display: inline-flex;
     align-items: center;
+    min-height: 44px;
+    padding-inline: var(--space-3);
     color: var(--color-text-muted);
     font-size: 0.875rem;
     text-decoration: none;
@@ -106,6 +108,7 @@ const diagnosticHref = locale === "es" ? "/es/diagnostico/" : "/en/diagnostic/";
   @media (max-width: 56rem) {
     .site-header {
       grid-template-columns: 1fr auto;
+      gap: var(--space-3);
     }
 
     .site-header :global(.mode-switch) {
