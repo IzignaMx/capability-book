@@ -2,11 +2,11 @@
 
 - **Status:** Accepted
 - **Date:** 2026-07-20
-- **Scope:** IzignaMx Capability Book
+- **Scope:** IzignaMx Book
 
 ## Context
 
-The capability book needs enough behavioral evidence to improve navigation, understand which capabilities and projects attract qualified attention, and measure diagnostic completion. It must not turn contact forms or exploratory behavior into a source of unnecessary personal-data collection.
+The Book needs enough behavioral evidence to improve navigation, understand which capabilities and projects attract qualified attention, and measure diagnostic completion. It must not turn contact forms or exploratory behavior into a source of unnecessary personal-data collection.
 
 ## Decision
 

@@ -1,6 +1,6 @@
-# IzignaMx Capability Book
+# IzignaMx Book
 
-Immersive, evidence-backed capability book and verified portfolio for **IzignaMx**.
+Immersive, evidence-backed Book and verified portfolio for **IzignaMx**.
 
 ## Current status
 

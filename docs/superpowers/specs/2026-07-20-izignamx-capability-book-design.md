@@ -1,4 +1,4 @@
-# IzignaMx Capability Book
+# IzignaMx Book
 
 ## Product and Experience Design Specification
 
@@ -12,7 +12,7 @@ Secondary language: English
 
 ## 1. Executive summary
 
-IzignaMx Capability Book is a high-end digital portfolio, capability demonstrator, and conversion platform. It must communicate what IzignaMx has built, what it can build, and how those capabilities create measurable business or social value.
+IzignaMx Book is a high-end digital portfolio, capability demonstrator, and conversion platform. It must communicate what IzignaMx has built, what it can build, and how those capabilities create measurable business or social value.
 
 The product is not a conventional portfolio grid. It is a dual-mode experience:
 

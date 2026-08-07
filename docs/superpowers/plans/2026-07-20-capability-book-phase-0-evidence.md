@@ -1,4 +1,4 @@
-# IzignaMx Capability Book Phase 0 Evidence Implementation Plan
+# IzignaMx Book Phase 0 Evidence Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -84,7 +84,7 @@ Phase 0 is complete only when `pnpm validate:evidence` passes in CI and the gene
 ```bash
 gh repo create IzignaMx/capability-book \
   --private \
-  --description "IzignaMx immersive capability book and verified portfolio" \
+  --description "IzignaMx immersive Book and verified portfolio" \
   --clone
 cd capability-book
 git switch -c feat/phase-0-evidence

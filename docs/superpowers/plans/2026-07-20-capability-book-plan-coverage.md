@@ -1,4 +1,4 @@
-# IzignaMx Capability Book plan coverage
+# IzignaMx Book plan coverage
 
 ## Approved scope covered by this planning package
 

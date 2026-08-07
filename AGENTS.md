@@ -1,6 +1,6 @@
-# IzignaMx Capability Book — Agent Guide
+# IzignaMx Book — Agent Guide
 
-Bilingual (es/en) Astro 7 static portfolio site at [book.izignamx.com](https://book.izignamx.com/). Evidence-backed capability book with a cinematic 3D Explore layer.
+Bilingual (es/en) Astro 7 static portfolio site at [book.izignamx.com](https://book.izignamx.com/). Evidence-backed Book with a cinematic 3D Explore layer.
 
 ## Quick start
 

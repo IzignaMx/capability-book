@@ -1,5 +1,7 @@
 import { useId, useMemo, useState } from "react";
 import type { PortfolioProject } from "../../domain/projects/PortfolioProject";
+import { resolveProjectVisual } from "../../domain/projects/projectVisualResolver";
+import { coverOverridesFor } from "../../domain/projects/coverVisualOverrides";
 import { filterProjects } from "../../features/evaluate-mode/projectFilters";
 
 interface ProjectCatalogProps {
@@ -44,53 +46,46 @@ interface ProjectCardCoverProps {
 }
 
 function ProjectCardCover({ project, index }: ProjectCardCoverProps) {
-  const evidence = project.visualEvidence.at(0);
-  const loading = index < 2 ? "eager" : "lazy";
-
-  if (!evidence) {
-    return (
-      <img
-        src={project.fallbackPoster}
-        alt=""
-        width="640"
-        height="360"
-        loading={loading}
-        decoding="async"
-      />
-    );
-  }
+  const visual = resolveProjectVisual(
+    project,
+    "catalog-cover",
+    { loading: index < 2 ? "eager" : "lazy" },
+    coverOverridesFor(project.slug)
+  );
 
   return (
     <picture
-      data-project-catalog-cover
-      data-cover-kind={evidence.provenance.kind === "local-development-capture" ? "local" : "production"}
+      data-project-cover
+      data-cover-context="catalog-cover"
+      data-cover-kind={visual.stateKind}
+      data-cover-src={visual.sourceKind}
+      style={{
+        "--cover-object-fit": visual.objectFit,
+        "--cover-object-position": visual.objectPosition
+      } as React.CSSProperties}
     >
-      <source
-        media="(max-width: 40rem)"
-        srcSet={evidence.variants.mobile.avif}
-        type="image/avif"
-        width={evidence.variants.mobile.width}
-        height={evidence.variants.mobile.height}
-      />
-      <source
-        media="(max-width: 40rem)"
-        srcSet={evidence.variants.mobile.webp}
-        type="image/webp"
-        width={evidence.variants.mobile.width}
-        height={evidence.variants.mobile.height}
-      />
-      <source
-        srcSet={evidence.variants.desktop.avif}
-        type="image/avif"
-        width={evidence.variants.desktop.width}
-        height={evidence.variants.desktop.height}
-      />
+      {visual.desktop.avif ? (
+        <source
+          srcSet={visual.desktop.avif}
+          type="image/avif"
+          width={visual.desktop.width}
+          height={visual.desktop.height}
+        />
+      ) : null}
+      {visual.desktop.webp ? (
+        <source
+          srcSet={visual.desktop.webp}
+          type="image/webp"
+          width={visual.desktop.width}
+          height={visual.desktop.height}
+        />
+      ) : null}
       <img
-        src={evidence.variants.desktop.webp}
-        alt={evidence.alt}
-        width={evidence.variants.desktop.width}
-        height={evidence.variants.desktop.height}
-        loading={loading}
+        src={visual.desktop.src}
+        alt={visual.alt}
+        width={visual.desktop.width}
+        height={visual.desktop.height}
+        loading={visual.loading}
         decoding="async"
       />
     </picture>
@@ -169,7 +164,6 @@ export function ProjectCatalog({ locale, projects }: ProjectCatalogProps) {
             <li className="project-card" key={project.slug}>
               <div className="project-card__media">
                 <ProjectCardCover project={project} index={index} />
-                <span>{String(index + 1).padStart(2, "0")}</span>
               </div>
               <div className="project-card__body">
                 <p className="project-card__classification">{project.classification}</p>
@@ -193,7 +187,7 @@ export function ProjectCatalog({ locale, projects }: ProjectCatalogProps) {
 
       <style>{`
         .project-catalog {
-          width: min(calc(100% - 2rem), var(--content-width));
+          width: min(calc(100% - 2 * var(--page-gutter)), var(--content-width));
           margin-inline: auto;
           padding: clamp(4rem, 9vw, 8rem) 0 6rem;
         }
@@ -255,7 +249,13 @@ export function ProjectCatalog({ locale, projects }: ProjectCatalogProps) {
           border-radius: var(--radius-sm);
           background: var(--color-space);
           color: var(--color-text);
-          padding: 0.75rem 1rem;
+          padding: var(--control-padding-block) var(--control-padding-inline);
+          transition: border-color var(--motion-fast);
+        }
+
+        .project-catalog__controls input:hover,
+        .project-catalog__controls select:hover {
+          border-color: var(--color-brand-bright);
         }
 
         .project-catalog__count {
@@ -280,36 +280,16 @@ export function ProjectCatalog({ locale, projects }: ProjectCatalogProps) {
         }
 
         .project-card__media {
-          position: relative;
-          aspect-ratio: 16 / 9;
+          aspect-ratio: 8 / 5;
           overflow: hidden;
           background:
             linear-gradient(135deg, rgb(59 130 246 / 28%), transparent 55%),
             var(--color-space);
         }
 
-        .project-card__media picture,
-        .project-card__media img {
-          display: block;
-          width: 100%;
-          height: 100%;
-        }
-
-        .project-card__media img {
-          object-fit: cover;
-        }
-
-        .project-card__media > span {
-          position: absolute;
-          right: 1rem;
-          bottom: 1rem;
-          color: var(--color-white);
-          font: 700 0.75rem/1 var(--font-data);
-        }
-
         .project-card__body {
           display: grid;
-          gap: 1rem;
+          gap: var(--space-4);
           padding: clamp(1.25rem, 3vw, 2rem);
         }
 
@@ -345,14 +325,21 @@ export function ProjectCatalog({ locale, projects }: ProjectCatalogProps) {
         .project-card a {
           display: inline-flex;
           width: fit-content;
+          min-height: 44px;
           align-items: center;
+          flex-wrap: wrap;
+          column-gap: 0.35rem;
           border-bottom: 1px solid var(--color-brand-bright);
           color: var(--color-white);
           text-decoration: none;
+          transition: border-color var(--motion-fast);
+        }
+
+        .project-card a:hover {
+          border-color: var(--color-cyan);
         }
 
         .project-card a span {
-          margin-left: 0.35rem;
           color: var(--color-brand-bright);
         }
 

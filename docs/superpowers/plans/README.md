@@ -1,4 +1,4 @@
-# IzignaMx Capability Book implementation sequence
+# IzignaMx Book implementation sequence
 
 Execute these plans in order:
 

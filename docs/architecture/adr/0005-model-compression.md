@@ -2,7 +2,7 @@
 
 - **Status:** Accepted
 - **Date:** 2026-07-21
-- **Scope:** IzignaMx Capability Book Phase 2
+- **Scope:** IzignaMx Book Phase 2
 
 ## Context
 

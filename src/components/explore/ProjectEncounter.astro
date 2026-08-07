@@ -4,6 +4,7 @@ import type {
   PortfolioProject,
   ProjectClassification
 } from "../../domain/projects/PortfolioProject";
+import ProjectCover from "../projects/ProjectCover.astro";
 
 interface Props {
   locale: Locale;
@@ -31,16 +32,14 @@ const copy = locale === "es"
       confidentiality: "Alcance",
       proof: "Capacidad demostrada",
       caseStudy: "Abrir caso completo",
-      diagnostic: "Iniciar diagnóstico relacionado",
-      posterAlt: `Vista visual de respaldo para ${project.title}`
+      diagnostic: "Iniciar diagnóstico relacionado"
     }
   : {
       index: chapterId === "omnisync" ? "04 / Operational encounter" : "05 / Community encounter",
       confidentiality: "Scope",
       proof: "Demonstrated capability",
       caseStudy: "Open full case study",
-      diagnostic: "Start related diagnostic",
-      posterAlt: `Fallback visual for ${project.title}`
+      diagnostic: "Start related diagnostic"
     };
 
 const classificationLabels: Record<ProjectClassification, { es: string; en: string }> = {
@@ -78,14 +77,7 @@ const diagnosticHref = `${diagnosticBase}?project=${encodeURIComponent(project.s
   <p>{project.elevatorPitch}</p>
 
   <figure class="project-encounter__poster">
-    <img
-      src={project.fallbackPoster}
-      alt={copy.posterAlt}
-      width="1280"
-      height="720"
-      loading="lazy"
-      decoding="async"
-    />
+    <ProjectCover project={project} context="explore-encounter" loading="lazy" />
   </figure>
 
   <div class="project-encounter__proof" aria-label={copy.proof}>
@@ -106,7 +98,7 @@ const diagnosticHref = `${diagnosticBase}?project=${encodeURIComponent(project.s
 
 <style>
   .project-encounter {
-    gap: var(--space-5);
+    gap: var(--content-gap);
   }
 
   .project-encounter__classification {
@@ -131,19 +123,12 @@ const diagnosticHref = `${diagnosticBase}?project=${encodeURIComponent(project.s
   }
 
   .project-encounter__poster {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 8 / 5;
     max-width: 43rem;
     margin: var(--space-3) 0 0;
     overflow: hidden;
     border: 1px solid var(--color-line);
     background: var(--color-midnight);
-  }
-
-  .project-encounter__poster img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
   }
 
   .project-encounter__proof {
@@ -191,7 +176,7 @@ const diagnosticHref = `${diagnosticBase}?project=${encodeURIComponent(project.s
     align-items: center;
     justify-content: center;
     min-height: 44px;
-    padding: var(--space-3) var(--space-5);
+    padding: var(--control-padding-block) var(--control-padding-inline);
     border: 1px solid var(--color-line);
     border-radius: var(--radius-pill);
     color: var(--color-text);
@@ -207,6 +192,10 @@ const diagnosticHref = `${diagnosticBase}?project=${encodeURIComponent(project.s
   .project-encounter__actions a:hover {
     border-color: var(--color-cyan);
     background: rgb(34 211 238 / 9%);
+  }
+
+  .project-encounter__actions a:active {
+    transform: translateY(1px);
   }
 
   @media (max-width: 34rem) {

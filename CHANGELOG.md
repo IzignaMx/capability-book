@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to the IzignaMx Capability Book are documented here.
+All notable changes to the IzignaMx Book are documented here.
 
 ## Unreleased / Phase 2 vertical slice
 

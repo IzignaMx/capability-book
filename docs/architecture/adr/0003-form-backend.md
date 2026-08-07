@@ -2,11 +2,11 @@
 
 - **Status:** Proposed
 - **Date:** 2026-07-21
-- **Scope:** IzignaMx Capability Book
+- **Scope:** IzignaMx Book
 
 ## Context
 
-The capability book is deployed as a fully static GitHub Pages site at
+The Book is deployed as a fully static GitHub Pages site at
 `https://book.izignamx.com/`. GitHub Pages can provision HTTPS for that custom
 domain, but it does not execute a request-time handler for diagnostic form
 submissions. Delivery therefore requires a separately operated HTTPS endpoint.

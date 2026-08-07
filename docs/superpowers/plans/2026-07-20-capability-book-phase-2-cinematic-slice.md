@@ -1,4 +1,4 @@
-# IzignaMx Capability Book Phase 2 Cinematic Vertical Slice Implementation Plan
+# IzignaMx Book Phase 2 Cinematic Vertical Slice Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -75,7 +75,7 @@ pnpm add -D --save-exact @types/three@0.185.1 @gltf-transform/cli@4.4.1
 
 - [ ] **Step 2: Write ADR 0004**
 
-Decision: use GSAP core and ScrollTrigger only under the Standard "No Charge" GSAP License, isolate imports under `src/motion`, register the plugin from browser-only lifecycle code, and preserve a native static path when GSAP fails to load. The capability book must not use GSAP to provide a competing no-code animation builder.
+Decision: use GSAP core and ScrollTrigger only under the Standard "No Charge" GSAP License, isolate imports under `src/motion`, register the plugin from browser-only lifecycle code, and preserve a native static path when GSAP fails to load. The Book must not use GSAP to provide a competing no-code animation builder.
 
 - [ ] **Step 3: Write ADR 0005**
 

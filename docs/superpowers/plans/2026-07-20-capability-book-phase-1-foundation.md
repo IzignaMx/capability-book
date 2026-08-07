@@ -1,8 +1,8 @@
-# IzignaMx Capability Book Phase 1 Foundation Implementation Plan
+# IzignaMx Book Phase 1 Foundation Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Deliver a bilingual, static-first, accessible IzignaMx Capability Book that works without WebGL and includes Evaluate mode, six validated projects, contextual diagnostic routing, and GitHub Pages deployment at `book.izignamx.com`.
+**Goal:** Deliver a bilingual, static-first, accessible IzignaMx Book that works without WebGL and includes Evaluate mode, six validated projects, contextual diagnostic routing, and GitHub Pages deployment at `book.izignamx.com`.
 
 **Architecture:** Astro owns routing, content, HTML, SEO, and static rendering. React islands are limited to project filtering and the diagnostic wizard. Domain ports isolate content, analytics, search, and form submission. The fully static site accepts an optional public HTTPS form endpoint at build time; delivery, validation, rate limiting, spam controls, and secrets remain outside GitHub Pages.
 
@@ -144,7 +144,7 @@ const languages = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>IzignaMx Capability Book</title>
+    <title>IzignaMx Book</title>
     <meta name="description" content="Selecciona el idioma para explorar las capacidades y proyectos de IzignaMx." />
   </head>
   <body>
@@ -165,7 +165,7 @@ const languages = [
 pnpm check
 pnpm build
 git add package.json pnpm-lock.yaml astro.config.mjs src
-git commit -m "feat: scaffold static Astro capability book"
+git commit -m "feat: scaffold static Astro Book"
 ```
 
 ### Task 2: Implement immutable design tokens and global accessibility styles
@@ -1100,7 +1100,7 @@ git push -u origin feat/phase-1-foundation
 gh pr create \
   --base main \
   --head feat/phase-1-foundation \
-  --title "Phase 1: deliver accessible static capability book" \
+  --title "Phase 1: deliver accessible static Book" \
   --body "Adds bilingual static routing, validated case studies, Evaluate mode, contextual diagnostics, configurable external form delivery, SEO, privacy, accessibility, Pagefind, automated testing, budgets, and GitHub Pages deployment."
 ```
 
