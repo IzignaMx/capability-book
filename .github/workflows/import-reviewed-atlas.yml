@@ -41,10 +41,13 @@ jobs:
                   assert rel.parts[0] not in ['.git','.github','node_modules','dist']
                   dest=root.joinpath(*rel.parts)
                   assert dest.resolve().is_relative_to(root) and not dest.is_symlink()
-                  if entry['previous_sha256'] is None:
+                  previous=subprocess.run(['git','cat-file','blob',m['base']+':'+str(rel)],capture_output=True)
+                  if previous.returncode:
                       assert not dest.exists(), str(rel)+' already exists'
                   else:
-                      assert dest.is_file() and hashlib.sha256(dest.read_bytes()).hexdigest()==entry['previous_sha256'], str(rel)+' changed'
+                      expected_previous=hashlib.sha256(previous.stdout).hexdigest()
+                      assert expected_previous==entry['previous_sha256'], str(rel)+' base mismatch'
+                      assert dest.is_file() and hashlib.sha256(dest.read_bytes()).hexdigest()==expected_previous, str(rel)+' changed'
                   payload=z.read('files/'+str(rel))
                   assert hashlib.sha256(payload).hexdigest()==entry['sha256']
                   prepared.append((dest,payload,str(rel)))
