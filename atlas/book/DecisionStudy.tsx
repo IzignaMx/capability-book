@@ -5,6 +5,8 @@ import './decision-study.css';
 
 /** Editorial geometry explains the reading sequence, not a measured system topology. */
 const trajectories:Record<string,string[]>={
+ 'distrito-cero':['M42 224 L120 224 L120 140 L280 140','M42 66 L170 66 L170 140 L280 140','M280 140 L364 140 L364 66 L464 66'],
+ nexo:['M42 82 C146 268 224 260 280 140','M42 224 C170 30 206 22 280 140','M280 140 C328 242 460 190 458 80'],
  omnisync:['M44 146 C112 24 236 26 280 136','M60 235 C118 178 222 226 280 136','M280 136 C330 64 405 66 452 150'],
  'hamburguesa-nomada':['M40 204 C122 266 216 42 280 144','M68 60 C142 4 206 249 280 144','M280 144 C347 34 414 72 464 128'],
  tecuiyo:['M40 80 L162 80 L162 142 L280 142','M40 232 L112 232 L112 142 L280 142','M280 142 L354 142 L354 78 L464 78'],

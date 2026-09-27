@@ -19,6 +19,8 @@ class Page(HTMLParser):
    if d.get('rel')=='stylesheet':self.css.append(d['href']);self.assets.append(d['href'])
   if t in ['img','script'] and d.get('src'):self.assets.append(d['src'])
   if t=='source' and d.get('srcset'):self.assets.extend(x.strip().split(' ')[0] for x in d['srcset'].split(','))
+catalog=json.loads(Path("atlas/book/projects.json").read_text())
+expected_content_pages=16+2*len(catalog)
 errors=[];pages={}
 for f in root.rglob('*.html'):
  path='/'+f.relative_to(root).as_posix();path=path[:-10] if path.endswith('index.html') else path
@@ -43,7 +45,7 @@ for path,doc in pages.items():
   if target.endswith('/') and target not in pages:errors.append(path+': missing page '+href)
   elif not dest.exists():errors.append(path+': missing asset '+href)
   if u.fragment and target in pages and unquote(u.fragment) not in pages[target].ids:errors.append(path+': missing anchor '+href)
-if len(pages)!=30:errors.append('Expected 30 HTML documents, got '+str(len(pages)))
+if len(pages)!=expected_content_pages+2:errors.append('Expected '+str(expected_content_pages+2)+' HTML documents, got '+str(len(pages)))
 if (root/'CNAME').read_text().strip()!='book.izignamx.com':errors.append('CNAME differs')
 if not (root/'.nojekyll').is_file():errors.append('.nojekyll absent')
 if any(f.is_symlink() for f in root.rglob('*')):errors.append('Symlink in Pages artifact')
@@ -60,5 +62,5 @@ for entry in entries:visit(entry)
 initial=sum(len(gzip.compress((root/u.lstrip('/')).read_bytes())) for u in seen if (root/u.lstrip('/')).exists())
 if critical>120*1024:errors.append('Critical HTML+CSS exceeds 120 KiB gzip')
 if initial>180*1024:errors.append('Initial JS exceeds 180 KiB gzip')
-report={'contentPages':28,'htmlDocuments':len(pages),'criticalHtmlCssGzipBytes':critical,'initialJsGzipBytes':initial,'initialModules':sorted(seen),'errors':errors}
+report={'contentPages':expected_content_pages,'htmlDocuments':len(pages),'criticalHtmlCssGzipBytes':critical,'initialJsGzipBytes':initial,'initialModules':sorted(seen),'errors':errors}
 Path('docs/atlas').mkdir(parents=True,exist_ok=True);Path('docs/atlas/static-validation.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2));sys.exit(bool(errors))

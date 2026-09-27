@@ -21,6 +21,6 @@ for(const locale of ['es','en'] as const){
   expect(html).toContain(projects[0][locale].challenge.replaceAll('&','&amp;'));
  });
 }
-test('all six project narratives provide nonempty distinct decision steps',()=>{
+test('all project narratives provide nonempty distinct decision steps',()=>{
  for(const p of projects)for(const l of ['es','en'] as const){const parts=[p[l].challenge,p[l].strategy,p[l].solution];expect(parts.every(t=>t.length>25)).toBe(true);expect(new Set(parts).size).toBe(3);}
 });

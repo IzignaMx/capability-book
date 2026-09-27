@@ -1,8 +1,10 @@
+import {GameShelf} from "./GameShelf";
 import { useContextUrl } from "./useContextUrl";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import {
   projects,
   categories,
+  getProject,
   filterProjects,
   cleanSelection,
   pathFor,
@@ -42,8 +44,8 @@ export function Home({ locale: l }: { locale: Locale }) {
           <p>
             {tx(
               l,
-              "Seis proyectos. Sus decisiones, su arquitectura y la evidencia que los sostiene.",
-              "Six projects. The decisions, architecture and evidence behind them.",
+              `${projects.length} proyectos. Sus decisiones, su arquitectura y la evidencia que los sostiene.`,
+              `${projects.length} projects. The decisions, architecture and evidence behind them.`,
             )}
           </p>
           <div className="bk-hero-actions">
@@ -133,11 +135,12 @@ export function Home({ locale: l }: { locale: Locale }) {
           </a>
         </div>
         <div className="bk-curated-grid">
-          {[projects[1], projects[0], projects[2], projects[3]].map((p) => (
+          {["hamburguesa-nomada", "omnisync", "tecuiyo", "vald"].flatMap(slug => { const item = getProject(slug); return item ? [item] : []; }).map((p) => (
             <Card key={p.slug} project={p} locale={l} index={projects.indexOf(p)} />
           ))}
         </div>
       </section>
+      <GameShelf locale={l} />
       <section className="bk-disciplines">
         <div>
           <h2>

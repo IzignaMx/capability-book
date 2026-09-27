@@ -3008,5 +3008,771 @@
         }
       ]
     }
+  },
+  {
+    "slug": "distrito-cero",
+    "classification": "real",
+    "stage": {
+      "es": "Prototipo jugable · v0.20.13",
+      "en": "Playable prototype · v0.20.13"
+    },
+    "publication": {
+      "reviewedAt": "2026-09-27",
+      "confidentiality": "public",
+      "notes": "Playable public project. Captures document browser sessions, not device certification or commercial results."
+    },
+    "links": [
+      {
+        "label": "Jugar / Play",
+        "url": "https://cripterhack.github.io/distrito-cero/",
+        "public": true
+      },
+      {
+        "label": "Código y documentación / Source and documentation",
+        "url": "https://github.com/CripterHack/distrito-cero",
+        "public": true
+      }
+    ],
+    "sources": [
+      {
+        "id": "live",
+        "label": "Juego público / Public game",
+        "type": "live",
+        "url": "https://cripterhack.github.io/distrito-cero/"
+      },
+      {
+        "id": "readme",
+        "label": "Documentación de la versión / Release documentation",
+        "type": "documentation",
+        "url": "https://github.com/CripterHack/distrito-cero/blob/0fa83b9e024819821e135a9de540a3f897bc9c78/README.md"
+      }
+    ],
+    "media": [
+      {
+        "id": "live-gameplay",
+        "role": "screenshot",
+        "path": "/media/projects/distrito-cero/evidence/gameplay-desktop.avif",
+        "license": "owned",
+        "width": 1440,
+        "height": 900,
+        "alt": {
+          "es": "Partida real de Distrito Cero: personaje en la ciudad procedural, vehículos, minimapa e interfaz de exploración.",
+          "en": "Actual Distrito Cero gameplay: character in a procedural city, vehicles, minimap and exploration interface."
+        },
+        "caption": {
+          "es": "Capturas reales de la versión pública del 27 de septiembre de 2026. Escritorio y vista móvil emulada.",
+          "en": "Actual captures of the public release on September 27, 2026. Desktop and emulated mobile views."
+        },
+        "variants": {
+          "desktop": {
+            "avif": "/media/projects/distrito-cero/evidence/gameplay-desktop.avif",
+            "webp": "/media/projects/distrito-cero/evidence/gameplay-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "5a907546aec6f2cb3f1e3995915b38048a6fdf0ebaff461667d97b5591dff612",
+            "webpSha256": "3b6dd2dc7a337bc6898cb818fc2a7e46909a270c7af9f4fb537e32b87a6d58b6"
+          },
+          "mobile": {
+            "avif": "/media/projects/distrito-cero/evidence/gameplay-mobile.avif",
+            "webp": "/media/projects/distrito-cero/evidence/gameplay-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "97dbe640e17f7c61699dfd48c66e0ff888953e125fe50be255926da63460340f",
+            "webpSha256": "59ccee202a26d99dc273962e96bfa4cafbf871870ae1044823e2d9fb844fba2b"
+          }
+        },
+        "provenance": {
+          "kind": "direct-production-capture",
+          "repository": "https://github.com/CripterHack/distrito-cero",
+          "commit": "0fa83b9e024819821e135a9de540a3f897bc9c78",
+          "sourceUrl": "https://cripterhack.github.io/distrito-cero/",
+          "capturedAt": "2026-09-27T08:10:00.063Z",
+          "reviewedAt": "2026-09-27",
+          "rightsBasis": "User requested screenshots of these projects for this portfolio.",
+          "revisionBasis": "Public repository HEAD observed at capture; live HTML hashes recorded separately.",
+          "sourceSha256": {
+            "desktop": "553fd2f84af0ab447b32552d97b50ac9fdb1a966b2b207da0f5334f4b708100d",
+            "mobile": "26fb4c99f2613ce963a58251a7211854d8accc10c4403fa76682264a920bd148"
+          }
+        }
+      }
+    ],
+    "es": {
+      "title": "Distrito Cero",
+      "elevatorPitch": "Una ciudad procedural para explorar, conducir y tomar decisiones. Un prototipo de aventura urbana que lleva sistemas de mundo abierto al navegador con tecnología nativa.",
+      "challenge": "Hacer convivir ciudad, personajes, vehículos, cámara e interfaz dentro de una experiencia de navegador coherente, sin depender de un motor de terceros en ejecución.",
+      "constraints": [
+        "Prototipo en desarrollo, no un producto AAA terminado.",
+        "La captura documenta una sesión concreta, no todas las situaciones del mundo.",
+        "Compatibilidad en GPU físicas y navegadores adicionales pendiente de verificación completa."
+      ],
+      "strategy": "Construir una base autónoma y dividir la experiencia en sistemas observables: exploración, conducción, identidad del personaje, interacción y continuidad de la partida.",
+      "solution": "Una aventura criminal original con ciudad procedural, exploración libre, campaña, vehículos y personalización. WebGL2 dibuja el mundo y las API nativas del navegador coordinan interfaz, audio y guardado local.",
+      "capabilities": [
+        "Browser Games",
+        "Interactive Experiences",
+        "Web Experiences"
+      ],
+      "industries": [
+        "Entretenimiento",
+        "Experiencias interactivas"
+      ],
+      "technologies": [
+        "JavaScript",
+        "WebGL2",
+        "Canvas 2D",
+        "Web Audio",
+        "Python"
+      ],
+      "relatedServices": [
+        "Prototipos jugables",
+        "Experiencias WebGL",
+        "Interfaces interactivas"
+      ],
+      "chapters": [
+        {
+          "title": "Contexto y propuesta",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Distrito Cero explora el género de aventura urbana de mundo abierto desde una implementación propia para navegador. Una ciudad ficticia conecta desplazamiento a pie, conducción y decisiones de juego. El objetivo de este caso es mostrar la integración técnica y visual del prototipo, no equipararlo con un videojuego comercial terminado."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Alcance y restricciones",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La versión documentada es v0.20.13, Coherencia. El proyecto sigue en desarrollo. Las comprobaciones de una sesión no sustituyen pruebas de larga duración, cobertura de todas las situaciones emergentes o validación en dispositivos físicos. El contenido y el equipamiento pertenecen a una ficción de videojuego."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Decisiones de implementación",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La experiencia evita un motor de ejecución externo. El proyecto organiza simulación, representación y estado de interfaz, y genera una entrega HTML autónoma. Esa elección facilita inspeccionar el comportamiento, pero también hace explícita la responsabilidad de mantener renderizado, controles, persistencia y recuperación."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Arquitectura del mundo",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "JavaScript coordina los sistemas del mundo procedural y WebGL2 representa la escena tridimensional. Canvas 2D apoya mapas e interfaz gráfica, mientras Web Audio proporciona el sistema sonoro. Un proceso de construcción en Python ensambla la publicación. El juego no necesita un servidor de aplicación durante la partida."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Identidad e interacción",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Antes de explorar se puede crear un personaje y revisar su apariencia. Dentro del mundo, la interfaz distingue el movimiento a pie, los vehículos y las acciones contextuales. El mapa y la información superpuesta orientan al jugador sin convertir el caso del portafolio en una descarga automática del juego."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Continuidad y datos",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Las partidas se conservan en el navegador y el proyecto ofrece exportación e importación. Cambiar de origen, navegador o dispositivo no implica compartir automáticamente esos datos. La documentación recomienda exportarlos antes de cambiar de versión o entorno. No se presenta el guardado local como sincronización en la nube."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Qué muestra la captura",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Las imágenes proceden de la URL pública indicada y muestran una sesión real de exploración libre con el personaje predeterminado. Se conservaron interfaz y controles del juego, sin reemplazar la escena con una ilustración generada. La vista móvil fue capturada en un navegador con tamaño y controles táctiles emulados."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Capacidades transferibles",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "El caso permite revisar construcción procedural, interfaces sobre contenido tridimensional, coordinación de estados y publicación web autónoma. Estas capacidades pueden ser relevantes para prototipos, demostraciones de producto y experiencias de marca. No implican una promesa de alcance, precio o rendimiento para otro proyecto."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Evidencia y límites",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La fuente pública documenta el carácter de prototipo y las tareas pendientes. Las capturas no acreditan rendimiento con GPU física, calidad final AAA ni resultados de adquisición o retención. El código conserva su situación de licencias y las atribuciones de sus recursos, sin adjudicarle una licencia nueva desde el book."
+              ]
+            }
+          ]
+        }
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Experiencia jugable publicada",
+          "description": "Una sesión puede iniciarse desde la URL pública. No se atribuyen resultados comerciales no medidos.",
+          "sourceUrl": "https://cripterhack.github.io/distrito-cero/",
+          "sourceLabel": "Juego público",
+          "verifiedAt": "2026-09-27"
+        }
+      ],
+      "accessibilityNotes": [
+        "Mobile views use browser emulation, not physical-device verification."
+      ]
+    },
+    "en": {
+      "title": "Distrito Cero",
+      "elevatorPitch": "A procedural city to explore, drive through and make decisions in. An urban-adventure prototype bringing open-world systems to the browser through native web technology.",
+      "challenge": "Bring a city, characters, vehicles, camera and interface together as a coherent browser experience without a third-party runtime game engine.",
+      "constraints": [
+        "An evolving prototype, not a finished AAA product.",
+        "The capture documents one session, not every situation in the world.",
+        "Complete physical-GPU and cross-browser verification remains pending."
+      ],
+      "strategy": "Build a self-contained foundation and separate the experience into inspectable systems: exploration, driving, character identity, interaction and session continuity.",
+      "solution": "An original crime-adventure prototype with a procedural city, free exploration, a campaign, vehicles and customization. WebGL2 draws the world while native browser APIs coordinate interface, audio and local saves.",
+      "capabilities": [
+        "Browser Games",
+        "Interactive Experiences",
+        "Web Experiences"
+      ],
+      "industries": [
+        "Entertainment",
+        "Interactive experiences"
+      ],
+      "technologies": [
+        "JavaScript",
+        "WebGL2",
+        "Canvas 2D",
+        "Web Audio",
+        "Python"
+      ],
+      "relatedServices": [
+        "Playable prototypes",
+        "WebGL experiences",
+        "Interactive interfaces"
+      ],
+      "chapters": [
+        {
+          "title": "Context and proposition",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Distrito Cero explores the urban open-world adventure genre through an original browser implementation. A fictional city connects walking, driving and gameplay decisions. This case demonstrates the technical and visual integration of the prototype, rather than comparing its completion with a finished commercial game."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Scope and constraints",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The documented release is v0.20.13, Coherencia. Development continues. Checks from a single session do not replace long-duration testing, coverage of emergent situations or validation on physical devices. The setting and equipment belong to a fictional game world."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Implementation decisions",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The experience does not rely on an external runtime engine. The project organizes simulation, presentation and interface state, generating a self-contained HTML release. This makes behavior inspectable while keeping responsibility for rendering, controls, persistence and recovery within the project."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "World architecture",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "JavaScript coordinates the procedural world and WebGL2 renders the three-dimensional scene. Canvas 2D supports maps and graphical interface elements, while Web Audio supplies sound. A Python build process assembles the release. Gameplay does not require an application server."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Identity and interaction",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Players can create a character and inspect their appearance before exploring. The in-world interface distinguishes walking, vehicles and contextual actions. Maps and overlays provide orientation. The portfolio links to that experience rather than downloading the entire game automatically."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Continuity and data",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Saves remain in the browser and can be exported and imported. Moving to a different origin, browser or device does not transfer them automatically. The documentation recommends exporting before changing releases or environments. Local storage is not presented as cloud synchronization."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "What the capture shows",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The images come from the supplied public URL and show a real free-exploration session using the default character. The game's interface and controls were retained, not replaced by a generated illustration. The mobile view was captured using an emulated viewport and touch-capable browser context."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Transferable capabilities",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The case exposes procedural construction, interfaces over three-dimensional content, state coordination and self-contained web delivery. These capabilities can inform prototypes, product demonstrations and branded experiences. They do not imply a guaranteed scope, price or performance for a separate project."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Evidence and limitations",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The public source describes the prototype status and remaining work. These screenshots do not certify physical-GPU performance, finished AAA quality, acquisition or retention results. Existing licensing conditions and resource attributions are preserved without assigning a new license through this book."
+              ]
+            }
+          ]
+        }
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Published playable experience",
+          "description": "A session can be started from the public URL. No unmeasured commercial outcomes are claimed.",
+          "sourceUrl": "https://cripterhack.github.io/distrito-cero/",
+          "sourceLabel": "Public game",
+          "verifiedAt": "2026-09-27"
+        }
+      ],
+      "accessibilityNotes": [
+        "Mobile views use browser emulation, not physical-device verification."
+      ]
+    }
+  },
+  {
+    "slug": "nexo",
+    "classification": "real",
+    "stage": {
+      "es": "Beta jugable · 1.2",
+      "en": "Playable beta · 1.2"
+    },
+    "publication": {
+      "reviewedAt": "2026-09-27",
+      "confidentiality": "public",
+      "notes": "Playable public project. Captures document browser sessions, not device certification or commercial results."
+    },
+    "links": [
+      {
+        "label": "Jugar / Play",
+        "url": "https://nexo.izignamx.com/",
+        "public": true
+      },
+      {
+        "label": "Código y documentación / Source and documentation",
+        "url": "https://github.com/CripterHack/nexo-web",
+        "public": true
+      }
+    ],
+    "sources": [
+      {
+        "id": "live",
+        "label": "Juego público / Public game",
+        "type": "live",
+        "url": "https://nexo.izignamx.com/"
+      },
+      {
+        "id": "readme",
+        "label": "Documentación de la versión / Release documentation",
+        "type": "documentation",
+        "url": "https://github.com/CripterHack/nexo-web/blob/7ce8b77e263244ae0615ac64be3863239cccdab5/README.md"
+      }
+    ],
+    "media": [
+      {
+        "id": "live-gameplay",
+        "role": "screenshot",
+        "path": "/media/projects/nexo/evidence/gameplay-desktop.avif",
+        "license": "owned",
+        "width": 1440,
+        "height": 900,
+        "alt": {
+          "es": "Partida real de Nexo en el primer sector: nave Vector, semillas luminosas, radar y estado de regeneración.",
+          "en": "Actual Nexo gameplay in the first sector: Vector ship, luminous seeds, radar and regeneration status."
+        },
+        "caption": {
+          "es": "Capturas reales de la versión pública del 27 de septiembre de 2026. Escritorio y vista móvil emulada.",
+          "en": "Actual captures of the public release on September 27, 2026. Desktop and emulated mobile views."
+        },
+        "variants": {
+          "desktop": {
+            "avif": "/media/projects/nexo/evidence/gameplay-desktop.avif",
+            "webp": "/media/projects/nexo/evidence/gameplay-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "f933c3d9114428d5a162afd70322cea556a5d88acfe4a897994f99de6eaa6345",
+            "webpSha256": "3558f6f032442c81d9b8b236771e9274d864f23c4378ccbaa0f90fa4d8994a0a"
+          },
+          "mobile": {
+            "avif": "/media/projects/nexo/evidence/gameplay-mobile.avif",
+            "webp": "/media/projects/nexo/evidence/gameplay-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "a7abe9f45aabb7b0856d35155a4a58fd3976559c65bae356d2844e08a0e204cd",
+            "webpSha256": "b2e1c97d7e13583cfb517b1270805e98de2b91c9b4fdc13a4ee8d0149e24c32d"
+          }
+        },
+        "provenance": {
+          "kind": "direct-production-capture",
+          "repository": "https://github.com/CripterHack/nexo-web",
+          "commit": "7ce8b77e263244ae0615ac64be3863239cccdab5",
+          "sourceUrl": "https://nexo.izignamx.com/",
+          "capturedAt": "2026-09-27T08:10:31.963Z",
+          "reviewedAt": "2026-09-27",
+          "rightsBasis": "User requested screenshots of these projects for this portfolio.",
+          "revisionBasis": "Public repository HEAD observed at capture; live HTML hashes recorded separately.",
+          "sourceSha256": {
+            "desktop": "9aa3ec5aa647c73c152961f197935dabf90e3f4d1cc59505294a96340a1614fb",
+            "mobile": "96051e9b0e627b2ab5ab43671885303f5060ed782564ff482de7b5f81c26018c"
+          }
+        }
+      }
+    ],
+    "es": {
+      "title": "Nexo",
+      "elevatorPitch": "Un jardín de órbitas que se juega. Naves, semillas y regeneración espacial en una experiencia de navegador que combina atmósfera contemplativa, acción y ganas de volver a intentarlo.",
+      "challenge": "Dar identidad y continuidad a partidas breves: que movimiento, recolección, riesgo y progreso formen un ciclo legible tanto con teclado como con controles táctiles.",
+      "constraints": [
+        "Beta 1.2: no se presenta como un producto final.",
+        "El cooperativo es local. No incluye multijugador por Internet.",
+        "El progreso se guarda en el navegador, sin sincronización de cuentas."
+      ],
+      "strategy": "Construir el juego alrededor de regenerar sectores: recoger semillas, resistir amenazas y volver a dar vida. La elección de nave y de expedición aporta variación sin exigir una instalación.",
+      "solution": "Un cliente estático con tres naves, expedición de seis sectores, órbita infinita, reto diario y dúo local. La representación, el audio y los controles utilizan tecnologías nativas del navegador.",
+      "capabilities": [
+        "Browser Games",
+        "Interactive Experiences",
+        "Web Experiences"
+      ],
+      "industries": [
+        "Entretenimiento",
+        "Experiencias interactivas"
+      ],
+      "technologies": [
+        "JavaScript",
+        "Canvas 2D",
+        "Web Audio",
+        "HTML",
+        "CSS"
+      ],
+      "relatedServices": [
+        "Juegos de navegador",
+        "Experiencias interactivas",
+        "Interfaces de progresión"
+      ],
+      "chapters": [
+        {
+          "title": "Contexto y propuesta",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Nexo propone una pequeña expedición espacial alrededor de una idea: no conquistar el vacío, sino darle vida. Recoger semillas y regenerar sectores conecta la estética orbital con las decisiones durante la partida. La atmósfera acompaña un ciclo de acción y progresión, sin atribuir al juego efectos terapéuticos."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Alcance y restricciones",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La publicación documentada corresponde a la beta 1.2. Se puede jugar en solitario o en dúo local. El proyecto distingue ese cooperativo de una conexión multijugador por Internet, que no forma parte de esta versión. La evidencia muestra la interfaz actual y una sesión concreta, no una validación de todos los dispositivos."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Decisiones de experiencia",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Vector, Brisa y Bastión ofrecen distintos puntos de partida. La expedición organiza el recorrido en seis sectores, mientras la órbita infinita y el reto diario plantean otros ritmos de juego. La pantalla inicial explica la selección antes de comenzar y las acciones se mantienen próximas al campo de juego."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Arquitectura y publicación",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La entrega es un cliente estático sin dependencias externas de ejecución. JavaScript coordina el juego, Canvas 2D representa su mundo y las API del navegador gestionan la interacción y el sonido. Esta estructura permite publicar la experiencia como archivos web, sin un servidor de aplicación que procese cada partida."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Movimiento, interfaz y ritmo",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "El jugador desplaza una nave, recoge semillas, esquiva amenazas y utiliza impulso o pulso. El disparo automático permite concentrarse en posición y recorrido. Los indicadores de integridad, sector y regeneración acompañan la acción. El radar ofrece una segunda lectura del espacio sin sustituir la vista principal."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Teclado, móvil y cooperación",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La interfaz incorpora controles de teclado y un joystick táctil con acciones específicas. El menú permite seleccionar dúo local. Las capturas móviles del book proceden de emulación en Chromium: muestran una composición real del juego, pero no prueban la ergonomía o el rendimiento en todos los teléfonos."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Progreso y privacidad",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Las expediciones pueden exportarse e importarse desde Ajustes. No se transfieren automáticamente ajustes ni récords entre dispositivos y no hay sincronización online. La documentación declara ausencia de anuncios, analítica integrada y SDK de pagos. El apoyo voluntario se gestiona fuera del juego mediante GitHub."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Qué muestra la captura",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Las imágenes se tomaron en la URL pública de Nexo, tras iniciar una expedición en solitario con Vector. Muestran el primer sector, sus semillas, la nave, el radar y los indicadores de juego. No son renders promocionales ni imágenes generadas para simular un producto inexistente."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Capacidades transferibles",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "El caso reúne diseño de interacción, identidad visual aplicada a un sistema jugable, estados de interfaz y persistencia local. Puede servir como referencia para experiencias de marca y demostraciones interactivas. No se publican cifras de usuarios, retención ni resultados comerciales que no hayan sido medidos."
+              ]
+            }
+          ]
+        }
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Experiencia jugable publicada",
+          "description": "Una sesión puede iniciarse desde la URL pública. No se atribuyen resultados comerciales no medidos.",
+          "sourceUrl": "https://nexo.izignamx.com/",
+          "sourceLabel": "Juego público",
+          "verifiedAt": "2026-09-27"
+        }
+      ],
+      "accessibilityNotes": [
+        "Mobile views use browser emulation, not physical-device verification."
+      ]
+    },
+    "en": {
+      "title": "Nexo",
+      "elevatorPitch": "An orbital garden you can play. Ships, seeds and spatial regeneration in a browser experience combining a contemplative atmosphere, action and the invitation to try again.",
+      "challenge": "Give short sessions identity and continuity, making movement, collection, risk and progression readable with both keyboard and touch controls.",
+      "constraints": [
+        "Beta 1.2, not presented as a finished product.",
+        "Co-op is local. Online multiplayer is not included.",
+        "Progress stays in the browser without account synchronization."
+      ],
+      "strategy": "Center the game on regenerating sectors: collect seeds, resist threats and restore life. Ship and expedition choices provide variation without an installation step.",
+      "solution": "A static client with three ships, a six-sector expedition, endless orbit, a daily challenge and local duo play. Rendering, audio and controls use native browser technologies.",
+      "capabilities": [
+        "Browser Games",
+        "Interactive Experiences",
+        "Web Experiences"
+      ],
+      "industries": [
+        "Entertainment",
+        "Interactive experiences"
+      ],
+      "technologies": [
+        "JavaScript",
+        "Canvas 2D",
+        "Web Audio",
+        "HTML",
+        "CSS"
+      ],
+      "relatedServices": [
+        "Browser games",
+        "Interactive experiences",
+        "Progression interfaces"
+      ],
+      "chapters": [
+        {
+          "title": "Context and proposition",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Nexo frames a small space expedition around restoring life rather than conquering emptiness. Collecting seeds and regenerating sectors links its orbital identity to gameplay decisions. The atmosphere supports action and progression without claiming therapeutic effects."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Scope and constraints",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The documented publication is beta 1.2. Players can choose solo or local duo. The project distinguishes local co-op from online multiplayer, which is not included in this release. The evidence shows the current interface and one session, not a certification covering all devices."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Experience decisions",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Vector, Brisa and Bastión provide different starting points. The expedition organizes progression into six sectors, while endless orbit and a daily challenge offer other rhythms. The initial screen explains the selection before play, and controls remain close to the playfield."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Architecture and delivery",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The release is a static client without external runtime dependencies. JavaScript coordinates the game, Canvas 2D draws its world and browser APIs provide interaction and sound. The experience can be delivered as web files without an application server processing each session."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Movement, interface and rhythm",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The player pilots a ship, collects seeds, avoids threats and uses boost or pulse. Automatic firing keeps attention on positioning and movement. Integrity, sector and regeneration indicators accompany the action, while the radar offers another reading of the space without replacing the main view."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Keyboard, touch and cooperation",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The interface includes keyboard controls and a touch joystick with dedicated actions. Local duo is selectable from the menu. Mobile screenshots in this book use Chromium emulation: they show a real game layout, but do not establish ergonomics or performance on every phone."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Progress and privacy",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Expeditions can be exported and imported through Settings. Preferences and records do not synchronize automatically across devices, and there is no online account synchronization. The documentation states that ads, integrated analytics and payment SDKs are absent. Optional support is handled externally through GitHub."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "What the capture shows",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Images were taken from Nexo's public URL after starting a solo expedition with Vector. They show the first sector, seeds, ship, radar and game indicators. They are not promotional renders or generated images standing in for an unbuilt product."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Transferable capabilities",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The case combines interaction design, visual identity applied to a playable system, interface states and local persistence. It can inform branded experiences and interactive demonstrations. No unmeasured user counts, retention figures or commercial outcomes are published."
+              ]
+            }
+          ]
+        }
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Published playable experience",
+          "description": "A session can be started from the public URL. No unmeasured commercial outcomes are claimed.",
+          "sourceUrl": "https://nexo.izignamx.com/",
+          "sourceLabel": "Public game",
+          "verifiedAt": "2026-09-27"
+        }
+      ],
+      "accessibilityNotes": [
+        "Mobile views use browser emulation, not physical-device verification."
+      ]
+    }
   }
 ]

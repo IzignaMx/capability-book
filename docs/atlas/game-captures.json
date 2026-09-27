@@ -1,0 +1,219 @@
+{
+  "capturedFrom": "live public URLs",
+  "noGenerativeImages": true,
+  "physicalDevicesVerified": false,
+  "captures": [
+    {
+      "slug": "distrito-cero",
+      "device": "desktop",
+      "url": "https://cripterhack.github.io/distrito-cero/",
+      "requestedURL": "https://cripterhack.github.io/distrito-cero/",
+      "title": "Distrito Cero v0.20.13 · Coherencia",
+      "status": 200,
+      "sourceRevision": "0fa83b9e024819821e135a9de540a3f897bc9c78",
+      "htmlSHA256": "319d022f90f3bce614952d9ec30377d5af27447b21e7f6d9c0c064e7d3533f74",
+      "capturedAt": "2026-09-27T08:10:00.063Z",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        "Explorar sin historia",
+        "Comenzar exploración con personaje predeterminado",
+        "Caminar hacia delante durante 900 ms"
+      ],
+      "canvas": [
+        {
+          "id": "world",
+          "width": 1267,
+          "height": 792,
+          "visible": true
+        },
+        {
+          "id": "minimap",
+          "width": 160,
+          "height": 160,
+          "visible": true
+        },
+        {
+          "id": "citymap",
+          "width": 300,
+          "height": 150,
+          "visible": false
+        }
+      ],
+      "errors": [],
+      "body": "DISTRITO CERO\nSIGUE EL HORIZONTE\n\nSal de Distrito Cero por cualquier carretera. M abre las regiones y sus rutas.\n\nSEMILLA 1337 · 0.0 KM RECORRIDOS\n★\n★\n★\n★\n★\n$850\n+\n⌖\n▣\n⋯\nⅡ\nN\nCENTRO / DISTRITO CERO\nCENTRO METROPOLITANO · 0, 0\nA PIE / EXPLORACIÓN\nI · INTERACCIONES\n♫  RADIO 94.6 · APAGADA\nFVEHÍCULO\nEACCIÓN\nMMAPA\nF\nEntrar al vehículo\n▦\nTAB\nManos libres\nTAB · EQUIPAMIENTO\n—\nDISTRITO CERO\nTU PROPIO CAMINO\nTU PROPIO CAMINO",
+      "rawFile": "distrito-cero-desktop-gameplay.png",
+      "rawSHA256": "553fd2f84af0ab447b32552d97b50ac9fdb1a966b2b207da0f5334f4b708100d",
+      "method": "Chromium live public URL, ordinary UI clicks; no DOM alteration, generated image or game state injection",
+      "variants": {
+        "avif": {
+          "path": "/media/projects/distrito-cero/evidence/gameplay-desktop.avif",
+          "sha256": "5a907546aec6f2cb3f1e3995915b38048a6fdf0ebaff461667d97b5591dff612",
+          "bytes": 60291
+        },
+        "webp": {
+          "path": "/media/projects/distrito-cero/evidence/gameplay-desktop.webp",
+          "sha256": "3b6dd2dc7a337bc6898cb818fc2a7e46909a270c7af9f4fb537e32b87a6d58b6",
+          "bytes": 79482
+        }
+      }
+    },
+    {
+      "slug": "distrito-cero",
+      "device": "mobile",
+      "url": "https://cripterhack.github.io/distrito-cero/",
+      "requestedURL": "https://cripterhack.github.io/distrito-cero/",
+      "title": "Distrito Cero v0.20.13 · Coherencia",
+      "status": 200,
+      "sourceRevision": "0fa83b9e024819821e135a9de540a3f897bc9c78",
+      "htmlSHA256": "319d022f90f3bce614952d9ec30377d5af27447b21e7f6d9c0c064e7d3533f74",
+      "capturedAt": "2026-09-27T08:10:24.151Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "actions": [
+        "Explorar sin historia",
+        "Comenzar exploración con personaje predeterminado"
+      ],
+      "canvas": [
+        {
+          "id": "world",
+          "width": 343,
+          "height": 743,
+          "visible": true
+        },
+        {
+          "id": "minimap",
+          "width": 160,
+          "height": 160,
+          "visible": true
+        },
+        {
+          "id": "citymap",
+          "width": 300,
+          "height": 150,
+          "visible": false
+        }
+      ],
+      "errors": [],
+      "body": "DISTRITO CERO\nSIGUE EL HORIZONTE\n\nSal de Distrito Cero por cualquier carretera. M abre las regiones y sus rutas.\n\nSEMILLA 1337 · 0.0 KM RECORRIDOS\n★\n★\n★\n★\n★\n$850\n+\n⌖\n▣\n⋯\nⅡ\nN\nCENTRO / DISTRITO CERO\nA PIE / EXPLORACIÓN\nI · INTERACCIONES\n♫  RADIO 94.6 · APAGADA\nEntrar al vehículo\n▦\nTAB\nManos libres\nTAB · EQUIPAMIENTO\n—\n\nWASD para moverte. F para entrar o salir del coche. E para interactuar. M abre el atlas. Esc abre Pausa, tu personaje y tus partidas. TAB abre el equipamiento. 9 selecciona Gauss, 0 EMP y B binoculares. L recarga. R sigue siendo rendición.\n\nENTENDIDO · CONTINUAR\nESQUIVAR\nSUBIR\nCORRER\nACCIÓN\nEMPUJAR\nSALTAR\nDISTRITO CERO\nTU PROPIO CAMINO\nTU PROPIO CAMINO",
+      "rawFile": "distrito-cero-mobile-gameplay.png",
+      "rawSHA256": "26fb4c99f2613ce963a58251a7211854d8accc10c4403fa76682264a920bd148",
+      "method": "Chromium live public URL, ordinary UI clicks; no DOM alteration, generated image or game state injection",
+      "variants": {
+        "avif": {
+          "path": "/media/projects/distrito-cero/evidence/gameplay-mobile.avif",
+          "sha256": "97dbe640e17f7c61699dfd48c66e0ff888953e125fe50be255926da63460340f",
+          "bytes": 27996
+        },
+        "webp": {
+          "path": "/media/projects/distrito-cero/evidence/gameplay-mobile.webp",
+          "sha256": "59ccee202a26d99dc273962e96bfa4cafbf871870ae1044823e2d9fb844fba2b",
+          "bytes": 37810
+        }
+      }
+    },
+    {
+      "slug": "nexo",
+      "device": "desktop",
+      "url": "https://nexo.izignamx.com/",
+      "requestedURL": "https://nexo.izignamx.com/",
+      "title": "NEXO · Jardín de órbitas",
+      "status": 200,
+      "sourceRevision": "7ce8b77e263244ae0615ac64be3863239cccdab5",
+      "htmlSHA256": "de15df9930c400fcadb79c3dad7742393eeb18adb661b85e1c35a7f806acc8ae",
+      "capturedAt": "2026-09-27T08:10:31.963Z",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        "Iniciar expedición · Vector · Solo",
+        "Desplazar nave hacia la derecha durante 900 ms"
+      ],
+      "canvas": [
+        {
+          "id": "world",
+          "width": 1440,
+          "height": 900,
+          "visible": true
+        },
+        {
+          "id": "radar",
+          "width": 128,
+          "height": 128,
+          "visible": true
+        }
+      ],
+      "errors": [],
+      "body": "NEXO\nEXPEDICIÓN\nP1 / VECTOR\n100 / 100\n01 / 06\nREGENERACIÓN\nEl despertar\n0 / 14 semillas\nESTABILIZA 23s\nPUNTUACIÓN\n000000\n00:03\nÓRBITA ESTABLE\n❋\n2\nSEMILLAS A BORDO\nDAÑO +3% · ENTREGA ×1.08\nESPACIO\nIMPULSO\nLISTO\nE\nPULSO\n100%\nRADAR / 01\nARENA 2×\nMuévete con WASD o flechas. Recoge luz. El disparo es automático.\nSector 1. El despertar. Entrega 14 semillas.",
+      "rawFile": "nexo-desktop-gameplay.png",
+      "rawSHA256": "9aa3ec5aa647c73c152961f197935dabf90e3f4d1cc59505294a96340a1614fb",
+      "method": "Chromium live public URL, ordinary UI clicks; no DOM alteration, generated image or game state injection",
+      "variants": {
+        "avif": {
+          "path": "/media/projects/nexo/evidence/gameplay-desktop.avif",
+          "sha256": "f933c3d9114428d5a162afd70322cea556a5d88acfe4a897994f99de6eaa6345",
+          "bytes": 20794
+        },
+        "webp": {
+          "path": "/media/projects/nexo/evidence/gameplay-desktop.webp",
+          "sha256": "3558f6f032442c81d9b8b236771e9274d864f23c4378ccbaa0f90fa4d8994a0a",
+          "bytes": 28714
+        }
+      }
+    },
+    {
+      "slug": "nexo",
+      "device": "mobile",
+      "url": "https://nexo.izignamx.com/",
+      "requestedURL": "https://nexo.izignamx.com/",
+      "title": "NEXO · Jardín de órbitas",
+      "status": 200,
+      "sourceRevision": "7ce8b77e263244ae0615ac64be3863239cccdab5",
+      "htmlSHA256": "c27b745b2388afe99a935a2f824b1a1d3c93f3a6b5291546faf5252899d087d3",
+      "capturedAt": "2026-09-27T08:10:37.364Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "actions": [
+        "Iniciar expedición · Vector · Solo"
+      ],
+      "canvas": [
+        {
+          "id": "world",
+          "width": 390,
+          "height": 844,
+          "visible": true
+        },
+        {
+          "id": "radar",
+          "width": 128,
+          "height": 128,
+          "visible": true
+        }
+      ],
+      "errors": [],
+      "body": "NEXO\nP1 / VECTOR\n100 / 100\n01 / 06\nEl despertar\n0 / 14\nESTABILIZA 23s\nPUNTUACIÓN\n000000\n00:03\nÓRBITA ESTABLE\n❋\n1\nSEMILLAS A BORDO\nDAÑO +2% · ENTREGA ×1.04\nRADAR / 01\nARENA 2×\nUsa el joystick para recoger semillas. El disparo es automático.\nMOVER\n◎\nPULSO\n↗\nIMPULSO\nSECTOR 01\nEl despertar\n\nToda órbita comienza con una semilla.\n\nSector 1. El despertar. Entrega 14 semillas.",
+      "rawFile": "nexo-mobile-gameplay.png",
+      "rawSHA256": "96051e9b0e627b2ab5ab43671885303f5060ed782564ff482de7b5f81c26018c",
+      "method": "Chromium live public URL, ordinary UI clicks; no DOM alteration, generated image or game state injection",
+      "variants": {
+        "avif": {
+          "path": "/media/projects/nexo/evidence/gameplay-mobile.avif",
+          "sha256": "a7abe9f45aabb7b0856d35155a4a58fd3976559c65bae356d2844e08a0e204cd",
+          "bytes": 13320
+        },
+        "webp": {
+          "path": "/media/projects/nexo/evidence/gameplay-mobile.webp",
+          "sha256": "b2e1c97d7e13583cfb517b1270805e98de2b91c9b4fdc13a4ee8d0149e24c32d",
+          "bytes": 18448
+        }
+      }
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import {GameLink} from "./GameShelf";
 import {DecisionStudy} from "./DecisionStudy";
 import {CaseNavigation} from "./CaseNavigation";
 import {RelatedCases} from "./RelatedCases";
@@ -50,6 +51,7 @@ export function Case({ project: p, locale: l }: { project: Project; locale: Loca
             <Icon name="down" />
           </a>
         </div>
+        <GameLink project={p} locale={l} />
       </header>
       <div className="bk-case-facts">
         <div>

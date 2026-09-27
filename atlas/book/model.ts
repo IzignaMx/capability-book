@@ -37,6 +37,7 @@ export type EvidenceImage = {
 };
 export type Project = {
   slug: string;
+  stage?: Record<Locale, string>;
   classification: string;
   publication: { reviewedAt: string; notes: string; confidentiality: string };
   links: { label: string; url: string; public: boolean }[];
@@ -45,7 +46,7 @@ export type Project = {
   es: ProjectCopy;
   en: ProjectCopy;
 };
-export const projects = data as unknown as [Project, Project, Project, Project, Project, Project];
+export const projects = data as unknown as [Project, ...Project[]];
 export const categories = [
   { id: "all", es: "Todos", en: "All" },
   { id: "commerce", es: "Comercio", en: "Commerce" },
@@ -53,9 +54,12 @@ export const categories = [
   { id: "impact", es: "Impacto", en: "Impact" },
   { id: "data", es: "Datos", en: "Data" },
   { id: "tools", es: "Herramientas", en: "Tools" },
+  { id: "games", es: "Juegos", en: "Games" },
 ] as const;
 export type Category = (typeof categories)[number]["id"];
 const assignment: Record<string, Category[]> = {
+  "distrito-cero": ["games", "experience"],
+  nexo: ["games", "experience"],
   omnisync: ["commerce", "data", "tools"],
   "hamburguesa-nomada": ["experience", "impact"],
   tecuiyo: ["impact", "tools"],
@@ -147,6 +151,7 @@ export const allRoutes = (["es", "en"] as const).flatMap((l) => [
   ...projects.map((p) => pathFor(l, "case", p.slug)),
 ]);
 export function classification(p: Project, l: Locale) {
+  if (p.stage) return p.stage[l];
   return p.classification === "internal"
     ? l === "es"
       ? "Proyecto interno · demo"

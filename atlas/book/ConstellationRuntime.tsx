@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import * as T from "three";
 import { nodePosition, normalizeView } from "./constellation-model";
 export function ConstellationRuntime({
+  count,
   resetEpoch,
   selected,
   spread,
@@ -11,6 +12,7 @@ export function ConstellationRuntime({
   onSelect,
   onError,
 }: {
+  count: number;
   resetEpoch: number;
   selected: number;
   spread: number;
@@ -76,7 +78,7 @@ export function ConstellationRuntime({
           }),
         ),
       );
-      for (let i = 0; i < 6; i++) {
+      for (let i = 0; i < count; i++) {
         const node = new T.Mesh(
           new T.SphereGeometry(0.14, 16, 12),
           new T.MeshStandardMaterial({
@@ -113,6 +115,7 @@ export function ConstellationRuntime({
         labels.push(label);
         root.add(label);
       }
+      el.dataset.nodeCount = String(nodes.length);
       for (let j = 0; j < 3; j++) {
         const points = Array.from({ length: 180 }, (_, i) => {
           const a = (i / 179) * Math.PI * 2;
@@ -147,7 +150,7 @@ export function ConstellationRuntime({
           { spread: s, zoom: z } = normalizeView(state);
         if (s !== previousSpread) {
           nodes.forEach((n, i) => {
-            const p = new T.Vector3(...nodePosition(i, s));
+            const p = new T.Vector3(...nodePosition(i, s, count));
             n.position.copy(p);
             labels[i]?.position.copy(p).add(new T.Vector3(0, 0.38, 0));
             const curve = new T.QuadraticBezierCurve3(
@@ -272,7 +275,7 @@ export function ConstellationRuntime({
       renderer?.dispose();
       onError();
     }
-  }, [onSelect, onError]);
+  }, [onSelect, onError, count]);
   useEffect(() => update.current(), [selected, spread, zoom, playing, reduced]);
   useEffect(() => {
     rotation.current = 0;

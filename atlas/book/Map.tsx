@@ -10,7 +10,7 @@ function StaticMap({ selected }: { selected: number }) {
       className="bk-map-static"
       viewBox="0 0 800 560"
       role="img"
-      aria-label="Mapa geométrico de seis proyectos / Six-project geometric map"
+      aria-label={`Mapa geométrico de ${projects.length} proyectos / ${projects.length}-project geometric map`}
     >
       <g fill="none" stroke="currentColor" strokeWidth="1">
         <ellipse cx="400" cy="280" rx="250" ry="125" transform="rotate(-20 400 280)" />
@@ -18,7 +18,7 @@ function StaticMap({ selected }: { selected: number }) {
         <ellipse cx="400" cy="280" rx="235" ry="110" transform="rotate(100 400 280)" />
       </g>
       {projects.map((p, i) => {
-        const a = (i * Math.PI) / 3 - 0.4,
+        const a = (i * Math.PI * 2) / projects.length - 0.4,
           x = 400 + Math.cos(a) * 250,
           y = 280 + Math.sin(a) * 170;
         return (
@@ -65,7 +65,7 @@ export function MapPage({ locale: l }: { locale: Locale }) {
     q.addEventListener("change", sync);
     return () => q.removeEventListener("change", sync);
   }, []);
-  const onSelect = useCallback((i: number) => setSelected(Math.max(0, Math.min(5, i))), []),
+  const onSelect = useCallback((i: number) => setSelected(Math.max(0, Math.min(projects.length - 1, i))), []),
     onError = useCallback(() => {
       setFailed(true);
       setActive(false);
@@ -114,6 +114,7 @@ export function MapPage({ locale: l }: { locale: Locale }) {
                 }
               >
                 <Runtime
+                  count={projects.length}
                   resetEpoch={resetEpoch}
                   selected={selected}
                   spread={spread}

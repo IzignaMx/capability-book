@@ -2,8 +2,8 @@
 import { describe, test, expect } from "vitest";
 const m: any = await import("../atlas/book/model").catch(() => ({}));
 describe("Book atlas contracts", () => {
-  test("all six published cases remain bilingual", () => {
-    expect(m.projects?.length).toBe(6);
+  test("all eight published cases remain bilingual", () => {
+    expect(m.projects?.length).toBe(8);
     for (const p of m.projects) {
       expect(p.es.title.length).toBeGreaterThan(2);
       expect(p.en.title.length).toBeGreaterThan(2);

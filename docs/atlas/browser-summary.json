@@ -3,7 +3,7 @@
   "reports": [
     {
       "file": "book-browser-checks.json",
-      "checks": 209,
+      "checks": 221,
       "failures": 0
     },
     {
@@ -13,19 +13,24 @@
     },
     {
       "file": "book-reading-checks.json",
-      "checks": 127,
+      "checks": 159,
       "failures": 0
     },
     {
       "file": "book-case-polish-checks.json",
-      "checks": 95,
+      "checks": 111,
       "failures": 0
     },
     {
       "file": "book-3d-checks.json",
       "checks": 28,
       "failures": 0
+    },
+    {
+      "file": "book-game-checks.json",
+      "checks": 80,
+      "failures": 0
     }
   ],
-  "total": 479
+  "total": 619
 }

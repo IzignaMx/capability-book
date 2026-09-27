@@ -17,3 +17,5 @@ tests/e2e/visual-regression.spec.ts-snapshots/
 
 /node_modules
 /docs/book-*-checks.json
+
+/assets-capture/

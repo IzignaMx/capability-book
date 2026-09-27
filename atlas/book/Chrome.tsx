@@ -106,7 +106,7 @@ export const tx = (l: Locale, es: string, en: string) => (l === "es" ? es : en);
 export function Brand({ locale }: { locale: Locale }) {
   return (
     <a className="bk-brand" href={pathFor(locale)} aria-label="IzignaMx Book">
-      <img src="/assets/book-mark.svg" width="30" height="30" alt="" />
+      <img src="/assets/brand-mark-white.svg" width="30" height="30" alt="" />
       <span>
         IzignaMx
         <span className="bk-brand-divider" /> <small>Book</small>

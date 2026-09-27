@@ -4,7 +4,7 @@
 
 This repository uses a GitHub Actions Pages build, not branch-root publishing. `quality.yml` builds `dist/`, uploads it with `actions/upload-pages-artifact@v5`, and deploys that artifact with `actions/deploy-pages@v5`. **Do not copy dist/client from Higgsfield, commit dist to the root, or select a different Pages branch.** The Pages source remains GitHub Actions.
 
-The approved Atlas components now live in `atlas/book`. Astro prerenders the 28 localized routes as directory index.html documents. `dist/index.html` is the language gateway and `dist/404.html` is the missing-page fallback. The gateway uses HTML refresh, not an HTTP 308 response, which cannot be implemented by a static file alone. The existing `public/CNAME` and new `.nojekyll` are copied to `dist/`.
+The approved Atlas components now live in `atlas/book`. Astro prerenders the 32 localized routes as directory index.html documents. `dist/index.html` is the language gateway and `dist/404.html` is the missing-page fallback. The gateway uses HTML refresh, not an HTTP 308 response, which cannot be implemented by a static file alone. The existing `public/CNAME` and new `.nojekyll` are copied to `dist/`.
 
 No Cloudflare Worker, TanStack server, Higgsfield authentication, runtime API, credentials or database is required. Static output retains React hydration and an explicitly activated Three.js constellation. Fonts still refer to the original brand font URL and are not redistributed in this change.
 

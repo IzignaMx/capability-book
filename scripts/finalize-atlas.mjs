@@ -2,7 +2,8 @@ import {readFile,writeFile,readdir} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {join} from 'node:path';
 const source=JSON.parse(await readFile('docs/atlas/import.json','utf8'));
-const release={edition:'IzignaMx Book Atlas',sourceRevision:source.sourceCommit,buildRevision:process.env.GITHUB_SHA||'local-review',indexable:process.env.ATLAS_INDEXABLE==='true',contentPages:28,hosting:'GitHub Pages static artifact',requiresServer:false};
+const catalog=JSON.parse(await readFile('atlas/book/projects.json','utf8'));
+const release={edition:'IzignaMx Book Atlas',sourceRevision:source.sourceCommit,buildRevision:process.env.GITHUB_SHA||'local-review',indexable:process.env.ATLAS_INDEXABLE==='true',contentPages:16+2*catalog.length,projectCount:catalog.length,hosting:'GitHub Pages static artifact',requiresServer:false};
 await writeFile('dist/release.json',JSON.stringify(release,null,2)+'\n');
 const hashes={};
 async function visit(path=''){

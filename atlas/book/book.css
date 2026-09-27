@@ -176,9 +176,9 @@ img {
   white-space: nowrap;
 }
 .bk-brand img {
-  filter: brightness(0) invert(1);
-  width: 29px;
-  height: 29px;
+  filter: none;
+  width: 34px;
+  height: 34px;
 }
 .bk-brand > span {
   display: flex;
