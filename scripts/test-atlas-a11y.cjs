@@ -32,7 +32,7 @@ async function start(){
     return {audit:path=>auditPage({browser,pa11y,url:base+path}),close};
   }catch(error){await close();throw error;}
 }
-runAudit({base,paths,reportPath:'docs/atlas/a11y.json',start,onResult:result=>{
+runAudit({base,paths,reportPath:'audit/atlas-accessibility/a11y.json',start,onResult:result=>{
   console.log(result.path,result.status,JSON.stringify({errors:result.errors,attempts:result.attempts}));
 }}).then(report=>{
   console.log('Accessibility audit:',report.status,report.results.length+'/'+report.expectedPages+' pages');

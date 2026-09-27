@@ -96,9 +96,7 @@ jobs:
         if: always()
         with:
           name: atlas-accessibility-checks
-          path: |
-            docs/atlas/a11y.json
-            docs/atlas/a11y-readiness-regression.json
+          path: audit/atlas-accessibility/
   deploy:
     name: deploy
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'

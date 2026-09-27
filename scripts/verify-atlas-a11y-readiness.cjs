@@ -51,6 +51,7 @@ const base='http://127.0.0.1:4214',checks=[];
     let timedOut=false;
     try{await pa11y(url,{browser,page:oldPage,standard:'WCAG2AA',timeout:4000});}
     catch(error){timedOut=error.name==='TimeoutError';}
+    await oldPage.waitForFunction(()=>!!document.querySelector('main h1')&&!document.querySelector('astro-island[ssr]'),{timeout:20000});
     const contentExists=await oldPage.evaluate(()=>!!document.querySelector('main h1')&&!document.querySelector('astro-island[ssr]'));
     assert(timedOut&&contentExists,'Old network-idle gate times out even after content hydrates');
     checks.push({name:'Original timeout reproduced with ready content and three pending background requests',passed:true});
@@ -70,8 +71,8 @@ const base='http://127.0.0.1:4214',checks=[];
   }catch(error){checks.push({name:'Readiness regression completes',passed:false,error:String(error)});process.exitCode=1;}
   finally{
     await browser?.close();server.kill();
-    mkdirSync('docs/atlas',{recursive:true});
-    writeFileSync('docs/atlas/a11y-readiness-regression.json',JSON.stringify({scope:'Synthetic network/error fixtures over the unchanged local production artifact',checks},null,2)+'\n');
+    mkdirSync('audit/atlas-accessibility',{recursive:true});
+    writeFileSync('audit/atlas-accessibility/readiness-regression.json',JSON.stringify({scope:'Synthetic network/error fixtures over the unchanged local production artifact',checks},null,2)+'\n');
     console.log(JSON.stringify(checks,null,2));
   }
 })();

@@ -47,3 +47,10 @@ test('cleanup failure cannot produce a successful report',async()=>{
  const result=await run({reportPath:reportFile(),start:async()=>({audit:async()=>({issues:[]}),close:async()=>{throw new Error('Browser close failed');}})});
  expect(result.status).toBe('failed');expect(result.cleanupError.message).toBe('Browser close failed');
 });
+test('CI uploads fresh ignored reports, never tracked historical audit results',()=>{
+ const runner=readFileSync('scripts/test-atlas-a11y.cjs','utf8');
+ const workflow=readFileSync('.github/workflows/quality.yml','utf8');
+ expect(runner).toContain("reportPath:'audit/atlas-accessibility/a11y.json'");
+ expect(workflow).toContain('path: audit/atlas-accessibility/');
+ expect(workflow).not.toContain('path: docs/atlas/a11y.json');
+});
