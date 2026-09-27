@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-27T08:24:48.015630+00:00",
+  "date": "2026-09-27",
   "baseCommit": "07205842c813c6ee9bcb0ec0525b684925b84617",
   "projects": 8,
   "contentPages": 32,
@@ -7,36 +7,12 @@
   "applicationTests": 187,
   "browserChecks": 619,
   "browserReports": [
-    {
-      "report": "docs/book-browser-checks.json",
-      "checks": 221,
-      "failures": 0
-    },
-    {
-      "report": "docs/book-context-checks.json",
-      "checks": 20,
-      "failures": 0
-    },
-    {
-      "report": "docs/book-reading-checks.json",
-      "checks": 159,
-      "failures": 0
-    },
-    {
-      "report": "docs/book-case-polish-checks.json",
-      "checks": 111,
-      "failures": 0
-    },
-    {
-      "report": "docs/book-3d-checks.json",
-      "checks": 28,
-      "failures": 0
-    },
-    {
-      "report": "docs/book-game-checks.json",
-      "checks": 80,
-      "failures": 0
-    }
+    {"report":"docs/book-browser-checks.json","checks":221,"failures":0},
+    {"report":"docs/book-context-checks.json","checks":20,"failures":0},
+    {"report":"docs/book-reading-checks.json","checks":159,"failures":0},
+    {"report":"docs/book-case-polish-checks.json","checks":111,"failures":0},
+    {"report":"docs/book-3d-checks.json","checks":28,"failures":0},
+    {"report":"docs/book-game-checks.json","checks":80,"failures":0}
   ],
   "automatedAccessibilityPages": 16,
   "a11yErrors": 0,
@@ -44,9 +20,11 @@
   "brandAssetsCompared": 6,
   "originalProjectRecordsPreserved": true,
   "productionChanged": false,
-  "manualVisualReview": "Eight initial screenshots inspected in local image viewer: actual game correspondence, brand geometry, desktop and mobile layouts verified. Distrito Cero recaptured through normal UI after the tutorial obscured its scene; final images awaiting transfer for inspection.",
+  "manualVisualReview": "Completed in the local image viewer. Inspected the four actual game screenshots and desktop/mobile portfolio views. The initial Distrito Cero tutorial obstruction was corrected by recapturing after an ordinary in-game dismissal. Final screenshots and SHA-256 checks were verified through GitHub artifact 10927830736. See GAME-VISUAL-REVIEW.md for scope and observations.",
+  "finalImageValidation": "After replacing the two Distrito Cero captures, 187 unit tests, the static build, all 80 focused game/brand browser assertions and all 107 output checksums passed. The complete six-suite browser workflow runs again in GitHub Actions for the final branch revision.",
   "limitations": [
     "Chromium/Linux and viewport emulation, not physical-device or cross-browser certification.",
-    "Screenshots are actual public game sessions, not measurements of FPS or retention."
+    "Screenshots are actual public game sessions, not measurements of FPS or retention.",
+    "Visual inspection covers the changed surfaces, not every route or interaction state."
   ]
 }
