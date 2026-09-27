@@ -1,0 +1,41 @@
+{
+  "scope": "Initial viewport against frozen Higgsfield Atlas code on local 4208. Pixel threshold 8, reduced motion, same browser.",
+  "results": [
+    {
+      "width": 390,
+      "path": "/es/",
+      "pixelsDifferent": 0,
+      "totalPixels": 351000
+    },
+    {
+      "width": 390,
+      "path": "/es/proyectos/omnisync/",
+      "pixelsDifferent": 0,
+      "totalPixels": 351000
+    },
+    {
+      "width": 390,
+      "path": "/es/diagnostico/",
+      "pixelsDifferent": 0,
+      "totalPixels": 351000
+    },
+    {
+      "width": 1440,
+      "path": "/es/",
+      "pixelsDifferent": 0,
+      "totalPixels": 1296000
+    },
+    {
+      "width": 1440,
+      "path": "/es/proyectos/omnisync/",
+      "pixelsDifferent": 0,
+      "totalPixels": 1296000
+    },
+    {
+      "width": 1440,
+      "path": "/es/diagnostico/",
+      "pixelsDifferent": 578,
+      "totalPixels": 1296000
+    }
+  ]
+}

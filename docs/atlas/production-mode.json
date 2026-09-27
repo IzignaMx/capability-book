@@ -1,0 +1,26 @@
+[
+  {
+    "check": "/es/ production indexing",
+    "passed": true
+  },
+  {
+    "check": "/en/ production indexing",
+    "passed": true
+  },
+  {
+    "check": "/es/proyectos/omnisync/ production indexing",
+    "passed": true
+  },
+  {
+    "check": "comparison remains noindex",
+    "passed": true
+  },
+  {
+    "check": "26 indexable destinations in production sitemap",
+    "passed": true
+  },
+  {
+    "check": "CNAME retained",
+    "passed": true
+  }
+]

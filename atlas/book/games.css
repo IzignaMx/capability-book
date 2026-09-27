@@ -1,0 +1,12 @@
+.bk-game-shelf{padding-block:clamp(48px,7vw,96px)}
+.bk-game-intro{max-width:62ch;color:var(--bk-muted);font-size:16px;line-height:1.8;margin-top:24px}
+.bk-games-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,4vw,56px)}
+.bk-games-grid>div{min-width:0}
+.bk-play-link{display:inline-flex;align-items:center;justify-content:flex-start;gap:12px;min-height:48px;margin-top:18px;padding:10px 0;color:var(--bk-link);font-size:14px;line-height:1.6;text-decoration:none}
+.bk-play-link:hover{text-decoration:underline;text-underline-offset:5px}
+.bk-play-link>.bk-icon:last-child{width:15px;height:15px}
+.bk-case-heading>.bk-play-link{margin-top:28px}
+@media(max-width:680px){.bk-games-grid{grid-template-columns:1fr;gap:44px}.bk-game-intro{font-size:15px}.bk-play-link{min-height:48px}}
+@media print{.bk-play-link{display:none}}
+/* Eight references need two deliberate rows when the evidence stage is narrow. */
+@media(max-width:1199px){.bk-hero-selector{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.bk-hero-selector button{min-width:44px}}

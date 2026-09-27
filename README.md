@@ -1,3 +1,7 @@
+# Current delivery: Book Atlas for GitHub Pages
+
+The current site is authored in `atlas/` and built with `astro.atlas.config.mjs`. Read `docs/atlas/GITHUB-PAGES.md` first. `pnpm build` generates the Pages-ready `dist/`. The original source guide below is retained for legacy rollback and evidence tooling.
+
 # IzignaMx Book
 
 Immersive, evidence-backed Book and verified portfolio for **IzignaMx**.
@@ -23,3 +27,7 @@ Immersive, evidence-backed Book and verified portfolio for **IzignaMx**.
 2. Accessible static foundation
 3. Cinematic 3D vertical slice
 4. Complete capability universe and launch hardening
+
+# Atlas edition
+
+The current Pages build uses `atlas/` and `astro.atlas.config.mjs`. Read `docs/atlas/GITHUB-PAGES.md` before publishing. Original source and its rollback commands remain available.

@@ -1,0 +1,36 @@
+{
+  "hosting": "Static files only",
+  "reports": [
+    {
+      "file": "book-browser-checks.json",
+      "checks": 221,
+      "failures": 0
+    },
+    {
+      "file": "book-context-checks.json",
+      "checks": 20,
+      "failures": 0
+    },
+    {
+      "file": "book-reading-checks.json",
+      "checks": 159,
+      "failures": 0
+    },
+    {
+      "file": "book-case-polish-checks.json",
+      "checks": 111,
+      "failures": 0
+    },
+    {
+      "file": "book-3d-checks.json",
+      "checks": 28,
+      "failures": 0
+    },
+    {
+      "file": "book-game-checks.json",
+      "checks": 80,
+      "failures": 0
+    }
+  ],
+  "total": 619
+}

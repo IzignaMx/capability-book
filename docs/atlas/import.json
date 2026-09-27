@@ -1,0 +1,27 @@
+{
+  "sourceCommit": "ca3fc9dabbe39df7ce9c74d14320fdb6151b6b16",
+  "sourceURL": "https://izignamx-book-atlas.higgsfield.app",
+  "files": {
+    "projects.json": "fa15687c076b9871d90a36f9747cf02444a08e5f494cc8ef0735bca75092ee64",
+    "model.ts": "9b76dd3baa532bfa431a954c18618958fc800c6d89da258c33c1b4f48db824f0",
+    "Chrome.tsx": "0c6fabf092997d2cb72b14d2473f2175ebe36528da475e04f4efe8e03b899119",
+    "Discovery.tsx": "375fe8d52cc6c1439c94cb68df37e62677a71a406987c8780a94c82c6c5c93ee",
+    "Case.tsx": "351a6f045537ab6b910a3e125c79276c7a829969b73ee74f3fc216b688a74acf",
+    "Brief.tsx": "3b7057563a529143b545f61a659c3c854b792c51526865dfab147e31a6253c73",
+    "constellation-model.ts": "084adb8c9cbf5a3ed592ea4fbd7c2127855e6ba6c7dc838ad42e241501201cc6",
+    "ConstellationRuntime.tsx": "4e926a000cd5dec1dae8ab8950bc57d91b394bd30384fd425754d2ba82ba76e8",
+    "Map.tsx": "c4f9adf4bbc9a61c48ffa0fb809903b423f42a7a1f46496c5c01ea66ea0e47fa",
+    "Editorial.tsx": "01c2f50c5e975511307fbbef87058ad1c1fb69e7dbd760cb9e19a2df4566a387",
+    "BookPage.tsx": "1a1068abb63fa9878d89c07a906b54f3d5c198e49096afa728dd9dec540a3547",
+    "book.css": "27e4476c7e341110490535656c0f637d59ce5a0646c901bc273cc987df6c96c8",
+    "inline.ts": "c4ac6ec5bbcce6ce8e5208aaa3741c59621176516318842568ed176e7aa0cdbc",
+    "context.ts": "18990eafd899aae6b31f7fc130e55e9c3c669419a8c86620509d197c5868370b",
+    "useContextUrl.ts": "a818c9339e8da6e4198fa485943530c58c7d6025071068bf8b12e232bfa7c546",
+    "reading.ts": "c2f2b8271b5558c010f268f3675653363deabde64528af6254295934cd62771f",
+    "CaseNavigation.tsx": "e28230a46d0734a46f43792e1ecb79a6065f64f0105f5d269573fc0f1f8ea6ba",
+    "RelatedCases.tsx": "0dd0b9d8f9844ee0210b149e8385418eb4d2adc7b64945c687e4dee02de48101",
+    "reading.css": "22f3585f66b47baf371fdbd7ab902a89571bbcf58209db42c3a24af68e8285cd",
+    "DecisionStudy.tsx": "561dc6739ad9e36df27b11633914e11e55f73296d5801102f5f663f28e3c4157",
+    "decision-study.css": "dce81468739b48feae543faf699c6e693ba0e7394afabc42722193bf9399db92"
+  }
+}

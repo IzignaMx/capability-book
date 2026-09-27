@@ -18,7 +18,7 @@ export default defineConfig({
     screenshot: "only-on-failure"
   },
   webServer: {
-    command: "pnpm build && pnpm preview --host 127.0.0.1 --port 4333",
+    command: "pnpm build:legacy && pnpm preview:legacy --host 127.0.0.1 --port 4333",
     env: {
       PUBLIC_DIAGNOSTIC_ENDPOINT: "https://forms.test/diagnostic",
       PUBLIC_ENABLE_TEST_HOOKS: "true"

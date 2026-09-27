@@ -1,0 +1,27 @@
+.bk-reading-mobile{display:none}
+.bk-reading-navigation .bk-kicker{font-size:10px;margin-bottom:18px}
+.bk-case-narrative .bk-reading-navigation nav a{min-height:44px;gap:12px;border-inline-start:2px solid transparent;padding:9px 12px}
+.bk-reading-navigation nav a>span{color:var(--bk-muted);font:10px/1.4 ui-monospace,monospace;flex:none}
+.bk-case-narrative .bk-reading-navigation nav a[aria-current=location]{color:var(--bk-link);border-inline-start-color:var(--bk-link);background:var(--bk-panel)}
+.bk-capture-original{display:inline-flex;align-items:center;gap:14px;min-height:44px;font-size:12px;color:var(--bk-link);margin-top:12px}
+.bk-lightbox .bk-lightbox-options{display:flex;align-items:center;flex-wrap:wrap;gap:10px;width:100%;margin-bottom:16px}
+.bk-lightbox .bk-lightbox-options button{position:static;width:auto;height:auto;min-height:44px;display:inline-flex;align-items:center;padding:10px 14px;border-radius:5px;font-size:13px;line-height:1.5}
+.bk-lightbox-options button[aria-pressed=true]{border-color:var(--bk-link);color:var(--bk-link)}
+.bk-lightbox-options a{display:inline-flex;align-items:center;gap:10px;font-size:12px;min-height:44px;color:var(--bk-link);padding:8px}
+.bk-lightbox-stage{overflow:auto;max-height:64dvh;width:100%;overscroll-behavior:contain;border-radius:5px}
+.bk-lightbox-stage picture{margin:auto;width:fit-content}
+.bk-lightbox .bk-lightbox-stage img{width:auto;height:auto;max-width:100%;max-height:64dvh;margin:auto}
+.bk-lightbox[data-native=true] .bk-lightbox-stage picture{width:max-content;max-width:none}
+.bk-lightbox[data-native=true] .bk-lightbox-stage img{max-height:none;max-width:none;width:auto}
+.bk-related-cases{padding-block:70px 15px}
+.bk-related-cases .bk-section-heading>p:last-child{font-size:15px;line-height:1.8;color:var(--bk-muted);max-width:60ch;margin-top:20px}
+.bk-related-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px}
+.bk-related-grid>div{min-width:0}
+.bk-related-compare{display:inline-flex;align-items:center;gap:14px;min-height:44px;margin-top:20px;color:var(--bk-link);font-size:13px;line-height:1.6}
+@media(max-width:900px){.bk-reading-desktop{display:none}.bk-reading-mobile{display:block}.bk-case-narrative>aside.bk-reading-navigation{position:static}.bk-reading-mobile summary{display:flex;gap:15px;align-items:center;min-height:52px;font-size:14px;cursor:pointer;list-style:none;padding:12px 0}.bk-reading-mobile summary::-webkit-details-marker{display:none}.bk-reading-mobile summary>span{margin-left:auto;font:11px/1.7 ui-monospace,monospace;color:var(--bk-muted)}.bk-reading-mobile summary>.bk-icon{width:15px}.bk-reading-mobile[open] summary>.bk-icon{transform:rotate(180deg)}.bk-case-narrative .bk-reading-mobile nav{display:grid;grid-template-columns:1fr}.bk-related-grid{gap:28px}}
+@media(max-width:600px){.bk-related-grid{grid-template-columns:1fr;gap:42px}.bk-related-cases{padding-block:42px 0}.bk-lightbox>div{padding:56px 12px 16px}.bk-lightbox .bk-lightbox-options button{font-size:12px;padding:10px}.bk-lightbox-options{gap:7px}.bk-related-compare{font-size:12px}}
+@media(forced-colors:active){.bk-reading-navigation nav a[aria-current=location]{outline:1px solid CanvasText}.bk-lightbox-options button[aria-pressed=true]{outline:2px solid ButtonText}}
+@media print{.bk-capture-original,.bk-reading-navigation,.bk-related-compare,.bk-lightbox{display:none}.bk-related-grid{display:block}}
+/* The document already reserves 108px for the header. Add breathing room only,
+   instead of counting the fixed header twice at each chapter anchor. */
+.book[data-page="case"] .bk-case-prose > section { scroll-margin-top: 12px; }

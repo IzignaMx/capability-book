@@ -1,0 +1,31 @@
+---
+import '../book/book.css';
+import '../compat.css';
+interface Props {title:string; description:string; path:string; locale?:'es'|'en'; alternate?:string; noindex?:boolean;}
+const {title,description,path,locale='es',alternate,noindex=false}=Astro.props;
+const origin='https://book.izignamx.com';
+const indexable=process.env.ATLAS_INDEXABLE==='true'&&!noindex;
+const canonical=new URL(path,origin).href;
+---
+<!doctype html>
+<html lang={locale==='es'?'es-MX':'en'}>
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>{title}</title><meta name="description" content={description}/>
+<meta name="robots" content={indexable?'index, follow':'noindex, follow'}/>
+<meta name="referrer" content="strict-origin-when-cross-origin"/>
+<link rel="canonical" href={canonical}/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="icon" href="/icon-32.png" sizes="32x32"/>
+<link rel="icon" href="/icon-16.png" sizes="16x16"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<link rel="alternate" hreflang={locale==='es'?'es-MX':'en'} href={canonical}/>
+<link rel="alternate" hreflang={locale==='es'?'en':'es-MX'} href={new URL(alternate||`/${locale==='es'?'en':'es'}/`,origin).href}/>
+<link rel="alternate" hreflang="x-default" href={new URL(locale==='es'?path:(alternate||'/es/'),origin).href}/>
+<link rel="sitemap" type="application/xml" href="/sitemap.xml"/>
+<meta property="og:type" content="website"/><meta property="og:site_name" content="IzignaMx Book"/>
+<meta property="og:title" content={title}/><meta property="og:description" content={description}/>
+<meta property="og:url" content={canonical}/><meta property="og:locale" content={locale==='es'?'es_MX':'en_US'}/>
+<meta property="og:image" content={origin+'/assets/book-cover.webp'}/><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content={origin+'/assets/book-cover.webp'}/>
+</head><body><slot/></body></html>

@@ -1,0 +1,3778 @@
+[
+  {
+    "slug": "omnisync",
+    "classification": "internal",
+    "publication": {
+      "confidentiality": "partial",
+      "publishable": true,
+      "reviewedAt": "2026-08-03",
+      "notes": "La captura publicada muestra únicamente el dashboard demo local autorizado; no representa una instancia pública de producción."
+    },
+    "links": [],
+    "sources": [],
+    "media": [
+      {
+        "id": "home-local-demo",
+        "role": "screenshot",
+        "path": "/media/projects/omnisync/evidence/home-desktop.avif",
+        "license": "owned",
+        "width": 1440,
+        "height": 900,
+        "alt": {
+          "es": "Dashboard demo local autorizado de OmniSync, con el resumen de sincronización multicanal y datos simulados.",
+          "en": "Authorized local OmniSync demo dashboard, showing the multichannel synchronization overview and simulated data."
+        },
+        "caption": {
+          "es": "Captura local revisada del dashboard demo autorizado; no representa una instancia pública de producción.",
+          "en": "Reviewed local capture of the authorized demo dashboard; it does not represent a public production instance."
+        },
+        "variants": {
+          "mobile": {
+            "avif": "/media/projects/omnisync/evidence/home-mobile.avif",
+            "webp": "/media/projects/omnisync/evidence/home-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "63a167fd6d5ce1bd466345689c111d0de7f912f1163d4d7392d60cddcf7826a7",
+            "webpSha256": "5664f73505bacb97f8f88d4fcb7bbcba15a8680421fb778491f5ec3288ea32d5"
+          },
+          "desktop": {
+            "avif": "/media/projects/omnisync/evidence/home-desktop.avif",
+            "webp": "/media/projects/omnisync/evidence/home-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "21000aaef77d3e8c75fdaf09076ec3236655d736c4f4aad660e116798df68c3b",
+            "webpSha256": "54a4ecc8e98948b7b9b5ec2af3d709755505308e26358e7412797af16fe7119d"
+          }
+        },
+        "provenance": {
+          "kind": "local-development-capture",
+          "repository": "https://github.com/IzignaMx/OmniSync",
+          "commit": "a4368b8b50ee32f77d3c585a69563d2e64ca9535",
+          "sourceUrl": "https://github.com/IzignaMx/OmniSync",
+          "capturedAt": "2026-08-03T04:41:02Z",
+          "sourceSha256": {
+            "mobile": "4915ce9fa8fbfc5848c60468040c688903a5289c2ad2c995d2cae0c32bfa707f",
+            "desktop": "87189c1988229d2f2f3a8d7ef7ec2d352b682811f2ef23635866169a35e529d2"
+          },
+          "rightsBasis": "IzignaMx authorized this locally run internal-project demo capture for portfolio evidence.",
+          "approvedBy": "IzignaMx",
+          "reviewedAt": "2026-08-03"
+        }
+      }
+    ],
+    "es": {
+      "title": "OmniSync",
+      "elevatorPitch": "Un núcleo operativo que coordina inventario, precios, pedidos y estados entre Shopify y canales externos.",
+      "challenge": "Operar varios canales de comercio exige mantener datos relacionados en sincronía sin convertir cada integración en una dependencia del núcleo.",
+      "constraints": [
+        "Publicar solamente arquitectura y comportamiento visibles o revisados para difusión.",
+        "Mantener separadas las reglas de inventario y de precio para evitar sobrescrituras no deseadas.",
+        "Conservar estados operativos claros durante procesos asíncronos y recuperación ante fallos."
+      ],
+      "strategy": "Separar canales mediante contratos de adaptación y coordinar operaciones con eventos, colas y estados observables.",
+      "solution": "Una plataforma multicanal desacoplada que centraliza reglas operativas mientras permite incorporar canales sin reescribir el núcleo.",
+      "capabilities": [
+        "Commerce Systems",
+        "AI and Automation",
+        "Data and Visualization",
+        "Developer Products"
+      ],
+      "industries": [
+        "Comercio electrónico",
+        "Operaciones minoristas"
+      ],
+      "technologies": [
+        "TypeScript",
+        "Shopify",
+        "Webhooks",
+        "Background jobs"
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Arquitectura por adaptadores",
+          "description": "Los canales se integran mediante contratos desacoplados que permiten ampliar el sistema sin modificar el núcleo.",
+          "verifiedAt": "2026-08-03"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Protección de precios",
+          "description": "El sistema distingue sincronización de inventario y reglas de precio para evitar sobrescrituras no deseadas.",
+          "verifiedAt": "2026-08-03"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Procesamiento asíncrono",
+          "description": "Colas, webhooks y estados en tiempo real coordinan operaciones multicanal y recuperación ante fallos.",
+          "verifiedAt": "2026-08-03"
+        }
+      ],
+      "accessibilityNotes": [
+        "El caso conserva una narrativa textual completa sin depender de visualizaciones avanzadas."
+      ],
+      "relatedServices": [
+        "Arquitectura de producto",
+        "Integraciones de comercio",
+        "Automatización operativa"
+      ],
+      "chapters": [
+        {
+          "title": "Contexto y problema",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Operar varios canales de comercio exige mantener datos relacionados en sincronía sin convertir cada integración en una dependencia del núcleo."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Restricciones",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Publicar solamente arquitectura y comportamiento visibles o revisados para difusión.",
+                "Mantener separadas las reglas de inventario y de precio para evitar sobrescrituras no deseadas.",
+                "Conservar estados operativos claros durante procesos asíncronos y recuperación ante fallos."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Estrategia",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Separar canales mediante contratos de adaptación y coordinar operaciones con eventos, colas y estados observables."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Arquitectura",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Los adaptadores aíslan las particularidades de cada canal. Webhooks y trabajos en segundo plano trasladan cambios hacia un flujo central con estados recuperables."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Experiencia y diseño visual",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La interfaz concentra señales de sincronización y estado para que una persona pueda distinguir operaciones activas, completadas o con atención requerida."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Funciones clave",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Sincronización multicanal",
+                "Protección de precios",
+                "Procesamiento asíncrono",
+                "Estados operativos en tiempo real"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Calidad, accesibilidad, seguridad y rendimiento",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Contratos desacoplados",
+                "Recuperación ante fallos",
+                "Publicación limitada por confidencialidad",
+                "El caso conserva una narrativa textual completa sin depender de visualizaciones avanzadas."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Clasificación de resultados",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Los resultados publicados se presentan como capacidades demostradas y se vinculan con fuentes públicas cuando están disponibles."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Tecnologías",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "TypeScript",
+                "Shopify",
+                "Webhooks",
+                "Background jobs"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Capacidades relacionadas",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Commerce Systems",
+                "AI and Automation",
+                "Data and Visualization",
+                "Developer Products"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Siguiente paso",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Solicita un diagnóstico contextual para explorar cómo estas capacidades pueden aplicarse a otro sistema."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "en": {
+      "title": "OmniSync",
+      "elevatorPitch": "An operational core coordinating inventory, pricing, orders, and status across Shopify and external channels.",
+      "challenge": "Operating several commerce channels requires related data to remain synchronized without turning every integration into a core dependency.",
+      "constraints": [
+        "Publish only architecture and behavior cleared for public communication.",
+        "Keep inventory and pricing rules separate to prevent unintended overwrites.",
+        "Preserve clear operational states during asynchronous processing and failure recovery."
+      ],
+      "strategy": "Separate channels through adapter contracts and coordinate operations with events, queues, and observable state.",
+      "solution": "A decoupled multichannel platform that centralizes operating rules while allowing new channels without rewriting the core.",
+      "capabilities": [
+        "Commerce Systems",
+        "AI and Automation",
+        "Data and Visualization",
+        "Developer Products"
+      ],
+      "industries": [
+        "E-commerce",
+        "Retail operations"
+      ],
+      "technologies": [
+        "TypeScript",
+        "Shopify",
+        "Webhooks",
+        "Background jobs"
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Adapter architecture",
+          "description": "Channels connect through decoupled contracts that let the system expand without changing its core.",
+          "verifiedAt": "2026-08-03"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Price protection",
+          "description": "The system separates inventory synchronization from pricing rules to prevent unintended overwrites.",
+          "verifiedAt": "2026-08-03"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Asynchronous processing",
+          "description": "Queues, webhooks, and real-time states coordinate multichannel operations and failure recovery.",
+          "verifiedAt": "2026-08-03"
+        }
+      ],
+      "accessibilityNotes": [
+        "The case retains a complete text narrative without relying on advanced visualization."
+      ],
+      "relatedServices": [
+        "Product architecture",
+        "Commerce integrations",
+        "Operational automation"
+      ],
+      "chapters": [
+        {
+          "title": "Context and problem",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Operating several commerce channels requires related data to remain synchronized without turning every integration into a core dependency."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Constraints",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Publish only architecture and behavior cleared for public communication.",
+                "Keep inventory and pricing rules separate to prevent unintended overwrites.",
+                "Preserve clear operational states during asynchronous processing and failure recovery."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Strategy",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Separate channels through adapter contracts and coordinate operations with events, queues, and observable state."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Architecture",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Adapters isolate channel-specific behavior. Webhooks and background jobs move changes through a central flow with recoverable states."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Experience and visual design",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The interface concentrates synchronization and status signals so operators can distinguish active, completed, and attention-required work."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Key features",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Multichannel synchronization",
+                "Price protection",
+                "Asynchronous processing",
+                "Real-time operational status"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Quality, accessibility, security, and performance",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Decoupled contracts",
+                "Failure recovery",
+                "Confidentiality-aware publication",
+                "The case retains a complete text narrative without relying on advanced visualization."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Outcome classification",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Published outcomes are presented as demonstrated capabilities and linked to public sources when available."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Technologies",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "TypeScript",
+                "Shopify",
+                "Webhooks",
+                "Background jobs"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Related capabilities",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Commerce Systems",
+                "AI and Automation",
+                "Data and Visualization",
+                "Developer Products"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Next step",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Request a contextual diagnostic to explore how these capabilities can apply to another system."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "slug": "hamburguesa-nomada",
+    "classification": "real",
+    "publication": {
+      "confidentiality": "public",
+      "publishable": true,
+      "reviewedAt": "2026-07-20",
+      "notes": "El caso puede mostrar funciones públicas y el contexto comunitario autorizado."
+    },
+    "links": [
+      {
+        "label": "Sitio público",
+        "url": "https://nomada.izignamx.com/",
+        "public": true
+      },
+      {
+        "label": "Código fuente",
+        "url": "https://github.com/IzignaMx/hamburguesa-nomada",
+        "public": true
+      }
+    ],
+    "sources": [
+      {
+        "id": "repository",
+        "label": "Repositorio Hamburguesa Nómada",
+        "type": "repository",
+        "url": "https://github.com/IzignaMx/hamburguesa-nomada"
+      },
+      {
+        "id": "live",
+        "label": "Sitio Hamburguesa Nómada",
+        "type": "live",
+        "url": "https://nomada.izignamx.com/"
+      }
+    ],
+    "media": [
+      {
+        "id": "home-production",
+        "role": "screenshot",
+        "path": "/media/projects/hamburguesa-nomada/evidence/home-desktop.avif",
+        "license": "client-authorized",
+        "width": 1440,
+        "height": 900,
+        "alt": {
+          "es": "Portada de producción de Hamburguesa Nómada con su cartel ciclista de aniversario en tonos rosa y rojo.",
+          "en": "Production homepage of Hamburguesa Nómada with its pink and red anniversary cycling poster."
+        },
+        "caption": {
+          "es": "Captura directa y revisada de la portada pública de producción; el repositorio de referencia corresponde al commit 0546706.",
+          "en": "Reviewed direct capture of the public production homepage; the reference repository points to commit 0546706."
+        },
+        "variants": {
+          "mobile": {
+            "avif": "/media/projects/hamburguesa-nomada/evidence/home-mobile.avif",
+            "webp": "/media/projects/hamburguesa-nomada/evidence/home-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "3c5d3d313284d7dc62c5b8415a1c028657b7fb59a832e10a3a2bdf8065c13dbf",
+            "webpSha256": "572bf217665f1bb32f2cff1d80f88b493b3f5bde3b36e13301cbed59fd1d58c6"
+          },
+          "desktop": {
+            "avif": "/media/projects/hamburguesa-nomada/evidence/home-desktop.avif",
+            "webp": "/media/projects/hamburguesa-nomada/evidence/home-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "35c73addac8c7c0da4ffe63646daaf5d213ddbde45a93514037be4478af92d34",
+            "webpSha256": "6379e43c27611f6e448b2f88cb740a46385393e65381b606f7d96e7969cd57d7"
+          }
+        },
+        "provenance": {
+          "kind": "direct-production-capture",
+          "repository": "https://github.com/IzignaMx/hamburguesa-nomada",
+          "commit": "05467064095c9bb31e7ccc47bb8184f380531706",
+          "sourceUrl": "https://nomada.izignamx.com/",
+          "capturedAt": "2026-08-02T01:30:32.445Z",
+          "sourceSha256": {
+            "mobile": "6436a8e5289aaa71a7b4329f416d3b779ef8793d253c20abeaf4d8fe17ad2739",
+            "desktop": "5bae92417d6061f283da99d3fede418ae1f892c194c54be33bcc29dd03c653e2"
+          },
+          "rightsBasis": "Publication of this direct production capture is authorized by IzignaMx for portfolio evidence; the reference source code is available under GPL-2.0.",
+          "approvedBy": "IzignaMx",
+          "reviewedAt": "2026-08-02"
+        }
+      }
+    ],
+    "es": {
+      "title": "Hamburguesa Nómada",
+      "elevatorPitch": "Un centro digital móvil para conectar un evento ciclista comunitario con resultados, reconocimientos y contenido basado en plantas.",
+      "challenge": "El evento necesitaba reunir información cambiante, resultados y reconocimientos descargables en una experiencia fácil de consultar desde la calle.",
+      "constraints": [
+        "Responder a tiempos de entrega exigentes.",
+        "Priorizar uso móvil y conectividad limitada.",
+        "Respetar la identidad visual y el contexto comunitario existentes."
+      ],
+      "strategy": "Convertir datos del evento en una publicación estática automatizada y enlazar cada resultado con una experiencia de reconocimiento compartible.",
+      "solution": "Una PWA que organiza el evento, consulta resultados y genera tarjetas descargables accesibles mediante códigos QR.",
+      "capabilities": [
+        "Web Experiences",
+        "Impact Technology",
+        "AI and Automation"
+      ],
+      "industries": [
+        "Eventos comunitarios",
+        "Alimentación basada en plantas",
+        "Ciclismo"
+      ],
+      "technologies": [
+        "Progressive Web App",
+        "QR codes",
+        "Static delivery",
+        "Automated publishing"
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Reconocimientos digitales",
+          "description": "La plataforma consulta resultados y genera tarjetas descargables vinculadas mediante códigos QR.",
+          "sourceLabel": "Repositorio Hamburguesa Nómada",
+          "sourceUrl": "https://github.com/IzignaMx/hamburguesa-nomada",
+          "verifiedAt": "2026-07-20"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Actualización automatizada",
+          "description": "Un flujo programado detecta cambios de datos y vuelve a publicar el sitio sin intervención manual.",
+          "sourceLabel": "Repositorio Hamburguesa Nómada",
+          "sourceUrl": "https://github.com/IzignaMx/hamburguesa-nomada",
+          "verifiedAt": "2026-07-20"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Experiencia PWA",
+          "description": "La aplicación prioriza acceso móvil, compartir contenido y continuidad bajo condiciones de conectividad limitada.",
+          "sourceLabel": "Repositorio Hamburguesa Nómada",
+          "sourceUrl": "https://github.com/IzignaMx/hamburguesa-nomada",
+          "verifiedAt": "2026-07-20"
+        }
+      ],
+      "accessibilityNotes": [
+        "La información y los reconocimientos permanecen disponibles sin animación avanzada."
+      ],
+      "relatedServices": [
+        "Experiencias web",
+        "Automatización de contenido",
+        "Productos digitales para comunidades"
+      ],
+      "chapters": [
+        {
+          "title": "Contexto y problema",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "El evento necesitaba reunir información cambiante, resultados y reconocimientos descargables en una experiencia fácil de consultar desde la calle."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Restricciones",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Responder a tiempos de entrega exigentes.",
+                "Priorizar uso móvil y conectividad limitada.",
+                "Respetar la identidad visual y el contexto comunitario existentes."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Estrategia",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Convertir datos del evento en una publicación estática automatizada y enlazar cada resultado con una experiencia de reconocimiento compartible."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Arquitectura",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Un flujo programado detecta cambios en los datos y vuelve a publicar una entrega estática, reduciendo operación manual y dependencias de servidor."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Experiencia y diseño visual",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La navegación móvil conecta checkpoints, resultados y reconocimientos con el catálogo vegetal y la identidad del evento."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Funciones clave",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Consulta de resultados",
+                "Reconocimientos descargables",
+                "Acceso mediante códigos QR",
+                "Publicación automatizada"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Calidad, accesibilidad, seguridad y rendimiento",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Entrega estática",
+                "Continuidad con conectividad limitada",
+                "Contenido público trazable",
+                "La información y los reconocimientos permanecen disponibles sin animación avanzada."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Clasificación de resultados",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Los resultados publicados se presentan como capacidades demostradas y se vinculan con fuentes públicas cuando están disponibles."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Tecnologías",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Progressive Web App",
+                "QR codes",
+                "Static delivery",
+                "Automated publishing"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Enlaces públicos",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "[Producto en vivo](https://nomada.izignamx.com/)",
+                "[Código fuente](https://github.com/IzignaMx/hamburguesa-nomada)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Capacidades relacionadas",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Web Experiences",
+                "Impact Technology",
+                "AI and Automation"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Siguiente paso",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Solicita un diagnóstico contextual para explorar cómo estas capacidades pueden aplicarse a otro sistema."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "en": {
+      "title": "Hamburguesa Nómada",
+      "elevatorPitch": "A mobile event hub connecting a community cycling experience with results, recognition, and plant-based content.",
+      "challenge": "The event needed to gather changing information, results, and downloadable recognition in an experience that remained easy to use on the street.",
+      "constraints": [
+        "Respond to demanding delivery timelines.",
+        "Prioritize mobile use and limited connectivity.",
+        "Respect the event's established visual identity and community context."
+      ],
+      "strategy": "Turn event data into an automated static publication and connect every result to a shareable recognition experience.",
+      "solution": "A PWA that organizes the event, retrieves results, and generates downloadable cards accessed through QR codes.",
+      "capabilities": [
+        "Web Experiences",
+        "Impact Technology",
+        "AI and Automation"
+      ],
+      "industries": [
+        "Community events",
+        "Plant-based food",
+        "Cycling"
+      ],
+      "technologies": [
+        "Progressive Web App",
+        "QR codes",
+        "Static delivery",
+        "Automated publishing"
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Digital recognition",
+          "description": "The platform retrieves results and generates downloadable cards connected through QR codes.",
+          "sourceLabel": "Repository: Hamburguesa Nómada",
+          "sourceUrl": "https://github.com/IzignaMx/hamburguesa-nomada",
+          "verifiedAt": "2026-07-20"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Automated updates",
+          "description": "A scheduled workflow detects data changes and republishes the site without manual intervention.",
+          "sourceLabel": "Repository: Hamburguesa Nómada",
+          "sourceUrl": "https://github.com/IzignaMx/hamburguesa-nomada",
+          "verifiedAt": "2026-07-20"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "PWA experience",
+          "description": "The application prioritizes mobile access, content sharing, and continuity under limited connectivity.",
+          "sourceLabel": "Repository: Hamburguesa Nómada",
+          "sourceUrl": "https://github.com/IzignaMx/hamburguesa-nomada",
+          "verifiedAt": "2026-07-20"
+        }
+      ],
+      "accessibilityNotes": [
+        "Event information and recognition remain available without advanced animation."
+      ],
+      "relatedServices": [
+        "Web experiences",
+        "Content automation",
+        "Community digital products"
+      ],
+      "chapters": [
+        {
+          "title": "Context and problem",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The event needed to gather changing information, results, and downloadable recognition in an experience that remained easy to use on the street."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Constraints",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Respond to demanding delivery timelines.",
+                "Prioritize mobile use and limited connectivity.",
+                "Respect the event's established visual identity and community context."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Strategy",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Turn event data into an automated static publication and connect every result to a shareable recognition experience."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Architecture",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "A scheduled workflow detects data changes and republishes a static delivery, reducing manual operations and server dependencies."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Experience and visual design",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Mobile navigation connects checkpoints, results, and recognition with the plant-based catalog and event identity."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Key features",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Result lookup",
+                "Downloadable recognition",
+                "QR code access",
+                "Automated publishing"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Quality, accessibility, security, and performance",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Static delivery",
+                "Limited-connectivity continuity",
+                "Traceable public content",
+                "Event information and recognition remain available without advanced animation."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Outcome classification",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Published outcomes are presented as demonstrated capabilities and linked to public sources when available."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Technologies",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Progressive Web App",
+                "QR codes",
+                "Static delivery",
+                "Automated publishing"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Public links",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "[Live product](https://nomada.izignamx.com/)",
+                "[Source code](https://github.com/IzignaMx/hamburguesa-nomada)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Related capabilities",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Web Experiences",
+                "Impact Technology",
+                "AI and Automation"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Next step",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Request a contextual diagnostic to explore how these capabilities can apply to another system."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "slug": "tecuiyo",
+    "classification": "real",
+    "publication": {
+      "confidentiality": "public",
+      "publishable": true,
+      "reviewedAt": "2026-07-20",
+      "notes": "La plataforma informa y orienta; no debe presentarse como sustituto de asesoría jurídica profesional."
+    },
+    "links": [
+      {
+        "label": "Sitio público",
+        "url": "https://tecuiyo.izignamx.com/",
+        "public": true
+      },
+      {
+        "label": "Código fuente",
+        "url": "https://github.com/CripterHack/tecuiyo-derechos-mx",
+        "public": true
+      }
+    ],
+    "sources": [
+      {
+        "id": "repository",
+        "label": "Repositorio Tecuiyo",
+        "type": "repository",
+        "url": "https://github.com/CripterHack/tecuiyo-derechos-mx"
+      },
+      {
+        "id": "live",
+        "label": "Sitio Tecuiyo",
+        "type": "live",
+        "url": "https://tecuiyo.izignamx.com/"
+      }
+    ],
+    "media": [
+      {
+        "id": "home-production",
+        "role": "screenshot",
+        "path": "/media/projects/tecuiyo/evidence/home-desktop.avif",
+        "license": "open-license",
+        "width": 1440,
+        "height": 900,
+        "alt": {
+          "es": "Portada pública de Tecuiyo con navegación de derechos laborales y accesos a información, cálculos y documentos.",
+          "en": "Public Tecuiyo homepage with labor-rights navigation and access to information, calculations, and documents."
+        },
+        "caption": {
+          "es": "Captura directa y revisada de la portada pública de producción; el repositorio de referencia corresponde al commit 4f91728.",
+          "en": "Reviewed direct capture of the public production homepage; the reference repository points to commit 4f91728."
+        },
+        "variants": {
+          "mobile": {
+            "avif": "/media/projects/tecuiyo/evidence/home-mobile.avif",
+            "webp": "/media/projects/tecuiyo/evidence/home-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "4bb347f882736b8627b9248966430e809a759163de57c3f9dd727481b4dbc219",
+            "webpSha256": "d19149d25d7fcf4a9464f9ed4a638c4654bfde669751d02c73b51b505a359beb"
+          },
+          "desktop": {
+            "avif": "/media/projects/tecuiyo/evidence/home-desktop.avif",
+            "webp": "/media/projects/tecuiyo/evidence/home-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "afd77f882c109c9b76e83b13c5cbc4717b0e0a19230302067c0a08c9e39e1222",
+            "webpSha256": "fddc57c4410a148bec5690ae5d6b5b9f073c8b6e7a44e34f4527e1b5a780d083"
+          }
+        },
+        "provenance": {
+          "kind": "direct-production-capture",
+          "repository": "https://github.com/CripterHack/tecuiyo-derechos-mx",
+          "commit": "4f917283d867240144cb3ef34fe0a84c9018a70c",
+          "sourceUrl": "https://tecuiyo.izignamx.com/",
+          "capturedAt": "2026-08-02T04:11:13.826Z",
+          "sourceSha256": {
+            "mobile": "a523aec14cd659d0b038b81916d033f3e5e742aa64aa1df8408fce7455b8c286",
+            "desktop": "d55405f0aef236b7dd362deee98d4d866e5d30b0275fa15509ee3457961f49ab"
+          },
+          "rightsBasis": "Publication of this direct production capture is authorized by IzignaMx for portfolio evidence; the reference source code is available under MIT.",
+          "approvedBy": "IzignaMx",
+          "reviewedAt": "2026-08-02"
+        }
+      }
+    ],
+    "es": {
+      "title": "Tecuiyo",
+      "elevatorPitch": "Tecnología cívica abierta para buscar información, realizar cálculos y preparar documentos sobre derechos laborales en México.",
+      "challenge": "La información laboral suele estar fragmentada y escrita en términos difíciles de relacionar con preguntas y acciones concretas.",
+      "constraints": [
+        "Informar sin sustituir asesoría jurídica profesional.",
+        "Mantener contenido y herramientas accesibles.",
+        "Separar con claridad navegación, datos, cálculos y documentos."
+      ],
+      "strategy": "Conectar preguntas laborales con contenido estructurado y herramientas prácticas mediante una arquitectura de producto modular.",
+      "solution": "Una plataforma cívica que reúne búsqueda temática, calculadoras y generación de documentos dentro de una experiencia accesible.",
+      "capabilities": [
+        "Impact Technology",
+        "Web Experiences",
+        "Developer Products"
+      ],
+      "industries": [
+        "Tecnología cívica",
+        "Derechos laborales",
+        "Servicios públicos digitales"
+      ],
+      "technologies": [
+        "React",
+        "TypeScript",
+        "Accessible components",
+        "Document generation"
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Consulta estructurada",
+          "description": "Búsqueda y navegación temática conectan preguntas laborales con contenido y herramientas relevantes.",
+          "sourceLabel": "Repositorio Tecuiyo",
+          "sourceUrl": "https://github.com/CripterHack/tecuiyo-derechos-mx",
+          "verifiedAt": "2026-07-20"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Cálculos y documentos",
+          "description": "La plataforma integra calculadoras y generación de documentos dentro de una experiencia accesible.",
+          "sourceLabel": "Repositorio Tecuiyo",
+          "sourceUrl": "https://github.com/CripterHack/tecuiyo-derechos-mx",
+          "verifiedAt": "2026-07-20"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Arquitectura de producto",
+          "description": "React, TypeScript y componentes accesibles separan contenido, datos, navegación y estados de interfaz.",
+          "sourceLabel": "Repositorio Tecuiyo",
+          "sourceUrl": "https://github.com/CripterHack/tecuiyo-derechos-mx",
+          "verifiedAt": "2026-07-20"
+        }
+      ],
+      "accessibilityNotes": [
+        "Los componentes y flujos se diseñan para navegación y comprensión accesibles."
+      ],
+      "relatedServices": [
+        "Tecnología cívica",
+        "Arquitectura frontend",
+        "Herramientas de autoservicio"
+      ],
+      "chapters": [
+        {
+          "title": "Contexto y problema",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La información laboral suele estar fragmentada y escrita en términos difíciles de relacionar con preguntas y acciones concretas."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Restricciones",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Informar sin sustituir asesoría jurídica profesional.",
+                "Mantener contenido y herramientas accesibles.",
+                "Separar con claridad navegación, datos, cálculos y documentos."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Estrategia",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Conectar preguntas laborales con contenido estructurado y herramientas prácticas mediante una arquitectura de producto modular."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Arquitectura",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "React, TypeScript y componentes accesibles separan contenido, datos, navegación y estados para mantener cada responsabilidad explícita."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Experiencia y diseño visual",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La navegación parte de preguntas y temas, guía hacia recursos relacionados y mantiene visible el carácter informativo de la plataforma."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Funciones clave",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Búsqueda temática",
+                "Calculadoras laborales",
+                "Generación de documentos",
+                "Navegación accesible"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Calidad, accesibilidad, seguridad y rendimiento",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Código abierto",
+                "Separación de responsabilidades",
+                "Límites jurídicos explícitos",
+                "Los componentes y flujos se diseñan para navegación y comprensión accesibles."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Clasificación de resultados",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Los resultados publicados se presentan como capacidades demostradas y se vinculan con fuentes públicas cuando están disponibles."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Tecnologías",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "React",
+                "TypeScript",
+                "Accessible components",
+                "Document generation"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Enlaces públicos",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "[Producto en vivo](https://tecuiyo.izignamx.com/)",
+                "[Código fuente](https://github.com/CripterHack/tecuiyo-derechos-mx)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Capacidades relacionadas",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Impact Technology",
+                "Web Experiences",
+                "Developer Products"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Siguiente paso",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Solicita un diagnóstico contextual para explorar cómo estas capacidades pueden aplicarse a otro sistema."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "en": {
+      "title": "Tecuiyo",
+      "elevatorPitch": "Open civic technology for finding information, running calculations, and preparing documents about labor rights in Mexico.",
+      "challenge": "Labor information is often fragmented and written in terms that are difficult to connect with concrete questions and actions.",
+      "constraints": [
+        "Inform without replacing professional legal advice.",
+        "Keep content and tools accessible.",
+        "Clearly separate navigation, data, calculations, and documents."
+      ],
+      "strategy": "Connect labor questions with structured content and practical tools through a modular product architecture.",
+      "solution": "A civic platform combining thematic search, calculators, and document generation in an accessible experience.",
+      "capabilities": [
+        "Impact Technology",
+        "Web Experiences",
+        "Developer Products"
+      ],
+      "industries": [
+        "Civic technology",
+        "Labor rights",
+        "Digital public services"
+      ],
+      "technologies": [
+        "React",
+        "TypeScript",
+        "Accessible components",
+        "Document generation"
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Structured consultation",
+          "description": "Search and thematic navigation connect labor questions with relevant content and tools.",
+          "sourceLabel": "Repository: Tecuiyo",
+          "sourceUrl": "https://github.com/CripterHack/tecuiyo-derechos-mx",
+          "verifiedAt": "2026-07-20"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Calculations and documents",
+          "description": "The platform combines calculators and document generation in an accessible experience.",
+          "sourceLabel": "Repository: Tecuiyo",
+          "sourceUrl": "https://github.com/CripterHack/tecuiyo-derechos-mx",
+          "verifiedAt": "2026-07-20"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Product architecture",
+          "description": "React, TypeScript, and accessible components separate content, data, navigation, and interface states.",
+          "sourceLabel": "Repository: Tecuiyo",
+          "sourceUrl": "https://github.com/CripterHack/tecuiyo-derechos-mx",
+          "verifiedAt": "2026-07-20"
+        }
+      ],
+      "accessibilityNotes": [
+        "Components and flows are designed for accessible navigation and comprehension."
+      ],
+      "relatedServices": [
+        "Civic technology",
+        "Frontend architecture",
+        "Self-service tools"
+      ],
+      "chapters": [
+        {
+          "title": "Context and problem",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Labor information is often fragmented and written in terms that are difficult to connect with concrete questions and actions."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Constraints",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Inform without replacing professional legal advice.",
+                "Keep content and tools accessible.",
+                "Clearly separate navigation, data, calculations, and documents."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Strategy",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Connect labor questions with structured content and practical tools through a modular product architecture."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Architecture",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "React, TypeScript, and accessible components separate content, data, navigation, and state so every responsibility remains explicit."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Experience and visual design",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Navigation starts from questions and topics, guides people toward related resources, and keeps the platform's informational role visible."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Key features",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Thematic search",
+                "Labor calculators",
+                "Document generation",
+                "Accessible navigation"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Quality, accessibility, security, and performance",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Open source",
+                "Separation of responsibilities",
+                "Explicit legal boundaries",
+                "Components and flows are designed for accessible navigation and comprehension."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Outcome classification",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Published outcomes are presented as demonstrated capabilities and linked to public sources when available."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Technologies",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "React",
+                "TypeScript",
+                "Accessible components",
+                "Document generation"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Public links",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "[Live product](https://tecuiyo.izignamx.com/)",
+                "[Source code](https://github.com/CripterHack/tecuiyo-derechos-mx)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Related capabilities",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Impact Technology",
+                "Web Experiences",
+                "Developer Products"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Next step",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Request a contextual diagnostic to explore how these capabilities can apply to another system."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "slug": "vald",
+    "classification": "real",
+    "publication": {
+      "confidentiality": "public",
+      "publishable": true,
+      "reviewedAt": "2026-08-02",
+      "notes": "La portada publicada corresponde a la edición 2025, renderizada desde un commit inmutable del repositorio público; las afirmaciones se limitan a comportamiento observable."
+    },
+    "links": [
+      {
+        "label": "Sitio público",
+        "url": "https://vald.izignamx.com/",
+        "public": true
+      },
+      {
+        "label": "Código fuente",
+        "url": "https://github.com/IzignaMx/vald-landing",
+        "public": true
+      }
+    ],
+    "sources": [
+      {
+        "id": "live",
+        "label": "Sitio VALD",
+        "type": "live",
+        "url": "https://vald.izignamx.com/"
+      }
+    ],
+    "media": [
+      {
+        "id": "home-production",
+        "role": "screenshot",
+        "path": "/media/projects/vald/evidence/home-desktop.avif",
+        "license": "owned",
+        "width": 1440,
+        "height": 900,
+        "alt": {
+          "es": "Portada de la edición 2025 de VALD: Vuelta a los Durmientes, con ruta de 317 km y detalles del evento de ultraciclismo.",
+          "en": "VALD: Vuelta a los Durmientes 2025 cover, with the 317 km route and ultracycling event details."
+        },
+        "caption": {
+          "es": "Captura revisada de la edición 2025, renderizada desde el commit inmutable 401c286 del repositorio de IzignaMx.",
+          "en": "Reviewed capture of the 2025 edition, rendered from immutable commit 401c286 in the IzignaMx repository."
+        },
+        "variants": {
+          "mobile": {
+            "avif": "/media/projects/vald/evidence/home-mobile.avif",
+            "webp": "/media/projects/vald/evidence/home-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "e2f1fe46ee9655a90ec2986d395078bbd8747e28386e0bf6f64fe841251be9a4",
+            "webpSha256": "30dfc5a7908d205d8c86bd8c2ddf8c764f70f30fd58992325cf0606cefbead57"
+          },
+          "desktop": {
+            "avif": "/media/projects/vald/evidence/home-desktop.avif",
+            "webp": "/media/projects/vald/evidence/home-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "7964654e45fdeed14c3be8a0069202a014a7b95417da59b25b31b8b7fa8644a1",
+            "webpSha256": "1105602529faaa50437153fccd5853e44c0c3a0097afca24d2eef027c68e93c1"
+          }
+        },
+        "provenance": {
+          "kind": "direct-production-capture",
+          "repository": "https://github.com/IzignaMx/vald-landing",
+          "commit": "401c2862b2243bb203e5f0967ed86f2ce44e9c36",
+          "sourceUrl": "https://github.com/IzignaMx/vald-landing/tree/401c2862b2243bb203e5f0967ed86f2ce44e9c36",
+          "capturedAt": "2026-08-02T23:30:06Z",
+          "sourceSha256": {
+            "mobile": "7abf5767fbc19dfc95c5f061a6e24396a04ba4773a6851af6755afb1481dbb1e",
+            "desktop": "91523ebc2da86533a3083717e2b8a35e4981cbb908afcd85143e5ccfb3f3e037"
+          },
+          "rightsBasis": "IzignaMx-authored repository with all rights reserved; IzignaMx approved this historical 2025 portfolio capture.",
+          "approvedBy": "IzignaMx",
+          "reviewedAt": "2026-08-02"
+        }
+      }
+    ],
+    "es": {
+      "title": "VALD",
+      "elevatorPitch": "Una experiencia editorial estática que convierte ruta, elevación, cronología y resultados de ultraciclismo en una historia navegable.",
+      "challenge": "La complejidad deportiva debía convertirse en una narrativa clara que conectara recorrido, momentos, resultados, imágenes y patrocinadores.",
+      "constraints": [
+        "Mantener una entrega estática y fácil de desplegar.",
+        "Priorizar lectura y navegación móvil.",
+        "Conservar contenido completo sin animaciones avanzadas."
+      ],
+      "strategy": "Organizar cada dimensión del evento como un módulo editorial y utilizar la ruta como hilo conductor entre información y emoción.",
+      "solution": "Un sitio modular de ultraciclismo con cronología, perfil de elevación, checkpoints, resultados, galería y patrocinadores.",
+      "capabilities": [
+        "Web Experiences",
+        "Data and Visualization",
+        "Impact Technology"
+      ],
+      "industries": [
+        "Deporte de resistencia",
+        "Eventos",
+        "Ciclismo"
+      ],
+      "technologies": [
+        "Astro",
+        "SCSS",
+        "Progressive Web App",
+        "Static generation"
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Narrativa de ruta",
+          "description": "La experiencia integra cronología, elevación, puntos de control y resultados en una estructura editorial modular.",
+          "sourceLabel": "Sitio VALD",
+          "sourceUrl": "https://vald.izignamx.com/",
+          "verifiedAt": "2026-08-02"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Arquitectura estática",
+          "description": "Astro, estilos modulares y generación estática reducen dependencias de ejecución y favorecen despliegues simples.",
+          "verifiedAt": "2026-08-02"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Continuidad móvil",
+          "description": "La interfaz se diseñó con enfoque mobile-first, soporte PWA y contenido utilizable sin animaciones avanzadas.",
+          "sourceLabel": "Sitio VALD",
+          "sourceUrl": "https://vald.izignamx.com/",
+          "verifiedAt": "2026-08-02"
+        }
+      ],
+      "accessibilityNotes": [
+        "El contenido deportivo conserva su orden y significado con movimiento reducido o desactivado."
+      ],
+      "relatedServices": [
+        "Narrativa digital",
+        "Visualización de datos",
+        "Experiencias web para eventos"
+      ],
+      "chapters": [
+        {
+          "title": "Contexto y problema",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La complejidad deportiva debía convertirse en una narrativa clara que conectara recorrido, momentos, resultados, imágenes y patrocinadores."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Restricciones",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Mantener una entrega estática y fácil de desplegar.",
+                "Priorizar lectura y navegación móvil.",
+                "Conservar contenido completo sin animaciones avanzadas."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Estrategia",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Organizar cada dimensión del evento como un módulo editorial y utilizar la ruta como hilo conductor entre información y emoción."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Arquitectura",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Astro genera páginas estáticas y estilos modulares, mientras la capacidad PWA sostiene una experiencia ligera y disponible en movilidad."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Experiencia y diseño visual",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La ruta estructura la lectura: elevación, checkpoints y momentos del evento aparecen como capas de una misma travesía."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Funciones clave",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Narrativa de ruta",
+                "Perfil de elevación",
+                "Cronología y checkpoints",
+                "Resultados y galería"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Calidad, accesibilidad, seguridad y rendimiento",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Generación estática",
+                "Diseño mobile-first",
+                "Paridad sin movimiento avanzado",
+                "El contenido deportivo conserva su orden y significado con movimiento reducido o desactivado."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Clasificación de resultados",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Los resultados publicados se presentan como capacidades demostradas y se vinculan con fuentes públicas cuando están disponibles."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Tecnologías",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Astro",
+                "SCSS",
+                "Progressive Web App",
+                "Static generation"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Enlaces públicos",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "[Producto en vivo](https://vald.izignamx.com/)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Capacidades relacionadas",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Web Experiences",
+                "Data and Visualization",
+                "Impact Technology"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Siguiente paso",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Solicita un diagnóstico contextual para explorar cómo estas capacidades pueden aplicarse a otro sistema."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "en": {
+      "title": "VALD",
+      "elevatorPitch": "A static editorial experience turning an ultracycling route, elevation, timeline, and results into a navigable story.",
+      "challenge": "Sporting complexity needed to become a clear narrative connecting the route, key moments, results, imagery, and sponsors.",
+      "constraints": [
+        "Maintain a static, straightforward deployment.",
+        "Prioritize mobile reading and navigation.",
+        "Preserve complete content without advanced animation."
+      ],
+      "strategy": "Organize each event dimension as an editorial module and use the route as the narrative thread between information and emotion.",
+      "solution": "A modular ultracycling site with a timeline, elevation profile, checkpoints, results, gallery, and sponsors.",
+      "capabilities": [
+        "Web Experiences",
+        "Data and Visualization",
+        "Impact Technology"
+      ],
+      "industries": [
+        "Endurance sports",
+        "Events",
+        "Cycling"
+      ],
+      "technologies": [
+        "Astro",
+        "SCSS",
+        "Progressive Web App",
+        "Static generation"
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Route narrative",
+          "description": "The experience combines timeline, elevation, checkpoints, and results in a modular editorial structure.",
+          "sourceLabel": "Sitio VALD",
+          "sourceUrl": "https://vald.izignamx.com/",
+          "verifiedAt": "2026-08-02"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Static architecture",
+          "description": "Astro, modular styles, and static generation reduce runtime dependencies and simplify deployment.",
+          "verifiedAt": "2026-08-02"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Mobile continuity",
+          "description": "The interface uses a mobile-first approach, PWA support, and content that works without advanced animation.",
+          "sourceLabel": "Sitio VALD",
+          "sourceUrl": "https://vald.izignamx.com/",
+          "verifiedAt": "2026-08-02"
+        }
+      ],
+      "accessibilityNotes": [
+        "Sport content keeps its order and meaning when motion is reduced or disabled."
+      ],
+      "relatedServices": [
+        "Digital storytelling",
+        "Data visualization",
+        "Event web experiences"
+      ],
+      "chapters": [
+        {
+          "title": "Context and problem",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Sporting complexity needed to become a clear narrative connecting the route, key moments, results, imagery, and sponsors."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Constraints",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Maintain a static, straightforward deployment.",
+                "Prioritize mobile reading and navigation.",
+                "Preserve complete content without advanced animation."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Strategy",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Organize each event dimension as an editorial module and use the route as the narrative thread between information and emotion."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Architecture",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Astro generates static pages and modular styles, while PWA support sustains a lightweight experience for mobile contexts."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Experience and visual design",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The route structures the story: elevation, checkpoints, and event moments appear as layers of the same journey."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Key features",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Route narrative",
+                "Elevation profile",
+                "Timeline and checkpoints",
+                "Results and gallery"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Quality, accessibility, security, and performance",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Static generation",
+                "Mobile-first design",
+                "Parity without advanced motion",
+                "Sport content keeps its order and meaning when motion is reduced or disabled."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Outcome classification",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Published outcomes are presented as demonstrated capabilities and linked to public sources when available."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Technologies",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Astro",
+                "SCSS",
+                "Progressive Web App",
+                "Static generation"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Public links",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "[Live product](https://vald.izignamx.com/)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Related capabilities",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Web Experiences",
+                "Data and Visualization",
+                "Impact Technology"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Next step",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Request a contextual diagnostic to explore how these capabilities can apply to another system."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "slug": "nutrichilango",
+    "classification": "real",
+    "publication": {
+      "confidentiality": "public",
+      "publishable": true,
+      "reviewedAt": "2026-07-20",
+      "notes": "Las fuentes, cálculos y actualizaciones deben conservar trazabilidad editorial."
+    },
+    "links": [
+      {
+        "label": "Sitio público",
+        "url": "https://nutrichilango.izignamx.com/",
+        "public": true
+      },
+      {
+        "label": "Código fuente",
+        "url": "https://github.com/IzignaMx/nutrichilango",
+        "public": true
+      }
+    ],
+    "sources": [
+      {
+        "id": "repository",
+        "label": "Repositorio NutriChilango",
+        "type": "repository",
+        "url": "https://github.com/IzignaMx/nutrichilango"
+      },
+      {
+        "id": "live",
+        "label": "Sitio NutriChilango",
+        "type": "live",
+        "url": "https://nutrichilango.izignamx.com/"
+      }
+    ],
+    "media": [
+      {
+        "id": "home-production",
+        "role": "screenshot",
+        "path": "/media/projects/nutrichilango/evidence/home-desktop.avif",
+        "license": "owned",
+        "width": 1440,
+        "height": 900,
+        "alt": {
+          "es": "Portada pública de NutriChilango con el mensaje Transforma Tu Salud con Plant-Based y fotografías de alimentos vegetales.",
+          "en": "Public NutriChilango homepage with the message Transforma Tu Salud con Plant-Based and plant-based food photography."
+        },
+        "caption": {
+          "es": "Captura directa y revisada de la portada pública de producción; el repositorio de referencia corresponde al commit a699c3a.",
+          "en": "Reviewed direct capture of the public production homepage; the reference repository points to commit a699c3a."
+        },
+        "variants": {
+          "mobile": {
+            "avif": "/media/projects/nutrichilango/evidence/home-mobile.avif",
+            "webp": "/media/projects/nutrichilango/evidence/home-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "9ac0c9a8d1aa0f46030fc9a63aab48cfd0ee7886ab5dadf43ae96b5d2018797e",
+            "webpSha256": "de6603bbeaaf291cfbf094bc80737266e5b6ebc61e7fbfb8a815ab43a0f3974d"
+          },
+          "desktop": {
+            "avif": "/media/projects/nutrichilango/evidence/home-desktop.avif",
+            "webp": "/media/projects/nutrichilango/evidence/home-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "317280265ac27fb75f04e9963ce5f256e89abc5ceb3dd4e38acedb016cdd3a65",
+            "webpSha256": "d8773fadf82213cc38a9c97a35299b90214582715157911410e1ab9b779ff452"
+          }
+        },
+        "provenance": {
+          "kind": "direct-production-capture",
+          "repository": "https://github.com/IzignaMx/nutrichilango",
+          "commit": "a699c3a509c3293ce19f42e2b64201471b2df66c",
+          "sourceUrl": "https://nutrichilango.izignamx.com/",
+          "capturedAt": "2026-08-02T04:11:11.274Z",
+          "sourceSha256": {
+            "mobile": "d10d4d86d256805ffc5bb9e9dd21cc895195df002923819864cc89d4198e1481",
+            "desktop": "c47b83652823440b2528e73b1e6d63d055b31accfbee9ed7d6795f4e61745704"
+          },
+          "rightsBasis": "Publication of this direct production capture is authorized by IzignaMx for portfolio evidence; the reference source code is available under MIT.",
+          "approvedBy": "IzignaMx",
+          "reviewedAt": "2026-08-02"
+        }
+      }
+    ],
+    "es": {
+      "title": "NutriChilango",
+      "elevatorPitch": "Una plataforma que relaciona precio, nutrición, disponibilidad y ubicación para facilitar decisiones informadas sobre alternativas vegetales.",
+      "challenge": "Comparar opciones vegetales exige reunir datos heterogéneos y convertirlos en criterios comprensibles para decisiones cotidianas en CDMX.",
+      "constraints": [
+        "Conservar trazabilidad de fuentes y cálculos.",
+        "Actualizar información sin depender de un servidor permanente.",
+        "Presentar varias dimensiones sin ocultar el contexto de los datos."
+      ],
+      "strategy": "Estructurar productos y lugares como datos comparables y ofrecer filtros, rankings, mapas y contenido que expliquen cada dimensión.",
+      "solution": "Una experiencia de comparación vegetal que combina precios, información nutricional, disponibilidad, mapas y recetas.",
+      "capabilities": [
+        "Data and Visualization",
+        "Impact Technology",
+        "AI and Automation"
+      ],
+      "industries": [
+        "Alimentación basada en plantas",
+        "Datos de consumo",
+        "Impacto social"
+      ],
+      "technologies": [
+        "Data pipelines",
+        "Maps",
+        "Data visualization",
+        "Scheduled workflows"
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Comparación multidimensional",
+          "description": "La plataforma relaciona precio, nutrición y disponibilidad mediante filtros, rankings y visualizaciones.",
+          "sourceLabel": "Repositorio NutriChilango",
+          "sourceUrl": "https://github.com/IzignaMx/nutrichilango",
+          "verifiedAt": "2026-07-20"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Datos geográficos",
+          "description": "Mapas y ubicaciones permiten explorar alternativas vegetales según contexto territorial.",
+          "sourceLabel": "Repositorio NutriChilango",
+          "sourceUrl": "https://github.com/IzignaMx/nutrichilango",
+          "verifiedAt": "2026-07-20"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Actualizaciones programadas",
+          "description": "Procesos automatizados mantienen información y contenido sin requerir una aplicación de servidor permanente.",
+          "sourceLabel": "Repositorio NutriChilango",
+          "sourceUrl": "https://github.com/IzignaMx/nutrichilango",
+          "verifiedAt": "2026-07-20"
+        }
+      ],
+      "accessibilityNotes": [
+        "Las comparaciones ofrecen etiquetas y explicación textual además de sus representaciones visuales."
+      ],
+      "relatedServices": [
+        "Productos de datos",
+        "Visualización",
+        "Automatización editorial"
+      ],
+      "chapters": [
+        {
+          "title": "Contexto y problema",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Comparar opciones vegetales exige reunir datos heterogéneos y convertirlos en criterios comprensibles para decisiones cotidianas en CDMX."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Restricciones",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Conservar trazabilidad de fuentes y cálculos.",
+                "Actualizar información sin depender de un servidor permanente.",
+                "Presentar varias dimensiones sin ocultar el contexto de los datos."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Estrategia",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Estructurar productos y lugares como datos comparables y ofrecer filtros, rankings, mapas y contenido que expliquen cada dimensión."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Arquitectura",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Procesos programados mantienen datos y contenido; la entrega estática desacopla la consulta pública de la actualización editorial."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Experiencia y diseño visual",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Filtros y visualizaciones permiten cambiar entre criterios de precio, nutrición y territorio sin presentar una única respuesta como universal."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Funciones clave",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Comparación multidimensional",
+                "Filtros y rankings",
+                "Mapas y ubicaciones",
+                "Actualizaciones programadas"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Calidad, accesibilidad, seguridad y rendimiento",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Trazabilidad editorial",
+                "Entrega estática",
+                "Contexto visible para datos comparados",
+                "Las comparaciones ofrecen etiquetas y explicación textual además de sus representaciones visuales."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Clasificación de resultados",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Los resultados publicados se presentan como capacidades demostradas y se vinculan con fuentes públicas cuando están disponibles."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Tecnologías",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Data pipelines",
+                "Maps",
+                "Data visualization",
+                "Scheduled workflows"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Enlaces públicos",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "[Producto en vivo](https://nutrichilango.izignamx.com/)",
+                "[Código fuente](https://github.com/IzignaMx/nutrichilango)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Capacidades relacionadas",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Data and Visualization",
+                "Impact Technology",
+                "AI and Automation"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Siguiente paso",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Solicita un diagnóstico contextual para explorar cómo estas capacidades pueden aplicarse a otro sistema."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "en": {
+      "title": "NutriChilango",
+      "elevatorPitch": "A platform connecting price, nutrition, availability, and location to support informed choices about plant-based alternatives.",
+      "challenge": "Comparing plant-based options requires gathering heterogeneous data and turning it into understandable criteria for everyday decisions in Mexico City.",
+      "constraints": [
+        "Preserve source and calculation traceability.",
+        "Update information without relying on a permanent application server.",
+        "Present several dimensions without hiding data context."
+      ],
+      "strategy": "Structure products and locations as comparable data and provide filters, rankings, maps, and content that explain each dimension.",
+      "solution": "A plant-based comparison experience combining prices, nutrition information, availability, maps, and recipes.",
+      "capabilities": [
+        "Data and Visualization",
+        "Impact Technology",
+        "AI and Automation"
+      ],
+      "industries": [
+        "Plant-based food",
+        "Consumer data",
+        "Social impact"
+      ],
+      "technologies": [
+        "Data pipelines",
+        "Maps",
+        "Data visualization",
+        "Scheduled workflows"
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Multidimensional comparison",
+          "description": "The platform connects price, nutrition, and availability through filters, rankings, and visualizations.",
+          "sourceLabel": "Repository: NutriChilango",
+          "sourceUrl": "https://github.com/IzignaMx/nutrichilango",
+          "verifiedAt": "2026-07-20"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Geographic data",
+          "description": "Maps and locations support exploration of plant-based alternatives by geographic context.",
+          "sourceLabel": "Repository: NutriChilango",
+          "sourceUrl": "https://github.com/IzignaMx/nutrichilango",
+          "verifiedAt": "2026-07-20"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Scheduled updates",
+          "description": "Automated processes maintain information and content without requiring a permanent application server.",
+          "sourceLabel": "Repository: NutriChilango",
+          "sourceUrl": "https://github.com/IzignaMx/nutrichilango",
+          "verifiedAt": "2026-07-20"
+        }
+      ],
+      "accessibilityNotes": [
+        "Comparisons provide labels and text explanations alongside visual representations."
+      ],
+      "relatedServices": [
+        "Data products",
+        "Visualization",
+        "Editorial automation"
+      ],
+      "chapters": [
+        {
+          "title": "Context and problem",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Comparing plant-based options requires gathering heterogeneous data and turning it into understandable criteria for everyday decisions in Mexico City."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Constraints",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Preserve source and calculation traceability.",
+                "Update information without relying on a permanent application server.",
+                "Present several dimensions without hiding data context."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Strategy",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Structure products and locations as comparable data and provide filters, rankings, maps, and content that explain each dimension."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Architecture",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Scheduled processes maintain data and content; static delivery separates public access from editorial updates."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Experience and visual design",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Filters and visualizations let people move between price, nutrition, and geographic criteria without presenting one answer as universal."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Key features",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Multidimensional comparison",
+                "Filters and rankings",
+                "Maps and locations",
+                "Scheduled updates"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Quality, accessibility, security, and performance",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Editorial traceability",
+                "Static delivery",
+                "Visible context for compared data",
+                "Comparisons provide labels and text explanations alongside visual representations."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Outcome classification",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Published outcomes are presented as demonstrated capabilities and linked to public sources when available."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Technologies",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Data pipelines",
+                "Maps",
+                "Data visualization",
+                "Scheduled workflows"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Public links",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "[Live product](https://nutrichilango.izignamx.com/)",
+                "[Source code](https://github.com/IzignaMx/nutrichilango)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Related capabilities",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Data and Visualization",
+                "Impact Technology",
+                "AI and Automation"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Next step",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Request a contextual diagnostic to explore how these capabilities can apply to another system."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "slug": "developer-tools",
+    "classification": "open-source",
+    "publication": {
+      "confidentiality": "public",
+      "publishable": true,
+      "reviewedAt": "2026-07-20",
+      "notes": "Cada herramienta conserva su licencia, límites de uso, privacidad y documentación pública."
+    },
+    "links": [
+      {
+        "label": "Catálogo de aplicaciones",
+        "url": "https://apps.izignamx.com/",
+        "public": true
+      },
+      {
+        "label": "Smart Git Commit",
+        "url": "https://github.com/CripterHack/smart-git-commit",
+        "public": true
+      },
+      {
+        "label": "Smart Git Commit en PyPI",
+        "url": "https://pypi.org/project/smart-git-commit/",
+        "public": true
+      },
+      {
+        "label": "Instagram Downloader Skill",
+        "url": "https://github.com/CripterHack/ig-downloader-skill",
+        "public": true
+      },
+      {
+        "label": "BigCommerce WYSIWYG Extension",
+        "url": "https://github.com/CripterHack/bigcommerce-wysiwyg-extension",
+        "public": true
+      },
+      {
+        "label": "Demostración BigCommerce WYSIWYG",
+        "url": "https://cripterhack.github.io/bigcommerce-wysiwyg-extension/",
+        "public": true
+      }
+    ],
+    "sources": [
+      {
+        "id": "smart-git",
+        "label": "Repositorio Smart Git Commit",
+        "type": "repository",
+        "url": "https://github.com/CripterHack/smart-git-commit"
+      },
+      {
+        "id": "smart-git-pypi",
+        "label": "Paquete Smart Git Commit en PyPI",
+        "type": "documentation",
+        "url": "https://pypi.org/project/smart-git-commit/"
+      },
+      {
+        "id": "instagram-skill",
+        "label": "Repositorio Instagram Downloader Skill",
+        "type": "repository",
+        "url": "https://github.com/CripterHack/ig-downloader-skill"
+      },
+      {
+        "id": "bigcommerce-extension",
+        "label": "Repositorio BigCommerce WYSIWYG Extension",
+        "type": "repository",
+        "url": "https://github.com/CripterHack/bigcommerce-wysiwyg-extension"
+      },
+      {
+        "id": "bigcommerce-demo",
+        "label": "Presentación BigCommerce WYSIWYG Extension",
+        "type": "live",
+        "url": "https://cripterhack.github.io/bigcommerce-wysiwyg-extension/"
+      },
+      {
+        "id": "live",
+        "label": "Catálogo de aplicaciones IzignaMx",
+        "type": "live",
+        "url": "https://apps.izignamx.com/"
+      }
+    ],
+    "media": [
+      {
+        "id": "bigcommerce-demo-production",
+        "role": "screenshot",
+        "path": "/media/projects/developer-tools/evidence/home-desktop.avif",
+        "license": "client-authorized",
+        "width": 1440,
+        "height": 900,
+        "alt": {
+          "es": "Demostración pública de producción de la extensión WYSIWYG para BigCommerce con editor visual y documentación.",
+          "en": "Public production demo of the BigCommerce WYSIWYG extension with visual editing and documentation."
+        },
+        "caption": {
+          "es": "Captura directa y revisada de la demostración pública; representa una herramienta de la colección mantenida en el commit fcabcea.",
+          "en": "Reviewed direct capture of the public demo; it represents one tool in the collection maintained at commit fcabcea."
+        },
+        "variants": {
+          "mobile": {
+            "avif": "/media/projects/developer-tools/evidence/home-mobile.avif",
+            "webp": "/media/projects/developer-tools/evidence/home-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "2655d3623c3e7c6f85c0c27fff88d332e559679bd6e2bcbe5968a27e19dc8507",
+            "webpSha256": "3a9e3cbe416522157b1b9eaf7fd7898daeaf7350407159ff2a1d255194adb877"
+          },
+          "desktop": {
+            "avif": "/media/projects/developer-tools/evidence/home-desktop.avif",
+            "webp": "/media/projects/developer-tools/evidence/home-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "d36d2466165213a8d3b48b2486a669505d3a91bd5f036124bf79bda64b545a54",
+            "webpSha256": "e83755ea5ce31b45661e2335285a625c3f2b811ac18a0c4d9e7731bb05a0a15e"
+          }
+        },
+        "provenance": {
+          "kind": "direct-production-capture",
+          "repository": "https://github.com/CripterHack/bigcommerce-wysiwyg-extension",
+          "commit": "fcabcea67d2fecc3f14f648eb2d833b9ab35452e",
+          "sourceUrl": "https://cripterhack.github.io/bigcommerce-wysiwyg-extension/",
+          "capturedAt": "2026-08-02T01:30:39.061Z",
+          "sourceSha256": {
+            "mobile": "30ee37b4489e9f7c920fb04afd3e906ed91f5aa53c9f7e58b440990e284b8207",
+            "desktop": "4c16373d62688ac233785c67a578bd1f0284618cc7cc64370634d235000b60d4"
+          },
+          "rightsBasis": "Publication of this direct production capture is authorized by IzignaMx for portfolio evidence; the reference implementation is maintained publicly by CripterHack.",
+          "approvedBy": "IzignaMx",
+          "reviewedAt": "2026-08-02"
+        }
+      }
+    ],
+    "es": {
+      "title": "Colección de herramientas para desarrollo",
+      "elevatorPitch": "Herramientas abiertas que reducen fricción en commits, recuperación de contenido autenticado y edición visual para comercio.",
+      "challenge": "Flujos especializados de desarrollo y comercio suelen depender de pasos repetitivos o de herramientas que no respetan restricciones locales, de privacidad o del navegador.",
+      "constraints": [
+        "Conservar licencias y documentación de cada herramienta.",
+        "No solicitar contraseñas en los flujos de recuperación.",
+        "Respetar las restricciones de seguridad de navegadores y plataformas."
+      ],
+      "strategy": "Resolver cada problema como una herramienta enfocada, documentada y compatible con su entorno en lugar de construir una plataforma monolítica.",
+      "solution": "Una colección abierta formada por un asistente local para commits, una skill de descarga autenticada y una extensión visual para BigCommerce.",
+      "capabilities": [
+        "Developer Products",
+        "AI and Automation",
+        "Commerce Systems"
+      ],
+      "industries": [
+        "Desarrollo de software",
+        "Comercio electrónico",
+        "Automatización de contenido"
+      ],
+      "technologies": [
+        "Python",
+        "CLI",
+        "Browser automation",
+        "BigCommerce Page Builder"
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Smart Git Commit",
+          "description": "CLI que analiza cambios, propone agrupaciones atómicas y genera mensajes compatibles con Conventional Commits mediante modelos locales.",
+          "sourceLabel": "Repositorio Smart Git Commit",
+          "sourceUrl": "https://github.com/CripterHack/smart-git-commit",
+          "verifiedAt": "2026-07-20"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Instagram Downloader Skill",
+          "description": "Skill y CLI que coordinan sesión autenticada, automatización de navegador y rutas de recuperación sin solicitar contraseñas.",
+          "sourceLabel": "Repositorio Instagram Downloader Skill",
+          "sourceUrl": "https://github.com/CripterHack/ig-downloader-skill",
+          "verifiedAt": "2026-07-20"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "BigCommerce WYSIWYG Extension",
+          "description": "Extensión que incorpora edición visual local en Page Builder respetando restricciones de seguridad del navegador.",
+          "sourceLabel": "Repositorio BigCommerce WYSIWYG Extension",
+          "sourceUrl": "https://github.com/CripterHack/bigcommerce-wysiwyg-extension",
+          "verifiedAt": "2026-07-20"
+        }
+      ],
+      "accessibilityNotes": [
+        "La documentación y los flujos principales no dependen de una presentación visual avanzada."
+      ],
+      "relatedServices": [
+        "Herramientas para desarrollo",
+        "Automatización",
+        "Extensiones de comercio"
+      ],
+      "chapters": [
+        {
+          "title": "Contexto y problema",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Flujos especializados de desarrollo y comercio suelen depender de pasos repetitivos o de herramientas que no respetan restricciones locales, de privacidad o del navegador."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Restricciones",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Conservar licencias y documentación de cada herramienta.",
+                "No solicitar contraseñas en los flujos de recuperación.",
+                "Respetar las restricciones de seguridad de navegadores y plataformas."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Estrategia",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Resolver cada problema como una herramienta enfocada, documentada y compatible con su entorno en lugar de construir una plataforma monolítica."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Arquitectura",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Cada producto mantiene una frontera propia: CLI y modelos locales para commits, coordinación de sesión y navegador para descargas, y extensión local para Page Builder."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Experiencia y diseño visual",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Las interfaces priorizan acciones concretas, recuperación explícita y documentación pública para que el usuario conserve control del flujo."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Funciones clave",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Commits atómicos asistidos",
+                "Descarga autenticada sin solicitar contraseñas",
+                "Edición visual en BigCommerce",
+                "Documentación pública"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Calidad, accesibilidad, seguridad y rendimiento",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Herramientas enfocadas",
+                "Privacidad explícita",
+                "Compatibilidad con restricciones de plataforma",
+                "La documentación y los flujos principales no dependen de una presentación visual avanzada."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Clasificación de resultados",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Los resultados publicados se presentan como capacidades demostradas y se vinculan con fuentes públicas cuando están disponibles."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Tecnologías",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Python",
+                "CLI",
+                "Browser automation",
+                "BigCommerce Page Builder"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Enlaces públicos",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "[Producto en vivo](https://apps.izignamx.com/)",
+                "[Código fuente](https://github.com/CripterHack/smart-git-commit)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Capacidades relacionadas",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Developer Products",
+                "AI and Automation",
+                "Commerce Systems"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Siguiente paso",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Solicita un diagnóstico contextual para explorar cómo estas capacidades pueden aplicarse a otro sistema."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "en": {
+      "title": "Developer Tools Collection",
+      "elevatorPitch": "Open tools reducing friction in commits, authenticated content retrieval, and visual editing for commerce workflows.",
+      "challenge": "Specialized development and commerce workflows often rely on repetitive steps or tools that ignore local, privacy, or browser constraints.",
+      "constraints": [
+        "Preserve each tool's license and documentation.",
+        "Never request passwords in retrieval workflows.",
+        "Respect browser and platform security restrictions."
+      ],
+      "strategy": "Solve each problem as a focused, documented tool compatible with its environment rather than building a monolithic platform.",
+      "solution": "An open collection comprising a local commit assistant, an authenticated download skill, and a visual BigCommerce extension.",
+      "capabilities": [
+        "Developer Products",
+        "AI and Automation",
+        "Commerce Systems"
+      ],
+      "industries": [
+        "Software development",
+        "E-commerce",
+        "Content automation"
+      ],
+      "technologies": [
+        "Python",
+        "CLI",
+        "Browser automation",
+        "BigCommerce Page Builder"
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Smart Git Commit",
+          "description": "A CLI analyzes changes, proposes atomic groups, and generates Conventional Commit messages using local models.",
+          "sourceLabel": "Repository: Smart Git Commit",
+          "sourceUrl": "https://github.com/CripterHack/smart-git-commit",
+          "verifiedAt": "2026-07-20"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "Instagram Downloader Skill",
+          "description": "A skill and CLI coordinate authenticated sessions, browser automation, and recovery paths without requesting passwords.",
+          "sourceLabel": "Repository: Instagram Downloader Skill",
+          "sourceUrl": "https://github.com/CripterHack/ig-downloader-skill",
+          "verifiedAt": "2026-07-20"
+        },
+        {
+          "kind": "demonstrated-capability",
+          "label": "BigCommerce WYSIWYG Extension",
+          "description": "An extension adds local visual editing to Page Builder while respecting browser security constraints.",
+          "sourceLabel": "Repository: BigCommerce WYSIWYG Extension",
+          "sourceUrl": "https://github.com/CripterHack/bigcommerce-wysiwyg-extension",
+          "verifiedAt": "2026-07-20"
+        }
+      ],
+      "accessibilityNotes": [
+        "Documentation and primary workflows do not depend on advanced visual presentation."
+      ],
+      "relatedServices": [
+        "Developer tooling",
+        "Automation",
+        "Commerce extensions"
+      ],
+      "chapters": [
+        {
+          "title": "Context and problem",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Specialized development and commerce workflows often rely on repetitive steps or tools that ignore local, privacy, or browser constraints."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Constraints",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Preserve each tool's license and documentation.",
+                "Never request passwords in retrieval workflows.",
+                "Respect browser and platform security restrictions."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Strategy",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Solve each problem as a focused, documented tool compatible with its environment rather than building a monolithic platform."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Architecture",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Each product keeps its own boundary: CLI and local models for commits, session and browser coordination for downloads, and a local Page Builder extension."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Experience and visual design",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Interfaces prioritize concrete actions, explicit recovery, and public documentation so users retain control of the workflow."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Key features",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Assisted atomic commits",
+                "Authenticated download without password requests",
+                "Visual BigCommerce editing",
+                "Public documentation"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Quality, accessibility, security, and performance",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Focused tools",
+                "Explicit privacy",
+                "Compatibility with platform restrictions",
+                "Documentation and primary workflows do not depend on advanced visual presentation."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Outcome classification",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Published outcomes are presented as demonstrated capabilities and linked to public sources when available."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Technologies",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Python",
+                "CLI",
+                "Browser automation",
+                "BigCommerce Page Builder"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Public links",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "[Live product](https://apps.izignamx.com/)",
+                "[Source code](https://github.com/CripterHack/smart-git-commit)"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Related capabilities",
+          "blocks": [
+            {
+              "type": "list",
+              "text": [
+                "Developer Products",
+                "AI and Automation",
+                "Commerce Systems"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Next step",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Request a contextual diagnostic to explore how these capabilities can apply to another system."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "slug": "distrito-cero",
+    "classification": "real",
+    "stage": {
+      "es": "Prototipo jugable · v0.20.13",
+      "en": "Playable prototype · v0.20.13"
+    },
+    "publication": {
+      "reviewedAt": "2026-09-27",
+      "confidentiality": "public",
+      "notes": "Playable public project. Captures document browser sessions, not device certification or commercial results."
+    },
+    "links": [
+      {
+        "label": "Jugar / Play",
+        "url": "https://cripterhack.github.io/distrito-cero/",
+        "public": true
+      },
+      {
+        "label": "Código y documentación / Source and documentation",
+        "url": "https://github.com/CripterHack/distrito-cero",
+        "public": true
+      }
+    ],
+    "sources": [
+      {
+        "id": "live",
+        "label": "Juego público / Public game",
+        "type": "live",
+        "url": "https://cripterhack.github.io/distrito-cero/"
+      },
+      {
+        "id": "readme",
+        "label": "Documentación de la versión / Release documentation",
+        "type": "documentation",
+        "url": "https://github.com/CripterHack/distrito-cero/blob/0fa83b9e024819821e135a9de540a3f897bc9c78/README.md"
+      }
+    ],
+    "media": [
+      {
+        "id": "live-gameplay",
+        "role": "screenshot",
+        "path": "/media/projects/distrito-cero/evidence/gameplay-desktop.avif",
+        "license": "owned",
+        "width": 1440,
+        "height": 900,
+        "alt": {
+          "es": "Partida real de Distrito Cero: personaje en la ciudad procedural, vehículos, minimapa e interfaz de exploración.",
+          "en": "Actual Distrito Cero gameplay: character in a procedural city, vehicles, minimap and exploration interface."
+        },
+        "caption": {
+          "es": "Capturas reales de la versión pública del 27 de septiembre de 2026. Escritorio y vista móvil emulada.",
+          "en": "Actual captures of the public release on September 27, 2026. Desktop and emulated mobile views."
+        },
+        "variants": {
+          "desktop": {
+            "avif": "/media/projects/distrito-cero/evidence/gameplay-desktop.avif",
+            "webp": "/media/projects/distrito-cero/evidence/gameplay-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "9059502ecbb97830d8c0496fc6b2fbcc6f2f8f94cbb52d3c0c1b62d124498857",
+            "webpSha256": "1eb06f759789f5c555676b329deaca41a7eaf29ee66c024d188ee79797a61177"
+          },
+          "mobile": {
+            "avif": "/media/projects/distrito-cero/evidence/gameplay-mobile.avif",
+            "webp": "/media/projects/distrito-cero/evidence/gameplay-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "ababb05c9b2075ec283973c0bc89bba660aa59800695519950c2772e03280075",
+            "webpSha256": "f27c318832fd617ea610f4ac5e25b29e11d234fc78d86a74543909b62760e6d2"
+          }
+        },
+        "provenance": {
+          "kind": "direct-production-capture",
+          "repository": "https://github.com/CripterHack/distrito-cero",
+          "commit": "0fa83b9e024819821e135a9de540a3f897bc9c78",
+          "sourceUrl": "https://cripterhack.github.io/distrito-cero/",
+          "capturedAt": "2026-09-27T08:33:12.859Z",
+          "reviewedAt": "2026-09-27",
+          "rightsBasis": "User requested screenshots of these projects for this portfolio.",
+          "revisionBasis": "Public repository HEAD observed at capture; live HTML hashes recorded separately.",
+          "sourceSha256": {
+            "desktop": "b431114f19ac0f74f2aa0fda60ac7f8609bcc33230748529bf95275795105e6b",
+            "mobile": "7620b2c6dc35b6663e74502de5b33b1658b1bed4a8710e7ca5e22463ed0fdb3e"
+          }
+        }
+      }
+    ],
+    "es": {
+      "title": "Distrito Cero",
+      "elevatorPitch": "Una ciudad procedural para explorar, conducir y tomar decisiones. Un prototipo de aventura urbana que lleva sistemas de mundo abierto al navegador con tecnología nativa.",
+      "challenge": "Hacer convivir ciudad, personajes, vehículos, cámara e interfaz dentro de una experiencia de navegador coherente, sin depender de un motor de terceros en ejecución.",
+      "constraints": [
+        "Prototipo en desarrollo, no un producto AAA terminado.",
+        "La captura documenta una sesión concreta, no todas las situaciones del mundo.",
+        "Compatibilidad en GPU físicas y navegadores adicionales pendiente de verificación completa."
+      ],
+      "strategy": "Construir una base autónoma y dividir la experiencia en sistemas observables: exploración, conducción, identidad del personaje, interacción y continuidad de la partida.",
+      "solution": "Una aventura criminal original con ciudad procedural, exploración libre, campaña, vehículos y personalización. WebGL2 dibuja el mundo y las API nativas del navegador coordinan interfaz, audio y guardado local.",
+      "capabilities": [
+        "Browser Games",
+        "Interactive Experiences",
+        "Web Experiences"
+      ],
+      "industries": [
+        "Entretenimiento",
+        "Experiencias interactivas"
+      ],
+      "technologies": [
+        "JavaScript",
+        "WebGL2",
+        "Canvas 2D",
+        "Web Audio",
+        "Python"
+      ],
+      "relatedServices": [
+        "Prototipos jugables",
+        "Experiencias WebGL",
+        "Interfaces interactivas"
+      ],
+      "chapters": [
+        {
+          "title": "Contexto y propuesta",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Distrito Cero explora el género de aventura urbana de mundo abierto desde una implementación propia para navegador. Una ciudad ficticia conecta desplazamiento a pie, conducción y decisiones de juego. El objetivo de este caso es mostrar la integración técnica y visual del prototipo, no equipararlo con un videojuego comercial terminado."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Alcance y restricciones",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La versión documentada es v0.20.13, Coherencia. El proyecto sigue en desarrollo. Las comprobaciones de una sesión no sustituyen pruebas de larga duración, cobertura de todas las situaciones emergentes o validación en dispositivos físicos. El contenido y el equipamiento pertenecen a una ficción de videojuego."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Decisiones de implementación",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La experiencia evita un motor de ejecución externo. El proyecto organiza simulación, representación y estado de interfaz, y genera una entrega HTML autónoma. Esa elección facilita inspeccionar el comportamiento, pero también hace explícita la responsabilidad de mantener renderizado, controles, persistencia y recuperación."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Arquitectura del mundo",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "JavaScript coordina los sistemas del mundo procedural y WebGL2 representa la escena tridimensional. Canvas 2D apoya mapas e interfaz gráfica, mientras Web Audio proporciona el sistema sonoro. Un proceso de construcción en Python ensambla la publicación. El juego no necesita un servidor de aplicación durante la partida."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Identidad e interacción",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Antes de explorar se puede crear un personaje y revisar su apariencia. Dentro del mundo, la interfaz distingue el movimiento a pie, los vehículos y las acciones contextuales. El mapa y la información superpuesta orientan al jugador sin convertir el caso del portafolio en una descarga automática del juego."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Continuidad y datos",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Las partidas se conservan en el navegador y el proyecto ofrece exportación e importación. Cambiar de origen, navegador o dispositivo no implica compartir automáticamente esos datos. La documentación recomienda exportarlos antes de cambiar de versión o entorno. No se presenta el guardado local como sincronización en la nube."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Qué muestra la captura",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Las imágenes proceden de la URL pública indicada y muestran una sesión real de exploración libre con el personaje predeterminado. Se conservaron interfaz y controles del juego, sin reemplazar la escena con una ilustración generada. La vista móvil fue capturada en un navegador con tamaño y controles táctiles emulados."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Capacidades transferibles",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "El caso permite revisar construcción procedural, interfaces sobre contenido tridimensional, coordinación de estados y publicación web autónoma. Estas capacidades pueden ser relevantes para prototipos, demostraciones de producto y experiencias de marca. No implican una promesa de alcance, precio o rendimiento para otro proyecto."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Evidencia y límites",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La fuente pública documenta el carácter de prototipo y las tareas pendientes. Las capturas no acreditan rendimiento con GPU física, calidad final AAA ni resultados de adquisición o retención. El código conserva su situación de licencias y las atribuciones de sus recursos, sin adjudicarle una licencia nueva desde el book."
+              ]
+            }
+          ]
+        }
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Experiencia jugable publicada",
+          "description": "Una sesión puede iniciarse desde la URL pública. No se atribuyen resultados comerciales no medidos.",
+          "sourceUrl": "https://cripterhack.github.io/distrito-cero/",
+          "sourceLabel": "Juego público",
+          "verifiedAt": "2026-09-27"
+        }
+      ],
+      "accessibilityNotes": [
+        "Mobile views use browser emulation, not physical-device verification."
+      ]
+    },
+    "en": {
+      "title": "Distrito Cero",
+      "elevatorPitch": "A procedural city to explore, drive through and make decisions in. An urban-adventure prototype bringing open-world systems to the browser through native web technology.",
+      "challenge": "Bring a city, characters, vehicles, camera and interface together as a coherent browser experience without a third-party runtime game engine.",
+      "constraints": [
+        "An evolving prototype, not a finished AAA product.",
+        "The capture documents one session, not every situation in the world.",
+        "Complete physical-GPU and cross-browser verification remains pending."
+      ],
+      "strategy": "Build a self-contained foundation and separate the experience into inspectable systems: exploration, driving, character identity, interaction and session continuity.",
+      "solution": "An original crime-adventure prototype with a procedural city, free exploration, a campaign, vehicles and customization. WebGL2 draws the world while native browser APIs coordinate interface, audio and local saves.",
+      "capabilities": [
+        "Browser Games",
+        "Interactive Experiences",
+        "Web Experiences"
+      ],
+      "industries": [
+        "Entertainment",
+        "Interactive experiences"
+      ],
+      "technologies": [
+        "JavaScript",
+        "WebGL2",
+        "Canvas 2D",
+        "Web Audio",
+        "Python"
+      ],
+      "relatedServices": [
+        "Playable prototypes",
+        "WebGL experiences",
+        "Interactive interfaces"
+      ],
+      "chapters": [
+        {
+          "title": "Context and proposition",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Distrito Cero explores the urban open-world adventure genre through an original browser implementation. A fictional city connects walking, driving and gameplay decisions. This case demonstrates the technical and visual integration of the prototype, rather than comparing its completion with a finished commercial game."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Scope and constraints",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The documented release is v0.20.13, Coherencia. Development continues. Checks from a single session do not replace long-duration testing, coverage of emergent situations or validation on physical devices. The setting and equipment belong to a fictional game world."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Implementation decisions",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The experience does not rely on an external runtime engine. The project organizes simulation, presentation and interface state, generating a self-contained HTML release. This makes behavior inspectable while keeping responsibility for rendering, controls, persistence and recovery within the project."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "World architecture",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "JavaScript coordinates the procedural world and WebGL2 renders the three-dimensional scene. Canvas 2D supports maps and graphical interface elements, while Web Audio supplies sound. A Python build process assembles the release. Gameplay does not require an application server."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Identity and interaction",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Players can create a character and inspect their appearance before exploring. The in-world interface distinguishes walking, vehicles and contextual actions. Maps and overlays provide orientation. The portfolio links to that experience rather than downloading the entire game automatically."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Continuity and data",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Saves remain in the browser and can be exported and imported. Moving to a different origin, browser or device does not transfer them automatically. The documentation recommends exporting before changing releases or environments. Local storage is not presented as cloud synchronization."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "What the capture shows",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The images come from the supplied public URL and show a real free-exploration session using the default character. The game's interface and controls were retained, not replaced by a generated illustration. The mobile view was captured using an emulated viewport and touch-capable browser context."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Transferable capabilities",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The case exposes procedural construction, interfaces over three-dimensional content, state coordination and self-contained web delivery. These capabilities can inform prototypes, product demonstrations and branded experiences. They do not imply a guaranteed scope, price or performance for a separate project."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Evidence and limitations",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The public source describes the prototype status and remaining work. These screenshots do not certify physical-GPU performance, finished AAA quality, acquisition or retention results. Existing licensing conditions and resource attributions are preserved without assigning a new license through this book."
+              ]
+            }
+          ]
+        }
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Published playable experience",
+          "description": "A session can be started from the public URL. No unmeasured commercial outcomes are claimed.",
+          "sourceUrl": "https://cripterhack.github.io/distrito-cero/",
+          "sourceLabel": "Public game",
+          "verifiedAt": "2026-09-27"
+        }
+      ],
+      "accessibilityNotes": [
+        "Mobile views use browser emulation, not physical-device verification."
+      ]
+    }
+  },
+  {
+    "slug": "nexo",
+    "classification": "real",
+    "stage": {
+      "es": "Beta jugable · 1.2",
+      "en": "Playable beta · 1.2"
+    },
+    "publication": {
+      "reviewedAt": "2026-09-27",
+      "confidentiality": "public",
+      "notes": "Playable public project. Captures document browser sessions, not device certification or commercial results."
+    },
+    "links": [
+      {
+        "label": "Jugar / Play",
+        "url": "https://nexo.izignamx.com/",
+        "public": true
+      },
+      {
+        "label": "Código y documentación / Source and documentation",
+        "url": "https://github.com/CripterHack/nexo-web",
+        "public": true
+      }
+    ],
+    "sources": [
+      {
+        "id": "live",
+        "label": "Juego público / Public game",
+        "type": "live",
+        "url": "https://nexo.izignamx.com/"
+      },
+      {
+        "id": "readme",
+        "label": "Documentación de la versión / Release documentation",
+        "type": "documentation",
+        "url": "https://github.com/CripterHack/nexo-web/blob/7ce8b77e263244ae0615ac64be3863239cccdab5/README.md"
+      }
+    ],
+    "media": [
+      {
+        "id": "live-gameplay",
+        "role": "screenshot",
+        "path": "/media/projects/nexo/evidence/gameplay-desktop.avif",
+        "license": "owned",
+        "width": 1440,
+        "height": 900,
+        "alt": {
+          "es": "Partida real de Nexo en el primer sector: nave Vector, semillas luminosas, radar y estado de regeneración.",
+          "en": "Actual Nexo gameplay in the first sector: Vector ship, luminous seeds, radar and regeneration status."
+        },
+        "caption": {
+          "es": "Capturas reales de la versión pública del 27 de septiembre de 2026. Escritorio y vista móvil emulada.",
+          "en": "Actual captures of the public release on September 27, 2026. Desktop and emulated mobile views."
+        },
+        "variants": {
+          "desktop": {
+            "avif": "/media/projects/nexo/evidence/gameplay-desktop.avif",
+            "webp": "/media/projects/nexo/evidence/gameplay-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "f933c3d9114428d5a162afd70322cea556a5d88acfe4a897994f99de6eaa6345",
+            "webpSha256": "3558f6f032442c81d9b8b236771e9274d864f23c4378ccbaa0f90fa4d8994a0a"
+          },
+          "mobile": {
+            "avif": "/media/projects/nexo/evidence/gameplay-mobile.avif",
+            "webp": "/media/projects/nexo/evidence/gameplay-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "a7abe9f45aabb7b0856d35155a4a58fd3976559c65bae356d2844e08a0e204cd",
+            "webpSha256": "b2e1c97d7e13583cfb517b1270805e98de2b91c9b4fdc13a4ee8d0149e24c32d"
+          }
+        },
+        "provenance": {
+          "kind": "direct-production-capture",
+          "repository": "https://github.com/CripterHack/nexo-web",
+          "commit": "7ce8b77e263244ae0615ac64be3863239cccdab5",
+          "sourceUrl": "https://nexo.izignamx.com/",
+          "capturedAt": "2026-09-27T08:10:31.963Z",
+          "reviewedAt": "2026-09-27",
+          "rightsBasis": "User requested screenshots of these projects for this portfolio.",
+          "revisionBasis": "Public repository HEAD observed at capture; live HTML hashes recorded separately.",
+          "sourceSha256": {
+            "desktop": "9aa3ec5aa647c73c152961f197935dabf90e3f4d1cc59505294a96340a1614fb",
+            "mobile": "96051e9b0e627b2ab5ab43671885303f5060ed782564ff482de7b5f81c26018c"
+          }
+        }
+      }
+    ],
+    "es": {
+      "title": "Nexo",
+      "elevatorPitch": "Un jardín de órbitas que se juega. Naves, semillas y regeneración espacial en una experiencia de navegador que combina atmósfera contemplativa, acción y ganas de volver a intentarlo.",
+      "challenge": "Dar identidad y continuidad a partidas breves: que movimiento, recolección, riesgo y progreso formen un ciclo legible tanto con teclado como con controles táctiles.",
+      "constraints": [
+        "Beta 1.2: no se presenta como un producto final.",
+        "El cooperativo es local. No incluye multijugador por Internet.",
+        "El progreso se guarda en el navegador, sin sincronización de cuentas."
+      ],
+      "strategy": "Construir el juego alrededor de regenerar sectores: recoger semillas, resistir amenazas y volver a dar vida. La elección de nave y de expedición aporta variación sin exigir una instalación.",
+      "solution": "Un cliente estático con tres naves, expedición de seis sectores, órbita infinita, reto diario y dúo local. La representación, el audio y los controles utilizan tecnologías nativas del navegador.",
+      "capabilities": [
+        "Browser Games",
+        "Interactive Experiences",
+        "Web Experiences"
+      ],
+      "industries": [
+        "Entretenimiento",
+        "Experiencias interactivas"
+      ],
+      "technologies": [
+        "JavaScript",
+        "Canvas 2D",
+        "Web Audio",
+        "HTML",
+        "CSS"
+      ],
+      "relatedServices": [
+        "Juegos de navegador",
+        "Experiencias interactivas",
+        "Interfaces de progresión"
+      ],
+      "chapters": [
+        {
+          "title": "Contexto y propuesta",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Nexo propone una pequeña expedición espacial alrededor de una idea: no conquistar el vacío, sino darle vida. Recoger semillas y regenerar sectores conecta la estética orbital con las decisiones durante la partida. La atmósfera acompaña un ciclo de acción y progresión, sin atribuir al juego efectos terapéuticos."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Alcance y restricciones",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La publicación documentada corresponde a la beta 1.2. Se puede jugar en solitario o en dúo local. El proyecto distingue ese cooperativo de una conexión multijugador por Internet, que no forma parte de esta versión. La evidencia muestra la interfaz actual y una sesión concreta, no una validación de todos los dispositivos."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Decisiones de experiencia",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Vector, Brisa y Bastión ofrecen distintos puntos de partida. La expedición organiza el recorrido en seis sectores, mientras la órbita infinita y el reto diario plantean otros ritmos de juego. La pantalla inicial explica la selección antes de comenzar y las acciones se mantienen próximas al campo de juego."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Arquitectura y publicación",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La entrega es un cliente estático sin dependencias externas de ejecución. JavaScript coordina el juego, Canvas 2D representa su mundo y las API del navegador gestionan la interacción y el sonido. Esta estructura permite publicar la experiencia como archivos web, sin un servidor de aplicación que procese cada partida."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Movimiento, interfaz y ritmo",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "El jugador desplaza una nave, recoge semillas, esquiva amenazas y utiliza impulso o pulso. El disparo automático permite concentrarse en posición y recorrido. Los indicadores de integridad, sector y regeneración acompañan la acción. El radar ofrece una segunda lectura del espacio sin sustituir la vista principal."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Teclado, móvil y cooperación",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "La interfaz incorpora controles de teclado y un joystick táctil con acciones específicas. El menú permite seleccionar dúo local. Las capturas móviles del book proceden de emulación en Chromium: muestran una composición real del juego, pero no prueban la ergonomía o el rendimiento en todos los teléfonos."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Progreso y privacidad",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Las expediciones pueden exportarse e importarse desde Ajustes. No se transfieren automáticamente ajustes ni récords entre dispositivos y no hay sincronización online. La documentación declara ausencia de anuncios, analítica integrada y SDK de pagos. El apoyo voluntario se gestiona fuera del juego mediante GitHub."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Qué muestra la captura",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Las imágenes se tomaron en la URL pública de Nexo, tras iniciar una expedición en solitario con Vector. Muestran el primer sector, sus semillas, la nave, el radar y los indicadores de juego. No son renders promocionales ni imágenes generadas para simular un producto inexistente."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Capacidades transferibles",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "El caso reúne diseño de interacción, identidad visual aplicada a un sistema jugable, estados de interfaz y persistencia local. Puede servir como referencia para experiencias de marca y demostraciones interactivas. No se publican cifras de usuarios, retención ni resultados comerciales que no hayan sido medidos."
+              ]
+            }
+          ]
+        }
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Experiencia jugable publicada",
+          "description": "Una sesión puede iniciarse desde la URL pública. No se atribuyen resultados comerciales no medidos.",
+          "sourceUrl": "https://nexo.izignamx.com/",
+          "sourceLabel": "Juego público",
+          "verifiedAt": "2026-09-27"
+        }
+      ],
+      "accessibilityNotes": [
+        "Mobile views use browser emulation, not physical-device verification."
+      ]
+    },
+    "en": {
+      "title": "Nexo",
+      "elevatorPitch": "An orbital garden you can play. Ships, seeds and spatial regeneration in a browser experience combining a contemplative atmosphere, action and the invitation to try again.",
+      "challenge": "Give short sessions identity and continuity, making movement, collection, risk and progression readable with both keyboard and touch controls.",
+      "constraints": [
+        "Beta 1.2, not presented as a finished product.",
+        "Co-op is local. Online multiplayer is not included.",
+        "Progress stays in the browser without account synchronization."
+      ],
+      "strategy": "Center the game on regenerating sectors: collect seeds, resist threats and restore life. Ship and expedition choices provide variation without an installation step.",
+      "solution": "A static client with three ships, a six-sector expedition, endless orbit, a daily challenge and local duo play. Rendering, audio and controls use native browser technologies.",
+      "capabilities": [
+        "Browser Games",
+        "Interactive Experiences",
+        "Web Experiences"
+      ],
+      "industries": [
+        "Entertainment",
+        "Interactive experiences"
+      ],
+      "technologies": [
+        "JavaScript",
+        "Canvas 2D",
+        "Web Audio",
+        "HTML",
+        "CSS"
+      ],
+      "relatedServices": [
+        "Browser games",
+        "Interactive experiences",
+        "Progression interfaces"
+      ],
+      "chapters": [
+        {
+          "title": "Context and proposition",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Nexo frames a small space expedition around restoring life rather than conquering emptiness. Collecting seeds and regenerating sectors links its orbital identity to gameplay decisions. The atmosphere supports action and progression without claiming therapeutic effects."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Scope and constraints",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The documented publication is beta 1.2. Players can choose solo or local duo. The project distinguishes local co-op from online multiplayer, which is not included in this release. The evidence shows the current interface and one session, not a certification covering all devices."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Experience decisions",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Vector, Brisa and Bastión provide different starting points. The expedition organizes progression into six sectors, while endless orbit and a daily challenge offer other rhythms. The initial screen explains the selection before play, and controls remain close to the playfield."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Architecture and delivery",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The release is a static client without external runtime dependencies. JavaScript coordinates the game, Canvas 2D draws its world and browser APIs provide interaction and sound. The experience can be delivered as web files without an application server processing each session."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Movement, interface and rhythm",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The player pilots a ship, collects seeds, avoids threats and uses boost or pulse. Automatic firing keeps attention on positioning and movement. Integrity, sector and regeneration indicators accompany the action, while the radar offers another reading of the space without replacing the main view."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Keyboard, touch and cooperation",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The interface includes keyboard controls and a touch joystick with dedicated actions. Local duo is selectable from the menu. Mobile screenshots in this book use Chromium emulation: they show a real game layout, but do not establish ergonomics or performance on every phone."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Progress and privacy",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Expeditions can be exported and imported through Settings. Preferences and records do not synchronize automatically across devices, and there is no online account synchronization. The documentation states that ads, integrated analytics and payment SDKs are absent. Optional support is handled externally through GitHub."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "What the capture shows",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "Images were taken from Nexo's public URL after starting a solo expedition with Vector. They show the first sector, seeds, ship, radar and game indicators. They are not promotional renders or generated images standing in for an unbuilt product."
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Transferable capabilities",
+          "blocks": [
+            {
+              "type": "paragraph",
+              "text": [
+                "The case combines interaction design, visual identity applied to a playable system, interface states and local persistence. It can inform branded experiences and interactive demonstrations. No unmeasured user counts, retention figures or commercial outcomes are published."
+              ]
+            }
+          ]
+        }
+      ],
+      "outcomes": [
+        {
+          "kind": "demonstrated-capability",
+          "label": "Published playable experience",
+          "description": "A session can be started from the public URL. No unmeasured commercial outcomes are claimed.",
+          "sourceUrl": "https://nexo.izignamx.com/",
+          "sourceLabel": "Public game",
+          "verifiedAt": "2026-09-27"
+        }
+      ],
+      "accessibilityNotes": [
+        "Mobile views use browser emulation, not physical-device verification."
+      ]
+    }
+  }
+]

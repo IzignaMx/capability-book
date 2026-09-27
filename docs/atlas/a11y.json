@@ -1,0 +1,69 @@
+{
+  "scope": "Static artifact, automated Pa11y WCAG2AA, not certification",
+  "results": [
+    {
+      "path": "/es/",
+      "errors": []
+    },
+    {
+      "path": "/en/",
+      "errors": []
+    },
+    {
+      "path": "/es/proyectos/",
+      "errors": []
+    },
+    {
+      "path": "/en/projects/",
+      "errors": []
+    },
+    {
+      "path": "/es/proyectos/omnisync/",
+      "errors": []
+    },
+    {
+      "path": "/en/projects/hamburguesa-nomada/",
+      "errors": []
+    },
+    {
+      "path": "/es/comparar/?projects=omnisync,tecuiyo",
+      "errors": []
+    },
+    {
+      "path": "/es/diagnostico/",
+      "errors": []
+    },
+    {
+      "path": "/en/diagnostic/",
+      "errors": []
+    },
+    {
+      "path": "/es/constelacion/",
+      "errors": []
+    },
+    {
+      "path": "/es/proyectos/distrito-cero/",
+      "errors": []
+    },
+    {
+      "path": "/en/projects/distrito-cero/",
+      "errors": []
+    },
+    {
+      "path": "/es/proyectos/nexo/",
+      "errors": []
+    },
+    {
+      "path": "/en/projects/nexo/",
+      "errors": []
+    },
+    {
+      "path": "/es/privacidad/",
+      "errors": []
+    },
+    {
+      "path": "/en/accessibility/",
+      "errors": []
+    }
+  ]
+}

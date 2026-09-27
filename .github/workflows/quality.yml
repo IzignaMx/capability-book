@@ -1,19 +1,17 @@
 name: quality and pages
-
 on:
   pull_request:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
   quality:
     name: quality
     runs-on: ubuntu-latest
+    env:
+      ATLAS_INDEXABLE: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && 'true' || 'false' }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -27,13 +25,21 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm validate:evidence
       - run: pnpm check
-      - run: pnpm test
       - run: pnpm build
-      - run: pnpm verify:3d-budgets
+      - run: python3 scripts/verify-atlas-manifest.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlas-dist
+          path: dist
+          include-hidden-files: true
+          if-no-files-found: error
       - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
-
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlas-build-validation
+          path: docs/atlas/static-validation.json
   e2e:
     name: e2e
     needs: quality
@@ -48,9 +54,21 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: atlas-dist
+          path: dist
+      - run: python3 scripts/verify-atlas-manifest.py
       - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm test:e2e
-
+      - run: pnpm test:e2e:atlas
+      - run: python3 scripts/verify-atlas-manifest.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atlas-browser-checks
+          path: |
+            docs/atlas/browser-summary.json
+            docs/book-*-checks.json
   accessibility:
     name: accessibility
     needs: quality
@@ -65,35 +83,23 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: atlas-dist
+          path: dist
+      - run: python3 scripts/verify-atlas-manifest.py
       - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm build
-      - name: Run Pa11y against the static preview
-        shell: bash
-        run: |
-          set -euo pipefail
-          export PUPPETEER_EXECUTABLE_PATH="$(node --input-type=module -e "import { chromium } from '@playwright/test'; process.stdout.write(chromium.executablePath())")"
-          pnpm preview --host 127.0.0.1 --port 4321 > "$RUNNER_TEMP/astro-preview.log" 2>&1 &
-          server_pid=$!
-          trap 'kill "$server_pid" 2>/dev/null || true; wait "$server_pid" 2>/dev/null || true' EXIT
-          for attempt in $(seq 1 60); do
-            if curl --fail --silent --show-error http://127.0.0.1:4321/ > /dev/null; then
-              break
-            fi
-            if [ "$attempt" -eq 60 ]; then
-              cat "$RUNNER_TEMP/astro-preview.log"
-              exit 1
-            fi
-            sleep 1
-          done
-          pnpm test:a11y
-
+      - run: pnpm test:a11y:atlas
+      - run: python3 scripts/verify-atlas-manifest.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atlas-accessibility-checks
+          path: docs/atlas/a11y.json
   deploy:
     name: deploy
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-    needs:
-      - quality
-      - e2e
-      - accessibility
+    needs: [quality, e2e, accessibility]
     permissions:
       pages: write
       id-token: write

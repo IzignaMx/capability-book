@@ -1,0 +1,47 @@
+{
+  "reference": "https://izignamx.com/",
+  "files": [
+    {
+      "sourceURL": "https://izignamx.com/assets/brand-mark-white.svg",
+      "sourceSHA256": "a0450fdc7727c40f53197dd6769c1d2db75a3357d9d2f0bc241b5e095146f458",
+      "bytes": 1716,
+      "mime": "image/svg+xml",
+      "fetchedAt": "2026-09-27T08:05:25.769446+00:00"
+    },
+    {
+      "sourceURL": "https://izignamx.com/favicon.svg",
+      "sourceSHA256": "8b2207cfd2d1a36cdef4b654446e906609dfe13720a25a2ca0604da8e5ca2fb0",
+      "bytes": 2621,
+      "mime": "image/svg+xml",
+      "fetchedAt": "2026-09-27T08:05:25.927704+00:00"
+    },
+    {
+      "sourceURL": "https://izignamx.com/favicon.ico",
+      "sourceSHA256": "6f55c3e8f1881e57f828ad426b555df71f8eeabfab471cd9028d933559d7fbe4",
+      "bytes": 673,
+      "mime": "image/vnd.microsoft.icon",
+      "fetchedAt": "2026-09-27T08:05:26.124735+00:00"
+    },
+    {
+      "sourceURL": "https://izignamx.com/icon-32.png",
+      "sourceSHA256": "741fe1ee469acaea0e4e5b94f341587bdfc41be08f3d851f0968d5c6ca93496a",
+      "bytes": 336,
+      "mime": "image/png",
+      "fetchedAt": "2026-09-27T08:05:26.357239+00:00"
+    },
+    {
+      "sourceURL": "https://izignamx.com/icon-16.png",
+      "sourceSHA256": "7c5e992f2b7dbb1dec613bf3e35189087ef6d0f3d202f981488019fdd042274e",
+      "bytes": 216,
+      "mime": "image/png",
+      "fetchedAt": "2026-09-27T08:05:26.685140+00:00"
+    },
+    {
+      "sourceURL": "https://izignamx.com/apple-touch-icon.png",
+      "sourceSHA256": "3fd46bc0ac02e3757d670593db1448506ecd33f4fccafcd3b155a502cae29f44",
+      "bytes": 1621,
+      "mime": "image/png",
+      "fetchedAt": "2026-09-27T08:05:26.915072+00:00"
+    }
+  ]
+}
