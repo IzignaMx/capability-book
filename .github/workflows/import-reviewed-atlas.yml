@@ -1,0 +1,63 @@
+name: Import reviewed Book Atlas source
+on:
+  push:
+    branches: [redesign/book-atlas-pages]
+    paths: [.github/workflows/import-reviewed-atlas.yml]
+permissions:
+  contents: write
+jobs:
+  import:
+    if: github.repository == 'IzignaMx/capability-book' && github.ref == 'refs/heads/redesign/book-atlas-pages'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: redesign/book-atlas-pages
+          fetch-depth: 0
+      - name: Download the fixed reviewed source package
+        run: |
+          curl --fail --location --retry 2 --output "$RUNNER_TEMP/atlas-source.zip" 'https://d2ol7oe51mr4n9.cloudfront.net/user_3Icvp3WfrHKY6QGnlXqcYgbAGfb/35eae627-eab4-4c26-930e-20bc74ae213b.zip'
+          echo "55b65107d0419a855dca17cd10f9c58eac1ac428bef33d7b4aa3a6de89a5ba94  $RUNNER_TEMP/atlas-source.zip" | sha256sum --check
+      - name: Validate source paths, hashes and previous versions before copying
+        run: |
+          python3 - <<'PY'
+          import os,json,hashlib,zipfile,subprocess
+          from pathlib import Path, PurePosixPath
+          root=Path.cwd().resolve()
+          with zipfile.ZipFile(Path(os.environ['RUNNER_TEMP'])/'atlas-source.zip') as z:
+              m=json.loads(z.read('manifest.json'))
+              assert m['repository']=='IzignaMx/capability-book'
+              assert m['branch']=='redesign/book-atlas-pages'
+              assert m['base']=='171d5cd0ed60a13fcb9b8de634fa08123e031bc1'
+              subprocess.run(['git','merge-base','--is-ancestor',m['base'],'HEAD'],check=True)
+              assert len(m['files'])==68
+              expected={'manifest.json'}|{'files/'+f['path'] for f in m['files']}
+              assert set(z.namelist())==expected and len(z.namelist())==len(expected)
+              assert sum(i.file_size for i in z.infolist())<2000000
+              prepared=[]
+              for entry in m['files']:
+                  rel=PurePosixPath(entry['path'])
+                  assert not rel.is_absolute() and '..' not in rel.parts
+                  assert rel.parts[0] not in ['.git','.github','node_modules','dist']
+                  dest=root.joinpath(*rel.parts)
+                  assert dest.resolve().is_relative_to(root) and not dest.is_symlink()
+                  if entry['previous_sha256'] is None:
+                      assert not dest.exists(), str(rel)+' already exists'
+                  else:
+                      assert dest.is_file() and hashlib.sha256(dest.read_bytes()).hexdigest()==entry['previous_sha256'], str(rel)+' changed'
+                  payload=z.read('files/'+str(rel))
+                  assert hashlib.sha256(payload).hexdigest()==entry['sha256']
+                  prepared.append((dest,payload,str(rel)))
+              for dest,payload,rel in prepared:
+                  dest.parent.mkdir(parents=True,exist_ok=True)
+                  dest.write_bytes(payload)
+              subprocess.run(['git','add','--']+[rel for _,_,rel in prepared],check=True)
+          print('Imported 68 verified source files. No workflow, production ref or DNS was changed by this step.')
+          PY
+      - name: Save the source only on the review branch
+        run: |
+          git diff --cached --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'feat: integrate the approved Book Atlas with static GitHub Pages delivery'
+          git push origin HEAD:refs/heads/redesign/book-atlas-pages
