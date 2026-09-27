@@ -1,0 +1,80 @@
+name: Import reviewed Book game cases
+on:
+  push:
+    branches: [redesign/book-atlas-pages]
+    paths: [.github/workflows/import-book-games.yml]
+permissions:
+  contents: write
+jobs:
+  import:
+    if: github.repository == 'IzignaMx/capability-book' && github.ref == 'refs/heads/redesign/book-atlas-pages'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: redesign/book-atlas-pages
+          fetch-depth: 0
+      - name: Retrieve the fixed reviewed source and screenshot package
+        run: |
+          curl --fail --location --retry 2 --output "$RUNNER_TEMP/book-games.zip" 'https://d2ol7oe51mr4n9.cloudfront.net/user_3Icvp3WfrHKY6QGnlXqcYgbAGfb/5374616f-619f-451f-9464-216bb605dae9.zip'
+          echo "24ee814f4aaf1c21e9ab8684b2a41e7a3232d0885d15e0ca1b8d6dd9494f78b8  $RUNNER_TEMP/book-games.zip" | sha256sum --check
+      - name: Validate every file against its previous version and approved hash
+        run: |
+          python3 - <<'PY'
+          import os,json,hashlib,zipfile,subprocess
+          from pathlib import Path, PurePosixPath
+          root=Path.cwd().resolve()
+          review=Path(os.environ['RUNNER_TEMP'])/'book-games-visuals'
+          with zipfile.ZipFile(Path(os.environ['RUNNER_TEMP'])/'book-games.zip') as z:
+              m=json.loads(z.read('manifest.json'))
+              assert m['repository']=='IzignaMx/capability-book'
+              assert m['branch']=='redesign/book-atlas-pages'
+              assert m['base']=='07205842c813c6ee9bcb0ec0525b684925b84617'
+              subprocess.run(['git','merge-base','--is-ancestor',m['base'],'HEAD'],check=True)
+              assert len(m['files'])==48 and len(m['review'])==8
+              expected={'manifest.json'}|{'files/'+f['path'] for f in m['files']}|{'review/'+f['path'] for f in m['review']}
+              assert set(z.namelist())==expected and len(z.namelist())==len(expected)
+              assert sum(i.file_size for i in z.infolist())<20000000
+              prepared=[]
+              for entry in m['files']:
+                  rel=PurePosixPath(entry['path'])
+                  assert not rel.is_absolute() and '..' not in rel.parts
+                  assert rel.parts[0] not in ['.git','.github','node_modules','dist','assets-capture']
+                  assert rel.suffix not in ['.woff','.woff2','.otf','.ttf']
+                  dest=root.joinpath(*rel.parts)
+                  assert dest.resolve().is_relative_to(root) and not dest.is_symlink()
+                  if entry['previous_sha256'] is None:
+                      assert not dest.exists(), str(rel)+' already exists'
+                  else:
+                      previous=subprocess.run(['git','cat-file','blob',m['base']+':'+str(rel)],capture_output=True,check=True).stdout
+                      assert hashlib.sha256(previous).hexdigest()==entry['previous_sha256']
+                      assert dest.is_file() and hashlib.sha256(dest.read_bytes()).hexdigest()==entry['previous_sha256'], str(rel)+' changed'
+                  data=z.read('files/'+str(rel))
+                  assert hashlib.sha256(data).hexdigest()==entry['sha256']
+                  prepared.append((dest,data,str(rel)))
+              review.mkdir(parents=True,exist_ok=True)
+              for entry in m['review']:
+                  rel=PurePosixPath(entry['path'])
+                  assert len(rel.parts)==1 and rel.suffix=='.png'
+                  data=z.read('review/'+str(rel))
+                  assert hashlib.sha256(data).hexdigest()==entry['sha256']
+                  (review/str(rel)).write_bytes(data)
+              (review/'manifest.json').write_text(json.dumps(m['review'],indent=2))
+              for dest,data,rel in prepared:
+                  dest.parent.mkdir(parents=True,exist_ok=True)
+                  dest.write_bytes(data)
+              subprocess.run(['git','add','--']+[rel for _,_,rel in prepared],check=True)
+          print('48 source files verified and imported; eight original screenshots exported for visual review.')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: book-games-visuals
+          path: ${{ runner.temp }}/book-games-visuals
+          if-no-files-found: error
+      - name: Save only to the existing review branch
+        run: |
+          git diff --cached --check
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'feat: add Distrito Cero and Nexo with real captures and canonical IzignaMx branding'
+          git push origin HEAD:refs/heads/redesign/book-atlas-pages
