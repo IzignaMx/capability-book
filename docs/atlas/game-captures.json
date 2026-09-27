@@ -4,119 +4,6 @@
   "physicalDevicesVerified": false,
   "captures": [
     {
-      "slug": "distrito-cero",
-      "device": "desktop",
-      "url": "https://cripterhack.github.io/distrito-cero/",
-      "requestedURL": "https://cripterhack.github.io/distrito-cero/",
-      "title": "Distrito Cero v0.20.13 · Coherencia",
-      "status": 200,
-      "sourceRevision": "0fa83b9e024819821e135a9de540a3f897bc9c78",
-      "htmlSHA256": "319d022f90f3bce614952d9ec30377d5af27447b21e7f6d9c0c064e7d3533f74",
-      "capturedAt": "2026-09-27T08:10:00.063Z",
-      "viewport": {
-        "width": 1440,
-        "height": 900
-      },
-      "actions": [
-        "Explorar sin historia",
-        "Comenzar exploración con personaje predeterminado",
-        "Caminar hacia delante durante 900 ms"
-      ],
-      "canvas": [
-        {
-          "id": "world",
-          "width": 1267,
-          "height": 792,
-          "visible": true
-        },
-        {
-          "id": "minimap",
-          "width": 160,
-          "height": 160,
-          "visible": true
-        },
-        {
-          "id": "citymap",
-          "width": 300,
-          "height": 150,
-          "visible": false
-        }
-      ],
-      "errors": [],
-      "body": "DISTRITO CERO\nSIGUE EL HORIZONTE\n\nSal de Distrito Cero por cualquier carretera. M abre las regiones y sus rutas.\n\nSEMILLA 1337 · 0.0 KM RECORRIDOS\n★\n★\n★\n★\n★\n$850\n+\n⌖\n▣\n⋯\nⅡ\nN\nCENTRO / DISTRITO CERO\nCENTRO METROPOLITANO · 0, 0\nA PIE / EXPLORACIÓN\nI · INTERACCIONES\n♫  RADIO 94.6 · APAGADA\nFVEHÍCULO\nEACCIÓN\nMMAPA\nF\nEntrar al vehículo\n▦\nTAB\nManos libres\nTAB · EQUIPAMIENTO\n—\nDISTRITO CERO\nTU PROPIO CAMINO\nTU PROPIO CAMINO",
-      "rawFile": "distrito-cero-desktop-gameplay.png",
-      "rawSHA256": "553fd2f84af0ab447b32552d97b50ac9fdb1a966b2b207da0f5334f4b708100d",
-      "method": "Chromium live public URL, ordinary UI clicks; no DOM alteration, generated image or game state injection",
-      "variants": {
-        "avif": {
-          "path": "/media/projects/distrito-cero/evidence/gameplay-desktop.avif",
-          "sha256": "5a907546aec6f2cb3f1e3995915b38048a6fdf0ebaff461667d97b5591dff612",
-          "bytes": 60291
-        },
-        "webp": {
-          "path": "/media/projects/distrito-cero/evidence/gameplay-desktop.webp",
-          "sha256": "3b6dd2dc7a337bc6898cb818fc2a7e46909a270c7af9f4fb537e32b87a6d58b6",
-          "bytes": 79482
-        }
-      }
-    },
-    {
-      "slug": "distrito-cero",
-      "device": "mobile",
-      "url": "https://cripterhack.github.io/distrito-cero/",
-      "requestedURL": "https://cripterhack.github.io/distrito-cero/",
-      "title": "Distrito Cero v0.20.13 · Coherencia",
-      "status": 200,
-      "sourceRevision": "0fa83b9e024819821e135a9de540a3f897bc9c78",
-      "htmlSHA256": "319d022f90f3bce614952d9ec30377d5af27447b21e7f6d9c0c064e7d3533f74",
-      "capturedAt": "2026-09-27T08:10:24.151Z",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "actions": [
-        "Explorar sin historia",
-        "Comenzar exploración con personaje predeterminado"
-      ],
-      "canvas": [
-        {
-          "id": "world",
-          "width": 343,
-          "height": 743,
-          "visible": true
-        },
-        {
-          "id": "minimap",
-          "width": 160,
-          "height": 160,
-          "visible": true
-        },
-        {
-          "id": "citymap",
-          "width": 300,
-          "height": 150,
-          "visible": false
-        }
-      ],
-      "errors": [],
-      "body": "DISTRITO CERO\nSIGUE EL HORIZONTE\n\nSal de Distrito Cero por cualquier carretera. M abre las regiones y sus rutas.\n\nSEMILLA 1337 · 0.0 KM RECORRIDOS\n★\n★\n★\n★\n★\n$850\n+\n⌖\n▣\n⋯\nⅡ\nN\nCENTRO / DISTRITO CERO\nA PIE / EXPLORACIÓN\nI · INTERACCIONES\n♫  RADIO 94.6 · APAGADA\nEntrar al vehículo\n▦\nTAB\nManos libres\nTAB · EQUIPAMIENTO\n—\n\nWASD para moverte. F para entrar o salir del coche. E para interactuar. M abre el atlas. Esc abre Pausa, tu personaje y tus partidas. TAB abre el equipamiento. 9 selecciona Gauss, 0 EMP y B binoculares. L recarga. R sigue siendo rendición.\n\nENTENDIDO · CONTINUAR\nESQUIVAR\nSUBIR\nCORRER\nACCIÓN\nEMPUJAR\nSALTAR\nDISTRITO CERO\nTU PROPIO CAMINO\nTU PROPIO CAMINO",
-      "rawFile": "distrito-cero-mobile-gameplay.png",
-      "rawSHA256": "26fb4c99f2613ce963a58251a7211854d8accc10c4403fa76682264a920bd148",
-      "method": "Chromium live public URL, ordinary UI clicks; no DOM alteration, generated image or game state injection",
-      "variants": {
-        "avif": {
-          "path": "/media/projects/distrito-cero/evidence/gameplay-mobile.avif",
-          "sha256": "97dbe640e17f7c61699dfd48c66e0ff888953e125fe50be255926da63460340f",
-          "bytes": 27996
-        },
-        "webp": {
-          "path": "/media/projects/distrito-cero/evidence/gameplay-mobile.webp",
-          "sha256": "59ccee202a26d99dc273962e96bfa4cafbf871870ae1044823e2d9fb844fba2b",
-          "bytes": 37810
-        }
-      }
-    },
-    {
       "slug": "nexo",
       "device": "desktop",
       "url": "https://nexo.izignamx.com/",
@@ -212,6 +99,121 @@
           "path": "/media/projects/nexo/evidence/gameplay-mobile.webp",
           "sha256": "b2e1c97d7e13583cfb517b1270805e98de2b91c9b4fdc13a4ee8d0149e24c32d",
           "bytes": 18448
+        }
+      }
+    },
+    {
+      "slug": "distrito-cero",
+      "device": "desktop",
+      "url": "https://cripterhack.github.io/distrito-cero/",
+      "requestedURL": "https://cripterhack.github.io/distrito-cero/",
+      "title": "Distrito Cero v0.20.13 · Coherencia",
+      "status": 200,
+      "sourceRevision": "0fa83b9e024819821e135a9de540a3f897bc9c78",
+      "htmlSHA256": "319d022f90f3bce614952d9ec30377d5af27447b21e7f6d9c0c064e7d3533f74",
+      "capturedAt": "2026-09-27T08:33:12.859Z",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "actions": [
+        "Explorar sin historia",
+        "Comenzar exploración con personaje predeterminado",
+        "Cerrar ayuda desde Entendido · Continuar",
+        "Caminar hacia delante durante 900 ms"
+      ],
+      "canvas": [
+        {
+          "id": "world",
+          "width": 1267,
+          "height": 792,
+          "visible": true
+        },
+        {
+          "id": "minimap",
+          "width": 160,
+          "height": 160,
+          "visible": true
+        },
+        {
+          "id": "citymap",
+          "width": 300,
+          "height": 150,
+          "visible": false
+        }
+      ],
+      "errors": [],
+      "body": "DISTRITO CERO\nSIGUE EL HORIZONTE\n\nSal de Distrito Cero por cualquier carretera. M abre las regiones y sus rutas.\n\nSEMILLA 1337 · 0.0 KM RECORRIDOS\n★\n★\n★\n★\n★\n$850\n+\n⌖\n▣\n⋯\nⅡ\nN\nCENTRO / DISTRITO CERO\nCENTRO METROPOLITANO · 0, 0\nA PIE / EXPLORACIÓN\nI · INTERACCIONES\n♫  RADIO 94.6 · APAGADA\nFVEHÍCULO\nEACCIÓN\nMMAPA\nF\nEntrar al vehículo\n▦\nTAB\nManos libres\nTAB · EQUIPAMIENTO\n—\nDISTRITO CERO\nTU PROPIO CAMINO\nTU PROPIO CAMINO",
+      "rawFile": "distrito-cero-desktop-gameplay.png",
+      "rawSHA256": "b431114f19ac0f74f2aa0fda60ac7f8609bcc33230748529bf95275795105e6b",
+      "method": "Chromium live public URL, ordinary UI clicks; no DOM alteration, generated image or game state injection",
+      "variants": {
+        "avif": {
+          "path": "/media/projects/distrito-cero/evidence/gameplay-desktop.avif",
+          "sha256": "9059502ecbb97830d8c0496fc6b2fbcc6f2f8f94cbb52d3c0c1b62d124498857",
+          "bytes": 57566
+        },
+        "webp": {
+          "path": "/media/projects/distrito-cero/evidence/gameplay-desktop.webp",
+          "sha256": "1eb06f759789f5c555676b329deaca41a7eaf29ee66c024d188ee79797a61177",
+          "bytes": 76430
+        }
+      }
+    },
+    {
+      "slug": "distrito-cero",
+      "device": "mobile",
+      "url": "https://cripterhack.github.io/distrito-cero/",
+      "requestedURL": "https://cripterhack.github.io/distrito-cero/",
+      "title": "Distrito Cero v0.20.13 · Coherencia",
+      "status": 200,
+      "sourceRevision": "0fa83b9e024819821e135a9de540a3f897bc9c78",
+      "htmlSHA256": "319d022f90f3bce614952d9ec30377d5af27447b21e7f6d9c0c064e7d3533f74",
+      "capturedAt": "2026-09-27T08:33:46.923Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "actions": [
+        "Explorar sin historia",
+        "Comenzar exploración con personaje predeterminado",
+        "Cerrar ayuda desde Entendido · Continuar"
+      ],
+      "canvas": [
+        {
+          "id": "world",
+          "width": 343,
+          "height": 743,
+          "visible": true
+        },
+        {
+          "id": "minimap",
+          "width": 160,
+          "height": 160,
+          "visible": true
+        },
+        {
+          "id": "citymap",
+          "width": 300,
+          "height": 150,
+          "visible": false
+        }
+      ],
+      "errors": [],
+      "body": "DISTRITO CERO\nSIGUE EL HORIZONTE\n\nSal de Distrito Cero por cualquier carretera. M abre las regiones y sus rutas.\n\nSEMILLA 1337 · 0.0 KM RECORRIDOS\n★\n★\n★\n★\n★\n$850\n+\n⌖\n▣\n⋯\nⅡ\nN\nCENTRO / DISTRITO CERO\nA PIE / EXPLORACIÓN\nI · INTERACCIONES\n♫  RADIO 94.6 · APAGADA\nEntrar al vehículo\n▦\nTAB\nManos libres\nTAB · EQUIPAMIENTO\n—\nESQUIVAR\nSUBIR\nCORRER\nACCIÓN\nEMPUJAR\nSALTAR\nDISTRITO CERO\nTU PROPIO CAMINO\nTU PROPIO CAMINO",
+      "rawFile": "distrito-cero-mobile-gameplay.png",
+      "rawSHA256": "7620b2c6dc35b6663e74502de5b33b1658b1bed4a8710e7ca5e22463ed0fdb3e",
+      "method": "Chromium live public URL, ordinary UI clicks; no DOM alteration, generated image or game state injection",
+      "variants": {
+        "avif": {
+          "path": "/media/projects/distrito-cero/evidence/gameplay-mobile.avif",
+          "sha256": "ababb05c9b2075ec283973c0bc89bba660aa59800695519950c2772e03280075",
+          "bytes": 23258
+        },
+        "webp": {
+          "path": "/media/projects/distrito-cero/evidence/gameplay-mobile.webp",
+          "sha256": "f27c318832fd617ea610f4ac5e25b29e11d234fc78d86a74543909b62760e6d2",
+          "bytes": 30424
         }
       }
     }

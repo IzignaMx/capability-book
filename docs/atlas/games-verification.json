@@ -44,7 +44,7 @@
   "brandAssetsCompared": 6,
   "originalProjectRecordsPreserved": true,
   "productionChanged": false,
-  "manualVisualReview": "pending artifact download",
+  "manualVisualReview": "Eight initial screenshots inspected in local image viewer: actual game correspondence, brand geometry, desktop and mobile layouts verified. Distrito Cero recaptured through normal UI after the tutorial obscured its scene; final images awaiting transfer for inspection.",
   "limitations": [
     "Chromium/Linux and viewport emulation, not physical-device or cross-browser certification.",
     "Screenshots are actual public game sessions, not measurements of FPS or retention."

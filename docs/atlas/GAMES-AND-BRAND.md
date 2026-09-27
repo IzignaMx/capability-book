@@ -6,7 +6,7 @@ This continuation extends the approved Atlas in PR #10. It adds Distrito Cero an
 
 ## Real screenshots
 
-The four original screenshots were captured from the user-specified public game URLs in fresh Chromium contexts, using normal game interface actions. Desktop: 1440×900. Emulated mobile: 390×844 at DPR 1. Both show a real started game rather than an invented scene. Distrito Cero is captured in free exploration with the default character. Nexo is captured in the first solo expedition sector with Vector. Some native onboarding/HUD overlays remain visible, as part of the actual game interface.
+The four original screenshots were captured from the user-specified public game URLs in fresh Chromium contexts, using normal game interface actions. Desktop: 1440×900. Emulated mobile: 390×844 at DPR 1. Both show a real started game rather than an invented scene. Distrito Cero is captured in free exploration with the default character. Nexo is captured in the first solo expedition sector with Vector. The initial Distrito Cero captures were reviewed visually and repeated after dismissing the tutorial through its own visible button. The final captures retain the game HUD and touch controls without that obstructing help panel. Nexo retains its ordinary game interface.
 
 `game-captures.json` records URLs, capture times, viewport dimensions, actual UI actions, page titles, HTML response hashes, original PNG hashes, and AVIF/WebP derivatives. Source revisions are repository HEAD observations, not unverified assertions that a CDN served that exact commit. The live page hashes are recorded separately. Pixel output depends on timing and GPU implementation; this is not a deterministic FPS benchmark or physical-device certification.
 

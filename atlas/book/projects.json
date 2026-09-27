@@ -3069,16 +3069,16 @@
             "webp": "/media/projects/distrito-cero/evidence/gameplay-desktop.webp",
             "width": 1440,
             "height": 900,
-            "avifSha256": "5a907546aec6f2cb3f1e3995915b38048a6fdf0ebaff461667d97b5591dff612",
-            "webpSha256": "3b6dd2dc7a337bc6898cb818fc2a7e46909a270c7af9f4fb537e32b87a6d58b6"
+            "avifSha256": "9059502ecbb97830d8c0496fc6b2fbcc6f2f8f94cbb52d3c0c1b62d124498857",
+            "webpSha256": "1eb06f759789f5c555676b329deaca41a7eaf29ee66c024d188ee79797a61177"
           },
           "mobile": {
             "avif": "/media/projects/distrito-cero/evidence/gameplay-mobile.avif",
             "webp": "/media/projects/distrito-cero/evidence/gameplay-mobile.webp",
             "width": 390,
             "height": 844,
-            "avifSha256": "97dbe640e17f7c61699dfd48c66e0ff888953e125fe50be255926da63460340f",
-            "webpSha256": "59ccee202a26d99dc273962e96bfa4cafbf871870ae1044823e2d9fb844fba2b"
+            "avifSha256": "ababb05c9b2075ec283973c0bc89bba660aa59800695519950c2772e03280075",
+            "webpSha256": "f27c318832fd617ea610f4ac5e25b29e11d234fc78d86a74543909b62760e6d2"
           }
         },
         "provenance": {
@@ -3086,13 +3086,13 @@
           "repository": "https://github.com/CripterHack/distrito-cero",
           "commit": "0fa83b9e024819821e135a9de540a3f897bc9c78",
           "sourceUrl": "https://cripterhack.github.io/distrito-cero/",
-          "capturedAt": "2026-09-27T08:10:00.063Z",
+          "capturedAt": "2026-09-27T08:33:12.859Z",
           "reviewedAt": "2026-09-27",
           "rightsBasis": "User requested screenshots of these projects for this portfolio.",
           "revisionBasis": "Public repository HEAD observed at capture; live HTML hashes recorded separately.",
           "sourceSha256": {
-            "desktop": "553fd2f84af0ab447b32552d97b50ac9fdb1a966b2b207da0f5334f4b708100d",
-            "mobile": "26fb4c99f2613ce963a58251a7211854d8accc10c4403fa76682264a920bd148"
+            "desktop": "b431114f19ac0f74f2aa0fda60ac7f8609bcc33230748529bf95275795105e6b",
+            "mobile": "7620b2c6dc35b6663e74502de5b33b1658b1bed4a8710e7ca5e22463ed0fdb3e"
           }
         }
       }
