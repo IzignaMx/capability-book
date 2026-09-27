@@ -89,13 +89,14 @@ jobs:
           path: dist
       - run: python3 scripts/verify-atlas-manifest.py
       - run: pnpm exec playwright install --with-deps chromium
+      - run: node scripts/verify-atlas-a11y-readiness.cjs
       - run: pnpm test:a11y:atlas
       - run: python3 scripts/verify-atlas-manifest.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: atlas-accessibility-checks
-          path: docs/atlas/a11y.json
+          path: audit/atlas-accessibility/
   deploy:
     name: deploy
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
