@@ -1,0 +1,4 @@
+/* Preserve the approved Atlas reset where the Higgsfield Tailwind scaffold
+   previously supplied it. No design changes or runtime dependency required. */
+.book legend { padding: 0; }
+.book input[type="checkbox"], .book input[type="radio"] { margin: 0; }

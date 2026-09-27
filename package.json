@@ -8,12 +8,12 @@
     "node": ">=22.12.0 <23"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro check && astro build && pagefind --site dist && pnpm validate:html && pnpm verify:budgets",
-    "preview": "astro preview",
+    "dev": "astro dev --config astro.atlas.config.mjs",
+    "build": "pnpm check:atlas && astro build --config astro.atlas.config.mjs && node scripts/finalize-atlas.mjs && python3 scripts/validate-atlas.py",
+    "preview": "astro preview --config astro.atlas.config.mjs",
     "test": "vitest run",
-    "test:e2e": "playwright test",
-    "test:a11y": "pa11y-ci --config pa11yci.json",
+    "test:e2e": "pnpm test:e2e:atlas",
+    "test:a11y": "pnpm test:a11y:atlas",
     "typecheck": "tsc --noEmit",
     "check": "astro check && pnpm typecheck && pnpm check:brand && pnpm check:tokens",
     "check:brand": "tsx scripts/check-brand.ts",
@@ -29,7 +29,17 @@
     "verify:3d-budgets": "tsx scripts/verify-3d-budgets.ts",
     "evidence:summary": "tsx scripts/generate-evidence-summary.ts",
     "capture:projects": "tsx scripts/capture-projects.ts",
-    "verify:capture-report": "tsx scripts/verify-capture-report.ts"
+    "verify:capture-report": "tsx scripts/verify-capture-report.ts",
+    "build:legacy": "astro check && astro build && pagefind --site dist && pnpm validate:html && pnpm verify:budgets",
+    "dev:legacy": "astro dev",
+    "check:atlas": "astro check --config astro.atlas.config.mjs --tsconfig tsconfig.atlas.json",
+    "preview:atlas": "python3 scripts/serve-atlas.py",
+    "validate:atlas": "python3 scripts/validate-atlas.py",
+    "test:e2e:atlas": "node scripts/test-atlas-browser.cjs",
+    "test:a11y:atlas": "node scripts/test-atlas-a11y.cjs",
+    "test:e2e:legacy": "playwright test",
+    "test:a11y:legacy": "pa11y-ci --config pa11yci.json",
+    "preview:legacy": "astro preview"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",

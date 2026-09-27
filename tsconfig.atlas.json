@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    ".astro/types.d.ts",
+    "atlas/**/*.ts",
+    "atlas/**/*.tsx",
+    "atlas/**/*.astro",
+    "tests/atlas-*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "src"
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "verifiedAt": "2026-09-27T07:37:37.572657+00:00",
+  "baseRevision": "171d5cd0ed60a13fcb9b8de634fa08123e031bc1",
+  "sourceRevision": "ca3fc9dabbe39df7ce9c74d14320fdb6151b6b16",
+  "applicationTests": 180,
+  "applicationFailures": 0,
+  "browserReports": [
+    {
+      "file": "book-browser-checks.json",
+      "checks": 209,
+      "passed": 209
+    },
+    {
+      "file": "book-context-checks.json",
+      "checks": 20,
+      "passed": 20
+    },
+    {
+      "file": "book-reading-checks.json",
+      "checks": 127,
+      "passed": 127
+    },
+    {
+      "file": "book-case-polish-checks.json",
+      "checks": 95,
+      "passed": 95
+    },
+    {
+      "file": "book-3d-checks.json",
+      "checks": 28,
+      "passed": 28
+    }
+  ],
+  "browserChecks": 479,
+  "browserFailures": 0,
+  "automatedAccessibilityPages": 12,
+  "automatedAccessibilityErrors": 0,
+  "staticValidation": {
+    "contentPages": 28,
+    "htmlDocuments": 30,
+    "criticalHtmlCssGzipBytes": 16193,
+    "initialJsGzipBytes": 93441,
+    "initialModules": [
+      "/_astro/BookPage.D34IcaVY.js",
+      "/_astro/client.DW6xmEpB.js",
+      "/_astro/jsx-runtime.Z10vqQGc.js",
+      "/_astro/react.CD6hyuMb.js"
+    ],
+    "errors": []
+  },
+  "artifactManifestSHA256": "ed1d81193033c8d82d723c37a7c541fdceb166bc9c49165228fe0c5649963766",
+  "newDependencies": 0,
+  "productionChanged": false,
+  "notes": [
+    "Chromium in Linux with emulated viewport widths. No physical-device or cross-browser certification.",
+    "Original project evidence and dependency lockfile are retained unchanged.",
+    "Five of six sampled initial views matched the original at an 8-channel pixel threshold. Desktop contact differed by 578 pixels out of 1296000, localized to native controls.",
+    "No claimed field speed or conversion improvement.",
+    "Source import is via a review branch; main-only deployment gate retained."
+  ]
+}

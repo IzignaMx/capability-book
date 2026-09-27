@@ -13,3 +13,7 @@ artifacts/evidence-summary.md
 .logs/
 audit/
 tests/e2e/visual-regression.spec.ts-snapshots/
+.astro-atlas/
+
+/node_modules
+/docs/book-*-checks.json

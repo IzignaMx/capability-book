@@ -1,0 +1,16 @@
+---
+import Page from '../layouts/Page.astro';
+import {BookPage} from '../book/BookPage';
+import {allRoutes,parseRoute,pathFor,getProject,type BookRoute} from '../book/model';
+export function getStaticPaths(){return allRoutes.map(path=>({params:{path:path.replace(/^\/+|\/+$/g,'')},props:{route:parseRoute(path)!}}));}
+interface Props {route:BookRoute;}
+const {route}=Astro.props,l=route.locale,p=route.slug?getProject(route.slug):null;
+const titles={home:['El trabajo, en perspectiva','The work, in perspective'],projects:['Índice de proyectos','Project index'],case:[p?.es.title||'',p?.en.title||''],approach:['Enfoque y evidencia','Approach and evidence'],map:['Constelación de proyectos','Project constellation'],compare:['Comparar capacidades','Compare capabilities'],contact:['Hablemos de tu proyecto','Let’s talk about your project'],privacy:['Privacidad','Privacy'],accessibility:['Accesibilidad','Accessibility']};
+const title=titles[route.page][l==='es'?0:1]+' | IzignaMx Book';
+const description=p?.[l].elevatorPitch||(l==='es'?'Explora seis proyectos de IzignaMx a través de sus decisiones, arquitectura y evidencia. Experiencias web, comercio, datos y tecnología con impacto.':'Explore six IzignaMx projects through their decisions, architecture and evidence. Web experiences, commerce, data and technology with impact.');
+const structuredData={'@context':'https://schema.org','@type':p?'CreativeWork':'WebPage',name:title,description,url:'https://book.izignamx.com'+pathFor(l,route.page,route.slug),inLanguage:l,creator:{'@type':'Organization',name:'IzignaMx',url:'https://izignamx.com/'}};
+---
+<Page title={title} description={description} path={pathFor(l,route.page,route.slug)} locale={l} alternate={pathFor(l==='es'?'en':'es',route.page,route.slug)} noindex={route.page==='compare'}>
+<script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g,'\\u003c')}/>
+<BookPage route={route} client:load/>
+</Page>
