@@ -37,6 +37,8 @@ Shared project evidence is exported as `public/portfolio-catalog.json`. After ap
 
 The main workflow intentionally preserves its original job IDs. The independent evidence workflow also retains its evidence, public-link and capture audits, now using frozen dependency installation.
 
+The three browser jobs use `ubuntu-24.04`, supported by the frozen Playwright 1.55.0 dependency. `ubuntu-latest` moved to Ubuntu 26.04, where that version cannot install Chromium. The quality and deployment gates remain intact; browser tests and accessibility checks are not skipped.
+
 ## Safety and rollback
 
 Original Astro source remains in `src/`. Its build, preview and browser checks are available as `build:legacy`, `preview:legacy` and `test:e2e:legacy`. The migration does not rewrite project history or change the six evidence records. Rollback can revert the integration PR and rerun the original pipeline. No forced push is required.
