@@ -80,10 +80,10 @@ describe('shared Atlas grammar', () => {
   });
 
   it('keeps pending lazy art visible and rechecks a completed request when the phase changes', () => {
-    const complete = vi.spyOn(HTMLImageElement.prototype, 'complete', 'get').mockImplementation(function () {
+    const complete = vi.spyOn(HTMLImageElement.prototype, 'complete', 'get').mockImplementation(function (this: HTMLImageElement) {
       return this.src.includes('trajectory') || this.src.includes('weave');
     });
-    const naturalWidth = vi.spyOn(HTMLImageElement.prototype, 'naturalWidth', 'get').mockImplementation(function () {
+    const naturalWidth = vi.spyOn(HTMLImageElement.prototype, 'naturalWidth', 'get').mockImplementation(function (this: HTMLImageElement) {
       return this.src.includes('weave') ? 1600 : 0;
     });
     try {

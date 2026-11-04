@@ -33,11 +33,7 @@
   margin: -25px -24px 0 0;
   pointer-events: none;
 }
-/* Progress is written by the shared event-batched native-scroll owner. */
-.bk-discovery[data-atlas-motion="active"] .bk-atlas-sculpture {
-  transform: translateY(calc(var(--atlas-progress, 0) * -24px));
-}
-.bk-atlas-sculpture:has(> [hidden]) {
+.bk-atlas-sculpture:not(:has(> .bk-folio-art:not([hidden]))) {
   height: 0;
   margin: 0;
 }
@@ -166,7 +162,7 @@
   height: 160px;
   pointer-events: none;
 }
-.bk-atlas-disciplines > div:first-of-type > a {
+.bk-atlas-disciplines > .bk-atlas-discipline-copy > a {
   display: inline-flex;
   align-items: center;
   gap: 20px;
@@ -175,7 +171,7 @@
   font-size: 14px;
   color: var(--bk-link);
 }
-.bk-atlas-disciplines > div:first-of-type {
+.bk-atlas-disciplines > .bk-atlas-discipline-copy {
   padding-bottom: 160px;
 }
 .bk-atlas-archive-heading {
@@ -263,7 +259,7 @@
     grid-template-columns: 1fr;
     gap: 32px;
   }
-  .bk-atlas-disciplines > div:first-of-type {
+  .bk-atlas-disciplines > .bk-atlas-discipline-copy {
     padding: 0 32% 0 0;
   }
   .bk-atlas-discipline-art {
@@ -396,7 +392,7 @@
   .bk-discovery .bk-atlas-disciplines {
     padding-block: 55px;
   }
-  .bk-atlas-disciplines > div:first-of-type {
+  .bk-atlas-disciplines > .bk-atlas-discipline-copy {
     padding: 0;
   }
   .bk-atlas-discipline-art {
@@ -464,4 +460,67 @@
     width: 100%;
     margin: 24px 0;
   }
+}
+
+/* Local reading surfaces are coordinated by one native owner on Home. The second
+   pose is always lazy, never an eager hidden resource. Paused surfaces retain
+   their last values without a CSS animation or delayed transition. */
+.bk-reading-folio {
+  position: relative;
+  isolation: isolate;
+  pointer-events: none;
+}
+.bk-reading-folio > .bk-reading-pose {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.bk-reading-folio > .bk-reading-destination {
+  opacity: 0;
+}
+.bk-reading-folio[data-atlas-motion="active"],
+.bk-reading-folio[data-atlas-motion="paused"] {
+  --folio-blend: clamp(0, calc((var(--atlas-progress, 0) - .45) / .35), 1);
+}
+.bk-reading-folio:is([data-atlas-motion="active"], [data-atlas-motion="paused"]) > .bk-reading-origin {
+  opacity: calc(1 - var(--folio-blend));
+  transform: translateY(calc(var(--folio-blend) * -12px)) rotate(calc(var(--folio-blend) * -2deg));
+}
+.bk-reading-folio:is([data-atlas-motion="active"], [data-atlas-motion="paused"]) > .bk-reading-destination {
+  opacity: var(--folio-blend);
+  transform: translateY(calc((1 - var(--folio-blend)) * 12px)) rotate(calc((1 - var(--folio-blend)) * 2deg));
+}
+/* Keep the surviving pose complete when either image fails. */
+.bk-reading-folio:has(> .bk-reading-destination[hidden]) > .bk-reading-origin,
+.bk-reading-folio:has(> .bk-reading-origin[hidden]) > .bk-reading-destination {
+  opacity: 1;
+  transform: none;
+}
+@media (min-width: 681px) and (max-width: 900px) {
+  .bk-discovery .bk-atlas-showcase:not(:has(> .bk-atlas-sculpture > .bk-folio-art:not([hidden]))) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 680px) {
+  .bk-atlas-curated > article:not(:first-child) .bk-card-signature,
+  .bk-atlas-games .bk-games-grid > div:nth-child(2) .bk-card-signature,
+  .bk-atlas-archive .bk-archive-grid .bk-card-title-row .bk-card-signature {
+    flex-basis: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bk-discovery .bk-reading-folio > .bk-reading-origin { opacity: 1; transform: none; }
+  .bk-discovery .bk-reading-folio > .bk-reading-destination { opacity: 0; transform: none; }
+}
+
+@media (min-width: 681px) {
+  .bk-reading-folio.bk-atlas-section-art,
+  .bk-reading-folio.bk-atlas-discipline-art { position: absolute; }
+}
+
+.bk-compare-columns .bk-compare-signature {
+  width: 62px;
+  height: 38px;
+  margin-bottom: 16px;
 }

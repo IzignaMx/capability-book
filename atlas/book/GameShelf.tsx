@@ -1,6 +1,6 @@
 import {projects,projectCategories,pathFor,type Project,type Locale} from './model';
 import {Card,Icon,tx} from './Chrome';
-import {FolioArt} from './art/FolioArt';
+import {ReadingFolio} from './ReadingFolio';
 import './games.css';
 import './discovery-art.css';
 export function GameLink({project:p,locale:l}:{project:Project;locale:Locale}){
@@ -13,7 +13,7 @@ export function GameShelf({locale:l}:{locale:Locale}){
  const games=projects.filter(p=>projectCategories(p).includes('games'));
  if(!games.length)return null;
  return <section className="bk-game-shelf bk-atlas-games" aria-labelledby="book-games-title" data-folio-phase="weave">
-  <div className="bk-section-heading bk-atlas-section-heading"><FolioArt phase="weave" className="bk-atlas-section-art"/><p className="bk-kicker">{tx(l,'MUNDOS QUE SE JUEGAN','WORLDS YOU CAN PLAY')}</p><h2 id="book-games-title">{tx(l,'De explorar una ciudad\na regenerar una órbita.','From exploring a city\nto restoring an orbit.')}</h2><p className="bk-game-intro">{tx(l,'Dos experiencias originales de navegador. Capturas de partidas reales, decisiones de diseño y acceso a sus versiones jugables.','Two original browser experiences. Actual gameplay captures, design decisions and access to their playable releases.')}</p><a href={pathFor(l,'projects')+'?category=games'}>{tx(l,'Explorar los juegos','Explore the games')}<Icon name="right"/></a></div>
+  <div className="bk-section-heading bk-atlas-section-heading"><ReadingFolio phase="weave" nextPhase="constellation" className="bk-atlas-section-art"/><p className="bk-kicker">{tx(l,'MUNDOS QUE SE JUEGAN','WORLDS YOU CAN PLAY')}</p><h2 id="book-games-title">{tx(l,'De explorar una ciudad\na regenerar una órbita.','From exploring a city\nto restoring an orbit.')}</h2><p className="bk-game-intro">{tx(l,'Dos experiencias originales de navegador. Capturas de partidas reales, decisiones de diseño y acceso a sus versiones jugables.','Two original browser experiences. Actual gameplay captures, design decisions and access to their playable releases.')}</p><a href={pathFor(l,'projects')+'?category=games'}>{tx(l,'Explorar los juegos','Explore the games')}<Icon name="right"/></a></div>
   <div className="bk-games-grid">{games.map(p=><div key={p.slug}><Card project={p} locale={l} index={projects.indexOf(p)}/><GameLink project={p} locale={l}/></div>)}</div>
  </section>;
 }

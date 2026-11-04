@@ -13,12 +13,13 @@ import {
 import { Icon, tx, ProjectImage, EvidenceLabel, Card, ContactBand } from "./Chrome";
 import { FolioArt } from "./art/FolioArt";
 import { TrajectoryMark } from "./art/TrajectoryMark";
+import { ReadingFolio } from "./ReadingFolio";
 import { useAtlasMotion } from "./art/useAtlasMotion";
 import "./discovery-art.css";
 export function Home({ locale: l }: { locale: Locale }) {
   const [active, setActive] = useState(0);
   const atlas = useRef<HTMLDivElement>(null);
-  useAtlasMotion(atlas);
+  useAtlasMotion(atlas, { surfaces: "[data-atlas-surface]" });
   const p = projects[active] ?? projects[0];
   return (
     <div className="bk-discovery" ref={atlas}>
@@ -49,9 +50,7 @@ export function Home({ locale: l }: { locale: Locale }) {
           </div>
         </div>
         <div className="bk-hero-showcase bk-atlas-showcase">
-          <div className="bk-atlas-sculpture" aria-hidden="true">
-            <FolioArt phase="matter" eager />
-          </div>
+          <ReadingFolio phase="matter" nextPhase="trajectory" className="bk-atlas-sculpture" eager />
           <div className="bk-atlas-evidence">
             <div className="bk-atlas-evidence-register" aria-hidden="true">
               <span>{String(active + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</span>
@@ -98,7 +97,7 @@ export function Home({ locale: l }: { locale: Locale }) {
       </section>
       <section className="bk-selected bk-atlas-selected" aria-labelledby="bk-selected-title" data-folio-phase="trajectory">
         <div className="bk-section-heading bk-atlas-section-heading">
-          <FolioArt phase="trajectory" className="bk-atlas-section-art" />
+          <ReadingFolio phase="trajectory" nextPhase="weave" className="bk-atlas-section-art" />
           <p className="bk-kicker">{tx(l, "SELECCIÓN DE TRABAJO", "SELECTED WORK")}</p>
           <h2 id="bk-selected-title">
             {tx(
@@ -120,8 +119,8 @@ export function Home({ locale: l }: { locale: Locale }) {
       </section>
       <GameShelf locale={l} />
       <section className="bk-disciplines bk-atlas-disciplines" data-folio-phase="constellation">
-        <FolioArt phase="constellation" className="bk-atlas-discipline-art" />
-        <div>
+        <ReadingFolio phase="weave" nextPhase="constellation" className="bk-atlas-discipline-art" />
+        <div className="bk-atlas-discipline-copy">
           <h2>
             {tx(l, "La conexión\nentre disciplinas.", "The connection\nbetween disciplines.")}
           </h2>
@@ -345,7 +344,8 @@ export function Compare({ locale: l }: { locale: Locale }) {
   const chosen = projects.filter((p) => selected.includes(p.slug));
   return (
     <>
-      <header className="bk-page-heading">
+      <header className="bk-page-heading bk-support-heading">
+        <TrajectoryMark slug={selected[0] || "omnisync"} className="bk-support-signature" />
         <p className="bk-kicker">{tx(l, "LECTURA EN PARALELO", "SIDE BY SIDE")}</p>
         <h1>
           {tx(
@@ -402,6 +402,7 @@ export function Compare({ locale: l }: { locale: Locale }) {
             <article key={p.slug}>
               <ProjectImage project={p} locale={l} />
               <h2>{p[l].title}</h2>
+              <TrajectoryMark slug={p.slug} compact className="bk-compare-signature" />
               <EvidenceLabel project={p} locale={l} />
               <section>
                 <h3>{tx(l, "Qué resuelve", "What it addresses")}</h3>
