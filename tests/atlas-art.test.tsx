@@ -60,6 +60,46 @@ describe('shared Atlas grammar', () => {
     expect(container.querySelector('svg title')).toBeNull();
   });
 
+  it('hides an SSR image that finished failing before hydration without another error event', () => {
+    const content = <><h1>Available case</h1><FolioArt phase="matter" eager /></>;
+    const container = document.createElement('div');
+    container.innerHTML = renderToString(content);
+    document.body.appendChild(container);
+    const prerenderedImage = container.querySelector('img')!;
+    // The request has already failed; no error event will be replayed after hydration.
+    Object.defineProperties(prerenderedImage, {
+      complete: { configurable: true, value: true },
+      naturalWidth: { configurable: true, value: 0 },
+    });
+    const { unmount } = render(content, { container, hydrate: true });
+    expect(container.querySelector('img')).toBe(prerenderedImage);
+    expect(container.querySelector('picture')).toHaveAttribute('hidden');
+    expect(screen.getByRole('heading')).toBeVisible();
+    unmount();
+    container.remove();
+  });
+
+  it('keeps pending lazy art visible and rechecks a completed request when the phase changes', () => {
+    const complete = vi.spyOn(HTMLImageElement.prototype, 'complete', 'get').mockImplementation(function () {
+      return this.src.includes('trajectory') || this.src.includes('weave');
+    });
+    const naturalWidth = vi.spyOn(HTMLImageElement.prototype, 'naturalWidth', 'get').mockImplementation(function () {
+      return this.src.includes('weave') ? 1600 : 0;
+    });
+    try {
+      const { container, rerender } = render(<FolioArt phase="matter" />);
+      expect(container.querySelector('img')).toHaveAttribute('loading', 'lazy');
+      expect(container.querySelector('picture')).not.toHaveAttribute('hidden');
+      rerender(<FolioArt phase="trajectory" />);
+      expect(container.querySelector('picture')).toHaveAttribute('hidden');
+      rerender(<FolioArt phase="weave" />);
+      expect(container.querySelector('picture')).not.toHaveAttribute('hidden');
+    } finally {
+      complete.mockRestore();
+      naturalWidth.mockRestore();
+    }
+  });
+
   it('hides only failed artwork and can display another phase', () => {
     const { container, rerender } = render(<><h1>Available case</h1><FolioArt phase="matter" eager /></>);
     expect(container.querySelector('img')).toHaveAttribute('loading', 'eager');
