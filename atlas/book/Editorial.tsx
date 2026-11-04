@@ -1,5 +1,7 @@
 import { pathFor, type Locale, type Page } from "./model";
 import { tx, Icon, ContactBand } from "./Chrome";
+import { TrajectoryMark } from "./art/TrajectoryMark";
+import { FolioArt } from "./art/FolioArt";
 export function Approach({ locale: l }: { locale: Locale }) {
   const sections =
     l === "es"
@@ -41,9 +43,10 @@ export function Approach({ locale: l }: { locale: Locale }) {
         ];
   return (
     <>
-      <header className="bk-page-heading">
+      <header className="bk-page-heading bk-support-heading">
         <p className="bk-kicker">{tx(l, "CRITERIO ANTES QUE EFECTO", "JUDGMENT BEFORE EFFECT")}</p>
         <h1>{tx(l, "Lo que une\ntodo el trabajo.", "What connects\nall the work.")}</h1>
+        <TrajectoryMark slug="omnisync" className="bk-support-signature" />
         <p>
           {tx(
             l,
@@ -54,14 +57,16 @@ export function Approach({ locale: l }: { locale: Locale }) {
       </header>
       <div className="bk-approach">
         {sections.map(([t, b], i) => (
-          <section key={t}>
+          <section key={t} className="bk-approach-study">
             <span>{String(i + 1).padStart(2, "0")}</span>
+            <TrajectoryMark slug="omnisync" activePath={(i % 3) as 0 | 1 | 2} compact className="bk-approach-signature" />
             <h2>{t}</h2>
             <p>{b}</p>
           </section>
         ))}
       </div>
-      <section className="bk-impact">
+      <section className="bk-impact bk-art-impact">
+        <FolioArt phase="weave" className="bk-impact-folio" />
         <Icon name="orbit" />
         <h2>
           {tx(

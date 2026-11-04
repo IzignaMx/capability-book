@@ -2,6 +2,7 @@ import { useContextUrl } from "./useContextUrl";
 import { useEffect, useRef, useState, type SubmitEvent } from "react";
 import { projects, cleanSelection, prepareBrief, type Locale } from "./model";
 import { tx, Icon } from "./Chrome";
+import { TrajectoryMark } from "./art/TrajectoryMark";
 export function Brief({ locale: l }: { locale: Locale }) {
   const [interactive, setInteractive] = useState(false);
   useEffect(() => setInteractive(true), []);
@@ -76,9 +77,10 @@ export function Brief({ locale: l }: { locale: Locale }) {
         ];
   return (
     <>
-      <header className="bk-page-heading bk-brief-heading">
+      <header className="bk-page-heading bk-brief-heading bk-support-heading">
         <p className="bk-kicker">{tx(l, "EL SIGUIENTE CAPÍTULO", "THE NEXT CHAPTER")}</p>
         <h1>{tx(l, "Empecemos por\nuna buena pregunta.", "Let’s start with\na good question.")}</h1>
+        <TrajectoryMark slug={selection[0] || "omnisync"} className="bk-support-signature" />
         <p>
           {tx(
             l,

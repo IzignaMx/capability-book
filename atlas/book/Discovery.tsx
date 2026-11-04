@@ -1,6 +1,6 @@
 import {GameShelf} from "./GameShelf";
 import { useContextUrl } from "./useContextUrl";
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   projects,
   categories,
@@ -11,31 +11,21 @@ import {
   type Locale,
 } from "./model";
 import { Icon, tx, ProjectImage, EvidenceLabel, Card, ContactBand } from "./Chrome";
+import { FolioArt } from "./art/FolioArt";
+import { TrajectoryMark } from "./art/TrajectoryMark";
+import { ReadingFolio } from "./ReadingFolio";
+import { useAtlasMotion } from "./art/useAtlasMotion";
+import "./discovery-art.css";
 export function Home({ locale: l }: { locale: Locale }) {
-  const [active, setActive] = useState(0),
-    stage = useRef<HTMLAnchorElement>(null);
+  const [active, setActive] = useState(0);
+  const atlas = useRef<HTMLDivElement>(null);
+  useAtlasMotion(atlas, { surfaces: "[data-atlas-surface]" });
   const p = projects[active] ?? projects[0];
-  function pointer(e: PointerEvent<HTMLAnchorElement>) {
-    if (
-      !matchMedia("(hover:hover) and (pointer:fine)").matches ||
-      matchMedia("(prefers-reduced-motion:reduce)").matches
-    )
-      return;
-    const r = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty(
-      "--tilt-x",
-      `${Math.max(-3, Math.min(3, ((e.clientX - r.left) / r.width) * 6 - 3))}deg`,
-    );
-    e.currentTarget.style.setProperty(
-      "--tilt-y",
-      `${Math.max(-2, Math.min(2, 2 - ((e.clientY - r.top) / r.height) * 4))}deg`,
-    );
-  }
   return (
-    <>
-      <section className="bk-hero">
+    <div className="bk-discovery" ref={atlas}>
+      <section className="bk-hero bk-atlas-hero" data-folio-phase="matter">
         <div className="bk-hero-copy">
-          <p className="bk-kicker">{tx(l, "PORTAFOLIO / IZIGNAMX", "PORTFOLIO / IZIGNAMX")}</p>
+          <p className="bk-kicker">{tx(l, "PORTAFOLIO / IzignaMx", "PORTFOLIO / IzignaMx")}</p>
           <h1>
             {tx(l, "El trabajo.", "The work.")}
             <br />
@@ -59,68 +49,55 @@ export function Home({ locale: l }: { locale: Locale }) {
             </a>
           </div>
         </div>
-        <div className="bk-hero-showcase">
-          <div className="bk-orbital-lines" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </div>
-          <a
-            className="bk-evidence-deck"
-            ref={stage}
-            href={pathFor(l, "case", p.slug)}
-            onPointerMove={pointer}
-            onPointerLeave={(e) => {
-              e.currentTarget.style.setProperty("--tilt-x", "0deg");
-              e.currentTarget.style.setProperty("--tilt-y", "0deg");
-            }}
-          >
-            <div className="bk-deck-sheet bk-deck-back" aria-hidden="true" />
-            <div className="bk-deck-sheet bk-deck-middle" aria-hidden="true" />
-            <div className="bk-deck-front">
-              <div className="bk-window-chrome" aria-hidden="true">
-                <i />
-                <i />
-                <i />
-                <span>{p[l].title}</span>
-                <Icon name="external" />
-              </div>
-              <ProjectImage project={p} locale={l} eager />
-            </div>
-          </a>
-          <div className="bk-hero-caption">
-            <div aria-live="polite" aria-atomic="true">
-              <strong>{p[l].title}</strong>
-              <EvidenceLabel project={p} locale={l} />
+        <div className="bk-hero-showcase bk-atlas-showcase">
+          <ReadingFolio phase="matter" nextPhase="trajectory" className="bk-atlas-sculpture" eager entry />
+          <div className="bk-atlas-evidence">
+            <div className="bk-atlas-evidence-register" aria-hidden="true">
+              <span>{String(active + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</span>
+              <TrajectoryMark slug={p.slug} compact />
             </div>
             <a
+              className="bk-evidence-deck bk-atlas-capture"
               href={pathFor(l, "case", p.slug)}
               aria-label={tx(l, "Leer caso: ", "Read case: ") + p[l].title}
             >
-              <Icon />
+              <ProjectImage project={p} locale={l} />
             </a>
-          </div>
-          <div
-            className="bk-hero-selector"
-            role="group"
-            aria-label={tx(l, "Proyecto destacado", "Featured project")}
-          >
-            {projects.map((q, i) => (
-              <button
-                type="button"
-                key={q.slug}
-                onClick={() => setActive(i)}
-                aria-pressed={active === i}
-                aria-label={tx(l, "Ver ", "View ") + q[l].title}
+            <div className="bk-hero-caption">
+              <div aria-live="polite" aria-atomic="true">
+                <strong>{p[l].title}</strong>
+                <EvidenceLabel project={p} locale={l} />
+              </div>
+              <a
+                href={pathFor(l, "case", p.slug)}
+                aria-label={tx(l, "Leer caso: ", "Read case: ") + p[l].title}
               >
-                {String(i + 1).padStart(2, "0")}
-              </button>
-            ))}
+                <Icon />
+              </a>
+            </div>
+            <div
+              className="bk-hero-selector"
+              role="group"
+              aria-label={tx(l, "Proyecto destacado", "Featured project")}
+            >
+              {projects.map((q, i) => (
+                <button
+                  type="button"
+                  key={q.slug}
+                  onClick={() => setActive(i)}
+                  aria-pressed={active === i}
+                  aria-label={tx(l, "Ver ", "View ") + q[l].title}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
-      <section className="bk-selected" aria-labelledby="bk-selected-title">
-        <div className="bk-section-heading">
+      <section className="bk-selected bk-atlas-selected" aria-labelledby="bk-selected-title" data-folio-phase="trajectory">
+        <div className="bk-section-heading bk-atlas-section-heading">
+          <ReadingFolio phase="trajectory" nextPhase="weave" className="bk-atlas-section-art" />
           <p className="bk-kicker">{tx(l, "SELECCIÓN DE TRABAJO", "SELECTED WORK")}</p>
           <h2 id="bk-selected-title">
             {tx(
@@ -134,15 +111,16 @@ export function Home({ locale: l }: { locale: Locale }) {
             <Icon name="right" />
           </a>
         </div>
-        <div className="bk-curated-grid">
+        <div className="bk-curated-grid bk-atlas-curated">
           {["hamburguesa-nomada", "omnisync", "tecuiyo", "vald"].flatMap(slug => { const item = getProject(slug); return item ? [item] : []; }).map((p) => (
             <Card key={p.slug} project={p} locale={l} index={projects.indexOf(p)} />
           ))}
         </div>
       </section>
       <GameShelf locale={l} />
-      <section className="bk-disciplines">
-        <div>
+      <section className="bk-disciplines bk-atlas-disciplines" data-folio-phase="constellation">
+        <ReadingFolio phase="weave" nextPhase="constellation" staticPhase="constellation" className="bk-atlas-discipline-art" />
+        <div className="bk-atlas-discipline-copy">
           <h2>
             {tx(l, "La conexión\nentre disciplinas.", "The connection\nbetween disciplines.")}
           </h2>
@@ -175,7 +153,7 @@ export function Home({ locale: l }: { locale: Locale }) {
         </div>
       </section>
       <ContactBand locale={l} />
-    </>
+    </div>
   );
 }
 export function Archive({ locale: l }: { locale: Locale }) {
@@ -211,8 +189,9 @@ export function Archive({ locale: l }: { locale: Locale }) {
       );
   }
   return (
-    <>
-      <header className="bk-page-heading">
+    <div className="bk-atlas-archive">
+      <header className="bk-page-heading bk-atlas-archive-heading">
+        <FolioArt phase="trajectory" className="bk-atlas-archive-art" />
         <p className="bk-kicker">{tx(l, "EL ARCHIVO", "THE ARCHIVE")}</p>
         <h1>{tx(l, "Proyectos,\nsin intermediarios.", "Projects,\nwithout the gloss.")}</h1>
         <p>
@@ -352,7 +331,7 @@ export function Archive({ locale: l }: { locale: Locale }) {
         </div>
       </section>
       <ContactBand locale={l} projectIds={selected} />
-    </>
+    </div>
   );
 }
 export function Compare({ locale: l }: { locale: Locale }) {
@@ -365,7 +344,8 @@ export function Compare({ locale: l }: { locale: Locale }) {
   const chosen = projects.filter((p) => selected.includes(p.slug));
   return (
     <>
-      <header className="bk-page-heading">
+      <header className="bk-page-heading bk-support-heading">
+        <TrajectoryMark slug={selected[0] || "omnisync"} className="bk-support-signature" />
         <p className="bk-kicker">{tx(l, "LECTURA EN PARALELO", "SIDE BY SIDE")}</p>
         <h1>
           {tx(
@@ -422,6 +402,7 @@ export function Compare({ locale: l }: { locale: Locale }) {
             <article key={p.slug}>
               <ProjectImage project={p} locale={l} />
               <h2>{p[l].title}</h2>
+              <TrajectoryMark slug={p.slug} compact className="bk-compare-signature" />
               <EvidenceLabel project={p} locale={l} />
               <section>
                 <h3>{tx(l, "Qué resuelve", "What it addresses")}</h3>

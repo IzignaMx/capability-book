@@ -1,0 +1,23 @@
+/* Shared atlas stations and signatures frame the folio; there are no decorative orbits. */
+.bk-map-passive{position:absolute;inset:0;overflow:hidden;pointer-events:none;background:var(--bk-bg)}
+.bk-map-folio{position:absolute;width:64%;left:18%;top:16%;opacity:.9}
+.bk-map-folio img{width:100%;height:100%;object-fit:contain}
+.bk-map-stage .bk-map-static{color:var(--bk-link);z-index:1}
+.bk-map-registration{stroke:var(--bk-line);stroke-width:1}
+.bk-map-fold{stroke:var(--bk-link);stroke-width:.7;opacity:.22}
+.bk-map-connection{stroke:var(--bk-link);stroke-width:.8;opacity:.2}
+.bk-map-signature{stroke:var(--bk-link);stroke-width:1;opacity:.55;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round}
+.bk-map-station circle{fill:var(--bk-blue)}
+.bk-map-stage .bk-map-static text{fill:var(--bk-muted);font:13px Aileron,sans-serif;letter-spacing:.08em}
+.bk-map-station.is-selected .bk-map-signature,.bk-map-station.is-selected .bk-map-connection{stroke:var(--bk-text);opacity:1}
+.bk-map-station.is-selected circle{fill:var(--bk-text)}
+.bk-map-stage .is-selected text{fill:var(--bk-text)}
+.bk-map-station-register{stroke:var(--bk-link);stroke-width:1}
+.bk-map-canvas{z-index:2;opacity:0;pointer-events:none}
+.bk-map-stage.is-live .bk-map-canvas{opacity:1;pointer-events:auto}
+.bk-map-stage.is-live .bk-map-passive{visibility:hidden}
+.bk-map-caption{z-index:3}
+.bk-map-loading{z-index:3;inset:auto 20px 45px;min-height:44px;background:var(--bk-bg);border:1px solid var(--bk-line);pointer-events:none}
+.bk-map-projects .bk-map-button-signature{width:44px;height:28px;flex:0 0 44px}
+@media(max-width:600px){.bk-map-folio{width:68%;left:16%;height:64%;top:16%}.bk-map-folio img{height:100%}.bk-map-stage .bk-map-static text{font-size:26px}.bk-map-projects .bk-map-button-signature{width:36px;flex-basis:36px}}
+@media(forced-colors:active){.bk-map-folio,.bk-map-canvas{display:none}.bk-map-stage.is-live .bk-map-passive{visibility:visible}.bk-map-connection,.bk-map-signature,.bk-map-fold{stroke:CanvasText;opacity:1}.bk-map-registration{stroke:GrayText}.bk-map-station.is-selected .bk-map-signature,.bk-map-station.is-selected .bk-map-connection,.bk-map-station-register{stroke:Highlight}.bk-map-station circle{fill:CanvasText}.bk-map-station.is-selected circle{fill:Highlight}.bk-map-stage .bk-map-static text{fill:CanvasText}}

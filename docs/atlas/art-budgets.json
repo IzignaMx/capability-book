@@ -1,0 +1,137 @@
+{
+  "limits": {
+    "mobilePoster": 184320,
+    "desktopPoster": 327680,
+    "model": 716800,
+    "bootstrapGzip": 256000,
+    "deferredTransfer": 1572864
+  },
+  "measurement": "Each unique deferred JS static/dynamic descendant is gzip level 9; shared initial modules count conservatively. Transfer is JS gzip plus raw embedded GLB bytes. Posters use raw bytes.",
+  "assets": [
+    {
+      "path": "/art/folio/matter-mobile.avif",
+      "bytes": 8273,
+      "sha256": "845384ca83f2f34a54678451fd07b69a2d46cccabc2ec86af3a3039b095f843e",
+      "width": 800,
+      "height": 1000
+    },
+    {
+      "path": "/art/folio/matter-mobile.webp",
+      "bytes": 15814,
+      "sha256": "acf036f8e91ab4d2accebb9ef60c56ae036fde9dd2c74efb76bba2246dd424c8",
+      "width": 800,
+      "height": 1000
+    },
+    {
+      "path": "/art/folio/matter-desktop.avif",
+      "bytes": 14127,
+      "sha256": "a61ea996e330986ba5e94ff8f6fa724ee241abb3a9cfac0d834c486cb308d05c",
+      "width": 1600,
+      "height": 1100
+    },
+    {
+      "path": "/art/folio/matter-desktop.webp",
+      "bytes": 28688,
+      "sha256": "b73b365ada8b03762d90852f3b2e81daa671632117af65b80e8b4983fd919a9e",
+      "width": 1600,
+      "height": 1100
+    },
+    {
+      "path": "/art/folio/trajectory-mobile.avif",
+      "bytes": 14279,
+      "sha256": "1b344c009c61e0872c4c15e18dc997c45683d44bcdc01b2e5041c75f55cbe6d7",
+      "width": 800,
+      "height": 1000
+    },
+    {
+      "path": "/art/folio/trajectory-mobile.webp",
+      "bytes": 25678,
+      "sha256": "97466b3a79f22f340c023ab3dc8bd5b6815614679f4ea9f1308ac76119894446",
+      "width": 800,
+      "height": 1000
+    },
+    {
+      "path": "/art/folio/trajectory-desktop.avif",
+      "bytes": 23157,
+      "sha256": "a5ea7869df447b7f868b444478283789e7c9e9bef74867bf846c82616a32d74c",
+      "width": 1600,
+      "height": 1100
+    },
+    {
+      "path": "/art/folio/trajectory-desktop.webp",
+      "bytes": 44104,
+      "sha256": "b9500353cba29a5f13b2bf651c5437c9fb957079332554c61f5e1dc6a49e1ed6",
+      "width": 1600,
+      "height": 1100
+    },
+    {
+      "path": "/art/folio/weave-mobile.avif",
+      "bytes": 15195,
+      "sha256": "eaefad0467287899a84d34d79b2f96a5f8da46e1d5ea7103d57333d697157e70",
+      "width": 800,
+      "height": 1000
+    },
+    {
+      "path": "/art/folio/weave-mobile.webp",
+      "bytes": 26930,
+      "sha256": "5a85ea73c03f6fc5541d0cd2b7a6e59369708cac8392ee18c18d97f0ec1c0e44",
+      "width": 800,
+      "height": 1000
+    },
+    {
+      "path": "/art/folio/weave-desktop.avif",
+      "bytes": 24905,
+      "sha256": "f52d4c85ff61265e9bacf3e1b142c73f1e926a38808ca2a8db3123c068f41305",
+      "width": 1600,
+      "height": 1100
+    },
+    {
+      "path": "/art/folio/weave-desktop.webp",
+      "bytes": 45926,
+      "sha256": "ceb1c7bb4c79c890398251eeb8b268eb7e43530eb00c1b26fe8dcda93310012c",
+      "width": 1600,
+      "height": 1100
+    },
+    {
+      "path": "/art/folio/constellation-mobile.avif",
+      "bytes": 15957,
+      "sha256": "466b78f97eb1038a45a388151f250a829cf766806f1c95476ff59e2ca480c8c4",
+      "width": 800,
+      "height": 1000
+    },
+    {
+      "path": "/art/folio/constellation-mobile.webp",
+      "bytes": 27816,
+      "sha256": "760e8a8370f2f2991e4a5951ef73a9665adc8d37eb51c3775306ce225459eb43",
+      "width": 800,
+      "height": 1000
+    },
+    {
+      "path": "/art/folio/constellation-desktop.avif",
+      "bytes": 25817,
+      "sha256": "5da4cdc0c0cef464f4dd9f2a544d4c7b862b9cc8452afdfc5b1dcd9681fceec2",
+      "width": 1600,
+      "height": 1100
+    },
+    {
+      "path": "/art/folio/constellation-desktop.webp",
+      "bytes": 47368,
+      "sha256": "1926b63555f77c6db2383c283b4ecd681db022e11a3ffca2479ce0b273ddec22",
+      "width": 1600,
+      "height": 1100
+    },
+    {
+      "path": "/art/folio/folio.glb",
+      "bytes": 451972,
+      "sha256": "b9c48437516a09724896119cd01713460c8df84e78ecb3088f8914a756a8a529"
+    }
+  ],
+  "deferredModules": [
+    "_astro/ConstellationRuntime.DEDYmYCd.js",
+    "_astro/Map.Kyywu0Ow.js",
+    "_astro/react.CD6hyuMb.js"
+  ],
+  "bootstrapGzipBytes": 188039,
+  "deferredTransferBytes": 640011,
+  "errors": []
+}

@@ -1,75 +1,101 @@
-import { lazy, Suspense, useCallback, useEffect, useState } from "react";
+import { Component, lazy, Suspense, useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { projects, pathFor, type Locale } from "./model";
 import { tx, Icon, ProjectImage, EvidenceLabel, ContactBand } from "./Chrome";
-const Runtime = lazy(() =>
-  import("./ConstellationRuntime").then((m) => ({ default: m.ConstellationRuntime })),
-);
-function StaticMap({ selected }: { selected: number }) {
+import { projectSignature } from "./art/trajectories";
+import { TrajectoryMark } from "./art/TrajectoryMark";
+import { FolioArt } from "./art/FolioArt";
+import "./map-art.css";
+
+/** Authored atlas stations shared by the SVG and the explicitly loaded spatial scene. */
+export const mapStations: readonly (readonly [number, number, number])[] = [
+  [-2.65, 1.8, -.3], [-.7, 2.2, -.5], [2.25, 1.8, .1], [3.1, .15, .4],
+  [2.5, -1.9, .1], [.5, -2.2, .5], [-2.25, -1.9, .1], [-3.1, -.15, -.1],
+];
+
+class SceneBoundary extends Component<{ children: ReactNode; onError: () => void }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() { return { failed: true }; }
+  componentDidCatch() { this.props.onError(); }
+  render() { return this.state.failed ? null : this.props.children; }
+}
+
+export function StaticMap({ selected }: { selected: number }) {
   return (
-    <svg
-      className="bk-map-static"
-      viewBox="0 0 800 560"
-      role="img"
-      aria-label={`Mapa geométrico de ${projects.length} proyectos / ${projects.length}-project geometric map`}
-    >
-      <g fill="none" stroke="currentColor" strokeWidth="1">
-        <ellipse cx="400" cy="280" rx="250" ry="125" transform="rotate(-20 400 280)" />
-        <ellipse cx="400" cy="280" rx="245" ry="120" transform="rotate(45 400 280)" />
-        <ellipse cx="400" cy="280" rx="235" ry="110" transform="rotate(100 400 280)" />
-      </g>
-      {projects.map((p, i) => {
-        const a = (i * Math.PI * 2) / projects.length - 0.4,
-          x = 400 + Math.cos(a) * 250,
-          y = 280 + Math.sin(a) * 170;
-        return (
-          <g key={p.slug}>
-            <path
-              d={`M400 280Q${x} 220 ${x} ${y}`}
-              stroke="currentColor"
-              opacity=".4"
-              fill="none"
-            />
-            <circle
-              cx={x}
-              cy={y}
-              r={i === selected ? 10 : 5}
-              fill={i === selected ? "#e0edff" : "#3b82f6"}
-            />
-            <text x={x + 15} y={y + 5}>
-              {String(i + 1).padStart(2, "0")}
-            </text>
-          </g>
-        );
-      })}
-      <path d="m400 245 34 20v40l-34 20-34-20v-40Z" fill="#1b3155" stroke="#7eb9ff" />
-      <path d="m366 265 34 22 34-22m-34 22v38" stroke="#7eb9ff" fill="none" />
-    </svg>
+    <div className="bk-map-passive">
+      <FolioArt phase="constellation" className="bk-map-folio" />
+      <svg className="bk-map-static" viewBox="0 0 800 560" role="img"
+        aria-label={`Atlas de ${projects.length} proyectos / ${projects.length}-project atlas`}>
+        <g className="bk-map-registration" fill="none">
+          <path d="M35 65V35h30M735 35h30v30M35 495v30h30M735 525h30v-30M380 35h40M380 525h40" />
+          <path d="M35 280h16M749 280h16M400 35v16M400 509v16" />
+        </g>
+        {/* A restrained fold drawing remains legible if the decorative poster is unavailable. */}
+        <g className="bk-map-fold" fill="none">
+          {Array.from({ length: 8 }, (_, i) => {
+            const leaf = i % 4;
+            const x = i < 4 ? 332 + leaf * 11 : 480 - leaf * 11;
+            const y = i < 4 ? 160 + leaf * 17 : 179 + leaf * 17;
+            const d = i < 4
+              ? `M400 403C340 366 284 272 ${x} ${y}L${x + 22} ${y + 37}C320 284 356 373 400 403Z`
+              : `M400 403C468 365 528 280 ${x} ${y}L${x - 24} ${y + 34}C504 292 452 375 400 403Z`;
+            return <path key={i} d={d} />;
+          })}
+        </g>
+        {projects.map((p, i) => {
+          const station = mapStations[i]!;
+          const x = 400 + station[0] * 90, y = 280 - station[1] * 90;
+          return <g key={p.slug} data-map-project={p.slug}
+            className={`bk-map-station${i === selected ? " is-selected" : ""}`}>
+            <path className="bk-map-connection" d={`M${400 + station[0] * 19} ${280 - station[1] * 19}Q${400 + station[0] * 47} ${y} ${x} ${y}`} fill="none" />
+            <g transform={`translate(${x - 64.4} ${y - 32.9}) scale(.23)`} fill="none">
+              {projectSignature(p.slug).map((d, j) => <path className="bk-map-signature" d={d} key={j} />)}
+            </g>
+            <circle cx={x} cy={y} r={i === selected ? 5 : 3} />
+            <text x={x - 56} y={y - 35}>{String(i + 1).padStart(2, "0")}</text>
+            {i === selected && <path className="bk-map-station-register" d={`M${x - 68} ${y - 43}v-8h14M${x + 52} ${y + 36}v8h-14`} fill="none" />}
+          </g>;
+        })}
+      </svg>
+    </div>
   );
 }
 export function MapPage({ locale: l }: { locale: Locale }) {
   const [resetEpoch, setResetEpoch] = useState(0);
+  const [attempt, setAttempt] = useState(0), [ready, setReady] = useState(false);
+  const Runtime = useMemo(() => lazy(() => import("./ConstellationRuntime")
+    .then((m) => ({ default: m.ConstellationRuntime }))), [attempt]);
   const [selected, setSelected] = useState(0),
     [active, setActive] = useState(false),
     [failed, setFailed] = useState(false),
     [reduced, setReduced] = useState(true),
+    [forcedColors, setForcedColors] = useState(false),
     [playing, setPlaying] = useState(false),
     [spread, setSpread] = useState(1),
     [zoom, setZoom] = useState(10);
   useEffect(() => {
-    const q = matchMedia("(prefers-reduced-motion:reduce)");
+    const q = matchMedia("(prefers-reduced-motion:reduce)"), colors = matchMedia("(forced-colors:active)");
     const sync = () => {
       setReduced(q.matches);
+      setForcedColors(colors.matches);
+      if (colors.matches) setActive(false);
       if (q.matches) setPlaying(false);
     };
     sync();
     q.addEventListener("change", sync);
-    return () => q.removeEventListener("change", sync);
+    colors.addEventListener("change", sync);
+    return () => { q.removeEventListener("change", sync); colors.removeEventListener("change", sync); };
   }, []);
   const onSelect = useCallback((i: number) => setSelected(Math.max(0, Math.min(projects.length - 1, i))), []),
     onError = useCallback(() => {
       setFailed(true);
       setActive(false);
     }, []);
+  const onReady = useCallback(() => setReady(true), []);
+  useEffect(() => {
+    if (!active || ready) return;
+    const timeout = window.setTimeout(onError, 12000);
+    return () => window.clearTimeout(timeout);
+  }, [active, ready, onError, attempt]);
   const p = projects[selected] ?? projects[0];
   return (
     <>
@@ -93,8 +119,11 @@ export function MapPage({ locale: l }: { locale: Locale }) {
           <button
             type="button"
             aria-pressed={active}
+            disabled={forcedColors}
             onClick={() => {
               setFailed(false);
+              setReady(false);
+              if (!active) setAttempt((n) => n + 1);
               setActive(!active);
               setPlaying(!reduced);
             }}
@@ -104,15 +133,11 @@ export function MapPage({ locale: l }: { locale: Locale }) {
           </button>
         </div>
         <div className="bk-map-layout">
-          <div className="bk-map-stage">
-            {active ? (
-              <Suspense
-                fallback={
-                  <div className="bk-map-loading">
-                    {tx(l, "Preparando la constelación…", "Preparing the constellation…")}
-                  </div>
-                }
-              >
+          <div className={`bk-map-stage${ready && active ? " is-live" : ""}`}>
+            <StaticMap selected={selected} />
+            {active && (
+              <SceneBoundary key={attempt} onError={onError}>
+              <Suspense fallback={null}>
                 <Runtime
                   count={projects.length}
                   resetEpoch={resetEpoch}
@@ -123,11 +148,14 @@ export function MapPage({ locale: l }: { locale: Locale }) {
                   reduced={reduced}
                   onSelect={onSelect}
                   onError={onError}
+                  onReady={onReady}
                 />
               </Suspense>
-            ) : (
-              <StaticMap selected={selected} />
+              </SceneBoundary>
             )}
+            {active && !ready && <div className="bk-map-loading" role="status">
+              {tx(l, "Preparando la constelación…", "Preparing the constellation…")}
+            </div>}
             <span className="bk-map-caption">
               {tx(
                 l,
@@ -150,6 +178,7 @@ export function MapPage({ locale: l }: { locale: Locale }) {
                   onClick={() => setSelected(i)}
                 >
                   <span>{String(i + 1).padStart(2, "0")}</span>
+                  <TrajectoryMark slug={p.slug} compact className="bk-map-button-signature" />
                   {p[l].title}
                   <Icon name="right" />
                 </button>
@@ -215,6 +244,7 @@ export function MapPage({ locale: l }: { locale: Locale }) {
             "Arrastra para girar. Flechas izquierda y derecha para rotar con teclado. Usa los botones para seleccionar cualquier proyecto.",
             "Drag to rotate. Left and right arrows rotate with the keyboard. Use the buttons to select any project.",
           )}
+          {forcedColors && " " + tx(l, "Colores forzados: atlas estático completo.", "Forced colors: complete static atlas.")}
           {reduced &&
             " " +
               tx(
