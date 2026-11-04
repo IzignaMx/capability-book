@@ -1,0 +1,656 @@
+{
+  "schemaVersion": 1,
+  "artwork": "Folio de trayectorias",
+  "createdAt": "2026-11-04",
+  "palette": [
+    "#3b82f6",
+    "#90c0ff",
+    "#0f1115"
+  ],
+  "paidExploration": {
+    "approvedResults": 2,
+    "quotedTotalCredits": 2.5,
+    "additionalPaidCalls": 0,
+    "studies": [
+      {
+        "jobId": "29d89ee4-e04f-4da4-a10d-8b559d667c43",
+        "status": "completed",
+        "model": "Recraft V4.1",
+        "requestedSettings": {
+          "aspectRatio": "16:9",
+          "resolution": "1k"
+        },
+        "actualDimensions": [
+          1344,
+          768
+        ],
+        "prompt": null,
+        "promptRecovered": false,
+        "promptAvailabilityNote": "Exact original prompt was not retained in recovered session; intent summary is not a verbatim prompt.",
+        "intentSummary": "Explore an original eight-leaf sculptural editorial folio in the existing blue, graphite, pale and cyan palette; no interface text or fabricated project screens.",
+        "usedAs": "Visual form/material exploration only; not a production render or texture",
+        "visuallyInspected": true,
+        "source": {
+          "bytes": 1008324,
+          "sha256": "682d3d79723d59c547957910defa150b99cb74171e206e094efd014c9aecc93a"
+        }
+      },
+      {
+        "jobId": "9fa047ea-f0c4-492d-ba13-d06ca72ed18e",
+        "status": "completed",
+        "model": "Recraft V4.1",
+        "requestedSettings": {
+          "aspectRatio": "16:9",
+          "resolution": "1k"
+        },
+        "actualDimensions": [
+          1344,
+          768
+        ],
+        "prompt": null,
+        "promptRecovered": false,
+        "promptAvailabilityNote": "Exact original prompt was not retained in recovered session; intent summary is not a verbatim prompt.",
+        "intentSummary": "Explore an original eight-leaf sculptural editorial folio in the existing blue, graphite, pale and cyan palette; no interface text or fabricated project screens.",
+        "usedAs": "Visual form/material exploration only; not a production render or texture",
+        "visuallyInspected": true,
+        "source": {
+          "bytes": 1080647,
+          "sha256": "6e62f17dd7dce6950fb34955a4f406ac5d2fb5da79d7344d0e28a734d03dd623"
+        }
+      }
+    ]
+  },
+  "scene": {
+    "provider": "Higgsfield 3D Jutsu",
+    "projectId": "b153b6b8-a123-4766-85f5-38893605280e",
+    "name": "IzignaMx Book · Folio de trayectorias",
+    "visibility": "private",
+    "revision": 6,
+    "blender": "5.2.0 LTS",
+    "renderer": "BLENDER_EEVEE",
+    "sourceRecipe": {
+      "path": "scripts/art/folio-scene.py",
+      "bytes": 7522,
+      "sha256": "c5cb0a3236fe5a6470a3690c9111eecf5e92821619c60a85a28449c86248e379"
+    },
+    "originalProceduralGeometry": true,
+    "importedCatalogAssets": 0,
+    "externalTextures": 0,
+    "leaves": 8,
+    "leafManifoldCheck": {
+      "operationId": "folio-delivery-weave-mobile-06",
+      "nonmanifoldEdgesPerLeaf": 0
+    },
+    "routeInlays": 24,
+    "sharedJunction": true,
+    "poses": [
+      "matter",
+      "trajectory",
+      "weave",
+      "constellation"
+    ],
+    "poseMethod": "Four static shape keys on the same topology; trajectory also equals Basis. No timeline animation.",
+    "material": "Plain Principled BSDF blue with pale cut edges and surface-fitted editorial route inlays.",
+    "camera": {
+      "blenderPosition": [
+        6.36,
+        -8.76,
+        3.5
+      ],
+      "blenderTarget": [
+        0.36,
+        0.24,
+        0.08
+      ],
+      "projection": "orthographic",
+      "desktopScale": 7.5,
+      "mobileScale": 7.4
+    },
+    "sourceGlb": {
+      "bytes": 1729072,
+      "sha256": "dc9f2a3b530432adfb0a8b57aceace1be08598b7cfa208395acd7c923b9e8eb2"
+    },
+    "editableBlend": {
+      "bytes": 2392790,
+      "sha256": "7ad2f03727992a4cbf306fc5a899834a08ed3b4cd11b1289ab2c45d837bbaf36"
+    }
+  },
+  "productionModel": {
+    "path": "/art/folio/folio.glb",
+    "sourceRevision": 6,
+    "representation": "Actual committed scene geometry, static trajectory pose",
+    "optimization": "Removed unused morph targets/weights, camera and light nodes; pruned unused accessors and deduplicated materials with glTF Transform 4.4.1. No mesh simplification or procedural counterpart.",
+    "sourceRetainsFourEditablePoses": true,
+    "runtimeView": "Visitor-activated WebGL constellation only",
+    "upAxis": "Y",
+    "frontAxis": "+Z",
+    "bounds": {
+      "min": [
+        -1.9120720624923706,
+        -1.8950000256299973,
+        -1.2063462734222412
+      ],
+      "max": [
+        1.912072777748108,
+        2.167171001434326,
+        0.7825102806091309
+      ]
+    },
+    "dimensions": [
+      3.8241448402404785,
+      4.062171027064323,
+      1.988856554031372
+    ],
+    "center": [
+      0,
+      0.13608548790216446,
+      -0.21191799640655518
+    ],
+    "triangles": 19664,
+    "drawMeshes": 41,
+    "materials": 3,
+    "leafNodeNames": [
+      "HERO_leaf_01",
+      "HERO_leaf_02",
+      "HERO_leaf_03",
+      "HERO_leaf_04",
+      "HERO_leaf_05",
+      "HERO_leaf_06",
+      "HERO_leaf_07",
+      "HERO_leaf_08"
+    ],
+    "verifiedWith": "Three.js GLTFLoader parse, bounds and mesh inspection; browser canvas inspected by map integration owner"
+  },
+  "renderArtifacts": [
+    {
+      "phase": "trajectory",
+      "operationId": "folio-delivery-trajectory-06",
+      "revision": 6,
+      "id": "00511a94f76cda9fb4b074035e585d63",
+      "name": "trajectory-desktop.png",
+      "width": 1600,
+      "height": 1100,
+      "bytes": 1013082,
+      "sha256": "38337c587fb9ac354403aba38c83a3b6db652d9a99c19a790db5cfcf188a120e",
+      "alpha": true,
+      "visuallyInspected": true
+    },
+    {
+      "phase": "trajectory",
+      "operationId": "folio-delivery-trajectory-06",
+      "revision": 6,
+      "id": "48363d82caaae3a9851124b259ab3bb8",
+      "name": "trajectory-mobile.png",
+      "width": 800,
+      "height": 1000,
+      "bytes": 448618,
+      "sha256": "c97af026f63cdff08d1b2aa236fd6897360dbea2a6e16f3f2550ef8c3787f4fe",
+      "alpha": true,
+      "visuallyInspected": true
+    },
+    {
+      "phase": "matter",
+      "operationId": "folio-delivery-matter-06",
+      "revision": 6,
+      "id": "2a482375de92c62bd961f4421225a622",
+      "name": "matter-desktop.png",
+      "width": 1600,
+      "height": 1100,
+      "bytes": 890571,
+      "sha256": "68c29e91396a60b06e8783367e17684becdb156af02208faf819b2abee447682",
+      "alpha": true,
+      "visuallyInspected": true
+    },
+    {
+      "phase": "matter",
+      "operationId": "folio-delivery-matter-06",
+      "revision": 6,
+      "id": "f519431fc201701bf47357631f2144b8",
+      "name": "matter-mobile.png",
+      "width": 800,
+      "height": 1000,
+      "bytes": 383504,
+      "sha256": "bd23cfea588d65ec4fcce5ffabb0143e94b1fe052947d83ab4ff28fff5a88bdf",
+      "alpha": true,
+      "visuallyInspected": true
+    },
+    {
+      "phase": "constellation",
+      "operationId": "folio-delivery-constellation-06",
+      "revision": 6,
+      "id": "a0943a07273afad8ae98f1257e6ed6a0",
+      "name": "constellation-desktop.png",
+      "width": 1600,
+      "height": 1100,
+      "bytes": 1088795,
+      "sha256": "971dfa014d92759145f06e2d5bb7de1fb936abfff8e146e89695a4a4ac6a2de5",
+      "alpha": true,
+      "visuallyInspected": true
+    },
+    {
+      "phase": "constellation",
+      "operationId": "folio-delivery-constellation-06",
+      "revision": 6,
+      "id": "a97c7e6e57c53cb74c8ae818add3f287",
+      "name": "constellation-mobile.png",
+      "width": 800,
+      "height": 1000,
+      "bytes": 481634,
+      "sha256": "7642f0f9ec165ae8759c414399e531c16c512e57633f707cc65408f2a88588b2",
+      "alpha": true,
+      "visuallyInspected": true
+    },
+    {
+      "phase": "weave",
+      "operationId": "folio-delivery-weave-desktop-06",
+      "revision": 6,
+      "id": "f0265b57bff0645b79dfac3c92b033c8",
+      "name": "weave-desktop.png",
+      "width": 1600,
+      "height": 1100,
+      "bytes": 1051608,
+      "sha256": "a4dbe5597465b809f2926d17ebad487ac782c4dc01c9ac44ba656104ac0f25fb",
+      "alpha": true,
+      "visuallyInspected": true
+    },
+    {
+      "phase": "weave",
+      "operationId": "folio-delivery-weave-mobile-06",
+      "revision": 6,
+      "id": "ca963e943c9f857fd6b5d23f2e9419c0",
+      "name": "weave-mobile.png",
+      "width": 800,
+      "height": 1000,
+      "bytes": 464803,
+      "sha256": "1fab0bba2d3b8ba4ade2c5a9a422442c318e311366153a85591760566d75a4a1",
+      "alpha": true,
+      "visuallyInspected": true
+    }
+  ],
+  "derivation": {
+    "tool": "Sharp",
+    "version": "0.35.3",
+    "resized": false,
+    "cropped": false,
+    "alphaPreserved": true,
+    "avif": {
+      "quality": 72,
+      "effort": 6,
+      "chromaSubsampling": "4:4:4"
+    },
+    "webp": {
+      "quality": 88,
+      "effort": 6,
+      "alphaQuality": 100
+    }
+  },
+  "limitations": [
+    "Original exact Recraft prompt strings were not recovered; known intent is explicitly separate.",
+    "Production GLB contains the trajectory pose; the four static PNG poses and editable Blender source retain the other shapes.",
+    "Runtime WebGL lighting differs from the EEVEE studio renders."
+  ],
+  "framingVerification": [
+    {
+      "phase": "matter",
+      "variant": "desktop",
+      "width": 1600,
+      "height": 1100,
+      "alphaBounds": [
+        573,
+        104,
+        971,
+        956
+      ],
+      "margins": [
+        573,
+        104,
+        628,
+        143
+      ]
+    },
+    {
+      "phase": "matter",
+      "variant": "mobile",
+      "width": 800,
+      "height": 1000,
+      "alphaBounds": [
+        256,
+        218,
+        508,
+        757
+      ],
+      "margins": [
+        256,
+        218,
+        291,
+        242
+      ]
+    },
+    {
+      "phase": "trajectory",
+      "variant": "desktop",
+      "width": 1600,
+      "height": 1100,
+      "alphaBounds": [
+        435,
+        70,
+        1187,
+        956
+      ],
+      "margins": [
+        435,
+        70,
+        412,
+        143
+      ]
+    },
+    {
+      "phase": "trajectory",
+      "variant": "mobile",
+      "width": 800,
+      "height": 1000,
+      "alphaBounds": [
+        168,
+        196,
+        645,
+        757
+      ],
+      "margins": [
+        168,
+        196,
+        154,
+        242
+      ]
+    },
+    {
+      "phase": "weave",
+      "variant": "desktop",
+      "width": 1600,
+      "height": 1100,
+      "alphaBounds": [
+        388,
+        58,
+        1262,
+        956
+      ],
+      "margins": [
+        388,
+        58,
+        337,
+        143
+      ]
+    },
+    {
+      "phase": "weave",
+      "variant": "mobile",
+      "width": 800,
+      "height": 1000,
+      "alphaBounds": [
+        139,
+        188,
+        692,
+        757
+      ],
+      "margins": [
+        139,
+        188,
+        107,
+        242
+      ]
+    },
+    {
+      "phase": "constellation",
+      "variant": "desktop",
+      "width": 1600,
+      "height": 1100,
+      "alphaBounds": [
+        336,
+        46,
+        1336,
+        956
+      ],
+      "margins": [
+        336,
+        46,
+        263,
+        143
+      ]
+    },
+    {
+      "phase": "constellation",
+      "variant": "mobile",
+      "width": 800,
+      "height": 1000,
+      "alphaBounds": [
+        106,
+        181,
+        739,
+        757
+      ],
+      "margins": [
+        106,
+        181,
+        60,
+        242
+      ]
+    }
+  ],
+  "sceneShownOnceAtRevision": 6,
+  "assets": [
+    {
+      "path": "/art/folio/matter-desktop.avif",
+      "phase": "matter",
+      "variant": "desktop",
+      "format": "avif",
+      "width": 1600,
+      "height": 1100,
+      "bytes": 14127,
+      "sha256": "a61ea996e330986ba5e94ff8f6fa724ee241abb3a9cfac0d834c486cb308d05c",
+      "alpha": true,
+      "quality": 72,
+      "sourcePngSha256": "68c29e91396a60b06e8783367e17684becdb156af02208faf819b2abee447682"
+    },
+    {
+      "path": "/art/folio/matter-desktop.webp",
+      "phase": "matter",
+      "variant": "desktop",
+      "format": "webp",
+      "width": 1600,
+      "height": 1100,
+      "bytes": 28688,
+      "sha256": "b73b365ada8b03762d90852f3b2e81daa671632117af65b80e8b4983fd919a9e",
+      "alpha": true,
+      "quality": 88,
+      "sourcePngSha256": "68c29e91396a60b06e8783367e17684becdb156af02208faf819b2abee447682"
+    },
+    {
+      "path": "/art/folio/matter-mobile.avif",
+      "phase": "matter",
+      "variant": "mobile",
+      "format": "avif",
+      "width": 800,
+      "height": 1000,
+      "bytes": 8273,
+      "sha256": "845384ca83f2f34a54678451fd07b69a2d46cccabc2ec86af3a3039b095f843e",
+      "alpha": true,
+      "quality": 72,
+      "sourcePngSha256": "bd23cfea588d65ec4fcce5ffabb0143e94b1fe052947d83ab4ff28fff5a88bdf"
+    },
+    {
+      "path": "/art/folio/matter-mobile.webp",
+      "phase": "matter",
+      "variant": "mobile",
+      "format": "webp",
+      "width": 800,
+      "height": 1000,
+      "bytes": 15814,
+      "sha256": "acf036f8e91ab4d2accebb9ef60c56ae036fde9dd2c74efb76bba2246dd424c8",
+      "alpha": true,
+      "quality": 88,
+      "sourcePngSha256": "bd23cfea588d65ec4fcce5ffabb0143e94b1fe052947d83ab4ff28fff5a88bdf"
+    },
+    {
+      "path": "/art/folio/trajectory-desktop.avif",
+      "phase": "trajectory",
+      "variant": "desktop",
+      "format": "avif",
+      "width": 1600,
+      "height": 1100,
+      "bytes": 23157,
+      "sha256": "a5ea7869df447b7f868b444478283789e7c9e9bef74867bf846c82616a32d74c",
+      "alpha": true,
+      "quality": 72,
+      "sourcePngSha256": "38337c587fb9ac354403aba38c83a3b6db652d9a99c19a790db5cfcf188a120e"
+    },
+    {
+      "path": "/art/folio/trajectory-desktop.webp",
+      "phase": "trajectory",
+      "variant": "desktop",
+      "format": "webp",
+      "width": 1600,
+      "height": 1100,
+      "bytes": 44104,
+      "sha256": "b9500353cba29a5f13b2bf651c5437c9fb957079332554c61f5e1dc6a49e1ed6",
+      "alpha": true,
+      "quality": 88,
+      "sourcePngSha256": "38337c587fb9ac354403aba38c83a3b6db652d9a99c19a790db5cfcf188a120e"
+    },
+    {
+      "path": "/art/folio/trajectory-mobile.avif",
+      "phase": "trajectory",
+      "variant": "mobile",
+      "format": "avif",
+      "width": 800,
+      "height": 1000,
+      "bytes": 14279,
+      "sha256": "1b344c009c61e0872c4c15e18dc997c45683d44bcdc01b2e5041c75f55cbe6d7",
+      "alpha": true,
+      "quality": 72,
+      "sourcePngSha256": "c97af026f63cdff08d1b2aa236fd6897360dbea2a6e16f3f2550ef8c3787f4fe"
+    },
+    {
+      "path": "/art/folio/trajectory-mobile.webp",
+      "phase": "trajectory",
+      "variant": "mobile",
+      "format": "webp",
+      "width": 800,
+      "height": 1000,
+      "bytes": 25678,
+      "sha256": "97466b3a79f22f340c023ab3dc8bd5b6815614679f4ea9f1308ac76119894446",
+      "alpha": true,
+      "quality": 88,
+      "sourcePngSha256": "c97af026f63cdff08d1b2aa236fd6897360dbea2a6e16f3f2550ef8c3787f4fe"
+    },
+    {
+      "path": "/art/folio/weave-desktop.avif",
+      "phase": "weave",
+      "variant": "desktop",
+      "format": "avif",
+      "width": 1600,
+      "height": 1100,
+      "bytes": 24905,
+      "sha256": "f52d4c85ff61265e9bacf3e1b142c73f1e926a38808ca2a8db3123c068f41305",
+      "alpha": true,
+      "quality": 72,
+      "sourcePngSha256": "a4dbe5597465b809f2926d17ebad487ac782c4dc01c9ac44ba656104ac0f25fb"
+    },
+    {
+      "path": "/art/folio/weave-desktop.webp",
+      "phase": "weave",
+      "variant": "desktop",
+      "format": "webp",
+      "width": 1600,
+      "height": 1100,
+      "bytes": 45926,
+      "sha256": "ceb1c7bb4c79c890398251eeb8b268eb7e43530eb00c1b26fe8dcda93310012c",
+      "alpha": true,
+      "quality": 88,
+      "sourcePngSha256": "a4dbe5597465b809f2926d17ebad487ac782c4dc01c9ac44ba656104ac0f25fb"
+    },
+    {
+      "path": "/art/folio/weave-mobile.avif",
+      "phase": "weave",
+      "variant": "mobile",
+      "format": "avif",
+      "width": 800,
+      "height": 1000,
+      "bytes": 15195,
+      "sha256": "eaefad0467287899a84d34d79b2f96a5f8da46e1d5ea7103d57333d697157e70",
+      "alpha": true,
+      "quality": 72,
+      "sourcePngSha256": "1fab0bba2d3b8ba4ade2c5a9a422442c318e311366153a85591760566d75a4a1"
+    },
+    {
+      "path": "/art/folio/weave-mobile.webp",
+      "phase": "weave",
+      "variant": "mobile",
+      "format": "webp",
+      "width": 800,
+      "height": 1000,
+      "bytes": 26930,
+      "sha256": "5a85ea73c03f6fc5541d0cd2b7a6e59369708cac8392ee18c18d97f0ec1c0e44",
+      "alpha": true,
+      "quality": 88,
+      "sourcePngSha256": "1fab0bba2d3b8ba4ade2c5a9a422442c318e311366153a85591760566d75a4a1"
+    },
+    {
+      "path": "/art/folio/constellation-desktop.avif",
+      "phase": "constellation",
+      "variant": "desktop",
+      "format": "avif",
+      "width": 1600,
+      "height": 1100,
+      "bytes": 25817,
+      "sha256": "5da4cdc0c0cef464f4dd9f2a544d4c7b862b9cc8452afdfc5b1dcd9681fceec2",
+      "alpha": true,
+      "quality": 72,
+      "sourcePngSha256": "971dfa014d92759145f06e2d5bb7de1fb936abfff8e146e89695a4a4ac6a2de5"
+    },
+    {
+      "path": "/art/folio/constellation-desktop.webp",
+      "phase": "constellation",
+      "variant": "desktop",
+      "format": "webp",
+      "width": 1600,
+      "height": 1100,
+      "bytes": 47368,
+      "sha256": "1926b63555f77c6db2383c283b4ecd681db022e11a3ffca2479ce0b273ddec22",
+      "alpha": true,
+      "quality": 88,
+      "sourcePngSha256": "971dfa014d92759145f06e2d5bb7de1fb936abfff8e146e89695a4a4ac6a2de5"
+    },
+    {
+      "path": "/art/folio/constellation-mobile.avif",
+      "phase": "constellation",
+      "variant": "mobile",
+      "format": "avif",
+      "width": 800,
+      "height": 1000,
+      "bytes": 15957,
+      "sha256": "466b78f97eb1038a45a388151f250a829cf766806f1c95476ff59e2ca480c8c4",
+      "alpha": true,
+      "quality": 72,
+      "sourcePngSha256": "7642f0f9ec165ae8759c414399e531c16c512e57633f707cc65408f2a88588b2"
+    },
+    {
+      "path": "/art/folio/constellation-mobile.webp",
+      "phase": "constellation",
+      "variant": "mobile",
+      "format": "webp",
+      "width": 800,
+      "height": 1000,
+      "bytes": 27816,
+      "sha256": "760e8a8370f2f2991e4a5951ef73a9665adc8d37eb51c3775306ce225459eb43",
+      "alpha": true,
+      "quality": 88,
+      "sourcePngSha256": "7642f0f9ec165ae8759c414399e531c16c512e57633f707cc65408f2a88588b2"
+    },
+    {
+      "path": "/art/folio/folio.glb",
+      "format": "glb",
+      "phase": "trajectory",
+      "bytes": 451972,
+      "sha256": "b9c48437516a09724896119cd01713460c8df84e78ecb3088f8914a756a8a529"
+    }
+  ]
+}
