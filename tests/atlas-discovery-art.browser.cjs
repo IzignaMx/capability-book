@@ -16,13 +16,21 @@ const read = surface => surface.evaluate(element => ({
   transform: getComputedStyle(element.querySelector('.bk-reading-destination')).transform,
 }));
 async function position(page, surface, progress) {
-  await surface.evaluate((element, value) => {
+  const target = await surface.evaluate((element, value) => {
     const rect = element.getBoundingClientRect();
     const top = innerHeight - value * (innerHeight + rect.height);
-    scrollTo(0, Math.max(0, scrollY + rect.top - top));
+    const target = Math.max(0, Math.min(document.documentElement.scrollHeight - innerHeight, scrollY + rect.top - top));
+    scrollTo({left:0, top:target, behavior:'instant'});
+    return target;
   }, progress);
+  await page.waitForFunction(target => Math.abs(scrollY - target) < 1, target);
   await tick(page);
   await page.waitForFunction(element => [...element.querySelectorAll('img')].every(image => image.complete && image.naturalWidth > 0), await surface.elementHandle());
+}
+async function resetTop(page) {
+  await page.evaluate(() => scrollTo({left:0, top:0, behavior:'instant'}));
+  await page.waitForFunction(() => scrollY === 0);
+  await tick(page);
 }
 (async () => {
   mkdirSync(shots, {recursive:true});
@@ -65,11 +73,11 @@ async function position(page, surface, progress) {
         check(width+' section '+index+' evolves while visible', settled.motion==='active' && settled.destination>entry.destination+.1, {entry,settled});
       }
       await page.emulateMedia({reducedMotion:'reduce'});
-      await page.evaluate(() => scrollTo(0,0)); await tick(page);
-      check(width+' reduced motion immediately shows complete static poses', await surfaces.evaluateAll(elements => elements.every(element => element.dataset.atlasMotion==='static' && getComputedStyle(element.querySelector('.bk-reading-origin')).opacity==='1' && getComputedStyle(element.querySelector('.bk-reading-destination')).opacity==='0')));
+      await resetTop(page);
+      check(width+' reduced motion immediately shows complete static poses', await surfaces.evaluateAll(elements => elements.every(element => element.dataset.atlasMotion==='static' && getComputedStyle(element.querySelector('.bk-reading-origin')).opacity===(element.dataset.staticPose==='destination'?'0':'1') && getComputedStyle(element.querySelector('.bk-reading-destination')).opacity===(element.dataset.staticPose==='destination'?'1':'0'))));
       await page.screenshot({path:join(shots,`home-${width}-reduced.png`)});
       await page.emulateMedia({reducedMotion:'no-preference'});
-      await page.evaluate(() => scrollTo(0,0)); await tick(page);
+      await resetTop(page);
       const previousTitle = await page.locator('.bk-hero-caption strong').textContent();
       await page.locator('.bk-hero-selector button').nth(1).focus();
       await page.keyboard.press('Enter');
@@ -94,6 +102,7 @@ async function position(page, surface, progress) {
     const nojs = await browser.newPage({javaScriptEnabled:false,viewport:{width:390,height:844}});
     await nojs.goto(base+'/es/',{waitUntil:'networkidle'});
     check('no-JS home has complete static origin and direct actions',await nojs.locator('.bk-hero-explore').count()===1 && await nojs.locator('.bk-reading-folio').first().evaluate(element=>getComputedStyle(element.querySelector('.bk-reading-origin')).opacity==='1'&&getComputedStyle(element.querySelector('.bk-reading-destination')).opacity==='0'));
+    check('no-JS discipline completes the constellation phase',await nojs.locator('.bk-atlas-discipline-art').evaluate(element=>element.dataset.readingStatic==='constellation' && getComputedStyle(element.querySelector('.bk-reading-origin')).opacity==='0' && getComputedStyle(element.querySelector('.bk-reading-destination')).opacity==='1'));
     await nojs.goto(base+'/es/proyectos/',{waitUntil:'networkidle'});
     check('no-JS catalog retains all eight cases',await nojs.locator('.bk-archive-grid article').count()===8);
     await nojs.close();

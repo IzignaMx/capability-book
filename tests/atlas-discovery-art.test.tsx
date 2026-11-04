@@ -64,12 +64,40 @@ describe('Discovery reading-driven art consumer', () => {
     const surfaces = [...element.querySelectorAll('[data-atlas-surface]')];
     expect(surfaces.map(surface => [surface.getAttribute('data-reading-from'), surface.getAttribute('data-reading-to')]))
       .toEqual([['matter', 'trajectory'], ['trajectory', 'weave'], ['weave', 'constellation'], ['weave', 'constellation']]);
+    expect(surfaces.map(surface => surface.getAttribute('data-reading-static')))
+      .toEqual(['matter', 'trajectory', 'weave', 'constellation']);
+    expect(surfaces[3]).toHaveAttribute('data-static-pose', 'destination');
     surfaces.forEach(surface => {
       expect(surface).not.toHaveAttribute('data-atlas-motion');
       expect(surface.querySelector('.bk-reading-origin')).not.toHaveAttribute('hidden');
       expect(surface.querySelector('.bk-reading-destination img')).toHaveAttribute('loading', 'lazy');
     });
     expect(element.querySelector('.bk-evidence-deck img')).toHaveAttribute('alt');
+  });
+
+  it('uses the completed constellation as the final static fallback while retaining both transition poses', () => {
+    const { container, rerender } = render(<ReadingFolio phase="weave" nextPhase="constellation" staticPhase="constellation" />);
+    const surface = container.querySelector('[data-atlas-surface]')!;
+    expect(surface).toHaveAttribute('data-static-pose', 'destination');
+    expect(surface).toHaveAttribute('data-reading-static', 'constellation');
+    expect(surface.querySelector('.bk-reading-origin')).toHaveAttribute('data-folio-phase', 'weave');
+    expect(surface.querySelector('.bk-reading-destination')).toHaveAttribute('data-folio-phase', 'constellation');
+    rerender(<ReadingFolio phase="matter" nextPhase="trajectory" staticPhase="constellation" />);
+    expect(surface).toHaveAttribute('data-static-pose', 'origin');
+    expect(surface).toHaveAttribute('data-reading-static', 'matter');
+  });
+
+  it.each(['reduced', 'observer unavailable'])('keeps the final completed fallback with %s motion', mode => {
+    if (mode === 'reduced') queries.get(reduced)!.matches = true;
+    else vi.stubGlobal('IntersectionObserver', undefined);
+    const { container } = render(<Home locale="en" />);
+    const final = container.querySelector('.bk-atlas-discipline-art')!;
+    expect(final).toHaveAttribute('data-atlas-motion', 'static');
+    expect(final).toHaveAttribute('data-reading-static', 'constellation');
+    expect(final).toHaveAttribute('data-static-pose', 'destination');
+    expect(final.querySelector('.bk-reading-origin')).toHaveAttribute('data-folio-phase', 'weave');
+    expect(final.querySelector('.bk-reading-destination')).toHaveAttribute('data-folio-phase', 'constellation');
+    expect(frames.size).toBe(0);
   });
 
   it('updates local visible progress forward and backward using one frame and no root movement', () => {

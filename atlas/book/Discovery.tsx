@@ -119,7 +119,7 @@ export function Home({ locale: l }: { locale: Locale }) {
       </section>
       <GameShelf locale={l} />
       <section className="bk-disciplines bk-atlas-disciplines" data-folio-phase="constellation">
-        <ReadingFolio phase="weave" nextPhase="constellation" className="bk-atlas-discipline-art" />
+        <ReadingFolio phase="weave" nextPhase="constellation" staticPhase="constellation" className="bk-atlas-discipline-art" />
         <div className="bk-atlas-discipline-copy">
           <h2>
             {tx(l, "La conexión\nentre disciplinas.", "The connection\nbetween disciplines.")}

@@ -466,6 +466,8 @@
    pose is always lazy, never an eager hidden resource. Paused surfaces retain
    their last values without a CSS animation or delayed transition. */
 .bk-reading-folio {
+  --folio-static-origin: 1;
+  --folio-static-destination: 0;
   position: relative;
   isolation: isolate;
   pointer-events: none;
@@ -476,8 +478,15 @@
   width: 100%;
   height: 100%;
 }
+.bk-reading-folio[data-static-pose="destination"] {
+  --folio-static-origin: 0;
+  --folio-static-destination: 1;
+}
+.bk-reading-folio > .bk-reading-origin {
+  opacity: var(--folio-static-origin);
+}
 .bk-reading-folio > .bk-reading-destination {
-  opacity: 0;
+  opacity: var(--folio-static-destination);
 }
 .bk-reading-folio[data-atlas-motion="active"],
 .bk-reading-folio[data-atlas-motion="paused"] {
@@ -510,8 +519,8 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bk-discovery .bk-reading-folio > .bk-reading-origin { opacity: 1; transform: none; }
-  .bk-discovery .bk-reading-folio > .bk-reading-destination { opacity: 0; transform: none; }
+  .bk-discovery .bk-reading-folio > .bk-reading-origin { opacity: var(--folio-static-origin); transform: none; }
+  .bk-discovery .bk-reading-folio > .bk-reading-destination { opacity: var(--folio-static-destination); transform: none; }
 }
 
 @media (min-width: 681px) {
