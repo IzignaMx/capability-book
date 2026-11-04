@@ -24,7 +24,13 @@ expected_content_pages=16+2*len(catalog)
 errors=[];pages={}
 for f in root.rglob('*.html'):
  path='/'+f.relative_to(root).as_posix();path=path[:-10] if path.endswith('index.html') else path
- doc=Page();doc.feed(f.read_text());pages[path]=doc
+ html=f.read_text();doc=Page();doc.feed(html);pages[path]=doc
+ if '<astro-island' in html:
+  start=html.find('<!--email_off-->');end=html.find('<!--/email_off-->')
+  if html.count('<!--email_off-->')!=1 or html.count('<!--/email_off-->')!=1 or not 0<=start<html.index('<astro-island')<html.rindex('</astro-island>')<end:
+   errors.append(path+': React island must be inside Cloudflare email_off comments')
+  if '__cf_email__' in html or '/cdn-cgi/l/email-protection' in html:
+   errors.append(path+': email markup was rewritten before delivery')
  if doc.h1!=1:errors.append(path+': expected one h1')
  if doc.lang not in ['es-MX','en']:errors.append(path+': invalid language')
  if not doc.canonical.startswith('https://book.izignamx.com/'):errors.append(path+': invalid canonical')
