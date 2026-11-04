@@ -1,8 +1,11 @@
 import {GameLink} from "./GameShelf";
 import {DecisionStudy} from "./DecisionStudy";
-import {CaseNavigation} from "./CaseNavigation";
+import {CaseNavigation, readingPhase} from "./CaseNavigation";
 import {RelatedCases} from "./RelatedCases";
 import "./reading.css";
+import "./case-art.css";
+import { TrajectoryMark } from "./art/TrajectoryMark";
+import { FolioArt } from "./art/FolioArt";
 import { linkSegments } from "./inline";
 import { useRef, useState } from "react";
 import { projects, pathFor, mainCategory, type Locale, type Project } from "./model";
@@ -27,6 +30,7 @@ export function Case({ project: p, locale: l }: { project: Project; locale: Loca
     image = p.media[0],
     [device, setDevice] = useState<"desktop" | "mobile">("desktop"),
     [native, setNative] = useState(false),
+    [phase, setPhase] = useState(0),
     dialog = useRef<HTMLDialogElement>(null),
     trigger = useRef<HTMLButtonElement>(null);
   const sibling = projects[(projects.indexOf(p) + 1) % projects.length] ?? p;
@@ -39,7 +43,8 @@ export function Case({ project: p, locale: l }: { project: Project; locale: Loca
         </a>
         <span>{c.title}</span>
       </nav>
-      <header className="bk-case-heading">
+      <header className="bk-case-heading bk-case-atlas-heading">
+        <div className="bk-case-opening-copy">
         <p className="bk-kicker">
           {mainCategory(p, l)} / {String(projects.indexOf(p) + 1).padStart(2, "0")}
         </p>
@@ -52,6 +57,12 @@ export function Case({ project: p, locale: l }: { project: Project; locale: Loca
           </a>
         </div>
         <GameLink project={p} locale={l} />
+        </div>
+        <div className="bk-case-opening-art" aria-hidden="true">
+          <FolioArt phase="trajectory" className="bk-case-folio" />
+          <TrajectoryMark slug={p.slug} activePath={phase} className="bk-case-opening-signature" />
+          <span className="bk-case-registration">{String(projects.indexOf(p) + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</span>
+        </div>
       </header>
       <div className="bk-case-facts">
         <div>
@@ -134,12 +145,13 @@ export function Case({ project: p, locale: l }: { project: Project; locale: Loca
           <p>{image.caption[l]}</p>
         </div>
       </dialog>
-      <DecisionStudy project={p} locale={l} />
+      <DecisionStudy project={p} locale={l} activePhase={phase} onPhaseChange={setPhase} />
       <div className="bk-case-narrative">
-        <CaseNavigation chapters={c.chapters} locale={l} />
+        <CaseNavigation chapters={c.chapters} locale={l} projectSlug={p.slug} activePhase={phase} onPhaseChange={setPhase} />
         <div className="bk-case-prose">
           {c.chapters.map((ch, i) => (
-            <section id={"chapter-" + i} key={i}>
+            <section id={"chapter-" + i} key={i} data-reading-phase={readingPhase("chapter-" + i)} data-phase-active={phase === readingPhase("chapter-" + i)}>
+              <span className="bk-case-chapter-number" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
               <h2>{ch.title}</h2>
               {ch.blocks.map((b, j) =>
                 b.type === "list" ? (
