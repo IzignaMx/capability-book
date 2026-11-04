@@ -50,7 +50,7 @@ export function Home({ locale: l }: { locale: Locale }) {
           </div>
         </div>
         <div className="bk-hero-showcase bk-atlas-showcase">
-          <ReadingFolio phase="matter" nextPhase="trajectory" className="bk-atlas-sculpture" eager />
+          <ReadingFolio phase="matter" nextPhase="trajectory" className="bk-atlas-sculpture" eager entry />
           <div className="bk-atlas-evidence">
             <div className="bk-atlas-evidence-register" aria-hidden="true">
               <span>{String(active + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</span>

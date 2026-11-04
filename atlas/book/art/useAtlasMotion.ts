@@ -192,7 +192,12 @@ function coordinateSurfaces(root: HTMLElement, selector: string, enabled: boolea
         pause(element);
         continue;
       }
-      const phase = atlasPhase((window.innerHeight - rect.top) / (window.innerHeight + rect.height));
+      // The opening artwork rests at page entry, then evolves during its own
+      // visible reading distance. Later surfaces follow their viewport crossing.
+      const progress = element.dataset.atlasProgress === 'entry'
+        ? window.scrollY / Math.max(rect.height, 1)
+        : (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+      const phase = atlasPhase(progress);
       element.dataset.atlasMotion = 'active';
       element.dataset.atlasStage = phase.name;
       element.style.setProperty('--atlas-progress', String(phase.progress));

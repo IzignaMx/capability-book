@@ -533,3 +533,13 @@
   height: 38px;
   margin-bottom: 16px;
 }
+
+/* Local poster planes retain their explicit dimensions even when shared art CSS
+   is emitted later by another island. */
+.bk-reading-folio > .bk-reading-pose > img {
+  height: 100%;
+  object-fit: contain;
+}
+.bk-reading-folio.bk-atlas-sculpture:is([data-atlas-motion="active"], [data-atlas-motion="paused"]) {
+  --folio-blend: clamp(0, calc(var(--atlas-progress, 0) / .65), 1);
+}

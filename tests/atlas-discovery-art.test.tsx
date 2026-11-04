@@ -6,11 +6,11 @@ import { ReadingFolio } from '../atlas/book/ReadingFolio';
 import { Home } from '../atlas/book/Discovery';
 import { useAtlasMotion } from '../atlas/book/art/useAtlasMotion';
 
-function Reading({ enabled = true }: { enabled?: boolean }) {
+function Reading({ enabled = true, entry = false }: { enabled?: boolean; entry?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   useAtlasMotion(ref, { enabled, surfaces: '[data-atlas-surface]' });
   return <div ref={ref} data-testid="owner"><h1>Readable work</h1><a href="/es/proyectos/">Explore projects</a>
-    <ReadingFolio phase="matter" nextPhase="trajectory" className="first" eager />
+    <ReadingFolio phase="matter" nextPhase="trajectory" className="first" eager entry={entry} />
     <ReadingFolio phase="trajectory" nextPhase="weave" className="second" />
   </div>;
 }
@@ -32,6 +32,7 @@ describe('Discovery reading-driven art consumer', () => {
   });
   beforeEach(() => {
     frames = new Map(); serial = 0;
+    vi.stubGlobal('scrollY', 0);
     positions = { first: 250, second: 1500 };
     vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
       const top = this.classList.contains('first') ? positions.first! : positions.second!;
@@ -120,6 +121,22 @@ describe('Discovery reading-driven art consumer', () => {
     expect(frames.size).toBe(0);
     expect(listen.mock.calls.filter(([event]) => event === 'scroll')).toHaveLength(1);
     expect(listen.mock.calls.filter(([event]) => event === 'resize')).toHaveLength(1);
+  });
+
+  it('keeps the hero at completed matter on entry and evolves only with real reversible page reading', () => {
+    const { container } = render(<Reading entry />);
+    const first = container.querySelector<HTMLElement>('.first')!;
+    flush();
+    expect(first).toHaveAttribute('data-atlas-stage', 'matter');
+    expect(first.style.getPropertyValue('--atlas-progress')).toBe('0');
+    vi.stubGlobal('scrollY', 150); positions.first = 100;
+    fireEvent.scroll(window); flush();
+    expect(Number(first.style.getPropertyValue('--atlas-progress'))).toBeCloseTo(.5);
+    vi.stubGlobal('scrollY', 0); positions.first = 250;
+    fireEvent.scroll(window); flush();
+    expect(first).toHaveAttribute('data-atlas-stage', 'matter');
+    expect(first.style.getPropertyValue('--atlas-progress')).toBe('0');
+    expect(frames.size).toBe(0);
   });
 
   it('freezes offscreen art while a later surface receives progress and restores on reverse', () => {
