@@ -1,0 +1,46 @@
+{
+  "reviewedAt": "2026-11-04",
+  "captureKind": "direct-public-website-capture",
+  "repositoryRevisionBasis": "Public source HEAD observed separately; no assertion that live HTML was built from this commit.",
+  "browser": "Chromium, desktop and emulated mobile, DPR1, reduced motion",
+  "editing": "None; original PNG screenshots",
+  "eventEdition": "2025, historical event; no current registration claim",
+  "captures": [
+    {
+      "slug": "vuelta-condor",
+      "requestedURL": "https://condor.izignamx.com/",
+      "finalURL": "https://condor.izignamx.com/",
+      "responseStatus": 200,
+      "title": "Vuelta al Cóndor - El Rey de la Montaña",
+      "sourceRepo": "https://github.com/CripterHack/Vuelta-al-Condor",
+      "observedHEAD": "362c3a5d50838104120b36915639db5dc5c63839",
+      "kind": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capturedAt": "2026-11-04T07:55:07.196Z",
+      "rawHTMLSHA256": "20e594fb3f8b5e73ae96b6794f6f001daf8d71907cef5a818d9b83551f7321cb",
+      "pngSHA256": "46ddd53a72e13494b95a46979391d5c96f97a9189151d7a23d7a616e0483fe9b",
+      "file": "vuelta-condor-desktop.png"
+    },
+    {
+      "slug": "vuelta-condor",
+      "requestedURL": "https://condor.izignamx.com/",
+      "finalURL": "https://condor.izignamx.com/",
+      "responseStatus": 200,
+      "title": "Vuelta al Cóndor - El Rey de la Montaña",
+      "sourceRepo": "https://github.com/CripterHack/Vuelta-al-Condor",
+      "observedHEAD": "362c3a5d50838104120b36915639db5dc5c63839",
+      "kind": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAt": "2026-11-04T07:55:13.106Z",
+      "rawHTMLSHA256": "20e594fb3f8b5e73ae96b6794f6f001daf8d71907cef5a818d9b83551f7321cb",
+      "pngSHA256": "3b3802d369c02fb3684c2dfb6e5c514ef3a2a789971c0b92aff794f6c5ae923a",
+      "file": "vuelta-condor-mobile.png"
+    }
+  ]
+}

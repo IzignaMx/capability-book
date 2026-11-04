@@ -1,0 +1,510 @@
+{
+  "schemaVersion": 1,
+  "researchedAt": "2026-11-04",
+  "scope": {
+    "visibility": "public",
+    "owners": [
+      "CripterHack",
+      "IzignaMx"
+    ],
+    "repositories": 48,
+    "forksExcluded": 8
+  },
+  "existingBookSlugs": [
+    "omnisync",
+    "hamburguesa-nomada",
+    "tecuiyo",
+    "vald",
+    "nutrichilango",
+    "developer-tools",
+    "distrito-cero",
+    "nexo"
+  ],
+  "prioritizedNewCandidates": [
+    "CripterHack/Vuelta-al-Condor",
+    "IzignaMx/open-cycling-workshop",
+    "CripterHack/web-cloner"
+  ],
+  "repositories": [
+    {
+      "repository": "CripterHack/after-install-ubuntu-dev",
+      "url": "https://github.com/CripterHack/after-install-ubuntu-dev",
+      "fork": false,
+      "archived": false,
+      "description": "Run \"after_activate_repository_universe_ubunu.sh\" in 64 bits systems after install Ubuntu +17.04 Intel.",
+      "homepage": "",
+      "updatedAt": "2025-10-27T11:04:22Z",
+      "pushedAt": "2019-01-08T04:43:21Z"
+    },
+    {
+      "repository": "CripterHack/Amaru",
+      "url": "https://github.com/CripterHack/Amaru",
+      "fork": false,
+      "archived": false,
+      "description": "Open-source antivirus for Windows 11 with real-time scanning, YARA rules, Radare2 integration, and Rust-powered efficiency.",
+      "homepage": null,
+      "updatedAt": "2026-10-20T11:48:04Z",
+      "pushedAt": "2025-04-01T07:04:33Z"
+    },
+    {
+      "repository": "CripterHack/best-resume-ever",
+      "url": "https://github.com/CripterHack/best-resume-ever",
+      "fork": true,
+      "archived": false,
+      "description": ":necktie: :briefcase: Build fast :rocket: and easy multiple beautiful resumes and create your best CV ever! Made with Vue and LESS.",
+      "homepage": "https://salomonelli.github.io/best-resume-ever",
+      "updatedAt": "2020-07-07T09:33:49Z",
+      "pushedAt": "2020-07-07T09:33:43Z"
+    },
+    {
+      "repository": "CripterHack/bigcommerce-wysiwyg-extension",
+      "url": "https://github.com/CripterHack/bigcommerce-wysiwyg-extension",
+      "fork": false,
+      "archived": false,
+      "description": "This Chrome extension adds a native WYSIWYG editor to BigCommerce Page Builder, making it easier to edit rich text formatted content.",
+      "homepage": "https://cripterhack.github.io/bigcommerce-wysiwyg-extension/",
+      "updatedAt": "2025-07-28T03:01:07Z",
+      "pushedAt": "2025-07-28T03:01:17Z"
+    },
+    {
+      "repository": "CripterHack/business-address-scrapper",
+      "url": "https://github.com/CripterHack/business-address-scrapper",
+      "fork": false,
+      "archived": false,
+      "description": "Python+Scrapy - Distributed scraping system with cache for business information extraction.",
+      "homepage": "",
+      "updatedAt": "2025-03-25T08:23:22Z",
+      "pushedAt": "2025-02-11T02:02:27Z"
+    },
+    {
+      "repository": "CripterHack/C-first-steps",
+      "url": "https://github.com/CripterHack/C-first-steps",
+      "fork": false,
+      "archived": false,
+      "description": "My learning drafts.",
+      "homepage": null,
+      "updatedAt": "2018-10-27T23:07:07Z",
+      "pushedAt": "2018-10-27T23:07:06Z"
+    },
+    {
+      "repository": "CripterHack/CapiCoin",
+      "url": "https://github.com/CripterHack/CapiCoin",
+      "fork": false,
+      "archived": false,
+      "description": "Token BEP-20 en Binance Smart Chain enfocado en sustentabilidad y donaciones a refugios de animales",
+      "homepage": null,
+      "updatedAt": "2025-02-28T08:40:11Z",
+      "pushedAt": "2025-02-28T08:40:08Z"
+    },
+    {
+      "repository": "CripterHack/central_comunicacion",
+      "url": "https://github.com/CripterHack/central_comunicacion",
+      "fork": false,
+      "archived": false,
+      "description": "web repository, comunication agency",
+      "homepage": null,
+      "updatedAt": "2018-02-21T20:30:45Z",
+      "pushedAt": "2018-02-21T20:29:46Z"
+    },
+    {
+      "repository": "CripterHack/CoinGeckoReactAPI",
+      "url": "https://github.com/CripterHack/CoinGeckoReactAPI",
+      "fork": false,
+      "archived": false,
+      "description": "A simple view of coins graph with coingecko free API",
+      "homepage": null,
+      "updatedAt": "2022-03-25T03:43:51Z",
+      "pushedAt": "2022-03-25T03:43:48Z"
+    },
+    {
+      "repository": "CripterHack/CripterHack",
+      "url": "https://github.com/CripterHack/CripterHack",
+      "fork": false,
+      "archived": false,
+      "description": null,
+      "homepage": null,
+      "updatedAt": "2025-03-19T03:48:20Z",
+      "pushedAt": "2025-03-19T03:48:17Z"
+    },
+    {
+      "repository": "CripterHack/cv-generator",
+      "url": "https://github.com/CripterHack/cv-generator",
+      "fork": false,
+      "archived": false,
+      "description": "Simple CV Resume Generator using Harvard standard",
+      "homepage": "",
+      "updatedAt": "2026-09-07T17:59:59Z",
+      "pushedAt": "2026-06-03T21:18:15Z"
+    },
+    {
+      "repository": "CripterHack/distrito-cero",
+      "url": "https://github.com/CripterHack/distrito-cero",
+      "fork": false,
+      "archived": false,
+      "description": null,
+      "homepage": null,
+      "updatedAt": "2026-10-06T20:24:38Z",
+      "pushedAt": "2026-10-23T17:57:22Z"
+    },
+    {
+      "repository": "CripterHack/doradostudio",
+      "url": "https://github.com/CripterHack/doradostudio",
+      "fork": false,
+      "archived": false,
+      "description": "website for architect agency",
+      "homepage": null,
+      "updatedAt": "2025-03-26T08:56:21Z",
+      "pushedAt": "2025-03-26T08:56:11Z"
+    },
+    {
+      "repository": "CripterHack/edgar-zorrilla",
+      "url": "https://github.com/CripterHack/edgar-zorrilla",
+      "fork": false,
+      "archived": false,
+      "description": "About me",
+      "homepage": null,
+      "updatedAt": "2025-02-19T08:25:31Z",
+      "pushedAt": "2025-02-19T08:25:28Z"
+    },
+    {
+      "repository": "CripterHack/edgar-zorrilla-cv",
+      "url": "https://github.com/CripterHack/edgar-zorrilla-cv",
+      "fork": false,
+      "archived": false,
+      "description": "My custom online resume original fork from: \"https://github.com/salomonelli/best-resume-ever\".",
+      "homepage": null,
+      "updatedAt": "2023-12-02T09:31:17Z",
+      "pushedAt": "2023-10-27T17:00:33Z"
+    },
+    {
+      "repository": "CripterHack/edgar-zorrilla-static-cv",
+      "url": "https://github.com/CripterHack/edgar-zorrilla-static-cv",
+      "fork": false,
+      "archived": false,
+      "description": "Static, lightweight, and print-friendly online CV for Edgar Zorrilla, a Full Stack Developer with a strong Frontend focus, specialized in React, TypeScript, Shopify, BigCommerce, ecommerce platforms, API integrations, performance optimization, and production-ready web experiences.",
+      "homepage": "http://edgar.izignamx.com/",
+      "updatedAt": "2026-05-09T17:19:41Z",
+      "pushedAt": "2026-05-09T17:19:12Z"
+    },
+    {
+      "repository": "CripterHack/epayco",
+      "url": "https://github.com/CripterHack/epayco",
+      "fork": false,
+      "archived": false,
+      "description": "Monorepo pnpm que orquesta la billetera virtual de EPayco. Incluye un frontend Vue 3 accesible, una API pública (BFF) en NestJS, un servicio interno de dominio con acceso a MySQL y artefactos de infraestructura para desarrollo local.",
+      "homepage": "",
+      "updatedAt": "2025-10-15T07:28:24Z",
+      "pushedAt": "2025-10-15T07:27:37Z"
+    },
+    {
+      "repository": "CripterHack/gloop-git-switcher",
+      "url": "https://github.com/CripterHack/gloop-git-switcher",
+      "fork": false,
+      "archived": false,
+      "description": "Tray app to easily switch between global Git users",
+      "homepage": null,
+      "updatedAt": "2025-05-22T07:32:30Z",
+      "pushedAt": "2025-05-22T07:32:26Z"
+    },
+    {
+      "repository": "CripterHack/gnome-shell-extension-sermon-fork-update",
+      "url": "https://github.com/CripterHack/gnome-shell-extension-sermon-fork-update",
+      "fork": true,
+      "archived": false,
+      "description": "A GNOME Shell extension for monitoring and managing systemd services, cron jobs, docker and poman containers",
+      "homepage": "https://extensions.gnome.org/extension/1804/sermon/",
+      "updatedAt": "2022-05-02T18:14:13Z",
+      "pushedAt": "2023-03-28T02:18:02Z"
+    },
+    {
+      "repository": "CripterHack/gpu-io",
+      "url": "https://github.com/CripterHack/gpu-io",
+      "fork": true,
+      "archived": false,
+      "description": "A GPU-accelerated computing library for running physics simulations and other GPGPU computations in a web browser.",
+      "homepage": "https://apps.amandaghassaei.com/gpu-io/examples/",
+      "updatedAt": "2025-10-26T10:55:14Z",
+      "pushedAt": "2025-10-29T00:03:03Z"
+    },
+    {
+      "repository": "CripterHack/hello_world",
+      "url": "https://github.com/CripterHack/hello_world",
+      "fork": false,
+      "archived": false,
+      "description": null,
+      "homepage": null,
+      "updatedAt": "2026-10-13T16:53:54Z",
+      "pushedAt": "2026-10-13T16:53:51Z"
+    },
+    {
+      "repository": "CripterHack/HexSecGPT",
+      "url": "https://github.com/CripterHack/HexSecGPT",
+      "fork": true,
+      "archived": false,
+      "description": "HexSecGPT is designed to provide powerful, unrestricted, and seamless AI-driven conversations, pushing the boundaries of what is possible with natural language processing.",
+      "homepage": "https://hexsec.netlify.app",
+      "updatedAt": "2026-03-02T11:01:27Z",
+      "pushedAt": "2026-03-02T11:02:22Z"
+    },
+    {
+      "repository": "CripterHack/Hispano16",
+      "url": "https://github.com/CripterHack/Hispano16",
+      "fork": false,
+      "archived": false,
+      "description": "A Web Design for \"Hispano Fashion Film Festival\"",
+      "homepage": null,
+      "updatedAt": "2025-03-26T08:42:07Z",
+      "pushedAt": "2025-03-26T08:42:01Z"
+    },
+    {
+      "repository": "CripterHack/ig-downloader-skill",
+      "url": "https://github.com/CripterHack/ig-downloader-skill",
+      "fork": false,
+      "archived": false,
+      "description": "Download Instagram media (reels, carousels, photos) via Apify Actor data with instagrapi carousel enhancement",
+      "homepage": null,
+      "updatedAt": "2026-07-07T12:23:49Z",
+      "pushedAt": "2026-07-07T12:23:46Z"
+    },
+    {
+      "repository": "CripterHack/llm-bootcamp",
+      "url": "https://github.com/CripterHack/llm-bootcamp",
+      "fork": false,
+      "archived": false,
+      "description": null,
+      "homepage": null,
+      "updatedAt": "2025-06-13T07:10:20Z",
+      "pushedAt": "2025-06-13T07:10:20Z"
+    },
+    {
+      "repository": "CripterHack/nexo-web",
+      "url": "https://github.com/CripterHack/nexo-web",
+      "fork": false,
+      "archived": false,
+      "description": null,
+      "homepage": "http://nexo.izignamx.com/",
+      "updatedAt": "2026-09-06T10:54:22Z",
+      "pushedAt": "2026-09-06T10:36:09Z"
+    },
+    {
+      "repository": "CripterHack/openai-ollama-local-proxy",
+      "url": "https://github.com/CripterHack/openai-ollama-local-proxy",
+      "fork": false,
+      "archived": false,
+      "description": "A proxy server that redirects OpenAI API requests to a local Ollama instance",
+      "homepage": null,
+      "updatedAt": "2025-05-22T17:31:25Z",
+      "pushedAt": "2025-05-22T17:31:10Z"
+    },
+    {
+      "repository": "CripterHack/pixel-perfect-test",
+      "url": "https://github.com/CripterHack/pixel-perfect-test",
+      "fork": false,
+      "archived": false,
+      "description": "HTML+CSS+JS+Tailwind+jQuery+Node+SASS+. Responsive landing page developed as part of a frontend technical interview.",
+      "homepage": "",
+      "updatedAt": "2025-03-25T08:26:34Z",
+      "pushedAt": "2025-02-05T09:52:38Z"
+    },
+    {
+      "repository": "CripterHack/potrans",
+      "url": "https://github.com/CripterHack/potrans",
+      "fork": true,
+      "archived": false,
+      "description": "Command line tool for translate Gettext with Google Translator API",
+      "homepage": null,
+      "updatedAt": "2020-07-11T04:24:58Z",
+      "pushedAt": "2020-07-11T04:24:56Z"
+    },
+    {
+      "repository": "CripterHack/PromptForge",
+      "url": "https://github.com/CripterHack/PromptForge",
+      "fork": false,
+      "archived": false,
+      "description": null,
+      "homepage": null,
+      "updatedAt": "2025-04-27T07:00:25Z",
+      "pushedAt": "2025-04-27T07:00:25Z"
+    },
+    {
+      "repository": "CripterHack/smart-git-commit",
+      "url": "https://github.com/CripterHack/smart-git-commit",
+      "fork": false,
+      "archived": false,
+      "description": "An AI-powered Git workflow tool that intelligently analyzes your changes, groups them into logical commits, and generates detailed conventional commit messages.",
+      "homepage": "https://pypi.org/project/smart-git-commit/",
+      "updatedAt": "2026-09-29T14:16:50Z",
+      "pushedAt": "2025-05-05T22:08:46Z"
+    },
+    {
+      "repository": "CripterHack/tecuiyo-derechos-mx",
+      "url": "https://github.com/CripterHack/tecuiyo-derechos-mx",
+      "fork": false,
+      "archived": false,
+      "description": "Plataforma digital de código abierto que democratiza el acceso a la información sobre derechos laborales en México. Nuestro objetivo es empoderar a trabajadores, empleadores y profesionales del derecho con herramientas precisas y actualizadas basadas en la Ley Federal del Trabajo (LFT).",
+      "homepage": "https://tecuiyo.izignamx.com/",
+      "updatedAt": "2026-11-02T11:03:26Z",
+      "pushedAt": "2026-11-02T22:31:26Z"
+    },
+    {
+      "repository": "CripterHack/to-do-app-material-vue-apollo-webpack",
+      "url": "https://github.com/CripterHack/to-do-app-material-vue-apollo-webpack",
+      "fork": false,
+      "archived": false,
+      "description": "To-Do app. Front: Materialize. VueJs. VuexJs. Back: Apollo (RestFul with Graphql). ExpressJs. WebPack. Built with Boilerplate: Vuexpresso.  MIT LICENSE.",
+      "homepage": null,
+      "updatedAt": "2018-04-13T15:34:11Z",
+      "pushedAt": "2018-04-13T15:34:10Z"
+    },
+    {
+      "repository": "CripterHack/todo-react-app",
+      "url": "https://github.com/CripterHack/todo-react-app",
+      "fork": false,
+      "archived": false,
+      "description": "This project is a robust task management web application. It provides user authentication, task collections, and session handling features. Built using TypeScript, React, Redux, and Express with a MongoDB backend.",
+      "homepage": null,
+      "updatedAt": "2023-07-21T07:12:51Z",
+      "pushedAt": "2023-07-21T13:12:05Z"
+    },
+    {
+      "repository": "CripterHack/uptime",
+      "url": "https://github.com/CripterHack/uptime",
+      "fork": false,
+      "archived": false,
+      "description": "📈 Uptime monitor and status page for Edgar Zorrilla, powered by @upptime",
+      "homepage": "https://cripterhack.github.io/uptime",
+      "updatedAt": "2026-11-04T05:40:06Z",
+      "pushedAt": "2026-11-04T05:40:02Z"
+    },
+    {
+      "repository": "CripterHack/Vuelta-al-Condor",
+      "url": "https://github.com/CripterHack/Vuelta-al-Condor",
+      "fork": false,
+      "archived": false,
+      "description": "Sitio estático oficial de la Vuelta al Cóndor 2025, un desafío de ciclismo de ruta autosuficiente de 187 km y 3000 m+ organizado por El Rey de la Montaña. El proyecto prioriza la accesibilidad (WCAG 2.2 AA), el rendimiento (Core Web Vitals ≥ 95) y la comunicación inclusiva para toda la comunidad LGBTQI+.",
+      "homepage": "https://condor.izignamx.com/",
+      "updatedAt": "2026-02-17T10:52:06Z",
+      "pushedAt": "2026-02-17T10:52:02Z"
+    },
+    {
+      "repository": "CripterHack/web-cloner",
+      "url": "https://github.com/CripterHack/web-cloner",
+      "fork": false,
+      "archived": false,
+      "description": "Simple website cloner built with Python. It allows users to clone a website and modify its base URL, saving all resources locally.",
+      "homepage": null,
+      "updatedAt": "2026-10-26T04:31:39Z",
+      "pushedAt": "2025-03-19T11:27:08Z"
+    },
+    {
+      "repository": "CripterHack/woocommerce",
+      "url": "https://github.com/CripterHack/woocommerce",
+      "fork": true,
+      "archived": false,
+      "description": "An open source eCommerce plugin for WordPress.",
+      "homepage": "http://www.woocommerce.com/",
+      "updatedAt": "2020-04-12T01:09:14Z",
+      "pushedAt": "2020-04-11T14:08:30Z"
+    },
+    {
+      "repository": "CripterHack/wp-vcd-malware-sample",
+      "url": "https://github.com/CripterHack/wp-vcd-malware-sample",
+      "fork": true,
+      "archived": false,
+      "description": "Wordpress malware sample with IOC",
+      "homepage": "",
+      "updatedAt": "2018-05-04T00:23:44Z",
+      "pushedAt": "2018-05-04T00:23:44Z"
+    },
+    {
+      "repository": "CripterHack/wp-waitlist",
+      "url": "https://github.com/CripterHack/wp-waitlist",
+      "fork": true,
+      "archived": false,
+      "description": "Waitlists for WordPress lets you create and manage user lists of almost any type in any post.",
+      "homepage": null,
+      "updatedAt": "2017-08-22T21:31:40Z",
+      "pushedAt": "2017-08-22T21:33:38Z"
+    },
+    {
+      "repository": "IzignaMx/apps-landing",
+      "url": "https://github.com/IzignaMx/apps-landing",
+      "fork": false,
+      "archived": false,
+      "description": null,
+      "homepage": "http://apps.izignamx.com/",
+      "updatedAt": "2026-07-10T08:25:44Z",
+      "pushedAt": "2026-07-10T08:25:18Z"
+    },
+    {
+      "repository": "IzignaMx/capability-book",
+      "url": "https://github.com/IzignaMx/capability-book",
+      "fork": false,
+      "archived": false,
+      "description": null,
+      "homepage": "http://book.izignamx.com/",
+      "updatedAt": "2026-09-27T09:22:46Z",
+      "pushedAt": "2026-09-27T09:22:41Z"
+    },
+    {
+      "repository": "IzignaMx/hamburguesa-nomada",
+      "url": "https://github.com/IzignaMx/hamburguesa-nomada",
+      "fork": false,
+      "archived": false,
+      "description": null,
+      "homepage": null,
+      "updatedAt": "2026-07-11T15:11:51Z",
+      "pushedAt": "2026-07-11T15:11:50Z"
+    },
+    {
+      "repository": "IzignaMx/izignamx-public-static",
+      "url": "https://github.com/IzignaMx/izignamx-public-static",
+      "fork": false,
+      "archived": false,
+      "description": null,
+      "homepage": null,
+      "updatedAt": "2026-11-04T07:28:39Z",
+      "pushedAt": "2026-11-04T07:28:34Z"
+    },
+    {
+      "repository": "IzignaMx/nutrichilango",
+      "url": "https://github.com/IzignaMx/nutrichilango",
+      "fork": false,
+      "archived": false,
+      "description": null,
+      "homepage": "https://nutrichilango.izignamx.com/",
+      "updatedAt": "2026-11-02T11:00:17Z",
+      "pushedAt": "2026-11-02T11:35:46Z"
+    },
+    {
+      "repository": "IzignaMx/open-cycling-workshop",
+      "url": "https://github.com/IzignaMx/open-cycling-workshop",
+      "fork": false,
+      "archived": false,
+      "description": "Plataforma open source, offline first, modular y white label para administrar talleres, tiendas y negocios relacionados con el ciclismo, cubriendo clientes, bicicletas, órdenes de servicio, mecánica, inventario, ventas, compras, comunicación, documentación, agenda, personal, métricas y automatizaciones desde una interfaz accesible y multiplataforma",
+      "homepage": null,
+      "updatedAt": "2026-11-04T07:39:58Z",
+      "pushedAt": "2026-11-04T07:39:52Z"
+    },
+    {
+      "repository": "IzignaMx/sos",
+      "url": "https://github.com/IzignaMx/sos",
+      "fork": false,
+      "archived": false,
+      "description": "Arreglos Express (IzignaMX) es una landing page futurista enfocada en convertir leads de Shopify, BigCommerce y WordPress dentro de ventanas express de 24-72h. El sitio prioriza microanimaciones de alto impacto, estética dark y CTAs inmediatos (WhatsApp, agenda, diagnóstico).",
+      "homepage": "https://sos.izignamx.com/",
+      "updatedAt": "2026-02-20T04:10:09Z",
+      "pushedAt": "2026-02-20T04:10:14Z"
+    },
+    {
+      "repository": "IzignaMx/vald-landing",
+      "url": "https://github.com/IzignaMx/vald-landing",
+      "fork": false,
+      "archived": false,
+      "description": "Sitio web oficial para VALD - Vuelta a los Durmientes, una carrera de ultraciclismo autosuficiente que se lleva a cabo cada año a las 00:00 hrs. El recorrido con 4800m de desnivel acumulado representa uno de los desafíos ciclísticos más exigentes de México.",
+      "homepage": "https://vald.izignamx.com/",
+      "updatedAt": "2026-06-24T06:15:42Z",
+      "pushedAt": "2026-06-24T06:15:37Z"
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "capturedFrom": "live public URLs",
+  "method": "Fresh Chromium context for each public URL and viewport. Landing page only; no clicks, form submissions, logins, routes, DOM changes, or image editing.",
+  "repositoryObservation": {
+    "method": "gh api repos/{owner}/{repository}/commits/HEAD --jq .sha",
+    "observedAt": "2026-11-04T07:54:34.844Z",
+    "liveCommitRelationship": "Repository HEADs are separately observed public source references. No claim that the live deployment is built from those commits."
+  },
+  "browser": {
+    "engine": "Chromium",
+    "deviceScaleFactor": 1,
+    "reducedMotion": "reduce",
+    "locale": "es-MX",
+    "tls": "Default verification; no HTTPS-error bypass."
+  },
+  "encoding": {
+    "avif": {
+      "quality": 68,
+      "effort": 6
+    },
+    "webp": {
+      "quality": 82,
+      "effort": 5
+    },
+    "sceneEditing": false
+  },
+  "limitations": [
+    "Repository HEADs are separately observed references, not proof of the served deployment revision.",
+    "NutriChilango screenshots contain source-site marketing numbers; the portfolio does not treat them as verified results.",
+    "NutriChilango blocked its third-party Cloudflare beacon through source CSP.",
+    "The BigCommerce presentation blocked an external unpkg stylesheet through the browser ORB policy; its ordinary content remained visible.",
+    "Desktop and emulated mobile capture sessions are not physical-device certification."
+  ],
+  "captures": [
+    {
+      "slug": "nutrichilango",
+      "device": "desktop",
+      "requestedURL": "https://nutrichilango.izignamx.com/",
+      "finalURL": "https://nutrichilango.izignamx.com/",
+      "responseStatus": 200,
+      "title": "NutriChilango - Comparador Plant-Based Ciudad de México | Alimentación Consciente CDMX",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capturedAt": "2026-11-04T07:54:39.835Z",
+      "rawHTMLSHA256": "727deb1ac4cf68e87cb804fd836eaa60734f74f814914f98e5d3692443cf0786",
+      "rawPNGSHA256": "f87a07fb1a0a3b6972a1bbc8f52189899a170da0ac84f39bbe09d07a3e6b6efa",
+      "repository": "https://github.com/IzignaMx/nutrichilango",
+      "observedRepositoryHEAD": "885d0799e43d524e3edd359a4f35d255f32cf274",
+      "visuallyReviewed": true,
+      "variants": {
+        "avif": {
+          "path": "/media/projects/nutrichilango/evidence/home-desktop.avif",
+          "sha256": "0435b4bd425a0c078754dc7be74bdbe401450dc9880ee1da9c86dda819ed402f",
+          "bytes": 51727
+        },
+        "webp": {
+          "path": "/media/projects/nutrichilango/evidence/home-desktop.webp",
+          "sha256": "df729807877b53d3b6bbd76efa6fcf7f80289b2ff10e630f5b9b1660bc0c99a0",
+          "bytes": 68890
+        }
+      }
+    },
+    {
+      "slug": "nutrichilango",
+      "device": "mobile",
+      "requestedURL": "https://nutrichilango.izignamx.com/",
+      "finalURL": "https://nutrichilango.izignamx.com/",
+      "responseStatus": 200,
+      "title": "NutriChilango - Comparador Plant-Based Ciudad de México | Alimentación Consciente CDMX",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAt": "2026-11-04T07:54:44.161Z",
+      "rawHTMLSHA256": "727deb1ac4cf68e87cb804fd836eaa60734f74f814914f98e5d3692443cf0786",
+      "rawPNGSHA256": "b8863640fc03ca9d1bc4a5dc733d1a90d027bf4b3f67a2fd2ff0b53772ca4bf9",
+      "repository": "https://github.com/IzignaMx/nutrichilango",
+      "observedRepositoryHEAD": "885d0799e43d524e3edd359a4f35d255f32cf274",
+      "visuallyReviewed": true,
+      "variants": {
+        "avif": {
+          "path": "/media/projects/nutrichilango/evidence/home-mobile.avif",
+          "sha256": "88916ec71eee7e9b65ea8e985c4ba559ef5b5c809279c391d574ad221c3cf41f",
+          "bytes": 29688
+        },
+        "webp": {
+          "path": "/media/projects/nutrichilango/evidence/home-mobile.webp",
+          "sha256": "73e84c244a39fceab6e3bec724f345b5c3ffb19aa245aa4591ba5a52eb796f87",
+          "bytes": 35338
+        }
+      }
+    },
+    {
+      "slug": "hamburguesa-nomada",
+      "device": "desktop",
+      "requestedURL": "https://nomada.izignamx.com/",
+      "finalURL": "https://nomada.izignamx.com/",
+      "responseStatus": 200,
+      "title": "Hamburguesa Nómada — Aniversario 5",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capturedAt": "2026-11-04T07:54:48.659Z",
+      "rawHTMLSHA256": "c67bbab68b252ce131a689151df001107b2c6364c16c22dd30ed03a4bac76793",
+      "rawPNGSHA256": "d96ff70b4d7329e6f737c1c5cceda9701e9c86420bb13565bcea4584619097b0",
+      "repository": "https://github.com/IzignaMx/hamburguesa-nomada",
+      "observedRepositoryHEAD": "05467064095c9bb31e7ccc47bb8184f380531706",
+      "visuallyReviewed": true,
+      "variants": {
+        "avif": {
+          "path": "/media/projects/hamburguesa-nomada/evidence/home-desktop.avif",
+          "sha256": "ded2a85c4f05f150490b4b94032556183c3c5f7d333f5c7c4ec2cec878d4d1bb",
+          "bytes": 100129
+        },
+        "webp": {
+          "path": "/media/projects/hamburguesa-nomada/evidence/home-desktop.webp",
+          "sha256": "2457cc5c5cc9ead9ca109031cd1c18f7b0f23e522d31a9e35a7194a40e829973",
+          "bytes": 118420
+        }
+      }
+    },
+    {
+      "slug": "hamburguesa-nomada",
+      "device": "mobile",
+      "requestedURL": "https://nomada.izignamx.com/",
+      "finalURL": "https://nomada.izignamx.com/",
+      "responseStatus": 200,
+      "title": "Hamburguesa Nómada — Aniversario 5",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAt": "2026-11-04T07:54:52.714Z",
+      "rawHTMLSHA256": "c67bbab68b252ce131a689151df001107b2c6364c16c22dd30ed03a4bac76793",
+      "rawPNGSHA256": "7a5b7ea31f21c5ec0fa1583bd310449e9763eec177f5339ce48197d4de662c30",
+      "repository": "https://github.com/IzignaMx/hamburguesa-nomada",
+      "observedRepositoryHEAD": "05467064095c9bb31e7ccc47bb8184f380531706",
+      "visuallyReviewed": true,
+      "variants": {
+        "avif": {
+          "path": "/media/projects/hamburguesa-nomada/evidence/home-mobile.avif",
+          "sha256": "b9e40746ab34118903c130efd226cb25feb623ef0f26be2170f0ddef7b57a008",
+          "bytes": 41042
+        },
+        "webp": {
+          "path": "/media/projects/hamburguesa-nomada/evidence/home-mobile.webp",
+          "sha256": "3b970d7cd92aed4d3a051e5b1f682dadc9a0eaca8f1383a8cf365150dd20cc0f",
+          "bytes": 44058
+        }
+      }
+    },
+    {
+      "slug": "developer-tools",
+      "device": "desktop",
+      "requestedURL": "https://cripterhack.github.io/bigcommerce-wysiwyg-extension/",
+      "finalURL": "https://cripterhack.github.io/bigcommerce-wysiwyg-extension/",
+      "responseStatus": 200,
+      "title": "BigCommerce WYSIWYG Editor – Chrome Extension",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "capturedAt": "2026-11-04T07:54:57.231Z",
+      "rawHTMLSHA256": "6ead0496a3dc63fe9a94ecf3662dfc95dce55bc07c9bc4ce7604fe971f254e79",
+      "rawPNGSHA256": "c4d927bb95bb4592a9ee17f5a2857137007793e1589189e2490a0c825e6cea54",
+      "repository": "https://github.com/CripterHack/bigcommerce-wysiwyg-extension",
+      "observedRepositoryHEAD": "fcabcea67d2fecc3f14f648eb2d833b9ab35452e",
+      "visuallyReviewed": true,
+      "variants": {
+        "avif": {
+          "path": "/media/projects/developer-tools/evidence/home-desktop.avif",
+          "sha256": "628c86972438452f7dc02121e091ebab98bccd66bbacd1b183f5098e87cef576",
+          "bytes": 32344
+        },
+        "webp": {
+          "path": "/media/projects/developer-tools/evidence/home-desktop.webp",
+          "sha256": "88b6eaea4a4be7e9bae228e1d092e593a7c958c34a21f71a13f40b384504357f",
+          "bytes": 43964
+        }
+      }
+    },
+    {
+      "slug": "developer-tools",
+      "device": "mobile",
+      "requestedURL": "https://cripterhack.github.io/bigcommerce-wysiwyg-extension/",
+      "finalURL": "https://cripterhack.github.io/bigcommerce-wysiwyg-extension/",
+      "responseStatus": 200,
+      "title": "BigCommerce WYSIWYG Editor – Chrome Extension",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "capturedAt": "2026-11-04T07:55:01.456Z",
+      "rawHTMLSHA256": "6ead0496a3dc63fe9a94ecf3662dfc95dce55bc07c9bc4ce7604fe971f254e79",
+      "rawPNGSHA256": "2dee6bc6a91b8696266e4767b1968d888277a15f1131e85b8c56d113a0c8edb3",
+      "repository": "https://github.com/CripterHack/bigcommerce-wysiwyg-extension",
+      "observedRepositoryHEAD": "fcabcea67d2fecc3f14f648eb2d833b9ab35452e",
+      "visuallyReviewed": true,
+      "variants": {
+        "avif": {
+          "path": "/media/projects/developer-tools/evidence/home-mobile.avif",
+          "sha256": "c78e1d4142b022f3336303ffdf712c088d8585580f7779100377f4a63e4021fd",
+          "bytes": 19233
+        },
+        "webp": {
+          "path": "/media/projects/developer-tools/evidence/home-mobile.webp",
+          "sha256": "d3bdfaf54986cd938898e403e514d61f6c05a0b33060c508e95413041a7723bd",
+          "bytes": 29820
+        }
+      }
+    }
+  ]
+}

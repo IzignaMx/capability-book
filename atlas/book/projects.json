@@ -495,8 +495,8 @@
           "en": "Production homepage of Hamburguesa Nómada with its pink and red anniversary cycling poster."
         },
         "caption": {
-          "es": "Captura directa y revisada de la portada pública de producción; el repositorio de referencia corresponde al commit 0546706.",
-          "en": "Reviewed direct capture of the public production homepage; the reference repository points to commit 0546706."
+          "es": "Captura directa y revisada de la portada pública del 4 de noviembre de 2026. La revisión 0546706 se observó por separado en el repositorio; no verifica la revisión desplegada.",
+          "en": "Reviewed direct capture of the public homepage on November 4, 2026. Repository revision 0546706 was observed separately; it does not verify the deployed revision."
         },
         "variants": {
           "mobile": {
@@ -504,16 +504,16 @@
             "webp": "/media/projects/hamburguesa-nomada/evidence/home-mobile.webp",
             "width": 390,
             "height": 844,
-            "avifSha256": "3c5d3d313284d7dc62c5b8415a1c028657b7fb59a832e10a3a2bdf8065c13dbf",
-            "webpSha256": "572bf217665f1bb32f2cff1d80f88b493b3f5bde3b36e13301cbed59fd1d58c6"
+            "avifSha256": "b9e40746ab34118903c130efd226cb25feb623ef0f26be2170f0ddef7b57a008",
+            "webpSha256": "3b970d7cd92aed4d3a051e5b1f682dadc9a0eaca8f1383a8cf365150dd20cc0f"
           },
           "desktop": {
             "avif": "/media/projects/hamburguesa-nomada/evidence/home-desktop.avif",
             "webp": "/media/projects/hamburguesa-nomada/evidence/home-desktop.webp",
             "width": 1440,
             "height": 900,
-            "avifSha256": "35c73addac8c7c0da4ffe63646daaf5d213ddbde45a93514037be4478af92d34",
-            "webpSha256": "6379e43c27611f6e448b2f88cb740a46385393e65381b606f7d96e7969cd57d7"
+            "avifSha256": "ded2a85c4f05f150490b4b94032556183c3c5f7d333f5c7c4ec2cec878d4d1bb",
+            "webpSha256": "2457cc5c5cc9ead9ca109031cd1c18f7b0f23e522d31a9e35a7194a40e829973"
           }
         },
         "provenance": {
@@ -521,14 +521,14 @@
           "repository": "https://github.com/IzignaMx/hamburguesa-nomada",
           "commit": "05467064095c9bb31e7ccc47bb8184f380531706",
           "sourceUrl": "https://nomada.izignamx.com/",
-          "capturedAt": "2026-08-02T01:30:32.445Z",
+          "capturedAt": "2026-11-04T07:54:48.659Z",
           "sourceSha256": {
-            "mobile": "6436a8e5289aaa71a7b4329f416d3b779ef8793d253c20abeaf4d8fe17ad2739",
-            "desktop": "5bae92417d6061f283da99d3fede418ae1f892c194c54be33bcc29dd03c653e2"
+            "mobile": "7a5b7ea31f21c5ec0fa1583bd310449e9763eec177f5339ce48197d4de662c30",
+            "desktop": "d96ff70b4d7329e6f737c1c5cceda9701e9c86420bb13565bcea4584619097b0"
           },
-          "rightsBasis": "Publication of this direct production capture is authorized by IzignaMx for portfolio evidence; the reference source code is available under GPL-2.0.",
+          "rightsBasis": "IzignaMx requested these fresh public-project captures for portfolio evidence. Repository HEAD is observed separately and does not establish the deployed revision.",
           "approvedBy": "IzignaMx",
-          "reviewedAt": "2026-08-02"
+          "reviewedAt": "2026-11-04"
         }
       }
     ],
@@ -1997,12 +1997,12 @@
         "width": 1440,
         "height": 900,
         "alt": {
-          "es": "Portada pública de NutriChilango con el mensaje Transforma Tu Salud con Plant-Based y fotografías de alimentos vegetales.",
-          "en": "Public NutriChilango homepage with the message Transforma Tu Salud con Plant-Based and plant-based food photography."
+          "es": "Portada pública de NutriChilango con navegación a comparadores, despensa y emprendimientos sobre imágenes de alimentos vegetales.",
+          "en": "Public NutriChilango homepage with comparison, pantry and enterprise navigation over plant-based food imagery."
         },
         "caption": {
-          "es": "Captura directa y revisada de la portada pública de producción; el repositorio de referencia corresponde al commit a699c3a.",
-          "en": "Reviewed direct capture of the public production homepage; the reference repository points to commit a699c3a."
+          "es": "Captura directa y revisada de la portada pública del 4 de noviembre de 2026. La revisión 885d079 se observó por separado en el repositorio; no verifica la revisión desplegada.",
+          "en": "Reviewed direct capture of the public homepage on November 4, 2026. Repository revision 885d079 was observed separately; it does not verify the deployed revision."
         },
         "variants": {
           "mobile": {
@@ -2010,31 +2010,31 @@
             "webp": "/media/projects/nutrichilango/evidence/home-mobile.webp",
             "width": 390,
             "height": 844,
-            "avifSha256": "9ac0c9a8d1aa0f46030fc9a63aab48cfd0ee7886ab5dadf43ae96b5d2018797e",
-            "webpSha256": "de6603bbeaaf291cfbf094bc80737266e5b6ebc61e7fbfb8a815ab43a0f3974d"
+            "avifSha256": "88916ec71eee7e9b65ea8e985c4ba559ef5b5c809279c391d574ad221c3cf41f",
+            "webpSha256": "73e84c244a39fceab6e3bec724f345b5c3ffb19aa245aa4591ba5a52eb796f87"
           },
           "desktop": {
             "avif": "/media/projects/nutrichilango/evidence/home-desktop.avif",
             "webp": "/media/projects/nutrichilango/evidence/home-desktop.webp",
             "width": 1440,
             "height": 900,
-            "avifSha256": "317280265ac27fb75f04e9963ce5f256e89abc5ceb3dd4e38acedb016cdd3a65",
-            "webpSha256": "d8773fadf82213cc38a9c97a35299b90214582715157911410e1ab9b779ff452"
+            "avifSha256": "0435b4bd425a0c078754dc7be74bdbe401450dc9880ee1da9c86dda819ed402f",
+            "webpSha256": "df729807877b53d3b6bbd76efa6fcf7f80289b2ff10e630f5b9b1660bc0c99a0"
           }
         },
         "provenance": {
           "kind": "direct-production-capture",
           "repository": "https://github.com/IzignaMx/nutrichilango",
-          "commit": "a699c3a509c3293ce19f42e2b64201471b2df66c",
+          "commit": "885d0799e43d524e3edd359a4f35d255f32cf274",
           "sourceUrl": "https://nutrichilango.izignamx.com/",
-          "capturedAt": "2026-08-02T04:11:11.274Z",
+          "capturedAt": "2026-11-04T07:54:39.835Z",
           "sourceSha256": {
-            "mobile": "d10d4d86d256805ffc5bb9e9dd21cc895195df002923819864cc89d4198e1481",
-            "desktop": "c47b83652823440b2528e73b1e6d63d055b31accfbee9ed7d6795f4e61745704"
+            "mobile": "b8863640fc03ca9d1bc4a5dc733d1a90d027bf4b3f67a2fd2ff0b53772ca4bf9",
+            "desktop": "f87a07fb1a0a3b6972a1bbc8f52189899a170da0ac84f39bbe09d07a3e6b6efa"
           },
-          "rightsBasis": "Publication of this direct production capture is authorized by IzignaMx for portfolio evidence; the reference source code is available under MIT.",
+          "rightsBasis": "IzignaMx requested these fresh public-project captures for portfolio evidence. Repository HEAD is observed separately and does not establish the deployed revision.",
           "approvedBy": "IzignaMx",
-          "reviewedAt": "2026-08-02"
+          "reviewedAt": "2026-11-04"
         }
       }
     ],
@@ -2547,12 +2547,12 @@
         "width": 1440,
         "height": 900,
         "alt": {
-          "es": "Demostración pública de producción de la extensión WYSIWYG para BigCommerce con editor visual y documentación.",
-          "en": "Public production demo of the BigCommerce WYSIWYG extension with visual editing and documentation."
+          "es": "Presentación pública de la extensión WYSIWYG para BigCommerce, con enlaces de instalación y documentación de funciones.",
+          "en": "Public presentation of the BigCommerce WYSIWYG extension, with installation links and feature documentation."
         },
         "caption": {
-          "es": "Captura directa y revisada de la demostración pública; representa una herramienta de la colección mantenida en el commit fcabcea.",
-          "en": "Reviewed direct capture of the public demo; it represents one tool in the collection maintained at commit fcabcea."
+          "es": "Captura directa y revisada de la presentación pública de una herramienta de la colección del 4 de noviembre de 2026. La revisión fcabcea se observó por separado en el repositorio; no verifica la revisión desplegada.",
+          "en": "Reviewed direct capture of the public presentation of one tool in the collection on November 4, 2026. Repository revision fcabcea was observed separately; it does not verify the deployed revision."
         },
         "variants": {
           "mobile": {
@@ -2560,16 +2560,16 @@
             "webp": "/media/projects/developer-tools/evidence/home-mobile.webp",
             "width": 390,
             "height": 844,
-            "avifSha256": "2655d3623c3e7c6f85c0c27fff88d332e559679bd6e2bcbe5968a27e19dc8507",
-            "webpSha256": "3a9e3cbe416522157b1b9eaf7fd7898daeaf7350407159ff2a1d255194adb877"
+            "avifSha256": "c78e1d4142b022f3336303ffdf712c088d8585580f7779100377f4a63e4021fd",
+            "webpSha256": "d3bdfaf54986cd938898e403e514d61f6c05a0b33060c508e95413041a7723bd"
           },
           "desktop": {
             "avif": "/media/projects/developer-tools/evidence/home-desktop.avif",
             "webp": "/media/projects/developer-tools/evidence/home-desktop.webp",
             "width": 1440,
             "height": 900,
-            "avifSha256": "d36d2466165213a8d3b48b2486a669505d3a91bd5f036124bf79bda64b545a54",
-            "webpSha256": "e83755ea5ce31b45661e2335285a625c3f2b811ac18a0c4d9e7731bb05a0a15e"
+            "avifSha256": "628c86972438452f7dc02121e091ebab98bccd66bbacd1b183f5098e87cef576",
+            "webpSha256": "88b6eaea4a4be7e9bae228e1d092e593a7c958c34a21f71a13f40b384504357f"
           }
         },
         "provenance": {
@@ -2577,14 +2577,14 @@
           "repository": "https://github.com/CripterHack/bigcommerce-wysiwyg-extension",
           "commit": "fcabcea67d2fecc3f14f648eb2d833b9ab35452e",
           "sourceUrl": "https://cripterhack.github.io/bigcommerce-wysiwyg-extension/",
-          "capturedAt": "2026-08-02T01:30:39.061Z",
+          "capturedAt": "2026-11-04T07:54:57.231Z",
           "sourceSha256": {
-            "mobile": "30ee37b4489e9f7c920fb04afd3e906ed91f5aa53c9f7e58b440990e284b8207",
-            "desktop": "4c16373d62688ac233785c67a578bd1f0284618cc7cc64370634d235000b60d4"
+            "mobile": "2dee6bc6a91b8696266e4767b1968d888277a15f1131e85b8c56d113a0c8edb3",
+            "desktop": "c4d927bb95bb4592a9ee17f5a2857137007793e1589189e2490a0c825e6cea54"
           },
-          "rightsBasis": "Publication of this direct production capture is authorized by IzignaMx for portfolio evidence; the reference implementation is maintained publicly by CripterHack.",
+          "rightsBasis": "IzignaMx requested these fresh public-project captures for portfolio evidence. Repository HEAD is observed separately and does not establish the deployed revision.",
           "approvedBy": "IzignaMx",
-          "reviewedAt": "2026-08-02"
+          "reviewedAt": "2026-11-04"
         }
       }
     ],

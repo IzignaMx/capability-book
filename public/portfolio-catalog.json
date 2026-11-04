@@ -1,0 +1,520 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repository": "IzignaMx/capability-book",
+    "path": "atlas/book/projects.json",
+    "sha256": "77495718ec567a84d447999cd2284c2ba462736d4e0e04c4ef59d7c59879a9d4"
+  },
+  "projects": [
+    {
+      "slug": "omnisync",
+      "title": {
+        "es": "OmniSync",
+        "en": "OmniSync"
+      },
+      "classification": "internal",
+      "stage": null,
+      "bookUrls": {
+        "es": "https://book.izignamx.com/es/proyectos/omnisync/",
+        "en": "https://book.izignamx.com/en/projects/omnisync/"
+      },
+      "repositories": [],
+      "publicUrls": [],
+      "image": {
+        "id": "home-local-demo",
+        "license": "owned",
+        "alt": {
+          "es": "Dashboard demo local autorizado de OmniSync, con el resumen de sincronización multicanal y datos simulados.",
+          "en": "Authorized local OmniSync demo dashboard, showing the multichannel synchronization overview and simulated data."
+        },
+        "caption": {
+          "es": "Captura local revisada del dashboard demo autorizado; no representa una instancia pública de producción.",
+          "en": "Reviewed local capture of the authorized demo dashboard; it does not represent a public production instance."
+        },
+        "provenance": {
+          "kind": "local-development-capture",
+          "repository": "https://github.com/IzignaMx/OmniSync",
+          "commit": "a4368b8b50ee32f77d3c585a69563d2e64ca9535",
+          "sourceUrl": "https://github.com/IzignaMx/OmniSync",
+          "capturedAt": "2026-08-03T04:41:02Z",
+          "sourceSha256": {
+            "mobile": "4915ce9fa8fbfc5848c60468040c688903a5289c2ad2c995d2cae0c32bfa707f",
+            "desktop": "87189c1988229d2f2f3a8d7ef7ec2d352b682811f2ef23635866169a35e529d2"
+          },
+          "rightsBasis": "IzignaMx authorized this locally run internal-project demo capture for portfolio evidence.",
+          "approvedBy": "IzignaMx",
+          "reviewedAt": "2026-08-03"
+        },
+        "variants": {
+          "mobile": {
+            "avif": "/media/projects/omnisync/evidence/home-mobile.avif",
+            "webp": "/media/projects/omnisync/evidence/home-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "63a167fd6d5ce1bd466345689c111d0de7f912f1163d4d7392d60cddcf7826a7",
+            "webpSha256": "5664f73505bacb97f8f88d4fcb7bbcba15a8680421fb778491f5ec3288ea32d5"
+          },
+          "desktop": {
+            "avif": "/media/projects/omnisync/evidence/home-desktop.avif",
+            "webp": "/media/projects/omnisync/evidence/home-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "21000aaef77d3e8c75fdaf09076ec3236655d736c4f4aad660e116798df68c3b",
+            "webpSha256": "54a4ecc8e98948b7b9b5ec2af3d709755505308e26358e7412797af16fe7119d"
+          }
+        }
+      }
+    },
+    {
+      "slug": "hamburguesa-nomada",
+      "title": {
+        "es": "Hamburguesa Nómada",
+        "en": "Hamburguesa Nómada"
+      },
+      "classification": "real",
+      "stage": null,
+      "bookUrls": {
+        "es": "https://book.izignamx.com/es/proyectos/hamburguesa-nomada/",
+        "en": "https://book.izignamx.com/en/projects/hamburguesa-nomada/"
+      },
+      "repositories": [
+        "https://github.com/IzignaMx/hamburguesa-nomada"
+      ],
+      "publicUrls": [
+        "https://nomada.izignamx.com/"
+      ],
+      "image": {
+        "id": "home-production",
+        "license": "client-authorized",
+        "alt": {
+          "es": "Portada de producción de Hamburguesa Nómada con su cartel ciclista de aniversario en tonos rosa y rojo.",
+          "en": "Production homepage of Hamburguesa Nómada with its pink and red anniversary cycling poster."
+        },
+        "caption": {
+          "es": "Captura directa y revisada de la portada pública del 4 de noviembre de 2026. La revisión 0546706 se observó por separado en el repositorio; no verifica la revisión desplegada.",
+          "en": "Reviewed direct capture of the public homepage on November 4, 2026. Repository revision 0546706 was observed separately; it does not verify the deployed revision."
+        },
+        "provenance": {
+          "kind": "direct-production-capture",
+          "repository": "https://github.com/IzignaMx/hamburguesa-nomada",
+          "commit": "05467064095c9bb31e7ccc47bb8184f380531706",
+          "sourceUrl": "https://nomada.izignamx.com/",
+          "capturedAt": "2026-11-04T07:54:48.659Z",
+          "sourceSha256": {
+            "mobile": "7a5b7ea31f21c5ec0fa1583bd310449e9763eec177f5339ce48197d4de662c30",
+            "desktop": "d96ff70b4d7329e6f737c1c5cceda9701e9c86420bb13565bcea4584619097b0"
+          },
+          "rightsBasis": "IzignaMx requested these fresh public-project captures for portfolio evidence. Repository HEAD is observed separately and does not establish the deployed revision.",
+          "approvedBy": "IzignaMx",
+          "reviewedAt": "2026-11-04"
+        },
+        "variants": {
+          "mobile": {
+            "avif": "/media/projects/hamburguesa-nomada/evidence/home-mobile.avif",
+            "webp": "/media/projects/hamburguesa-nomada/evidence/home-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "b9e40746ab34118903c130efd226cb25feb623ef0f26be2170f0ddef7b57a008",
+            "webpSha256": "3b970d7cd92aed4d3a051e5b1f682dadc9a0eaca8f1383a8cf365150dd20cc0f"
+          },
+          "desktop": {
+            "avif": "/media/projects/hamburguesa-nomada/evidence/home-desktop.avif",
+            "webp": "/media/projects/hamburguesa-nomada/evidence/home-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "ded2a85c4f05f150490b4b94032556183c3c5f7d333f5c7c4ec2cec878d4d1bb",
+            "webpSha256": "2457cc5c5cc9ead9ca109031cd1c18f7b0f23e522d31a9e35a7194a40e829973"
+          }
+        }
+      }
+    },
+    {
+      "slug": "tecuiyo",
+      "title": {
+        "es": "Tecuiyo",
+        "en": "Tecuiyo"
+      },
+      "classification": "real",
+      "stage": null,
+      "bookUrls": {
+        "es": "https://book.izignamx.com/es/proyectos/tecuiyo/",
+        "en": "https://book.izignamx.com/en/projects/tecuiyo/"
+      },
+      "repositories": [
+        "https://github.com/CripterHack/tecuiyo-derechos-mx"
+      ],
+      "publicUrls": [
+        "https://tecuiyo.izignamx.com/"
+      ],
+      "image": {
+        "id": "home-production",
+        "license": "open-license",
+        "alt": {
+          "es": "Portada pública de Tecuiyo con navegación de derechos laborales y accesos a información, cálculos y documentos.",
+          "en": "Public Tecuiyo homepage with labor-rights navigation and access to information, calculations, and documents."
+        },
+        "caption": {
+          "es": "Captura directa y revisada de la portada pública de producción; el repositorio de referencia corresponde al commit 4f91728.",
+          "en": "Reviewed direct capture of the public production homepage; the reference repository points to commit 4f91728."
+        },
+        "provenance": {
+          "kind": "direct-production-capture",
+          "repository": "https://github.com/CripterHack/tecuiyo-derechos-mx",
+          "commit": "4f917283d867240144cb3ef34fe0a84c9018a70c",
+          "sourceUrl": "https://tecuiyo.izignamx.com/",
+          "capturedAt": "2026-08-02T04:11:13.826Z",
+          "sourceSha256": {
+            "mobile": "a523aec14cd659d0b038b81916d033f3e5e742aa64aa1df8408fce7455b8c286",
+            "desktop": "d55405f0aef236b7dd362deee98d4d866e5d30b0275fa15509ee3457961f49ab"
+          },
+          "rightsBasis": "Publication of this direct production capture is authorized by IzignaMx for portfolio evidence; the reference source code is available under MIT.",
+          "approvedBy": "IzignaMx",
+          "reviewedAt": "2026-08-02"
+        },
+        "variants": {
+          "mobile": {
+            "avif": "/media/projects/tecuiyo/evidence/home-mobile.avif",
+            "webp": "/media/projects/tecuiyo/evidence/home-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "4bb347f882736b8627b9248966430e809a759163de57c3f9dd727481b4dbc219",
+            "webpSha256": "d19149d25d7fcf4a9464f9ed4a638c4654bfde669751d02c73b51b505a359beb"
+          },
+          "desktop": {
+            "avif": "/media/projects/tecuiyo/evidence/home-desktop.avif",
+            "webp": "/media/projects/tecuiyo/evidence/home-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "afd77f882c109c9b76e83b13c5cbc4717b0e0a19230302067c0a08c9e39e1222",
+            "webpSha256": "fddc57c4410a148bec5690ae5d6b5b9f073c8b6e7a44e34f4527e1b5a780d083"
+          }
+        }
+      }
+    },
+    {
+      "slug": "vald",
+      "title": {
+        "es": "VALD",
+        "en": "VALD"
+      },
+      "classification": "real",
+      "stage": null,
+      "bookUrls": {
+        "es": "https://book.izignamx.com/es/proyectos/vald/",
+        "en": "https://book.izignamx.com/en/projects/vald/"
+      },
+      "repositories": [
+        "https://github.com/IzignaMx/vald-landing"
+      ],
+      "publicUrls": [
+        "https://vald.izignamx.com/"
+      ],
+      "image": {
+        "id": "home-production",
+        "license": "owned",
+        "alt": {
+          "es": "Portada de la edición 2025 de VALD: Vuelta a los Durmientes, con ruta de 317 km y detalles del evento de ultraciclismo.",
+          "en": "VALD: Vuelta a los Durmientes 2025 cover, with the 317 km route and ultracycling event details."
+        },
+        "caption": {
+          "es": "Captura revisada de la edición 2025, renderizada desde el commit inmutable 401c286 del repositorio de IzignaMx.",
+          "en": "Reviewed capture of the 2025 edition, rendered from immutable commit 401c286 in the IzignaMx repository."
+        },
+        "provenance": {
+          "kind": "direct-production-capture",
+          "repository": "https://github.com/IzignaMx/vald-landing",
+          "commit": "401c2862b2243bb203e5f0967ed86f2ce44e9c36",
+          "sourceUrl": "https://github.com/IzignaMx/vald-landing/tree/401c2862b2243bb203e5f0967ed86f2ce44e9c36",
+          "capturedAt": "2026-08-02T23:30:06Z",
+          "sourceSha256": {
+            "mobile": "7abf5767fbc19dfc95c5f061a6e24396a04ba4773a6851af6755afb1481dbb1e",
+            "desktop": "91523ebc2da86533a3083717e2b8a35e4981cbb908afcd85143e5ccfb3f3e037"
+          },
+          "rightsBasis": "IzignaMx-authored repository with all rights reserved; IzignaMx approved this historical 2025 portfolio capture.",
+          "approvedBy": "IzignaMx",
+          "reviewedAt": "2026-08-02"
+        },
+        "variants": {
+          "mobile": {
+            "avif": "/media/projects/vald/evidence/home-mobile.avif",
+            "webp": "/media/projects/vald/evidence/home-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "e2f1fe46ee9655a90ec2986d395078bbd8747e28386e0bf6f64fe841251be9a4",
+            "webpSha256": "30dfc5a7908d205d8c86bd8c2ddf8c764f70f30fd58992325cf0606cefbead57"
+          },
+          "desktop": {
+            "avif": "/media/projects/vald/evidence/home-desktop.avif",
+            "webp": "/media/projects/vald/evidence/home-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "7964654e45fdeed14c3be8a0069202a014a7b95417da59b25b31b8b7fa8644a1",
+            "webpSha256": "1105602529faaa50437153fccd5853e44c0c3a0097afca24d2eef027c68e93c1"
+          }
+        }
+      }
+    },
+    {
+      "slug": "nutrichilango",
+      "title": {
+        "es": "NutriChilango",
+        "en": "NutriChilango"
+      },
+      "classification": "real",
+      "stage": null,
+      "bookUrls": {
+        "es": "https://book.izignamx.com/es/proyectos/nutrichilango/",
+        "en": "https://book.izignamx.com/en/projects/nutrichilango/"
+      },
+      "repositories": [
+        "https://github.com/IzignaMx/nutrichilango"
+      ],
+      "publicUrls": [
+        "https://nutrichilango.izignamx.com/"
+      ],
+      "image": {
+        "id": "home-production",
+        "license": "owned",
+        "alt": {
+          "es": "Portada pública de NutriChilango con navegación a comparadores, despensa y emprendimientos sobre imágenes de alimentos vegetales.",
+          "en": "Public NutriChilango homepage with comparison, pantry and enterprise navigation over plant-based food imagery."
+        },
+        "caption": {
+          "es": "Captura directa y revisada de la portada pública del 4 de noviembre de 2026. La revisión 885d079 se observó por separado en el repositorio; no verifica la revisión desplegada.",
+          "en": "Reviewed direct capture of the public homepage on November 4, 2026. Repository revision 885d079 was observed separately; it does not verify the deployed revision."
+        },
+        "provenance": {
+          "kind": "direct-production-capture",
+          "repository": "https://github.com/IzignaMx/nutrichilango",
+          "commit": "885d0799e43d524e3edd359a4f35d255f32cf274",
+          "sourceUrl": "https://nutrichilango.izignamx.com/",
+          "capturedAt": "2026-11-04T07:54:39.835Z",
+          "sourceSha256": {
+            "mobile": "b8863640fc03ca9d1bc4a5dc733d1a90d027bf4b3f67a2fd2ff0b53772ca4bf9",
+            "desktop": "f87a07fb1a0a3b6972a1bbc8f52189899a170da0ac84f39bbe09d07a3e6b6efa"
+          },
+          "rightsBasis": "IzignaMx requested these fresh public-project captures for portfolio evidence. Repository HEAD is observed separately and does not establish the deployed revision.",
+          "approvedBy": "IzignaMx",
+          "reviewedAt": "2026-11-04"
+        },
+        "variants": {
+          "mobile": {
+            "avif": "/media/projects/nutrichilango/evidence/home-mobile.avif",
+            "webp": "/media/projects/nutrichilango/evidence/home-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "88916ec71eee7e9b65ea8e985c4ba559ef5b5c809279c391d574ad221c3cf41f",
+            "webpSha256": "73e84c244a39fceab6e3bec724f345b5c3ffb19aa245aa4591ba5a52eb796f87"
+          },
+          "desktop": {
+            "avif": "/media/projects/nutrichilango/evidence/home-desktop.avif",
+            "webp": "/media/projects/nutrichilango/evidence/home-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "0435b4bd425a0c078754dc7be74bdbe401450dc9880ee1da9c86dda819ed402f",
+            "webpSha256": "df729807877b53d3b6bbd76efa6fcf7f80289b2ff10e630f5b9b1660bc0c99a0"
+          }
+        }
+      }
+    },
+    {
+      "slug": "developer-tools",
+      "title": {
+        "es": "Colección de herramientas para desarrollo",
+        "en": "Developer Tools Collection"
+      },
+      "classification": "open-source",
+      "stage": null,
+      "bookUrls": {
+        "es": "https://book.izignamx.com/es/proyectos/developer-tools/",
+        "en": "https://book.izignamx.com/en/projects/developer-tools/"
+      },
+      "repositories": [
+        "https://github.com/CripterHack/smart-git-commit",
+        "https://github.com/CripterHack/ig-downloader-skill",
+        "https://github.com/CripterHack/bigcommerce-wysiwyg-extension"
+      ],
+      "publicUrls": [
+        "https://apps.izignamx.com/",
+        "https://pypi.org/project/smart-git-commit/",
+        "https://cripterhack.github.io/bigcommerce-wysiwyg-extension/"
+      ],
+      "image": {
+        "id": "bigcommerce-demo-production",
+        "license": "client-authorized",
+        "alt": {
+          "es": "Presentación pública de la extensión WYSIWYG para BigCommerce, con enlaces de instalación y documentación de funciones.",
+          "en": "Public presentation of the BigCommerce WYSIWYG extension, with installation links and feature documentation."
+        },
+        "caption": {
+          "es": "Captura directa y revisada de la presentación pública de una herramienta de la colección del 4 de noviembre de 2026. La revisión fcabcea se observó por separado en el repositorio; no verifica la revisión desplegada.",
+          "en": "Reviewed direct capture of the public presentation of one tool in the collection on November 4, 2026. Repository revision fcabcea was observed separately; it does not verify the deployed revision."
+        },
+        "provenance": {
+          "kind": "direct-production-capture",
+          "repository": "https://github.com/CripterHack/bigcommerce-wysiwyg-extension",
+          "commit": "fcabcea67d2fecc3f14f648eb2d833b9ab35452e",
+          "sourceUrl": "https://cripterhack.github.io/bigcommerce-wysiwyg-extension/",
+          "capturedAt": "2026-11-04T07:54:57.231Z",
+          "sourceSha256": {
+            "mobile": "2dee6bc6a91b8696266e4767b1968d888277a15f1131e85b8c56d113a0c8edb3",
+            "desktop": "c4d927bb95bb4592a9ee17f5a2857137007793e1589189e2490a0c825e6cea54"
+          },
+          "rightsBasis": "IzignaMx requested these fresh public-project captures for portfolio evidence. Repository HEAD is observed separately and does not establish the deployed revision.",
+          "approvedBy": "IzignaMx",
+          "reviewedAt": "2026-11-04"
+        },
+        "variants": {
+          "mobile": {
+            "avif": "/media/projects/developer-tools/evidence/home-mobile.avif",
+            "webp": "/media/projects/developer-tools/evidence/home-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "c78e1d4142b022f3336303ffdf712c088d8585580f7779100377f4a63e4021fd",
+            "webpSha256": "d3bdfaf54986cd938898e403e514d61f6c05a0b33060c508e95413041a7723bd"
+          },
+          "desktop": {
+            "avif": "/media/projects/developer-tools/evidence/home-desktop.avif",
+            "webp": "/media/projects/developer-tools/evidence/home-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "628c86972438452f7dc02121e091ebab98bccd66bbacd1b183f5098e87cef576",
+            "webpSha256": "88b6eaea4a4be7e9bae228e1d092e593a7c958c34a21f71a13f40b384504357f"
+          }
+        }
+      }
+    },
+    {
+      "slug": "distrito-cero",
+      "title": {
+        "es": "Distrito Cero",
+        "en": "Distrito Cero"
+      },
+      "classification": "real",
+      "stage": {
+        "es": "Prototipo jugable · v0.20.13",
+        "en": "Playable prototype · v0.20.13"
+      },
+      "bookUrls": {
+        "es": "https://book.izignamx.com/es/proyectos/distrito-cero/",
+        "en": "https://book.izignamx.com/en/projects/distrito-cero/"
+      },
+      "repositories": [
+        "https://github.com/CripterHack/distrito-cero"
+      ],
+      "publicUrls": [
+        "https://cripterhack.github.io/distrito-cero/"
+      ],
+      "image": {
+        "id": "live-gameplay",
+        "license": "owned",
+        "alt": {
+          "es": "Partida real de Distrito Cero: personaje en la ciudad procedural, vehículos, minimapa e interfaz de exploración.",
+          "en": "Actual Distrito Cero gameplay: character in a procedural city, vehicles, minimap and exploration interface."
+        },
+        "caption": {
+          "es": "Capturas reales de la versión pública del 27 de septiembre de 2026. Escritorio y vista móvil emulada.",
+          "en": "Actual captures of the public release on September 27, 2026. Desktop and emulated mobile views."
+        },
+        "provenance": {
+          "kind": "direct-production-capture",
+          "repository": "https://github.com/CripterHack/distrito-cero",
+          "commit": "0fa83b9e024819821e135a9de540a3f897bc9c78",
+          "sourceUrl": "https://cripterhack.github.io/distrito-cero/",
+          "capturedAt": "2026-09-27T08:33:12.859Z",
+          "reviewedAt": "2026-09-27",
+          "rightsBasis": "User requested screenshots of these projects for this portfolio.",
+          "revisionBasis": "Public repository HEAD observed at capture; live HTML hashes recorded separately.",
+          "sourceSha256": {
+            "desktop": "b431114f19ac0f74f2aa0fda60ac7f8609bcc33230748529bf95275795105e6b",
+            "mobile": "7620b2c6dc35b6663e74502de5b33b1658b1bed4a8710e7ca5e22463ed0fdb3e"
+          }
+        },
+        "variants": {
+          "desktop": {
+            "avif": "/media/projects/distrito-cero/evidence/gameplay-desktop.avif",
+            "webp": "/media/projects/distrito-cero/evidence/gameplay-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "9059502ecbb97830d8c0496fc6b2fbcc6f2f8f94cbb52d3c0c1b62d124498857",
+            "webpSha256": "1eb06f759789f5c555676b329deaca41a7eaf29ee66c024d188ee79797a61177"
+          },
+          "mobile": {
+            "avif": "/media/projects/distrito-cero/evidence/gameplay-mobile.avif",
+            "webp": "/media/projects/distrito-cero/evidence/gameplay-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "ababb05c9b2075ec283973c0bc89bba660aa59800695519950c2772e03280075",
+            "webpSha256": "f27c318832fd617ea610f4ac5e25b29e11d234fc78d86a74543909b62760e6d2"
+          }
+        }
+      }
+    },
+    {
+      "slug": "nexo",
+      "title": {
+        "es": "Nexo",
+        "en": "Nexo"
+      },
+      "classification": "real",
+      "stage": {
+        "es": "Beta jugable · 1.2",
+        "en": "Playable beta · 1.2"
+      },
+      "bookUrls": {
+        "es": "https://book.izignamx.com/es/proyectos/nexo/",
+        "en": "https://book.izignamx.com/en/projects/nexo/"
+      },
+      "repositories": [
+        "https://github.com/CripterHack/nexo-web"
+      ],
+      "publicUrls": [
+        "https://nexo.izignamx.com/"
+      ],
+      "image": {
+        "id": "live-gameplay",
+        "license": "owned",
+        "alt": {
+          "es": "Partida real de Nexo en el primer sector: nave Vector, semillas luminosas, radar y estado de regeneración.",
+          "en": "Actual Nexo gameplay in the first sector: Vector ship, luminous seeds, radar and regeneration status."
+        },
+        "caption": {
+          "es": "Capturas reales de la versión pública del 27 de septiembre de 2026. Escritorio y vista móvil emulada.",
+          "en": "Actual captures of the public release on September 27, 2026. Desktop and emulated mobile views."
+        },
+        "provenance": {
+          "kind": "direct-production-capture",
+          "repository": "https://github.com/CripterHack/nexo-web",
+          "commit": "7ce8b77e263244ae0615ac64be3863239cccdab5",
+          "sourceUrl": "https://nexo.izignamx.com/",
+          "capturedAt": "2026-09-27T08:10:31.963Z",
+          "reviewedAt": "2026-09-27",
+          "rightsBasis": "User requested screenshots of these projects for this portfolio.",
+          "revisionBasis": "Public repository HEAD observed at capture; live HTML hashes recorded separately.",
+          "sourceSha256": {
+            "desktop": "9aa3ec5aa647c73c152961f197935dabf90e3f4d1cc59505294a96340a1614fb",
+            "mobile": "96051e9b0e627b2ab5ab43671885303f5060ed782564ff482de7b5f81c26018c"
+          }
+        },
+        "variants": {
+          "desktop": {
+            "avif": "/media/projects/nexo/evidence/gameplay-desktop.avif",
+            "webp": "/media/projects/nexo/evidence/gameplay-desktop.webp",
+            "width": 1440,
+            "height": 900,
+            "avifSha256": "f933c3d9114428d5a162afd70322cea556a5d88acfe4a897994f99de6eaa6345",
+            "webpSha256": "3558f6f032442c81d9b8b236771e9274d864f23c4378ccbaa0f90fa4d8994a0a"
+          },
+          "mobile": {
+            "avif": "/media/projects/nexo/evidence/gameplay-mobile.avif",
+            "webp": "/media/projects/nexo/evidence/gameplay-mobile.webp",
+            "width": 390,
+            "height": 844,
+            "avifSha256": "a7abe9f45aabb7b0856d35155a4a58fd3976559c65bae356d2844e08a0e204cd",
+            "webpSha256": "b2e1c97d7e13583cfb517b1270805e98de2b91c9b4fdc13a4ee8d0149e24c32d"
+          }
+        }
+      }
+    }
+  ]
+}
