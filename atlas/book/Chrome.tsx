@@ -1,4 +1,5 @@
 import { contextQuery } from "./context";
+import { TrajectoryMark } from "./art/TrajectoryMark";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   pathFor,
@@ -299,6 +300,7 @@ export function ContactBand({
 }) {
   return (
     <section className="bk-contact-band">
+      <TrajectoryMark slug={projectIds[0] || "omnisync"} className="bk-contact-signature" />
       <p className="bk-kicker">{tx(l, "TU SIGUIENTE PROYECTO", "YOUR NEXT PROJECT")}</p>
       <div>
         <h2>
@@ -356,9 +358,12 @@ export function Card({
         </span>
         <EvidenceLabel project={p} locale={l} />
       </div>
-      <h3>
-        <a href={pathFor(l, "case", p.slug)}>{p[l].title}</a>
-      </h3>
+      <div className="bk-card-title-row">
+        <h3>
+          <a href={pathFor(l, "case", p.slug)}>{p[l].title}</a>
+        </h3>
+        <TrajectoryMark slug={p.slug} compact className="bk-card-signature" />
+      </div>
       <p>{p[l].elevatorPitch}</p>
       <div className="bk-card-actions">
         <a href={pathFor(l, "case", p.slug)}>

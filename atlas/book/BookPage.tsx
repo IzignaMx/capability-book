@@ -5,11 +5,12 @@ import { Brief } from "./Brief";
 import { Approach, Legal } from "./Editorial";
 import { MapPage } from "./Map";
 import { getProject, type BookRoute } from "./model";
+import "./supporting-art.css";
 export function BookPage({ route }: { route: BookRoute }) {
   const l = route.locale,
     p = route.slug ? getProject(route.slug) : undefined;
   return (
-    <div className="book" data-page={route.page}>
+    <div className="book" data-page={route.page} data-art-direction="sculptural-atlas">
       <Header route={route} />
       <main className="bk-wrap bk-main" id="contenido">
         {route.page === "home" && <Home locale={l} />}{" "}

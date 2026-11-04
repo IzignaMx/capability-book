@@ -1,0 +1,67 @@
+/* Shared editorial details use the existing Atlas typography, spacing and palette. */
+.book[data-art-direction="sculptural-atlas"] .bk-card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.bk-card-title-row h3 { min-width: 0; }
+.bk-card-title-row .bk-card-signature { width: 62px; flex: 0 0 62px; opacity: .75; }
+.book[data-art-direction="sculptural-atlas"] .bk-contact-band { position: relative; isolation: isolate; }
+.bk-contact-band .bk-contact-signature {
+  position: absolute;
+  width: min(30%, 290px);
+  right: 5%;
+  top: 15%;
+  opacity: .18;
+  z-index: -1;
+  pointer-events: none;
+}
+.bk-support-heading { position: relative; padding-right: 210px; }
+.bk-support-heading .bk-support-signature {
+  position: absolute;
+  width: 170px;
+  right: 0;
+  top: 22%;
+  opacity: .65;
+  pointer-events: none;
+}
+.bk-approach-study { position: relative; }
+.bk-approach-study .bk-approach-signature {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 64px;
+  opacity: .75;
+}
+.book[data-art-direction="sculptural-atlas"] .bk-art-impact {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: 24px 6%;
+  align-items: center;
+  text-align: left;
+}
+.bk-art-impact .bk-impact-folio { grid-row: 1 / span 4; width: 100%; }
+.bk-art-impact > .bk-icon { grid-column: 2; }
+.bk-art-impact > h2, .bk-art-impact > p, .bk-art-impact > a { grid-column: 2; margin: 0; }
+@media (max-width: 900px) {
+  .bk-support-heading { padding-right: 130px; }
+  .bk-support-heading .bk-support-signature { width: 110px; }
+  .book[data-art-direction="sculptural-atlas"] .bk-art-impact { gap: 22px 4%; }
+}
+@media (max-width: 650px) {
+  .bk-support-heading { padding-right: 0; }
+  .bk-support-heading .bk-support-signature { display: none; }
+  .bk-card-title-row .bk-card-signature { width: 48px; flex-basis: 48px; }
+  .bk-contact-band .bk-contact-signature { width: 40%; top: 6%; right: 0; }
+  .book[data-art-direction="sculptural-atlas"] .bk-art-impact { grid-template-columns: minmax(0, 1fr); }
+  .bk-art-impact .bk-impact-folio { grid-row: auto; width: min(100%, 330px); justify-self: center; }
+  .bk-art-impact > .bk-icon, .bk-art-impact > h2, .bk-art-impact > p, .bk-art-impact > a { grid-column: 1; }
+}
+@media (forced-colors: active) {
+  .bk-contact-band .bk-contact-signature { display: none; }
+  .bk-card-title-row .bk-card-signature, .bk-support-heading .bk-support-signature { opacity: 1; }
+}
+@media print {
+  .bk-contact-signature, .bk-support-signature, .bk-approach-signature, .bk-impact-folio { display: none; }
+}

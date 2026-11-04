@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "astro dev --config astro.atlas.config.mjs",
-    "build": "pnpm check:portfolio && pnpm check:atlas && astro build --config astro.atlas.config.mjs && node scripts/finalize-atlas.mjs && python3 scripts/validate-atlas.py",
+    "build": "pnpm check:portfolio && pnpm check:atlas && astro build --config astro.atlas.config.mjs && node scripts/finalize-atlas.mjs && python3 scripts/validate-atlas.py && pnpm verify:atlas-art",
     "preview": "astro preview --config astro.atlas.config.mjs",
     "test": "vitest run",
     "test:e2e": "pnpm test:e2e:atlas",
@@ -27,6 +27,7 @@
     "validate:html": "tsx scripts/validate-built-html.ts",
     "verify:budgets": "tsx scripts/verify-budgets.ts",
     "verify:3d-budgets": "tsx scripts/verify-3d-budgets.ts",
+    "verify:atlas-art": "tsx scripts/verify-atlas-art-budgets.ts",
     "evidence:summary": "tsx scripts/generate-evidence-summary.ts",
     "capture:projects": "tsx scripts/capture-projects.ts",
     "verify:capture-report": "tsx scripts/verify-capture-report.ts",

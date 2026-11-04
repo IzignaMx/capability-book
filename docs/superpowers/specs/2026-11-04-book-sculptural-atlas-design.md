@@ -1,12 +1,12 @@
 # Book · Atlas escultórico y editorial
 
-Estado: propuesta para aprobación de diseño y presupuesto inicial. No hay implementación ni generaciones de pago realizadas.
+Estado: diseño y dos imágenes de exploración aprobados por el propietario el 4 de noviembre de 2026, con 2,5 créditos estimados en total. Implementación en curso en `feat/book-sculptural-atlas`.
 
 ## Intención y decisión de dirección
 
 Transformar el Book en una experiencia artística reconocible de IzignaMx, con una idea visual que conecte portada, descubrimiento de proyectos, lectura de casos y constelación. El usuario eligió **Atlas escultórico y editorial**, conservando paleta, Aileron y componentes actuales. La meta es preparar un proyecto sólido para una futura candidatura a Awwwards, sin prometer el resultado de la evaluación ni realizar una inscripción o un pago de candidatura.
 
-Se consideraron tres enfoques: atlas escultórico/editorial (elegido: continuidad visual y utilidad del contenido), exposición cinematográfica (mayor peso de video y una entrada más teatral) y taller gráfico/tipográfico (menos volumen y movimiento). La implementación concreta que sigue es una propuesta del agente, todavía por aprobar.
+Se consideraron tres enfoques: atlas escultórico/editorial (elegido: continuidad visual y utilidad del contenido), exposición cinematográfica (mayor peso de video y una entrada más teatral) y taller gráfico/tipográfico (menos volumen y movimiento). El propietario aprobó la implementación concreta que sigue.
 
 ## Base revisada
 
@@ -59,7 +59,7 @@ Las capturas reales del 4 de noviembre, los ocho identificadores de proyecto, su
 
 ## Higgsfield y entregables visuales
 
-1. Dos imágenes de exploración de material/composición con Recraft V4.1, 16:9 y resolución 1k, usando explícitamente la paleta actual. No incluyen textos de interfaz ni pantallas ficticias de los proyectos. La estimación obtenida el 4 de noviembre es **2,5 créditos en total para dos resultados**. La generación queda pendiente de aprobación; no se amplía ese gasto sin una nueva decisión.
+1. Dos imágenes de exploración de material/composición con Recraft V4.1, 16:9 y resolución 1k, usando explícitamente la paleta actual. No incluyen textos de interfaz ni pantallas ficticias de los proyectos. La estimación obtenida el 4 de noviembre es **2,5 créditos en total para dos resultados**, aprobados por el propietario. No se amplía ese gasto sin una nueva decisión.
 2. Un proyecto nuevo de 3D Jutsu para el folio original, separado de los proyectos anteriores. Modelado editable, cámara y luces con nombres claros; revisión de silueta, proporción y lectura antes de detallar. Las operaciones de escena se realizan mediante las herramientas admitidas y se inspeccionan sus renders reales.
 3. Un conjunto pequeño de poses o renders de ese mismo objeto para la portada y los estados estáticos, más un modelo ligero únicamente si mejora la constelación activada. La representación web deberá corresponder a la pieza revisada. Una recreación procedural, un render o un modelo importado se documentan como tales.
 4. Recursos derivados AVIF/WebP, dimensiones y hashes, prompts, identificadores de trabajo y revisiones de la escena. Los archivos de producción se sirven desde el Book; no hay dependencia de login, API ni disponibilidad de Higgsfield durante la visita.

@@ -39,7 +39,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: atlas-build-validation
-          path: docs/atlas/static-validation.json
+          path: |
+            docs/atlas/static-validation.json
+            docs/atlas/art-budgets.json
   e2e:
     name: e2e
     needs: quality
