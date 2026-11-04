@@ -81,12 +81,12 @@
       "width": 1440,
       "height": 900,
       "alt": {
-        "es": "Portada pública de NutriChilango con el mensaje Transforma Tu Salud con Plant-Based y fotografías de alimentos vegetales.",
-        "en": "Public NutriChilango homepage with the message Transforma Tu Salud con Plant-Based and plant-based food photography."
+        "es": "Portada pública de NutriChilango con navegación a comparadores, despensa y emprendimientos sobre imágenes de alimentos vegetales.",
+        "en": "Public NutriChilango homepage with comparison, pantry and enterprise navigation over plant-based food imagery."
       },
       "caption": {
-        "es": "Captura directa y revisada de la portada pública de producción; el repositorio de referencia corresponde al commit a699c3a.",
-        "en": "Reviewed direct capture of the public production homepage; the reference repository points to commit a699c3a."
+        "es": "Captura directa y revisada de la portada pública del 4 de noviembre de 2026. La revisión 885d079 se observó por separado en el repositorio; no verifica la revisión desplegada.",
+        "en": "Reviewed direct capture of the public homepage on November 4, 2026. Repository revision 885d079 was observed separately; it does not verify the deployed revision."
       },
       "variants": {
         "mobile": {
@@ -94,31 +94,31 @@
           "webp": "/media/projects/nutrichilango/evidence/home-mobile.webp",
           "width": 390,
           "height": 844,
-          "avifSha256": "9ac0c9a8d1aa0f46030fc9a63aab48cfd0ee7886ab5dadf43ae96b5d2018797e",
-          "webpSha256": "de6603bbeaaf291cfbf094bc80737266e5b6ebc61e7fbfb8a815ab43a0f3974d"
+          "avifSha256": "88916ec71eee7e9b65ea8e985c4ba559ef5b5c809279c391d574ad221c3cf41f",
+          "webpSha256": "73e84c244a39fceab6e3bec724f345b5c3ffb19aa245aa4591ba5a52eb796f87"
         },
         "desktop": {
           "avif": "/media/projects/nutrichilango/evidence/home-desktop.avif",
           "webp": "/media/projects/nutrichilango/evidence/home-desktop.webp",
           "width": 1440,
           "height": 900,
-          "avifSha256": "317280265ac27fb75f04e9963ce5f256e89abc5ceb3dd4e38acedb016cdd3a65",
-          "webpSha256": "d8773fadf82213cc38a9c97a35299b90214582715157911410e1ab9b779ff452"
+          "avifSha256": "0435b4bd425a0c078754dc7be74bdbe401450dc9880ee1da9c86dda819ed402f",
+          "webpSha256": "df729807877b53d3b6bbd76efa6fcf7f80289b2ff10e630f5b9b1660bc0c99a0"
         }
       },
       "provenance": {
         "kind": "direct-production-capture",
         "repository": "https://github.com/IzignaMx/nutrichilango",
-        "commit": "a699c3a509c3293ce19f42e2b64201471b2df66c",
+        "commit": "885d0799e43d524e3edd359a4f35d255f32cf274",
         "sourceUrl": "https://nutrichilango.izignamx.com/",
-        "capturedAt": "2026-08-02T04:11:11.274Z",
+        "capturedAt": "2026-11-04T07:54:39.835Z",
         "sourceSha256": {
-          "mobile": "d10d4d86d256805ffc5bb9e9dd21cc895195df002923819864cc89d4198e1481",
-          "desktop": "c47b83652823440b2528e73b1e6d63d055b31accfbee9ed7d6795f4e61745704"
+          "mobile": "b8863640fc03ca9d1bc4a5dc733d1a90d027bf4b3f67a2fd2ff0b53772ca4bf9",
+          "desktop": "f87a07fb1a0a3b6972a1bbc8f52189899a170da0ac84f39bbe09d07a3e6b6efa"
         },
-        "rightsBasis": "Publication of this direct production capture is authorized by IzignaMx for portfolio evidence; the reference source code is available under MIT.",
+        "rightsBasis": "IzignaMx requested these fresh public-project captures for portfolio evidence. Repository HEAD is observed separately and does not establish the deployed revision.",
         "approvedBy": "IzignaMx",
-        "reviewedAt": "2026-08-02"
+        "reviewedAt": "2026-11-04"
       }
     }
   ]

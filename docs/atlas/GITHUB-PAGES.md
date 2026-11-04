@@ -27,6 +27,8 @@ python3 scripts/verify-atlas-manifest.py
 
 Preview: `pnpm preview:atlas` serves only files at port 4210. Browser checks start independent static servers automatically. Set PLAYWRIGHT_CHROMIUM_EXECUTABLE only when using an already installed browser outside Playwright's default path.
 
+Shared project evidence is exported as `public/portfolio-catalog.json`. After approved catalog or media edits, run `pnpm sync:portfolio`; the build rejects stale exports or invalid screenshot metadata. See [PORTFOLIO-CONSISTENCY.md](PORTFOLIO-CONSISTENCY.md) for the primary-site import workflow and capture boundaries.
+
 ## Action gates
 
 1. quality installs from the frozen lockfile, validates existing evidence, checks the original source, runs unit tests and creates the Atlas artifact.

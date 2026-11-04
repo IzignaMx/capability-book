@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "astro dev --config astro.atlas.config.mjs",
-    "build": "pnpm check:atlas && astro build --config astro.atlas.config.mjs && node scripts/finalize-atlas.mjs && python3 scripts/validate-atlas.py",
+    "build": "pnpm check:portfolio && pnpm check:atlas && astro build --config astro.atlas.config.mjs && node scripts/finalize-atlas.mjs && python3 scripts/validate-atlas.py",
     "preview": "astro preview --config astro.atlas.config.mjs",
     "test": "vitest run",
     "test:e2e": "pnpm test:e2e:atlas",
@@ -33,6 +33,9 @@
     "build:legacy": "astro check && astro build && pagefind --site dist && pnpm validate:html && pnpm verify:budgets",
     "dev:legacy": "astro dev",
     "check:atlas": "astro check --config astro.atlas.config.mjs --tsconfig tsconfig.atlas.json",
+    "sync:portfolio": "node scripts/sync-portfolio-catalog.mjs",
+    "check:portfolio": "node scripts/sync-portfolio-catalog.mjs --check && pnpm test:portfolio",
+    "test:portfolio": "node --test scripts/test-portfolio-catalog.mjs",
     "preview:atlas": "python3 scripts/serve-atlas.py",
     "validate:atlas": "python3 scripts/validate-atlas.py",
     "test:e2e:atlas": "node scripts/test-atlas-browser.cjs",
