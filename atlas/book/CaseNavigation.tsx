@@ -1,4 +1,4 @@
-import {useEffect,useMemo,useRef,useState} from 'react';
+import {useCallback,useEffect,useMemo,useRef,useState} from 'react';
 import {type Chapter,type Locale} from './model';
 import {activeReadingId,readingItems} from './reading';
 import {Icon,tx} from './Chrome';
@@ -15,14 +15,52 @@ export function CaseNavigation({chapters,locale:l,projectSlug,activePhase,onPhas
  const items=useMemo(()=>readingItems(chapters,l),[chapters,l]);
  const [active,setActive]=useState(items[0]?.id||'');
  const mobile=useRef<HTMLDetailsElement>(null);
+ const requested=useRef<string|null>(null);
+ const focusRequested=useRef<string|null>(null);
+ const focusFrame=useRef(0);
+ const focusTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
+ const focusHeading=useCallback((id:string)=>{
+  cancelAnimationFrame(focusFrame.current);
+  focusFrame.current=requestAnimationFrame(()=>{
+   const heading=document.getElementById(id)?.querySelector('h2');
+   requested.current=null;setActive(id);
+   if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});heading.addEventListener('blur',()=>heading.removeAttribute('tabindex'),{once:true});}
+  });
+ },[]);
+ const finishFocus=useCallback(()=>{
+  const id=focusRequested.current;
+  if(!id||location.hash!=='#'+id)return;
+  focusRequested.current=null;
+  onPhaseChange?.(readingPhase(id));
+  if(focusTimer.current!==null){clearTimeout(focusTimer.current);focusTimer.current=null;}
+  focusHeading(id);
+ },[focusHeading,onPhaseChange]);
+ const deferFocus=useCallback(()=>{
+  if(!focusRequested.current)return;
+  if(focusTimer.current!==null)clearTimeout(focusTimer.current);
+  // Fallback for engines without scrollend. This only waits for an explicit
+  // fragment request; scroll events update a timer, never React state.
+  focusTimer.current=setTimeout(finishFocus,120);
+ },[finishFocus]);
  useEffect(()=>{
   const sync=()=>{
    const positions=items.map(item=>({id:item.id,top:document.getElementById(item.id)?.getBoundingClientRect().top??NaN}));
-   const next=activeReadingId(positions,145);
+   // Closing a mobile disclosure can leave native fragment alignment a few
+   // pixels below the desktop position in Firefox/WebKit. Keep a requested
+   // chapter current during native scrolling, then resume geometric reading.
+   // Changing the study disclosure above it mid-scroll can cancel native
+   // smooth fragment navigation, so its phase waits for the scroll to settle.
+   const offset=160;
+   const destination=positions.find(item=>item.id===requested.current);
+   if(destination){
+    setActive(destination.id);return;
+   }
+   requested.current=null;
+   const next=activeReadingId(positions,offset);
    setActive(next);
    // A study disclosure can move chapters below the viewport. Keep its explicit
    // selection until reading actually reaches a chapter.
-   if(positions.some(item=>Number.isFinite(item.top)&&item.top<=145))onPhaseChange?.(readingPhase(next));
+   if(positions.some(item=>Number.isFinite(item.top)&&item.top<=offset))onPhaseChange?.(readingPhase(next));
   };
   let observer:IntersectionObserver|undefined;
   // Native anchors and explicit selection remain complete if observing is unavailable.
@@ -32,16 +70,45 @@ export function CaseNavigation({chapters,locale:l,projectSlug,activePhase,onPhas
     for(const item of items){const el=document.getElementById(item.id);if(el)observer.observe(el);}
    }
   }catch{observer?.disconnect();}
-  window.addEventListener('hashchange',sync);sync();
-  return()=>{observer?.disconnect();window.removeEventListener('hashchange',sync);};
- },[items,onPhaseChange]);
+  const fragmentChanged=()=>{
+   const id=location.hash.slice(1);
+   if(focusRequested.current===id)deferFocus();
+   sync();
+  };
+  const manualReading=(event:Event)=>{
+   if(!requested.current&&!focusRequested.current)return;
+   if(event instanceof KeyboardEvent&&!['ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' '].includes(event.key))return;
+   requested.current=null;focusRequested.current=null;
+   if(focusTimer.current!==null){clearTimeout(focusTimer.current);focusTimer.current=null;}
+   cancelAnimationFrame(focusFrame.current);sync();
+  };
+  // A queued focus/disclosure scrollend may precede the fragment's own scroll.
+  // Share the quiet-period check so that subsequent native scroll cancels it.
+  const scrollSettled=()=>deferFocus();
+  window.addEventListener('hashchange',fragmentChanged);
+  window.addEventListener('scroll',deferFocus,{passive:true});
+  window.addEventListener('scrollend',scrollSettled);
+  window.addEventListener('wheel',manualReading,{passive:true});
+  window.addEventListener('touchstart',manualReading,{passive:true});
+  window.addEventListener('keydown',manualReading);
+  sync();
+  return()=>{
+   observer?.disconnect();window.removeEventListener('hashchange',fragmentChanged);
+   window.removeEventListener('scroll',deferFocus);window.removeEventListener('scrollend',scrollSettled);
+   window.removeEventListener('wheel',manualReading);window.removeEventListener('touchstart',manualReading);window.removeEventListener('keydown',manualReading);
+   cancelAnimationFrame(focusFrame.current);if(focusTimer.current!==null)clearTimeout(focusTimer.current);
+  };
+ },[items,onPhaseChange,deferFocus,finishFocus]);
  const go=(id:string)=>{
-  setActive(id);onPhaseChange?.(readingPhase(id));
+  cancelAnimationFrame(focusFrame.current);
+  if(focusTimer.current!==null){clearTimeout(focusTimer.current);focusTimer.current=null;}
+  requested.current=id;focusRequested.current=id;
+  setActive(id);
   if(mobile.current)mobile.current.open=false;
-  requestAnimationFrame(()=>{
-   const heading=document.getElementById(id)?.querySelector('h2');
-   if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});heading.addEventListener('blur',()=>heading.removeAttribute('tabindex'),{once:true});}
-  });
+  // Firefox resets focus during native fragment navigation; Chromium can
+  // cancel smooth fragment scrolling if focus moves before that scroll ends.
+  // Repeat activation of the current fragment does not emit hashchange.
+  if(location.hash==='#'+id)deferFocus();
  };
  const links=()=>items.map((item,index)=><a key={item.id} href={'#'+item.id} aria-current={active===item.id?'location':undefined} onClick={()=>go(item.id)}><span aria-hidden="true">{String(index+1).padStart(2,'0')}</span>{item.label}</a>);
  return <aside className="bk-reading-navigation">
