@@ -12,5 +12,7 @@ const structuredData={'@context':'https://schema.org','@type':p?'CreativeWork':'
 ---
 <Page title={title} description={description} path={pathFor(l,route.page,route.slug)} locale={l} alternate={pathFor(l==='es'?'en':'es',route.page,route.slug)} noindex={route.page==='compare'}>
 <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData).replace(/</g,'\\u003c')}/>
+<Fragment set:html={'<!--email_off-->'}/>
 <BookPage route={route} client:load/>
+<Fragment set:html={'<!--/email_off-->'}/>
 </Page>
