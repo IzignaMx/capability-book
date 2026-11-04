@@ -46,6 +46,7 @@ export function Approach({ locale: l }: { locale: Locale }) {
       <header className="bk-page-heading bk-support-heading">
         <p className="bk-kicker">{tx(l, "CRITERIO ANTES QUE EFECTO", "JUDGMENT BEFORE EFFECT")}</p>
         <h1>{tx(l, "Lo que une\ntodo el trabajo.", "What connects\nall the work.")}</h1>
+        <TrajectoryMark slug="omnisync" className="bk-support-signature" />
         <p>
           {tx(
             l,
@@ -53,7 +54,6 @@ export function Approach({ locale: l }: { locale: Locale }) {
             "An approach connecting intent, experience and engineering, without separating the result from its consequences.",
           )}
         </p>
-        <TrajectoryMark slug="omnisync" className="bk-support-signature" />
       </header>
       <div className="bk-approach">
         {sections.map(([t, b], i) => (

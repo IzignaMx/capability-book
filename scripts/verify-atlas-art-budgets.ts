@@ -23,6 +23,7 @@ export function validateEmbeddedGlb(bytes: Buffer): void {
   let offset = 12;
   let document: Record<string, any> | undefined;
   let binaryLength = 0;
+  let binaryOffset = 0;
   while (offset < bytes.length) {
     assert(offset + 8 <= bytes.length, 'Truncated GLB chunk');
     const length = bytes.readUInt32LE(offset), kind = bytes.readUInt32LE(offset + 4);
@@ -33,6 +34,7 @@ export function validateEmbeddedGlb(bytes: Buffer): void {
     } else {
       assert(kind === 0x004e4942 && binaryLength === 0, 'Unexpected GLB chunk');
       binaryLength = length;
+      binaryOffset = offset + 8;
     }
     offset += 8 + length;
   }
@@ -48,6 +50,59 @@ export function validateEmbeddedGlb(bytes: Buffer): void {
     }
   };
   checkUris(document);
+  assert(document.buffers[0].uri === undefined, 'GLB geometry must use its embedded binary chunk');
+  // This gate checks the uncompressed embedded POSITION geometry used by this folio,
+  // rather than attempting to implement every optional glTF extension.
+  const index = (value: unknown): value is number => Number.isSafeInteger(value) && Number(value) >= 0;
+  const sceneIndex = document.scene ?? 0;
+  assert(index(sceneIndex) && Array.isArray(document.scenes?.[sceneIndex]?.nodes) &&
+    document.scenes[sceneIndex].nodes.length > 0, 'GLB must contain a reachable scene');
+  const pending: unknown[] = [...document.scenes[sceneIndex].nodes];
+  const visited = new Set<number>();
+  let primitiveCount = 0;
+  while (pending.length) {
+    const nodeIndex = pending.pop();
+    assert(index(nodeIndex) && document.nodes?.[nodeIndex], 'GLB scene references an invalid node');
+    if (visited.has(nodeIndex)) continue;
+    visited.add(nodeIndex);
+    const node = document.nodes[nodeIndex];
+    if (node.children !== undefined) {
+      assert(Array.isArray(node.children), 'GLB node children must be an array');
+      pending.push(...node.children);
+    }
+    if (node.mesh === undefined) continue;
+    assert(index(node.mesh) && Array.isArray(document.meshes[node.mesh]?.primitives) &&
+      document.meshes[node.mesh].primitives.length > 0, 'GLB reachable mesh must contain primitives');
+    for (const primitive of document.meshes[node.mesh].primitives) {
+      const positionIndex = primitive?.attributes?.POSITION;
+      assert(index(positionIndex), 'GLB primitive must reference POSITION geometry');
+      const accessor = document.accessors?.[positionIndex];
+      assert(accessor && accessor.type === 'VEC3' && accessor.componentType === 5126 &&
+        index(accessor.count) && accessor.count >= 3 && !accessor.sparse && index(accessor.bufferView),
+      'GLB POSITION must contain embedded float VEC3 vertices');
+      const view = document.bufferViews?.[accessor.bufferView];
+      const viewOffset = view?.byteOffset ?? 0, accessorOffset = accessor.byteOffset ?? 0;
+      const stride = view?.byteStride ?? 12;
+      assert(view && view.buffer === 0 && index(view.byteLength) && view.byteLength > 0 &&
+        index(viewOffset) && index(accessorOffset) && viewOffset % 4 === 0 && accessorOffset % 4 === 0 &&
+        index(stride) && stride >= 12 && stride <= 252 && stride % 4 === 0 &&
+        Number.isSafeInteger(viewOffset + view.byteLength) && viewOffset + view.byteLength <= document.buffers[0].byteLength &&
+        Number.isSafeInteger(accessorOffset + (accessor.count - 1) * stride + 12) &&
+        accessorOffset + (accessor.count - 1) * stride + 12 <= view.byteLength,
+      'GLB POSITION accessor/bufferView exceeds embedded buffer bounds');
+      const minima = [Infinity, Infinity, Infinity], maxima = [-Infinity, -Infinity, -Infinity];
+      for (let vertex = 0; vertex < accessor.count; vertex++) {
+        for (let axis = 0; axis < 3; axis++) {
+          const value = bytes.readFloatLE(binaryOffset + viewOffset + accessorOffset + vertex * stride + axis * 4);
+          assert(Number.isFinite(value), 'GLB POSITION contains a non-finite vertex');
+          minima[axis] = Math.min(minima[axis]!, value); maxima[axis] = Math.max(maxima[axis]!, value);
+        }
+      }
+      assert(maxima.some((value, axis) => value > minima[axis]!), 'GLB POSITION geometry has empty bounds');
+      primitiveCount++;
+    }
+  }
+  assert(primitiveCount > 0, 'GLB scene must contain reachable POSITION geometry');
 }
 
 export async function verifyAtlasArtBudgets(options: { root?: string; dist?: string; provenance?: string; report?: string } = {}) {

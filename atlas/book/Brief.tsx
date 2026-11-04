@@ -80,6 +80,7 @@ export function Brief({ locale: l }: { locale: Locale }) {
       <header className="bk-page-heading bk-brief-heading bk-support-heading">
         <p className="bk-kicker">{tx(l, "EL SIGUIENTE CAPÍTULO", "THE NEXT CHAPTER")}</p>
         <h1>{tx(l, "Empecemos por\nuna buena pregunta.", "Let’s start with\na good question.")}</h1>
+        <TrajectoryMark slug={selection[0] || "omnisync"} className="bk-support-signature" />
         <p>
           {tx(
             l,
@@ -87,7 +88,6 @@ export function Brief({ locale: l }: { locale: Locale }) {
             "What do you need to work better? You don’t need to arrive with a solution already defined.",
           )}
         </p>
-        <TrajectoryMark slug={selection[0] || "omnisync"} className="bk-support-signature" />
       </header>
       <div className="bk-brief-layout">
         <aside>

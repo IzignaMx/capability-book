@@ -5,18 +5,41 @@ import { tmpdir } from 'node:os';
 import { resolve } from 'node:path';
 import sharp from 'sharp';
 import { afterAll, afterEach, beforeAll, expect, test } from 'vitest';
-import { ATLAS_ART_LIMITS, verifyAtlasArtBudgets } from '../scripts/verify-atlas-art-budgets';
+import { ATLAS_ART_LIMITS, validateEmbeddedGlb, verifyAtlasArtBudgets } from '../scripts/verify-atlas-art-budgets';
 
 let template: string;
 const temporary: string[] = [];
 const poster = '/art/folio/matter-mobile.webp';
-function glb(external = false): Buffer {
-  const json = Buffer.from(JSON.stringify({ asset: { version: '2.0' }, meshes: [{ primitives: [] }],
-    buffers: [{ byteLength: 4, ...(external ? { uri: 'https://example.com/model.bin' } : {}) }] }).padEnd(256));
-  const result = Buffer.alloc(12 + 8 + json.length + 8 + 4);
+const triangleDocument = () => ({
+  asset: { version: '2.0' }, scene: 0, scenes: [{ nodes: [0] }], nodes: [{ mesh: 0 }],
+  meshes: [{ primitives: [{ attributes: { POSITION: 0 } }] }],
+  accessors: [{ bufferView: 0, componentType: 5126, count: 3, type: 'VEC3', min: [0, 0, 0], max: [1, 1, 0] }],
+  bufferViews: [{ buffer: 0, byteLength: 36 }], buffers: [{ byteLength: 36 }],
+});
+function encodeGlb(document: object, binary: Buffer): Buffer {
+  const text = JSON.stringify(document), json = Buffer.from(text.padEnd(Math.ceil(Buffer.byteLength(text) / 4) * 4));
+  const paddedBinary = Buffer.alloc(Math.ceil(binary.length / 4) * 4); binary.copy(paddedBinary);
+  const result = Buffer.alloc(12 + 8 + json.length + 8 + paddedBinary.length);
   result.write('glTF'); result.writeUInt32LE(2, 4); result.writeUInt32LE(result.length, 8);
   result.writeUInt32LE(json.length, 12); result.writeUInt32LE(0x4e4f534a, 16); json.copy(result, 20);
-  result.writeUInt32LE(4, 20 + json.length); result.writeUInt32LE(0x004e4942, 24 + json.length);
+  result.writeUInt32LE(paddedBinary.length, 20 + json.length); result.writeUInt32LE(0x004e4942, 24 + json.length);
+  paddedBinary.copy(result, 28 + json.length);
+  return result;
+}
+const triangleVertices = () => {
+  const bytes = Buffer.alloc(36);
+  [0, 0, 0, 1, 0, 0, 0, 1, 0].forEach((value, index) => bytes.writeFloatLE(value, index * 4));
+  return bytes;
+};
+function glb(external = false): Buffer {
+  const document = triangleDocument();
+  if (external) Object.assign(document.buffers[0]!, { uri: 'https://example.com/model.bin' });
+  return encodeGlb(document, triangleVertices());
+}
+function padGlbTo(bytes: Buffer, length: number): Buffer {
+  const result = Buffer.alloc(length), binaryHeader = 20 + bytes.readUInt32LE(12);
+  bytes.copy(result); result.writeUInt32LE(length, 8);
+  result.writeUInt32LE(length - binaryHeader - 8, binaryHeader);
   return result;
 }
 async function replace(root: string, path: string, bytes: Buffer, dimensions?: { width: number; height: number }) {
@@ -94,8 +117,7 @@ test('rejects a GLB with external fetch dependencies even with matching provenan
 test('accepts the GLB byte boundary and rejects the next aligned binary chunk size', async () => {
   const root = await fixture();
   for (const extra of [0, 4]) {
-    const bytes = Buffer.alloc(ATLAS_ART_LIMITS.model + extra);
-    glb().copy(bytes); bytes.writeUInt32LE(bytes.length, 8); bytes.writeUInt32LE(bytes.length - 284, 276);
+    const bytes = padGlbTo(glb(), ATLAS_ART_LIMITS.model + extra);
     await replace(root, '/art/folio/folio.glb', bytes);
     if (extra === 0) await expect(verifyAtlasArtBudgets({ root })).resolves.toBeDefined();
     else await expect(verifyAtlasArtBudgets({ root })).rejects.toThrow('model exceeds 700 KiB');
@@ -111,4 +133,35 @@ test('rejects an oversized dynamic child that a static-only closure would omit',
   const root = await fixture();
   await writeFile(resolve(root, 'dist/_astro/GLTFLoader.fixture.js'), `export const payload = "${randomBytes(300000).toString('hex')}";`);
   await expect(verifyAtlasArtBudgets({ root })).rejects.toThrow('bootstrap exceeds 250 KiB gzip');
+});
+
+test('rejects the formerly accepted empty placeholder', () => {
+  const placeholder = { asset: { version: '2.0' }, meshes: [{ primitives: [] }], buffers: [{ byteLength: 4 }] };
+  expect(() => validateEmbeddedGlb(encodeGlb(placeholder, Buffer.alloc(4)))).toThrow('reachable scene');
+});
+test('rejects geometry that is present but unreachable from the scene', () => {
+  const document = triangleDocument(); Object.assign(document.nodes[0]!, { mesh: undefined });
+  expect(() => validateEmbeddedGlb(encodeGlb(document, triangleVertices()))).toThrow('reachable POSITION geometry');
+});
+test('rejects empty reachable primitives and invalid POSITION accessor shapes', () => {
+  const empty = triangleDocument(); empty.meshes[0]!.primitives = [];
+  expect(() => validateEmbeddedGlb(encodeGlb(empty, triangleVertices()))).toThrow('must contain primitives');
+  const incorrect = triangleDocument(); incorrect.accessors[0]!.componentType = 5123;
+  expect(() => validateEmbeddedGlb(encodeGlb(incorrect, triangleVertices()))).toThrow('float VEC3');
+});
+test('rejects POSITION accessor and bufferView ranges outside embedded bytes', () => {
+  const accessor = triangleDocument(); accessor.accessors[0]!.count = 4;
+  expect(() => validateEmbeddedGlb(encodeGlb(accessor, triangleVertices()))).toThrow('buffer bounds');
+  const view = triangleDocument(); Object.assign(view.bufferViews[0]!, { byteOffset: 4 });
+  expect(() => validateEmbeddedGlb(encodeGlb(view, triangleVertices()))).toThrow('buffer bounds');
+});
+test('rejects zero-extent and nonfinite POSITION geometry', () => {
+  expect(() => validateEmbeddedGlb(encodeGlb(triangleDocument(), Buffer.alloc(36)))).toThrow('empty bounds');
+  const vertices = triangleVertices(); vertices.writeFloatLE(NaN, 0);
+  expect(() => validateEmbeddedGlb(encodeGlb(triangleDocument(), vertices))).toThrow('non-finite');
+});
+test('rejects a data URI buffer that would replace the validated binary chunk at runtime', () => {
+  const document = triangleDocument();
+  Object.assign(document.buffers[0]!, { uri: 'data:application/octet-stream;base64,AAAA' });
+  expect(() => validateEmbeddedGlb(encodeGlb(document, triangleVertices()))).toThrow('must use its embedded binary chunk');
 });
