@@ -22,8 +22,8 @@ The corrected integrated build passes all existing budgets and the new fail-clos
 
 | Measurement | Measured bytes | Limit bytes |
 | --- | ---: | ---: |
-| Critical HTML + CSS, gzip | 22,750 | 122,880 |
-| Initial JS, gzip | 107,083 | 184,320 |
+| Critical HTML + CSS, gzip | 22,751 | 122,880 |
+| Initial JS, gzip | 107,346 | 184,320 |
 | Complete deferred JS closure, gzip | 188,039 | 256,000 |
 | Deferred JS gzip + embedded GLB | 640,011 | 1,572,864 |
 | Folio GLB | 451,972 | 716,800 |
@@ -32,7 +32,9 @@ The corrected integrated build passes all existing budgets and the new fail-clos
 
 The art gate checks all 17 artifact/source/provenance hashes, decoded dimensions and formats, embedded reachable GLB geometry, and every unique static/dynamic runtime descendant. It does not exempt the loader or shared modules. No budget exception, added dependency or CI bypass is used.
 
-Validation includes 244 unit tests, the original 619 browser checks and four additional artifact suites for motion, model lifecycle, native image failure and chapter navigation/history. The browser runner totals 783 checks. Accessibility audits 16 representative pages. CI builds once and checks that same artifact's SHA-256 manifest before and after browser/accessibility tests; deployment stays restricted to main after all three gates.
+Final local validation passed 244 unit tests, the original 619 browser checks and four additional artifact suites for motion, model lifecycle, native image failure and chapter navigation/history/context links: 823 browser checks in total. Accessibility passed 16 representative pages and four readiness/error fixtures. The 66-view presentation matrix and actual interface recording completed with no image-readiness failures or overflow. CI builds once and checks that same artifact's SHA-256 manifest before and after browser/accessibility tests; deployment stays restricted to main after all three gates.
+
+Ordinary-motion context navigation was additionally checked in Firefox and Linux WebKit, including phase/current-chapter agreement after native scroll and the fallback without the application's scrollend listener. History tests follow the browser's restored viewport; they do not force Back to realign a hash. A Chromium native-only rapid focus/Enter scroll edge is recorded separately from the product regressions. The source keeps native scrolling and cancels superseded request/focus/timer work.
 
 The shared project source and exported catalog remain byte-identical to the approved portfolio sync: SHA-256 `77495718ec567a84d447999cd2284c2ba462736d4e0e04c4ef59d7c59879a9d4` and `31ba50b7df6e0db60dc14b47d728173ad045ed7f9a2ad61de966371a90418dd5`. All 42 protected catalog/evidence files match the baseline. This art release does not require a new content import into the primary site.
 

@@ -30,7 +30,27 @@
       "file": "book-game-checks.json",
       "checks": 80,
       "failures": 0
+    },
+    {
+      "file": "book-art-map-checks.json",
+      "checks": 11,
+      "failures": 0
+    },
+    {
+      "file": "book-art-discovery-checks.json",
+      "checks": 65,
+      "failures": 0
+    },
+    {
+      "file": "book-art-fallback-checks.json",
+      "checks": 18,
+      "failures": 0
+    },
+    {
+      "file": "book-art-case-checks.json",
+      "checks": 110,
+      "failures": 0
     }
   ],
-  "total": 619
+  "total": 823
 }
