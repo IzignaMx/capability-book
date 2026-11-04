@@ -14,7 +14,9 @@ export function FolioArt({ phase, className = '', eager = false }: FolioArtProps
     setFailedPhase(image?.complete && image.naturalWidth === 0 ? phase : null);
   }, [phase]);
   const base = `/art/folio/${phase}`;
-  return <picture className={`bk-folio-art ${className}`.trim()} aria-hidden="true"
+  // With scripting disabled this marker is real DOM; otherwise noscript is inert text.
+  // External CSS paints the same selected URL without the native broken-image chrome.
+  return <><noscript><span className="bk-folio-native" hidden /></noscript><picture className={`bk-folio-art ${className}`.trim()} aria-hidden="true"
     data-folio-phase={phase} hidden={failedPhase === phase}>
     <source media="(max-width: 600px)" type="image/avif" srcSet={`${base}-mobile.avif`} width="800" height="1000" />
     <source media="(max-width: 600px)" type="image/webp" srcSet={`${base}-mobile.webp`} width="800" height="1000" />
@@ -22,5 +24,5 @@ export function FolioArt({ phase, className = '', eager = false }: FolioArtProps
     <img key={phase} ref={imageRef} src={`${base}-desktop.webp`} width="1600" height="1100" alt=""
       loading={eager ? 'eager' : 'lazy'} fetchPriority={eager ? 'high' : 'auto'} decoding="async"
       onError={() => setFailedPhase(phase)} />
-  </picture>;
+  </picture></>;
 }

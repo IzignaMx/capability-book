@@ -5,9 +5,23 @@
 .bk-trajectory-register{stroke:var(--bk-line);stroke-width:1;vector-effect:non-scaling-stroke}
 .bk-trajectory-origin{fill:var(--bk-link)}
 .bk-trajectory-mark.is-compact{max-height:100px}
-.bk-folio-art{display:block;min-width:0;pointer-events:none;user-select:none}
+.bk-folio-art{display:block;min-width:0;pointer-events:none;user-select:none;background-repeat:no-repeat;background-position:center;background-size:contain}
 .bk-folio-art[hidden]{display:none}
 .bk-folio-art img{display:block;width:100%;height:auto;object-fit:contain}
+/* The marker exists only when scripting is disabled. Shared external CSS also
+   respects the static CSP; native/CSS fetches of the selected URL coalesce. */
+noscript:has(>.bk-folio-native){display:none}
+noscript:has(>.bk-folio-native)+.bk-folio-art img{visibility:hidden}
+noscript:has(>.bk-folio-native)+.bk-folio-art[data-folio-phase="matter"]{background-image:image-set(url("/art/folio/matter-desktop.avif") type("image/avif"),url("/art/folio/matter-desktop.webp") type("image/webp"))}
+noscript:has(>.bk-folio-native)+.bk-folio-art[data-folio-phase="trajectory"]{background-image:image-set(url("/art/folio/trajectory-desktop.avif") type("image/avif"),url("/art/folio/trajectory-desktop.webp") type("image/webp"))}
+noscript:has(>.bk-folio-native)+.bk-folio-art[data-folio-phase="weave"]{background-image:image-set(url("/art/folio/weave-desktop.avif") type("image/avif"),url("/art/folio/weave-desktop.webp") type("image/webp"))}
+noscript:has(>.bk-folio-native)+.bk-folio-art[data-folio-phase="constellation"]{background-image:image-set(url("/art/folio/constellation-desktop.avif") type("image/avif"),url("/art/folio/constellation-desktop.webp") type("image/webp"))}
+@media(max-width:600px){
+noscript:has(>.bk-folio-native)+.bk-folio-art[data-folio-phase="matter"]{background-image:image-set(url("/art/folio/matter-mobile.avif") type("image/avif"),url("/art/folio/matter-mobile.webp") type("image/webp"))}
+noscript:has(>.bk-folio-native)+.bk-folio-art[data-folio-phase="trajectory"]{background-image:image-set(url("/art/folio/trajectory-mobile.avif") type("image/avif"),url("/art/folio/trajectory-mobile.webp") type("image/webp"))}
+noscript:has(>.bk-folio-native)+.bk-folio-art[data-folio-phase="weave"]{background-image:image-set(url("/art/folio/weave-mobile.avif") type("image/avif"),url("/art/folio/weave-mobile.webp") type("image/webp"))}
+noscript:has(>.bk-folio-native)+.bk-folio-art[data-folio-phase="constellation"]{background-image:image-set(url("/art/folio/constellation-mobile.avif") type("image/avif"),url("/art/folio/constellation-mobile.webp") type("image/webp"))}
+}
 [data-atlas-motion]{--atlas-pointer-x:0px;--atlas-pointer-y:0px;touch-action:pan-y}
 [data-atlas-motion="active"] .bk-folio-art{transform:translate3d(var(--atlas-pointer-x,0px),var(--atlas-pointer-y,0px),0)}
 @media(prefers-reduced-motion:reduce){.bk-trajectory-path{transition:none}[data-atlas-motion] .bk-folio-art{transform:none}}
