@@ -19,22 +19,29 @@ export function CaseNavigation({chapters,locale:l,projectSlug,activePhase,onPhas
  const focusRequested=useRef<string|null>(null);
  const focusFrame=useRef(0);
  const focusTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
+ const cancelRequest=useCallback(()=>{
+  requested.current=null;focusRequested.current=null;
+  if(focusTimer.current!==null){clearTimeout(focusTimer.current);focusTimer.current=null;}
+  cancelAnimationFrame(focusFrame.current);focusFrame.current=0;
+ },[]);
  const focusHeading=useCallback((id:string)=>{
   cancelAnimationFrame(focusFrame.current);
   focusFrame.current=requestAnimationFrame(()=>{
+   if(location.hash!=='#'+id){cancelRequest();return;}
    const heading=document.getElementById(id)?.querySelector('h2');
    requested.current=null;setActive(id);
    if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});heading.addEventListener('blur',()=>heading.removeAttribute('tabindex'),{once:true});}
   });
- },[]);
+ },[cancelRequest]);
  const finishFocus=useCallback(()=>{
   const id=focusRequested.current;
-  if(!id||location.hash!=='#'+id)return;
+  if(!id)return;
+  if(location.hash!=='#'+id){cancelRequest();return;}
   focusRequested.current=null;
   onPhaseChange?.(readingPhase(id));
   if(focusTimer.current!==null){clearTimeout(focusTimer.current);focusTimer.current=null;}
   focusHeading(id);
- },[focusHeading,onPhaseChange]);
+ },[focusHeading,onPhaseChange,cancelRequest]);
  const deferFocus=useCallback(()=>{
   if(!focusRequested.current)return;
   if(focusTimer.current!==null)clearTimeout(focusTimer.current);
@@ -73,14 +80,13 @@ export function CaseNavigation({chapters,locale:l,projectSlug,activePhase,onPhas
   const fragmentChanged=()=>{
    const id=location.hash.slice(1);
    if(focusRequested.current===id)deferFocus();
+   else if(requested.current||focusRequested.current)cancelRequest();
    sync();
   };
   const manualReading=(event:Event)=>{
    if(!requested.current&&!focusRequested.current)return;
    if(event instanceof KeyboardEvent&&!['ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' '].includes(event.key))return;
-   requested.current=null;focusRequested.current=null;
-   if(focusTimer.current!==null){clearTimeout(focusTimer.current);focusTimer.current=null;}
-   cancelAnimationFrame(focusFrame.current);sync();
+   cancelRequest();sync();
   };
   // A queued focus/disclosure scrollend may precede the fragment's own scroll.
   // Share the quiet-period check so that subsequent native scroll cancels it.
@@ -96,12 +102,11 @@ export function CaseNavigation({chapters,locale:l,projectSlug,activePhase,onPhas
    observer?.disconnect();window.removeEventListener('hashchange',fragmentChanged);
    window.removeEventListener('scroll',deferFocus);window.removeEventListener('scrollend',scrollSettled);
    window.removeEventListener('wheel',manualReading);window.removeEventListener('touchstart',manualReading);window.removeEventListener('keydown',manualReading);
-   cancelAnimationFrame(focusFrame.current);if(focusTimer.current!==null)clearTimeout(focusTimer.current);
+   cancelRequest();
   };
- },[items,onPhaseChange,deferFocus,finishFocus]);
+ },[items,onPhaseChange,deferFocus,finishFocus,cancelRequest]);
  const go=(id:string)=>{
-  cancelAnimationFrame(focusFrame.current);
-  if(focusTimer.current!==null){clearTimeout(focusTimer.current);focusTimer.current=null;}
+  cancelRequest();
   requested.current=id;focusRequested.current=id;
   setActive(id);
   if(mobile.current)mobile.current.open=false;

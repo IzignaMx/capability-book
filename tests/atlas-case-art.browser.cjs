@@ -30,19 +30,8 @@ async function activate(page,nav,mode){
  await waitForNativeScroll(page);
 }
 
-(async()=>{
- const browser=await chromium.launch({headless:true,executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE||chromium.executablePath(),args:['--no-sandbox']});
- const errors=[];
- try{
-  const scenarios=[];
-  for(const locale of ['es','en'])for(const width of [1440,390])for(const mode of ['click','keyboard'])scenarios.push({locale,width,mode,noScrollend:false});
-  scenarios.push({locale:'en',width:1440,mode:'keyboard',noScrollend:true});
-  for(const scenario of scenarios){
-   const {locale,width,mode,noScrollend}=scenario;
-   const name=`${locale} ${width}px ${mode}${noScrollend?' without scrollend':''}`;
-   const page=await browser.newPage({viewport:{width,height:960}});
-   page.on('pageerror',e=>errors.push(e.message));
-   await page.addInitScript(noScrollend=>{
+async function installProbe(page,noScrollend=false){
+ await page.addInitScript(noScrollend=>{
     const probe=window.caseAnchorProbe={lastScroll:performance.now(),events:[],pendingFallbacks:0};
     const add=window.addEventListener;
     if(noScrollend)window.addEventListener=function(type,listener,options){if(type!=='scrollend')return add.call(this,type,listener,options);};
@@ -55,7 +44,22 @@ async function activate(page,nav,mode){
      if(delay===120){pending.add(id);probe.pendingFallbacks=pending.size;}return id;
     };
     window.clearTimeout=function(id){pending.delete(id);probe.pendingFallbacks=pending.size;return clear.call(this,id);};
-   },noScrollend);
+ },noScrollend);
+}
+
+(async()=>{
+ const browser=await chromium.launch({headless:true,executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE||chromium.executablePath(),args:['--no-sandbox']});
+ const errors=[];
+ try{
+  const scenarios=[];
+  for(const locale of ['es','en'])for(const width of [1440,390])for(const mode of ['click','keyboard'])scenarios.push({locale,width,mode,noScrollend:false});
+  scenarios.push({locale:'en',width:1440,mode:'keyboard',noScrollend:true});
+  for(const scenario of scenarios){
+   const {locale,width,mode,noScrollend}=scenario;
+   const name=`${locale} ${width}px ${mode}${noScrollend?' without scrollend':''}`;
+   const page=await browser.newPage({viewport:{width,height:960}});
+   page.on('pageerror',e=>errors.push(e.message));
+   await installProbe(page,noScrollend);
    try{
     await page.goto(`${base}/${locale}/${locale==='es'?'proyectos':'projects'}/omnisync/`,{waitUntil:'networkidle'});
     const nav=page.locator(width===390?'.bk-reading-mobile':'.bk-reading-desktop');
@@ -72,6 +76,54 @@ async function activate(page,nav,mode){
     await activate(page,nav,mode);
     const repeated=await state(page);
     check(name+' same-fragment activation also settles focus and location',repeated.hash==='#chapter-2'&&repeated.focused&&repeated.current==='#chapter-2'&&repeated.top>=80&&repeated.top<=170,repeated);
+   }catch(error){check(name+' completes',false,String(error));}
+   finally{await page.close();}
+  }
+  // History can supersede an explicit chapter request before its quiet-focus
+  // callback. Neither that obsolete focus nor its pinned marker may survive.
+  for(const locale of ['es','en'])for(const width of [1440,390])for(const direction of ['back','forward']){
+   const name=`${locale} ${width}px interrupted browser ${direction}`;
+   const page=await browser.newPage({viewport:{width,height:960}});
+   page.on('pageerror',e=>errors.push(e.message));await installProbe(page);
+   try{
+    await page.goto(`${base}/${locale}/${locale==='es'?'proyectos':'projects'}/omnisync/#chapter-0`,{waitUntil:'networkidle'});
+    await waitForNativeScroll(page);
+    const nav=page.locator(width===390?'.bk-reading-mobile':'.bk-reading-desktop');
+    const clickChapter=async index=>{
+     if(width===390)await nav.locator('summary').click();
+     await nav.locator(`a[href="#chapter-${index}"]`).click();
+    };
+    let expected,abandoned;
+    if(direction==='forward'){
+     // Create a settled forward entry, return, then interrupt a same-hash
+     // request. This preserves the forward stack and tests its cancellation.
+     await clickChapter(3);await waitForNativeScroll(page);
+     await page.goBack();await waitForNativeScroll(page);
+     await clickChapter(0);await page.goForward();expected=3;abandoned=0;
+    }else{
+     await clickChapter(2);await page.goBack();expected=0;abandoned=2;
+    }
+    await waitForNativeScroll(page);
+    const result=await page.evaluate(({expected,abandoned})=>{
+     const sections=[...document.querySelectorAll('.bk-case-prose>section'),document.getElementById('evidencia')].filter(Boolean);
+     const passed=sections.filter(section=>section.getBoundingClientRect().top<=160);
+     return {
+     hash:location.hash,current:document.querySelector('.bk-reading-desktop a[aria-current]')?.getAttribute('href'),
+     top:document.querySelector(`#chapter-${expected}`).getBoundingClientRect().top,
+     abandonedFocus:document.activeElement===document.querySelector(`#chapter-${abandoned} h2`),
+     pending:window.caseAnchorProbe.pendingFallbacks,events:window.caseAnchorProbe.events,
+     restoredReading:'#'+(passed.at(-1)||sections[0]).id,
+    };},{expected,abandoned});
+    // Opening/focusing mobile contents updates the old history entry's scroll
+    // position. Back restores that position, which can differ from its hash's
+    // anchor. Keep the desktop review's exact offset and check the actual
+    // restored reading position on mobile instead of replacing native scroll.
+    const restored=width===390?result.current===result.restoredReading:result.current===`#chapter-${expected}`&&result.top>=80&&result.top<=170;
+    check(name+' tracks history and the native restored reading position',result.hash===`#chapter-${expected}`&&restored,result);
+    check(name+' cancels obsolete focus and timer work',!result.abandonedFocus&&result.pending===0,result);
+    await page.mouse.move(width-24,500);await page.mouse.wheel(0,850);await waitForNativeScroll(page);
+    const manual=await page.locator('.bk-reading-desktop a[aria-current]').getAttribute('href');
+    check(name+' resumes later native reading',manual!==result.current,manual);
    }catch(error){check(name+' completes',false,String(error));}
    finally{await page.close();}
   }
