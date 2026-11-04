@@ -32,10 +32,11 @@ async function activate(page,nav,mode){
 
 async function installProbe(page,noScrollend=false){
  await page.addInitScript(noScrollend=>{
-    const probe=window.caseAnchorProbe={lastScroll:performance.now(),events:[],pendingFallbacks:0};
+    const probe=window.caseAnchorProbe={lastScroll:performance.now(),lastScrollEnd:0,events:[],pendingFallbacks:0};
     const add=window.addEventListener;
     if(noScrollend)window.addEventListener=function(type,listener,options){if(type!=='scrollend')return add.call(this,type,listener,options);};
     add.call(window,'scroll',()=>{probe.lastScroll=performance.now();},{passive:true});
+    add.call(window,'scrollend',()=>{probe.lastScrollEnd=performance.now();});
     for(const type of ['focusin','focusout','hashchange','scrollend'])add.call(window,type,event=>probe.events.push({type,target:event.target.tagName||'WINDOW',at:Math.round(performance.now()),y:scrollY,top:document.querySelector('#chapter-2')?.getBoundingClientRect().top,phase:document.querySelector('.bk-decision-figure')?.dataset.phase}),true);
     const schedule=window.setTimeout,clear=window.clearTimeout,pending=new Set();
     window.setTimeout=function(callback,delay,...args){
@@ -76,6 +77,45 @@ async function installProbe(page,noScrollend=false){
     await activate(page,nav,mode);
     const repeated=await state(page);
     check(name+' same-fragment activation also settles focus and location',repeated.hash==='#chapter-2'&&repeated.focused&&repeated.current==='#chapter-2'&&repeated.top>=80&&repeated.top<=170,repeated);
+   }catch(error){check(name+' completes',false,String(error));}
+   finally{await page.close();}
+  }
+  // The study's public context links use native fragments without the rail's
+  // heading-focus request. Their disclosure must stay stable during the scroll,
+  // and settled chapter geometry must agree with the shared semantic figure.
+  const contextScenarios=[];
+  for(const locale of ['es','en']){
+   for(const phase of [0,1,2])contextScenarios.push({locale,phase,slug:'omnisync',noScrollend:false});
+   contextScenarios.push({locale,phase:1,slug:'hamburguesa-nomada',noScrollend:false});
+   contextScenarios.push({locale,phase:1,slug:'omnisync',noScrollend:true});
+  }
+  for(const {locale,phase,slug,noScrollend} of contextScenarios){
+   const chapter=[0,2,3][phase];
+   const name=`${locale} 390px ${slug} decision ${phase+1} context${noScrollend?' without scrollend':''}`;
+   const page=await browser.newPage({viewport:{width:390,height:960}});
+   page.on('pageerror',e=>errors.push(e.message));await installProbe(page,noScrollend);
+   try{
+    await page.goto(`${base}/${locale}/${locale==='es'?'proyectos':'projects'}/${slug}/`,{waitUntil:'networkidle'});
+    const decision=page.locator('.bk-decision-steps details').nth(phase);
+    await decision.locator('summary').click();await waitForNativeScroll(page);
+    const selected=await page.locator('.bk-decision-figure').getAttribute('data-phase');
+    check(name+' explicitly selects the requested perspective',selected===String(phase),selected);
+    await decision.locator('a').click();await waitForNativeScroll(page);
+    // Firefox can dispatch scrollend after the last changed pixel. Wait for
+    // that native event's quiet period too, before asserting timer cleanup.
+    await page.waitForFunction(()=>performance.now()-Math.max(window.caseAnchorProbe.lastScroll,window.caseAnchorProbe.lastScrollEnd)>200,null,{timeout:6000});
+    const result=await page.evaluate(chapter=>({
+     hash:location.hash,top:document.getElementById(`chapter-${chapter}`).getBoundingClientRect().top,
+     current:document.querySelector('.bk-reading-desktop a[aria-current]')?.getAttribute('href'),
+     mobileCurrent:document.querySelector('.bk-reading-mobile a[aria-current]')?.getAttribute('href'),
+     phase:Number(document.querySelector('.bk-decision-figure').dataset.phase),
+     activeTrace:[...document.querySelectorAll('.bk-study-trace')].findIndex(trace=>trace.classList.contains('is-active')),
+     open:[...document.querySelectorAll('.bk-decision-steps details')].map(details=>details.open),
+     pending:window.caseAnchorProbe.pendingFallbacks,events:window.caseAnchorProbe.events,
+    }),chapter);
+    check(name+' finishes the native fragment at its reading boundary',result.hash===`#chapter-${chapter}`&&result.top>=80&&result.top<=160,result);
+    check(name+' reconciles both chapter guides, phase, figure and disclosure',result.current===`#chapter-${chapter}`&&result.mobileCurrent===result.current&&result.phase===phase&&result.activeTrace===phase&&result.open.every((open,index)=>open===(index===phase)),result);
+    check(name+' leaves no deferred work',result.pending===0,result.pending);
    }catch(error){check(name+' completes',false,String(error));}
    finally{await page.close();}
   }

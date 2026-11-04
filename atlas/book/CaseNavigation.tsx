@@ -50,6 +50,12 @@ export function CaseNavigation({chapters,locale:l,projectSlug,activePhase,onPhas
   focusTimer.current=setTimeout(finishFocus,120);
  },[finishFocus]);
  useEffect(()=>{
+  let fragmentScrolling=!!location.hash;
+  let readingTimer:ReturnType<typeof setTimeout>|null=null;
+  const cancelReading=()=>{
+   fragmentScrolling=false;
+   if(readingTimer!==null){clearTimeout(readingTimer);readingTimer=null;}
+  };
   const sync=()=>{
    const positions=items.map(item=>({id:item.id,top:document.getElementById(item.id)?.getBoundingClientRect().top??NaN}));
    // Closing a mobile disclosure can leave native fragment alignment a few
@@ -62,12 +68,31 @@ export function CaseNavigation({chapters,locale:l,projectSlug,activePhase,onPhas
    if(destination){
     setActive(destination.id);return;
    }
+   // Native context links and history also scroll past intermediate chapters.
+   // Keep their study disclosure stable until the browser finishes scrolling.
+   if(fragmentScrolling)return;
    requested.current=null;
    const next=activeReadingId(positions,offset);
    setActive(next);
    // A study disclosure can move chapters below the viewport. Keep its explicit
    // selection until reading actually reaches a chapter.
    if(positions.some(item=>Number.isFinite(item.top)&&item.top<=offset))onPhaseChange?.(readingPhase(next));
+  };
+  const deferReading=()=>{
+   if(readingTimer!==null)clearTimeout(readingTimer);
+   readingTimer=setTimeout(()=>{readingTimer=null;fragmentScrolling=false;sync();},120);
+  };
+  const nativeFragment=()=>{fragmentScrolling=true;deferReading();};
+  const fragmentClicked=(event:MouseEvent)=>{
+   if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+   const link=event.target instanceof Element?event.target.closest('a[href]'):null;
+   if(!(link instanceof HTMLAnchorElement)||link.target&&link.target!=='_self'||link.hasAttribute('download'))return;
+   const url=new URL(link.href);
+   if(url.origin===location.origin&&url.pathname===location.pathname&&url.search===location.search&&url.hash){
+    // A same-hash context link emits no hashchange. Supersede old focus work
+    // before the rail's own click handler can establish a fresh request.
+    cancelRequest();nativeFragment();
+   }
   };
   let observer:IntersectionObserver|undefined;
   // Native anchors and explicit selection remain complete if observing is unavailable.
@@ -81,28 +106,34 @@ export function CaseNavigation({chapters,locale:l,projectSlug,activePhase,onPhas
    const id=location.hash.slice(1);
    if(focusRequested.current===id)deferFocus();
    else if(requested.current||focusRequested.current)cancelRequest();
+   nativeFragment();
    sync();
   };
   const manualReading=(event:Event)=>{
-   if(!requested.current&&!focusRequested.current)return;
+   if(!requested.current&&!focusRequested.current&&!fragmentScrolling)return;
    if(event instanceof KeyboardEvent&&!['ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' '].includes(event.key))return;
-   cancelRequest();sync();
+   cancelRequest();cancelReading();sync();
   };
   // A queued focus/disclosure scrollend may precede the fragment's own scroll.
   // Share the quiet-period check so that subsequent native scroll cancels it.
-  const scrollSettled=()=>deferFocus();
+  // A final geometric sample also covers boundaries missed by the observer.
+  // Both paths use a bounded quiet timer, including engines without scrollend.
+  const scrollSettled=()=>{deferFocus();deferReading();};
+  window.addEventListener('click',fragmentClicked,true);
   window.addEventListener('hashchange',fragmentChanged);
-  window.addEventListener('scroll',deferFocus,{passive:true});
+  window.addEventListener('scroll',scrollSettled,{passive:true});
   window.addEventListener('scrollend',scrollSettled);
   window.addEventListener('wheel',manualReading,{passive:true});
   window.addEventListener('touchstart',manualReading,{passive:true});
   window.addEventListener('keydown',manualReading);
   sync();
+  if(fragmentScrolling)deferReading();
   return()=>{
    observer?.disconnect();window.removeEventListener('hashchange',fragmentChanged);
-   window.removeEventListener('scroll',deferFocus);window.removeEventListener('scrollend',scrollSettled);
+   window.removeEventListener('click',fragmentClicked,true);
+   window.removeEventListener('scroll',scrollSettled);window.removeEventListener('scrollend',scrollSettled);
    window.removeEventListener('wheel',manualReading);window.removeEventListener('touchstart',manualReading);window.removeEventListener('keydown',manualReading);
-   cancelRequest();
+   cancelRequest();cancelReading();
   };
  },[items,onPhaseChange,deferFocus,finishFocus,cancelRequest]);
  const go=(id:string)=>{
