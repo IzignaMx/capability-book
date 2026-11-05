@@ -1,14 +1,15 @@
 import { useEffect, type RefObject } from 'react';
 import { atlasPhase } from './trajectories';
 
-export type AtlasMotionOptions = { enabled?: boolean; surfaces?: string };
+export type AtlasMotionOptions = { enabled?: boolean; surfaces?: string; settle?: boolean };
 
-/** A single event-batched frame writes visual properties; React owns no frame state. */
-export function useAtlasMotion(ref: RefObject<HTMLElement | null>, { enabled = true, surfaces }: AtlasMotionOptions = {}) {
+/** One owner batches visual writes. Coordinated surfaces may settle briefly;
+ * React owns no frame state and every mode becomes idle when its values settle. */
+export function useAtlasMotion(ref: RefObject<HTMLElement | null>, { enabled = true, surfaces, settle = false }: AtlasMotionOptions = {}) {
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
-    if (surfaces) return coordinateSurfaces(element, surfaces, enabled);
+    if (surfaces) return coordinateSurfaces(element, surfaces, enabled, settle);
     const attributes = ['data-atlas-motion', 'data-atlas-stage'] as const;
     const properties = ['--atlas-progress', '--atlas-pointer-x', '--atlas-pointer-y'] as const;
     const originalAttributes = attributes.map(name => element.getAttribute(name));
@@ -142,12 +143,13 @@ export function useAtlasMotion(ref: RefObject<HTMLElement | null>, { enabled = t
         else element!.style.removeProperty(name);
       });
     }
-  }, [ref, enabled, surfaces]);
+  }, [ref, enabled, surfaces, settle]);
 }
 
 /** Optional multi-surface consumer mode. One observer/listener set and RAF owns
- * local viewport-crossing progress; the coordinator itself never moves descendants. */
-function coordinateSurfaces(root: HTMLElement, selector: string, enabled: boolean) {
+ * local viewport-crossing progress; the coordinator itself never moves descendants.
+ * Settling is opt-in and only follows changes while a surface remains visible. */
+function coordinateSurfaces(root: HTMLElement, selector: string, enabled: boolean, settle: boolean) {
   const attributes = ['data-atlas-motion', 'data-atlas-stage'] as const;
   const properties = ['--atlas-progress', '--atlas-pointer-x', '--atlas-pointer-y'] as const;
   let elements: HTMLElement[];
@@ -158,18 +160,21 @@ function coordinateSurfaces(root: HTMLElement, selector: string, enabled: boolea
     properties: properties.map(name => [element.style.getPropertyValue(name), element.style.getPropertyPriority(name)]),
   }));
   const visible = new Set<HTMLElement>();
+  const values = new Map<HTMLElement, { progress: number; x: number; y: number }>();
   const cleanups: Array<() => void> = [];
   let observer: IntersectionObserver | undefined;
   let frame = 0;
   let running = false;
+  let previousTime: number | undefined;
   let pointer: { x: number; y: number } | undefined;
   let fine: MediaQueryList | undefined;
-  const cancel = () => { if (frame) window.cancelAnimationFrame(frame); frame = 0; };
+  const cancel = () => { if (frame) window.cancelAnimationFrame(frame); frame = 0; previousTime = undefined; };
   const zeroPointer = (element: HTMLElement) => {
     element.style.setProperty('--atlas-pointer-x', '0px');
     element.style.setProperty('--atlas-pointer-y', '0px');
   };
   const staticState = () => {
+    values.clear();
     for (const element of [root, ...elements]) {
       element.dataset.atlasMotion = 'static';
       element.dataset.atlasStage = 'matter';
@@ -178,34 +183,59 @@ function coordinateSurfaces(root: HTMLElement, selector: string, enabled: boolea
     }
   };
   const pause = (element: HTMLElement) => {
+    // Resume from current geometry, never from a historical offscreen target.
+    values.delete(element);
     if (element.dataset.atlasMotion === 'paused') return;
     element.dataset.atlasMotion = 'paused';
     zeroPointer(element);
   };
   const canRun = () => running && document.visibilityState !== 'hidden' && visible.size > 0;
-  const paint = () => {
+  const paint = (time: number) => {
     frame = 0;
     if (!canRun()) return;
-    for (const element of visible) {
-      const rect = element.getBoundingClientRect();
+    // A 70ms time constant gives a short catch-up at any refresh rate. Cap gaps
+    // after a slow frame, and snap subpixel residuals to finish with zero RAFs.
+    const delta = previousTime === undefined ? 16 : Math.max(1, Math.min(time - previousTime, 50));
+    const alpha = 1 - Math.exp(-delta / 70);
+    const approach = (current: number, target: number, tolerance: number) => {
+      const next = current + (target - current) * alpha;
+      return Math.abs(target - next) <= tolerance ? target : next;
+    };
+    let pending = false;
+    // Batch geometry reads before any visual writes across the shared scene.
+    const measurements = [...visible].map(element => ({ element, rect: element.getBoundingClientRect() }));
+    for (const { element, rect } of measurements) {
       if (rect.bottom <= 0 || rect.top >= window.innerHeight || rect.height <= 0 || rect.width <= 0) {
         pause(element);
         continue;
       }
       // The opening artwork rests at page entry, then evolves during its own
       // visible reading distance. Later surfaces follow their viewport crossing.
-      const progress = element.dataset.atlasProgress === 'entry'
+      const reading = element.dataset.atlasProgress === 'entry'
         ? window.scrollY / Math.max(rect.height, 1)
         : (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-      const phase = atlasPhase(progress);
+      const target = {
+        progress: atlasPhase(reading).progress,
+        x: pointer && fine?.matches ? Math.max(-1, Math.min(1, (pointer.x - rect.left) / rect.width * 2 - 1)) * 8 : 0,
+        y: pointer && fine?.matches ? Math.max(-1, Math.min(1, (pointer.y - rect.top) / rect.height * 2 - 1)) * 6 : 0,
+      };
+      const current = values.get(element);
+      const next = settle && current ? {
+        progress: approach(current.progress, target.progress, .0005),
+        x: approach(current.x, target.x, .02),
+        y: approach(current.y, target.y, .02),
+      } : target;
+      values.set(element, next);
+      pending ||= next.progress !== target.progress || next.x !== target.x || next.y !== target.y;
+      const phase = atlasPhase(next.progress);
       element.dataset.atlasMotion = 'active';
       element.dataset.atlasStage = phase.name;
       element.style.setProperty('--atlas-progress', String(phase.progress));
-      const x = pointer && fine?.matches ? Math.max(-1, Math.min(1, (pointer.x - rect.left) / rect.width * 2 - 1)) * 8 : 0;
-      const y = pointer && fine?.matches ? Math.max(-1, Math.min(1, (pointer.y - rect.top) / rect.height * 2 - 1)) * 6 : 0;
-      element.style.setProperty('--atlas-pointer-x', `${x}px`);
-      element.style.setProperty('--atlas-pointer-y', `${y}px`);
+      element.style.setProperty('--atlas-pointer-x', `${next.x}px`);
+      element.style.setProperty('--atlas-pointer-y', `${next.y}px`);
     }
+    previousTime = pending ? time : undefined;
+    if (pending && canRun()) frame = window.requestAnimationFrame(paint);
   };
   const schedule = () => { if (canRun() && !frame) frame = window.requestAnimationFrame(paint); };
   const visibility = () => {

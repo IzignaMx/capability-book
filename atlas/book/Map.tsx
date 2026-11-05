@@ -165,6 +165,23 @@ export function MapPage({ locale: l }: { locale: Locale }) {
             </span>
           </div>
           <aside className="bk-map-inspector">
+            <div className="bk-map-context" data-project={p.slug}>
+              <a className="bk-map-context-link" href={pathFor(l, "case", p.slug)}
+                aria-label={tx(l, "Leer el caso: ", "Read the case: ") + p[l].title}>
+                <ProjectImage project={p} locale={l} className="bk-map-context-capture" />
+                <span className="bk-map-context-action">
+                  {tx(l, "Leer el caso", "Read the case")}<Icon name="right" />
+                </span>
+              </a>
+              <div className="bk-map-context-copy" aria-live="polite" aria-atomic="true">
+                <div className="bk-map-context-register" aria-hidden="true">
+                  <span className="bk-map-context-number">{String(selected + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</span>
+                  <TrajectoryMark slug={p.slug} compact />
+                </div>
+                <strong className="bk-map-context-title">{p[l].title}</strong>
+                <EvidenceLabel project={p} locale={l} />
+              </div>
+            </div>
             <div
               className="bk-map-projects"
               role="group"
@@ -263,7 +280,7 @@ export function MapPage({ locale: l }: { locale: Locale }) {
           </p>
         )}
       </section>
-      <section className="bk-map-selected" aria-live="polite">
+      <section className="bk-map-selected">
         <ProjectImage project={p} locale={l} />
         <div>
           <EvidenceLabel project={p} locale={l} />
