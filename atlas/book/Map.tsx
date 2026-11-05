@@ -12,6 +12,19 @@ export const mapStations: readonly (readonly [number, number, number])[] = [
   [2.5, -1.9, .1], [.5, -2.2, .5], [-2.25, -1.9, .1], [-3.1, -.15, -.1],
 ];
 
+/** Older native focus scrolling can consider a viewport-visible button reached
+ *  even when the sticky case plate covers it. Repair only that focused target. */
+function keepMapSelectionVisible(button: HTMLButtonElement) {
+  const context = button.closest('.bk-map-inspector')?.querySelector<HTMLElement>('.bk-map-context');
+  if (!context || window.getComputedStyle(context).position !== 'sticky') return;
+  const rect = button.getBoundingClientRect(), plate = context.getBoundingClientRect();
+  const header = document.querySelector('.bk-header')?.getBoundingClientRect();
+  if (rect.top < Math.max(plate.bottom + 12, header?.bottom ?? 0) || rect.bottom > window.innerHeight) {
+    // nearest is a no-op for an occluded but viewport-visible button in Chromium140.
+    button.scrollIntoView({block:'start',inline:'nearest',behavior:'instant'});
+  }
+}
+
 class SceneBoundary extends Component<{ children: ReactNode; onError: () => void }, { failed: boolean }> {
   state = { failed: false };
   static getDerivedStateFromError() { return { failed: true }; }
@@ -193,6 +206,7 @@ export function MapPage({ locale: l }: { locale: Locale }) {
                   type="button"
                   aria-pressed={selected === i}
                   onClick={() => setSelected(i)}
+                  onFocus={(event) => keepMapSelectionVisible(event.currentTarget)}
                 >
                   <span>{String(i + 1).padStart(2, "0")}</span>
                   <TrajectoryMark slug={p.slug} compact className="bk-map-button-signature" />

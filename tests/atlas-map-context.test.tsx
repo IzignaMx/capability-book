@@ -7,7 +7,7 @@ import { projects, pathFor } from '../atlas/book/model';
 beforeEach(() => {
   vi.stubGlobal('matchMedia', () => ({ matches: false, addEventListener() {}, removeEventListener() {} }));
 });
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
 describe('immediate constellation project context', () => {
   it('prerenders original project evidence and a native destination before the map controls', () => {
@@ -55,5 +55,32 @@ describe('immediate constellation project context', () => {
     expect(container.querySelector('.bk-map-selected h2')).toHaveTextContent(projects[0].es.title);
     expect(within(container.querySelector('.bk-map-context')! as HTMLElement)
       .getByRole('link', { name: /Leer el caso/ })).toBeInTheDocument();
+  });
+
+  it.each(['behind the sticky plate', 'outside the viewport'])('repairs focused selection %s using a bounded native scroll', reason => {
+    const { container } = render(<MapPage locale="es" />);
+    const preview=container.querySelector('.bk-map-context')!;
+    const button=container.querySelector('.bk-map-projects button')!;
+    vi.spyOn(window, 'getComputedStyle').mockReturnValue({position:'sticky'} as CSSStyleDeclaration);
+    vi.spyOn(preview, 'getBoundingClientRect').mockReturnValue({top:84,bottom:236} as DOMRect);
+    vi.spyOn(button, 'getBoundingClientRect').mockReturnValue(reason==='behind the sticky plate'
+      ? {top:167,bottom:223} as DOMRect : {top:800,bottom:856} as DOMRect);
+    const scroll=vi.fn();button.scrollIntoView=scroll;
+    fireEvent.focus(button);
+    expect(scroll).toHaveBeenCalledExactlyOnceWith({block:'start',inline:'nearest',behavior:'instant'});
+    expect(button).toHaveAttribute('aria-pressed','true');
+  });
+
+  it.each(['already visible', 'non-sticky layout'])('leaves native scrolling untouched for an %s selection', mode => {
+    const { container } = render(<MapPage locale="es" />);
+    const preview=container.querySelector('.bk-map-context')!;
+    const button=container.querySelector('.bk-map-projects button')!;
+    vi.spyOn(window, 'getComputedStyle').mockReturnValue({position:mode==='non-sticky layout'?'static':'sticky'} as CSSStyleDeclaration);
+    vi.spyOn(preview, 'getBoundingClientRect').mockReturnValue({top:84,bottom:236} as DOMRect);
+    vi.spyOn(button, 'getBoundingClientRect').mockReturnValue(mode==='already visible'
+      ? {top:260,bottom:316} as DOMRect : {top:167,bottom:223} as DOMRect);
+    const scroll=vi.fn();button.scrollIntoView=scroll;
+    fireEvent.focus(button);
+    expect(scroll).not.toHaveBeenCalled();
   });
 });

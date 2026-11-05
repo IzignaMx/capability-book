@@ -94,15 +94,19 @@ const check = (name, passed, detail) => {
           await page.keyboard.press('Enter');
           await page.waitForTimeout(300);
           await page.locator('.bk-map-context img').evaluate(image => image.decode());
-          check(`${width}x${height}: ${direction} keyboard project ${index+1} retains unobscured focus and context`, await page.evaluate(({index,contextHeight}) => {
+          const state = await page.evaluate(({index,contextHeight}) => {
             const button=document.querySelectorAll('.bk-map-projects button')[index];
             const rect=button.getBoundingClientRect(),preview=document.querySelector('.bk-map-context').getBoundingClientRect();
             const header=document.querySelector('.bk-header').getBoundingClientRect();
-            return document.activeElement===button && button.getAttribute('aria-pressed')==='true' &&
-              rect.top>=Math.max(header.bottom,preview.bottom+4) && rect.bottom<=innerHeight &&
-              document.elementFromPoint(rect.left+rect.width/2,rect.top+rect.height/2)?.closest('button')===button &&
-              preview.top>=header.bottom && preview.bottom<=innerHeight && Math.abs(preview.height-contextHeight)<1;
-          },{index,contextHeight}));
+            return {focused:document.activeElement===button,pressed:button.getAttribute('aria-pressed')==='true',
+              belowContext:rect.top>=Math.max(header.bottom,preview.bottom+4),withinViewport:rect.bottom<=innerHeight,
+              point:document.elementFromPoint(rect.left+rect.width/2,rect.top+rect.height/2)?.closest('button')===button,
+              contextVisible:preview.top>=header.bottom && preview.bottom<=innerHeight,
+              stableContext:Math.abs(preview.height-contextHeight)<1,
+              buttonBounds:[rect.top,rect.bottom],contextBounds:[preview.top,preview.bottom],scrollY};
+          },{index,contextHeight});
+          check(`${width}x${height}: ${direction} keyboard project ${index+1} retains unobscured focus and context`,
+            state.focused && state.pressed && state.belowContext && state.withinViewport && state.point && state.contextVisible && state.stableContext,state);
           if (index !== indices.at(-1)) await page.keyboard.press(direction==='forward'?'Tab':'Shift+Tab');
         }
       }

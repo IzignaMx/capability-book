@@ -41,3 +41,9 @@
 - [ ] Higgsfield worker inspects existing scene and tests camera framing; only ship a new render if actually better and provenanced, otherwise retain reviewed assets.
 - [ ] Build/check/unit + same-artifact existing browser/a11y gates, integrated real screenshots, new focused visual regression.
 - [ ] Fresh branch review, resolve important findings, PR with completeCI thenmerge/mainCI/Pages/Cloudflare/domain verify. Prepare real-interface presentation and receipt.
+
+## Chromium 140 focus visibility follow-up
+
+The exact PR browser gate reproduced a persistent native-focus occlusion at 320×568: a viewport-visible first selector remained behind the sticky case preview even after scrolling settled and with application scripts blocked. Waiting longer did not solve it. The current layout remains appropriate, but automatic focus scrolling in this engine does not account for the sticky preview.
+
+Add a scoped focus visibility repair to manual project selectors: inspect actual bounds only on focus and call native `scrollIntoView` only when the sticky preview obscures the target or it falls outside the viewport. Preserve native selection, wheel/touch scrolling, the single motion coordinator, all strict focus regressions and complete static content. Visible targets must not move; no UA branch, observer, animation loop or document-wide scroll handler is permitted. Validate against the failing pinned Chromium and the independent cross-engine matrix before merging.
