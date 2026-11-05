@@ -50,7 +50,7 @@ The prerendered BookPage island is enclosed by Cloudflare's documented [`email_o
 
 ## Cloudflare invalidation after Pages
 
-Repository Actions configuration uses `vars.CLOUDFLARE_ZONE_ID` (the zone's 32-character ID) and `secrets.CLOUDFLARE_API_TOKEN` (a token with **Cache Purge** permission for that zone). Values are passed only to configuration and purge steps in the main-only deploy job; they are never written to the artifact or logged. Missing configuration fails before publishing. API authorization is verified by the actual post-deployment request.
+Repository Actions configuration uses `vars.CLOUDFLARE_ZONE_ID` (the zone's 32-character ID) and `secrets.CLOUDFLARE_API_TOKEN` (a token with **Cache Purge** permission for that zone). Values are passed only to configuration and purge steps in the main-only deploy job and are never written to the artifact. The helper prints neither credential values nor raw API error bodies; GitHub masks the token as an Actions secret. Missing configuration fails before publishing. API authorization is verified by the actual post-deployment request.
 
 `.github/scripts/book_cdn.py` sends `POST /zones/{zone_id}/purge_cache` with exactly `{"hosts":["book.izignamx.com"]}`. This invalidates the Book's cached HTML, assets and aliases, including paths removed by a release. It does not purge `izignamx.com` or other subdomains, change DNS/cache rules, or clear visitors' browser caches. The existing `pages` concurrency group covers publication, invalidation and verification together.
 
