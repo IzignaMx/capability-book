@@ -83,4 +83,64 @@ describe('immediate constellation project context', () => {
     fireEvent.focus(button);
     expect(scroll).not.toHaveBeenCalled();
   });
+
+  function pointerFixture() {
+    const { container } = render(<MapPage locale="es" />);
+    const buttons=container.querySelectorAll<HTMLButtonElement>('.bk-map-projects button');
+    const preview=container.querySelector('.bk-map-context')!;
+    vi.spyOn(window,'getComputedStyle').mockReturnValue({position:'sticky'} as CSSStyleDeclaration);
+    vi.spyOn(preview,'getBoundingClientRect').mockReturnValue({top:84,bottom:236} as DOMRect);
+    for (const button of buttons) {
+      vi.spyOn(button,'getBoundingClientRect').mockReturnValue({left:0,right:100,top:800,bottom:856} as DOMRect);
+      button.scrollIntoView=vi.fn();
+    }
+    return {container,first:buttons[0]!,last:buttons[7]!};
+  }
+
+  it.each(['mouse','touch'])('preserves %s pointer activation without a focus-time scroll', mode => {
+    const {container,last}=pointerFixture();
+    fireEvent.pointerDown(last);
+    if (mode==='touch') {
+      const up=Object.assign(new Event('pointerup',{bubbles:true}),{clientX:10,clientY:820});
+      fireEvent(last,up);
+    }
+    fireEvent.focus(last);
+    fireEvent.click(last);
+    expect(last.scrollIntoView).not.toHaveBeenCalled();
+    expect(last).toHaveAttribute('aria-pressed','true');
+    expect(container.querySelector('.bk-map-context')).toHaveAttribute('data-project','nexo');
+  });
+
+  it('repairs programmatic focus after a completed pointer click that needed no new focus event', () => {
+    const {last}=pointerFixture();
+    fireEvent.pointerDown(last);
+    fireEvent.click(last);
+    fireEvent.focus(last);
+    expect(last.scrollIntoView).toHaveBeenCalledExactlyOnceWith({block:'start',inline:'nearest',behavior:'instant'});
+  });
+
+  it('does not let the old button blur erase a new pointer target', () => {
+    const {first,last}=pointerFixture();
+    fireEvent.pointerDown(last);
+    fireEvent.blur(first,{relatedTarget:last});
+    fireEvent.focus(last);
+    expect(last.scrollIntoView).not.toHaveBeenCalled();
+  });
+
+  it('clears an aborted outside release before later programmatic focus', () => {
+    const {last}=pointerFixture();
+    fireEvent.pointerDown(last);
+    const up=Object.assign(new Event('pointerup',{bubbles:true}),{clientX:10,clientY:900});
+    fireEvent(last,up);
+    fireEvent.focus(last);
+    expect(last.scrollIntoView).toHaveBeenCalledExactlyOnceWith({block:'start',inline:'nearest',behavior:'instant'});
+  });
+
+  it.each(['pointerCancel','blur'] as const)('clears a matching association on %s before later keyboard focus', event => {
+    const {last}=pointerFixture();
+    fireEvent.pointerDown(last);
+    fireEvent[event](last);
+    fireEvent.focus(last);
+    expect(last.scrollIntoView).toHaveBeenCalledExactlyOnceWith({block:'start',inline:'nearest',behavior:'instant'});
+  });
 });

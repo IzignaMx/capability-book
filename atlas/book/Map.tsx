@@ -1,4 +1,4 @@
-import { Component, lazy, Suspense, useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
+import { Component, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { projects, pathFor, type Locale } from "./model";
 import { tx, Icon, ProjectImage, EvidenceLabel, ContactBand } from "./Chrome";
 import { projectSignature } from "./art/trajectories";
@@ -73,6 +73,10 @@ export function StaticMap({ selected }: { selected: number }) {
   );
 }
 export function MapPage({ locale: l }: { locale: Locale }) {
+  const pointerFocus = useRef<HTMLButtonElement | null>(null);
+  const clearPointerFocus = (button: HTMLButtonElement) => {
+    if (pointerFocus.current === button) pointerFocus.current = null;
+  };
   const [resetEpoch, setResetEpoch] = useState(0);
   const [attempt, setAttempt] = useState(0), [ready, setReady] = useState(false);
   const Runtime = useMemo(() => lazy(() => import("./ConstellationRuntime")
@@ -205,8 +209,20 @@ export function MapPage({ locale: l }: { locale: Locale }) {
                   key={p.slug}
                   type="button"
                   aria-pressed={selected === i}
-                  onClick={() => setSelected(i)}
-                  onFocus={(event) => keepMapSelectionVisible(event.currentTarget)}
+                  onClick={(event) => { clearPointerFocus(event.currentTarget); setSelected(i); }}
+                  onPointerDown={(event) => { pointerFocus.current = event.currentTarget; }}
+                  onPointerUp={(event) => {
+                    const rect = event.currentTarget.getBoundingClientRect();
+                    // Touch compatibility focus can follow pointerup. Preserve inside releases.
+                    if (event.clientX < rect.left || event.clientX >= rect.right || event.clientY < rect.top || event.clientY >= rect.bottom) clearPointerFocus(event.currentTarget);
+                  }}
+                  onPointerCancel={(event) => clearPointerFocus(event.currentTarget)}
+                  onBlur={(event) => clearPointerFocus(event.currentTarget)}
+                  onFocus={(event) => {
+                    const pointerInitiated = pointerFocus.current === event.currentTarget;
+                    pointerFocus.current = null;
+                    if (!pointerInitiated) keepMapSelectionVisible(event.currentTarget);
+                  }}
                 >
                   <span>{String(i + 1).padStart(2, "0")}</span>
                   <TrajectoryMark slug={p.slug} compact className="bk-map-button-signature" />

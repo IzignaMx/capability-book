@@ -2,10 +2,10 @@
   "contentPages": 32,
   "htmlDocuments": 34,
   "criticalHtmlCssGzipBytes": 25297,
-  "initialJsGzipBytes": 108509,
+  "initialJsGzipBytes": 108637,
   "initialModules": [
-    "/_astro/BookPage.C47pvUtk.js",
-    "/_astro/Map.D-dj3cPH.js",
+    "/_astro/BookPage.cLJdUQRL.js",
+    "/_astro/Map.DuFlZdp0.js",
     "/_astro/client.DW6xmEpB.js",
     "/_astro/react.CD6hyuMb.js"
   ],
