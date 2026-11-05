@@ -27,6 +27,15 @@ async function position(page, surface, progress) {
   await page.waitForFunction(target => Math.abs(scrollY - target) < 1, target);
   await tick(page);
   await page.waitForFunction(element => [...element.querySelectorAll('img')].every(image => image.complete && image.naturalWidth > 0), await surface.elementHandle());
+  // The opt-in coordinator now catches up briefly after native scrolling.
+  // Check its geometric destination, rather than sampling an intermediate frame.
+  await page.waitForFunction(element => {
+    const rect=element.getBoundingClientRect();
+    const target=element.dataset.atlasProgress==='entry'
+      ? scrollY/Math.max(rect.height,1)
+      : (innerHeight-rect.top)/(innerHeight+rect.height);
+    return element.dataset.atlasMotion==='active' && Math.abs(Number(element.style.getPropertyValue('--atlas-progress'))-Math.max(0,Math.min(1,target)))<.001;
+  }, await surface.elementHandle(), {timeout:2000});
 }
 async function resetTop(page) {
   await page.evaluate(() => scrollTo({left:0, top:0, behavior:'instant'}));
@@ -106,12 +115,17 @@ async function visitCatalogueCaptures(page) {
       check(width+' list retains compare actions and fits viewport',await page.locator('.bk-archive-grid').getAttribute('data-layout')==='list' && await page.locator('.bk-archive-grid .bk-card-actions button').count()===8 && await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
       await page.screenshot({path:join(shots,`archive-${width}-list.png`),fullPage:true});
     }
-    // Both hero poses fail: the tablet evidence takes the full remaining column.
+    // Both hero poses fail: the registered vector plane remains useful and the
+    // authentic evidence still spans the available tablet composition.
     await page.setViewportSize({width:768,height:960});
     await page.route('**/art/folio/*',route=>route.abort());
     await page.goto(base+'/es/',{waitUntil:'networkidle'});
     await page.waitForFunction(()=>[...document.querySelectorAll('.bk-atlas-sculpture picture')].every(picture=>picture.hidden));
-    check('failed tablet art leaves a single full evidence column',await page.locator('.bk-atlas-showcase').evaluate(element=>getComputedStyle(element).gridTemplateColumns.split(' ').length===1) && await page.locator('.bk-evidence-deck img').evaluate(image=>image.complete&&image.naturalWidth>0));
+    check('failed tablet art preserves complete full-width evidence',await page.evaluate(()=>{
+      const hero=document.querySelector('.bk-atlas-hero').getBoundingClientRect();
+      const capture=document.querySelector('.bk-evidence-deck').getBoundingClientRect();
+      return capture.width>=hero.width*.95 && capture.left>=0 && capture.right<=innerWidth+1 && document.documentElement.scrollWidth<=innerWidth+1;
+    }) && await page.locator('.bk-evidence-deck img').evaluate(image=>image.complete&&image.naturalWidth>0));
     await page.screenshot({path:join(shots,'home-768-failed-art.png')});
     const nojs = await browser.newPage({javaScriptEnabled:false,viewport:{width:390,height:844}});
     await nojs.goto(base+'/es/',{waitUntil:'networkidle'});

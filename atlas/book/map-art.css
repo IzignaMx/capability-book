@@ -43,5 +43,14 @@
   .bk-map-inspector .bk-map-projects button .bk-map-button-signature{display:none}
   .bk-map-inspector .bk-map-projects button>.bk-icon{width:8px;height:10px}
 }
+/* A short viewport keeps the active case in the reading area while the native
+   two-column index scrolls. Focus spacing reserves the full variable-height plate. */
+@media(max-width:600px) and (max-height:700px){
+  .book .bk-map-workspace{overflow:clip}
+  .book .bk-map-inspector{display:block}
+  .bk-map-inspector .bk-map-context{position:sticky;top:84px;z-index:4;background:var(--bk-panel);box-shadow:0 -12px 0 var(--bk-panel),0 12px 0 var(--bk-panel);margin-bottom:23px}
+  .bk-map-inspector .bk-map-projects button{scroll-margin-top:180px;scroll-margin-bottom:16px}
+  .bk-map-inspector .bk-map-controls{margin-top:23px}
+}
 @media(max-width:600px){.bk-map-folio{width:68%;left:16%;height:64%;top:16%}.bk-map-folio img{height:100%}.bk-map-stage .bk-map-static text{font-size:26px}.bk-map-projects .bk-map-button-signature{width:36px;flex-basis:36px}}
 @media(forced-colors:active){.bk-map-folio,.bk-map-canvas{display:none}.bk-map-stage.is-live .bk-map-passive{visibility:visible}.bk-map-connection,.bk-map-signature,.bk-map-fold{stroke:CanvasText;opacity:1}.bk-map-registration{stroke:GrayText}.bk-map-station.is-selected .bk-map-signature,.bk-map-station.is-selected .bk-map-connection,.bk-map-station-register{stroke:Highlight}.bk-map-station circle{fill:CanvasText}.bk-map-station.is-selected circle{fill:Highlight}.bk-map-stage .bk-map-static text{fill:CanvasText}}

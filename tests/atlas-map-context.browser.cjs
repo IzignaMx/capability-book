@@ -65,6 +65,41 @@ const check = (name, passed, detail) => {
       await page.screenshot({path:output+`/map-context-eighth-${width}.png`});
       await page.close();
     }
+    for (const [width, height] of [[320,568],[390,568],[390,844]]) {
+      const page = await browser.newPage({viewport:{width,height}});
+      page.on('pageerror', error => errors.push(error.message));
+      await page.goto(base+'/es/constelacion/',{waitUntil:'networkidle'});
+      await page.waitForFunction(() => !document.querySelector('astro-island[ssr]'));
+      await page.evaluate(() => document.fonts.ready);
+      await page.locator('.bk-map-workspace').scrollIntoViewIfNeeded();
+      await page.locator('.bk-map-projects button').last().click();
+      await page.waitForTimeout(300);
+      await page.locator('.bk-map-context img').evaluate(image => image.decode());
+      check(`${width}x${height}: normal workspace flow retains eighth project context below the header`, await page.locator('.bk-map-context').evaluate(e => {
+        const rect=e.getBoundingClientRect(),header=document.querySelector('.bk-header').getBoundingClientRect();
+        return e.dataset.project==='nexo' && rect.top>=header.bottom && rect.bottom<=innerHeight;
+      }));
+      await page.locator('.bk-map-projects button').first().focus();
+      for (const [direction,indices] of [['forward',[0,1,2,3,4,5,6,7]],['reverse',[7,6,5,4,3,2,1,0]]]) {
+        for (const index of indices) {
+          await page.keyboard.press('Enter');
+          await page.waitForTimeout(300);
+          await page.locator('.bk-map-context img').evaluate(image => image.decode());
+          check(`${width}x${height}: ${direction} keyboard project ${index+1} retains unobscured focus and context`, await page.evaluate(index => {
+            const button=document.querySelectorAll('.bk-map-projects button')[index];
+            const rect=button.getBoundingClientRect(),preview=document.querySelector('.bk-map-context').getBoundingClientRect();
+            const header=document.querySelector('.bk-header').getBoundingClientRect();
+            return document.activeElement===button && button.getAttribute('aria-pressed')==='true' &&
+              rect.top>=Math.max(header.bottom,preview.bottom+4) && rect.bottom<=innerHeight &&
+              document.elementFromPoint(rect.left+rect.width/2,rect.top+rect.height/2)?.closest('button')===button &&
+              preview.top>=header.bottom && preview.bottom<=innerHeight;
+          },index));
+          if (index !== indices.at(-1)) await page.keyboard.press(direction==='forward'?'Tab':'Shift+Tab');
+        }
+      }
+      await page.screenshot({path:output+`/map-context-keyboard-${width}-${height}.png`});
+      await page.close();
+    }
     const native = await browser.newPage({javaScriptEnabled:false,viewport:{width:320,height:720}});
     await native.goto(base+'/es/constelacion/',{waitUntil:'networkidle'});
     check('Native 320px retains the real preview, complete stations and case destination', await native.locator('.bk-map-context img').count() === 1 && await native.locator('.bk-map-context a[href="/es/proyectos/omnisync/"]').count() === 1 && await native.locator('[data-map-project]').count() === 8 && await native.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
