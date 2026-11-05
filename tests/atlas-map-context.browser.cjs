@@ -68,6 +68,14 @@ const check = (name, passed, detail) => {
     for (const [width, height] of [320,390].flatMap(width => [568,720,768,844].map(height => [width,height]))) {
       const page = await browser.newPage({viewport:{width,height}});
       page.on('pageerror', error => errors.push(error.message));
+      await page.addInitScript(() => {
+        window.mapContextLastScroll=performance.now();
+        addEventListener('scroll',() => { window.mapContextLastScroll=performance.now(); },{passive:true});
+      });
+      const settled = async () => {
+        await page.waitForTimeout(240);
+        await page.waitForFunction(() => performance.now()-window.mapContextLastScroll>180);
+      };
       await page.goto(base+'/es/constelacion/',{waitUntil:'networkidle'});
       await page.waitForFunction(() => !document.querySelector('astro-island[ssr]'));
       await page.evaluate(() => document.fonts.ready);
@@ -75,6 +83,7 @@ const check = (name, passed, detail) => {
       await page.locator('.bk-map-projects button').last().click();
       await page.waitForTimeout(300);
       await page.locator('.bk-map-context img').evaluate(image => image.decode());
+      const contextHeight = await page.locator('.bk-map-context').evaluate(e => e.getBoundingClientRect().height);
       check(`${width}x${height}: normal workspace flow retains eighth project context below the header`, await page.locator('.bk-map-context').evaluate(e => {
         const rect=e.getBoundingClientRect(),header=document.querySelector('.bk-header').getBoundingClientRect();
         return e.dataset.project==='nexo' && rect.top>=header.bottom && rect.bottom<=innerHeight;
@@ -85,16 +94,54 @@ const check = (name, passed, detail) => {
           await page.keyboard.press('Enter');
           await page.waitForTimeout(300);
           await page.locator('.bk-map-context img').evaluate(image => image.decode());
-          check(`${width}x${height}: ${direction} keyboard project ${index+1} retains unobscured focus and context`, await page.evaluate(index => {
+          check(`${width}x${height}: ${direction} keyboard project ${index+1} retains unobscured focus and context`, await page.evaluate(({index,contextHeight}) => {
             const button=document.querySelectorAll('.bk-map-projects button')[index];
             const rect=button.getBoundingClientRect(),preview=document.querySelector('.bk-map-context').getBoundingClientRect();
             const header=document.querySelector('.bk-header').getBoundingClientRect();
             return document.activeElement===button && button.getAttribute('aria-pressed')==='true' &&
               rect.top>=Math.max(header.bottom,preview.bottom+4) && rect.bottom<=innerHeight &&
               document.elementFromPoint(rect.left+rect.width/2,rect.top+rect.height/2)?.closest('button')===button &&
-              preview.top>=header.bottom && preview.bottom<=innerHeight;
-          },index));
+              preview.top>=header.bottom && preview.bottom<=innerHeight && Math.abs(preview.height-contextHeight)<1;
+          },{index,contextHeight}));
           if (index !== indices.at(-1)) await page.keyboard.press(direction==='forward'?'Tab':'Shift+Tab');
+        }
+      }
+      if (height===568 || (width===390 && height===844)) {
+        // Reproduce the independent native-focus probe from a fresh page state,
+        // including the Tab that can leave the inspector before a jump back.
+        await page.goto(base+'/es/constelacion/',{waitUntil:'networkidle'});
+        await page.waitForFunction(() => !document.querySelector('astro-island[ssr]'));
+        await page.evaluate(() => document.fonts.ready);
+        await page.locator('.bk-map-workspace').scrollIntoViewIfNeeded();
+        await page.locator('.bk-map-projects button').last().click();
+        await settled();
+        const reserved = await page.locator('.bk-map-context').evaluate(e => e.getBoundingClientRect().height);
+        await page.keyboard.press('Tab');
+        await settled();
+        for (const index of [0,1,2,3,4,5,6,7,6,5,4,3,2,1,0]) {
+          const target=page.locator('.bk-map-projects button').nth(index);
+          await target.focus();
+          await settled();
+          const readFocus = () => page.evaluate(({index,reserved}) => {
+            const button=document.querySelectorAll('.bk-map-projects button')[index];
+            const rect=button.getBoundingClientRect(),preview=document.querySelector('.bk-map-context').getBoundingClientRect();
+            const header=document.querySelector('.bk-header').getBoundingClientRect();
+            return {focused:document.activeElement===button,top:rect.top,bottom:rect.bottom,
+              belowContext:rect.top>=Math.max(header.bottom,preview.bottom+4),
+              withinViewport:rect.bottom<=innerHeight,
+              point:document.elementFromPoint(rect.left+rect.width/2,rect.top+rect.height/2)?.closest('button')===button,
+              stableContext:Math.abs(preview.height-reserved)<1,
+              contextVisible:preview.top>=header.bottom && preview.bottom<=innerHeight};
+          },{index,reserved});
+          const before=await readFocus();
+          check(`${width}x${height}: direct focus project ${index+1} is wholly visible before selection`,
+            before.focused && before.belowContext && before.withinViewport && before.point && before.stableContext && before.contextVisible,before);
+          await page.keyboard.press('Enter');
+          await page.waitForTimeout(100);
+          await page.locator('.bk-map-context img').evaluate(image => image.decode());
+          const after=await readFocus();
+          check(`${width}x${height}: direct focus project ${index+1} remains wholly visible after Enter`,
+            await target.getAttribute('aria-pressed')==='true' && after.focused && after.belowContext && after.withinViewport && after.point && after.stableContext && after.contextVisible,after);
         }
       }
       await page.screenshot({path:output+`/map-context-keyboard-${width}-${height}.png`});

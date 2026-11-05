@@ -34,7 +34,7 @@
 .bk-map-context-copy .bk-evidence-label .bk-icon{flex:0 0 12px;margin-top:1px}
 @media(min-width:901px){.bk-map-inspector .bk-map-projects button{padding-block:8px;min-height:44px}}
 @media(min-width:601px) and (max-width:900px){.bk-map-inspector .bk-map-context{grid-column:1/-1;grid-template-columns:160px minmax(0,1fr);margin-bottom:0;padding-bottom:18px}.bk-map-context-title{font-size:24px}.bk-map-context-copy .bk-evidence-label{font-size:12px}.bk-map-context-register{justify-content:flex-start;gap:24px}}
-@media(max-width:600px){.bk-map-inspector .bk-map-context{margin-bottom:0;grid-template-columns:108px minmax(0,1fr);gap:16px}.bk-map-context-title{font-size:20px}.bk-map-context-copy .bk-evidence-label{font-size:11px}}
+@media(max-width:600px){.bk-map-inspector .bk-map-context{margin-bottom:0;grid-template-columns:108px minmax(0,1fr);gap:16px}.bk-map-context-title{font-size:18px}.bk-map-context-copy .bk-evidence-label{font-size:11px}}
 @media(max-width:600px){
   .bk-map-inspector .bk-map-context-action{min-height:24px}
   .bk-map-inspector .bk-map-projects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
@@ -44,12 +44,12 @@
   .bk-map-inspector .bk-map-projects button>.bk-icon{width:8px;height:10px}
 }
 /* The phone index keeps its active case in the reading area while the native
-   document scrolls. Focus spacing reserves the full variable-height plate. */
+   document scrolls. Room for full project titles keeps the index steady during selection. */
 @media(max-width:600px){
   .book .bk-map-workspace{overflow:clip}
   .book .bk-map-inspector{display:block}
-  .bk-map-inspector .bk-map-context{position:sticky;top:84px;z-index:4;background:var(--bk-panel);box-shadow:0 -12px 0 var(--bk-panel),0 12px 0 var(--bk-panel);margin-bottom:23px}
-  .bk-map-inspector .bk-map-projects button{scroll-margin-top:180px;scroll-margin-bottom:16px}
+  .bk-map-inspector .bk-map-context{position:sticky;top:84px;z-index:4;min-height:152px;background:var(--bk-panel);box-shadow:0 -12px 0 var(--bk-panel),0 12px 0 var(--bk-panel);margin-bottom:23px}
+  .bk-map-inspector .bk-map-projects button{scroll-margin-top:152px;scroll-margin-bottom:16px}
   .bk-map-inspector .bk-map-controls{margin-top:23px}
 }
 @media(max-width:600px){.bk-map-folio{width:68%;left:16%;height:64%;top:16%}.bk-map-folio img{height:100%}.bk-map-stage .bk-map-static text{font-size:26px}.bk-map-projects .bk-map-button-signature{width:36px;flex-basis:36px}}
