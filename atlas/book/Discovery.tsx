@@ -16,14 +16,15 @@ import { TrajectoryMark } from "./art/TrajectoryMark";
 import { ReadingFolio } from "./ReadingFolio";
 import { useAtlasMotion } from "./art/useAtlasMotion";
 import "./discovery-art.css";
+import { HeroAtlas } from "./HeroAtlas";
 export function Home({ locale: l }: { locale: Locale }) {
   const [active, setActive] = useState(0);
   const atlas = useRef<HTMLDivElement>(null);
-  useAtlasMotion(atlas, { surfaces: "[data-atlas-surface]" });
+  useAtlasMotion(atlas, { surfaces: "[data-atlas-surface]", settle: true });
   const p = projects[active] ?? projects[0];
   return (
     <div className="bk-discovery" ref={atlas}>
-      <section className="bk-hero bk-atlas-hero" data-folio-phase="matter">
+      <section className="bk-hero bk-atlas-hero bk-hero-composition" data-folio-phase="matter">
         <div className="bk-hero-copy">
           <p className="bk-kicker">{tx(l, "PORTAFOLIO / IzignaMx", "PORTFOLIO / IzignaMx")}</p>
           <h1>
@@ -50,19 +51,13 @@ export function Home({ locale: l }: { locale: Locale }) {
           </div>
         </div>
         <div className="bk-hero-showcase bk-atlas-showcase">
-          <ReadingFolio phase="matter" nextPhase="trajectory" className="bk-atlas-sculpture" eager entry />
+          <HeroAtlas project={p} />
           <div className="bk-atlas-evidence">
+            <div className="bk-hero-project">
             <div className="bk-atlas-evidence-register" aria-hidden="true">
               <span>{String(active + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</span>
               <TrajectoryMark slug={p.slug} compact />
             </div>
-            <a
-              className="bk-evidence-deck bk-atlas-capture"
-              href={pathFor(l, "case", p.slug)}
-              aria-label={tx(l, "Leer caso: ", "Read case: ") + p[l].title}
-            >
-              <ProjectImage project={p} locale={l} />
-            </a>
             <div className="bk-hero-caption">
               <div aria-live="polite" aria-atomic="true">
                 <strong>{p[l].title}</strong>
@@ -75,6 +70,7 @@ export function Home({ locale: l }: { locale: Locale }) {
                 <Icon />
               </a>
             </div>
+            <p className="bk-hero-project-summary">{p[l].elevatorPitch}</p>
             <div
               className="bk-hero-selector"
               role="group"
@@ -92,6 +88,14 @@ export function Home({ locale: l }: { locale: Locale }) {
                 </button>
               ))}
             </div>
+            </div>
+            <a
+              className="bk-evidence-deck bk-atlas-capture"
+              href={pathFor(l, "case", p.slug)}
+              aria-label={tx(l, "Leer caso: ", "Read case: ") + p[l].title}
+            >
+              <ProjectImage project={p} locale={l} />
+            </a>
           </div>
         </div>
       </section>

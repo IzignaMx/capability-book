@@ -127,11 +127,11 @@
     }
   ],
   "deferredModules": [
-    "_astro/ConstellationRuntime.DEDYmYCd.js",
-    "_astro/Map.Kyywu0Ow.js",
+    "_astro/ConstellationRuntime.CnEfvF8N.js",
+    "_astro/Map.DuFlZdp0.js",
     "_astro/react.CD6hyuMb.js"
   ],
-  "bootstrapGzipBytes": 188039,
-  "deferredTransferBytes": 640011,
+  "bootstrapGzipBytes": 188510,
+  "deferredTransferBytes": 640482,
   "errors": []
 }

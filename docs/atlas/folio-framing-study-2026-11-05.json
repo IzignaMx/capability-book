@@ -1,0 +1,137 @@
+{
+  "projectId": "b153b6b8-a123-4766-85f5-38893605280e",
+  "sceneRevision": 6,
+  "sceneSequence": 0,
+  "sourceInspectionOperation": "book-framing-inspect-20261105-a",
+  "renderStudyOperation": "book-framing-studies-20261105-a",
+  "operationStatus": "succeeded",
+  "operationAccess": "query",
+  "sceneMutations": 0,
+  "newPaidGenerationCalls": 0,
+  "newSceneProjects": 0,
+  "renderEngine": "BLENDER_EEVEE",
+  "resolution": [
+    640,
+    800
+  ],
+  "transparent": true,
+  "pose": "matter",
+  "materialAndBaseGeometryChanged": false,
+  "cameras": [
+    {
+      "name": "matter-original-study.png",
+      "cameraPosition": [
+        6.36,
+        -8.76,
+        3.5
+      ],
+      "target": [
+        0.36,
+        0.24,
+        0.08
+      ],
+      "orthographicScale": 7.4
+    },
+    {
+      "name": "matter-front-study.png",
+      "cameraPosition": [
+        0.3,
+        -10,
+        3
+      ],
+      "target": [
+        0,
+        0,
+        0
+      ],
+      "orthographicScale": 5.8
+    },
+    {
+      "name": "matter-side-study.png",
+      "cameraPosition": [
+        9,
+        -4.8,
+        3.4
+      ],
+      "target": [
+        0,
+        0,
+        0.05
+      ],
+      "orthographicScale": 5.8
+    }
+  ],
+  "files": [
+    {
+      "name": "matter-front-study.png",
+      "artifactId": "8d07e048fb56ffab387854908cc59747",
+      "bytes": 297646,
+      "sha256": "d6b6c03827f26b37c03746b111aa88caefb480704f6b5860668e7f8b9928da5a",
+      "alphaBounds": [
+        172,
+        104,
+        473,
+        654
+      ],
+      "visibleWidthFraction": 0.4703,
+      "visibleHeightFraction": 0.6875,
+      "margins": [
+        172,
+        104,
+        167,
+        146
+      ]
+    },
+    {
+      "name": "matter-original-study.png",
+      "artifactId": "89fe66233e725aebd1710531bb78d7db",
+      "bytes": 252876,
+      "sha256": "87ebbdf72eed9e50a8d971f6a982318c0354ddfabcdc782a0b08d7fe9dc449c8",
+      "alphaBounds": [
+        204,
+        174,
+        408,
+        607
+      ],
+      "visibleWidthFraction": 0.3187,
+      "visibleHeightFraction": 0.5413,
+      "margins": [
+        204,
+        174,
+        232,
+        193
+      ]
+    },
+    {
+      "name": "matter-side-study.png",
+      "artifactId": "69c0f3907e9cadccb2ee1d1899a47d01",
+      "bytes": 293646,
+      "sha256": "feb75832569545847b553d8e44580ed9711cd9814ea80f4cfb6d99a823eeeabb",
+      "alphaBounds": [
+        251,
+        100,
+        465,
+        658
+      ],
+      "visibleWidthFraction": 0.3344,
+      "visibleHeightFraction": 0.6975,
+      "margins": [
+        251,
+        100,
+        175,
+        142
+      ]
+    }
+  ],
+  "finalSceneState": {
+    "revision": 6,
+    "sceneSequence": 0,
+    "activeOperationId": null
+  },
+  "decision": "Retain all 17 reviewed production resources. Improve visual presence through the integrated CSS/SVG composition rather than replace only one pose with a new camera.",
+  "reviewedBy": [
+    "higgsfield_framing",
+    "root"
+  ],
+  "createdAt": "2026-11-05T16:23:01.696922+00:00"
+}

@@ -1,4 +1,4 @@
-import { Component, lazy, Suspense, useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
+import { Component, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { projects, pathFor, type Locale } from "./model";
 import { tx, Icon, ProjectImage, EvidenceLabel, ContactBand } from "./Chrome";
 import { projectSignature } from "./art/trajectories";
@@ -11,6 +11,19 @@ export const mapStations: readonly (readonly [number, number, number])[] = [
   [-2.65, 1.8, -.3], [-.7, 2.2, -.5], [2.25, 1.8, .1], [3.1, .15, .4],
   [2.5, -1.9, .1], [.5, -2.2, .5], [-2.25, -1.9, .1], [-3.1, -.15, -.1],
 ];
+
+/** Older native focus scrolling can consider a viewport-visible button reached
+ *  even when the sticky case plate covers it. Repair only that focused target. */
+function keepMapSelectionVisible(button: HTMLButtonElement) {
+  const context = button.closest('.bk-map-inspector')?.querySelector<HTMLElement>('.bk-map-context');
+  if (!context || window.getComputedStyle(context).position !== 'sticky') return;
+  const rect = button.getBoundingClientRect(), plate = context.getBoundingClientRect();
+  const header = document.querySelector('.bk-header')?.getBoundingClientRect();
+  if (rect.top < Math.max(plate.bottom + 12, header?.bottom ?? 0) || rect.bottom > window.innerHeight) {
+    // nearest is a no-op for an occluded but viewport-visible button in Chromium140.
+    button.scrollIntoView({block:'start',inline:'nearest',behavior:'instant'});
+  }
+}
 
 class SceneBoundary extends Component<{ children: ReactNode; onError: () => void }, { failed: boolean }> {
   state = { failed: false };
@@ -60,6 +73,10 @@ export function StaticMap({ selected }: { selected: number }) {
   );
 }
 export function MapPage({ locale: l }: { locale: Locale }) {
+  const pointerFocus = useRef<HTMLButtonElement | null>(null);
+  const clearPointerFocus = (button: HTMLButtonElement) => {
+    if (pointerFocus.current === button) pointerFocus.current = null;
+  };
   const [resetEpoch, setResetEpoch] = useState(0);
   const [attempt, setAttempt] = useState(0), [ready, setReady] = useState(false);
   const Runtime = useMemo(() => lazy(() => import("./ConstellationRuntime")
@@ -165,6 +182,23 @@ export function MapPage({ locale: l }: { locale: Locale }) {
             </span>
           </div>
           <aside className="bk-map-inspector">
+            <div className="bk-map-context" data-project={p.slug}>
+              <a className="bk-map-context-link" href={pathFor(l, "case", p.slug)}
+                aria-label={tx(l, "Leer el caso: ", "Read the case: ") + p[l].title}>
+                <ProjectImage project={p} locale={l} className="bk-map-context-capture" />
+                <span className="bk-map-context-action">
+                  {tx(l, "Leer el caso", "Read the case")}<Icon name="right" />
+                </span>
+              </a>
+              <div className="bk-map-context-copy" aria-live="polite" aria-atomic="true">
+                <div className="bk-map-context-register" aria-hidden="true">
+                  <span className="bk-map-context-number">{String(selected + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</span>
+                  <TrajectoryMark slug={p.slug} compact />
+                </div>
+                <strong className="bk-map-context-title">{p[l].title}</strong>
+                <EvidenceLabel project={p} locale={l} />
+              </div>
+            </div>
             <div
               className="bk-map-projects"
               role="group"
@@ -175,7 +209,20 @@ export function MapPage({ locale: l }: { locale: Locale }) {
                   key={p.slug}
                   type="button"
                   aria-pressed={selected === i}
-                  onClick={() => setSelected(i)}
+                  onClick={(event) => { clearPointerFocus(event.currentTarget); setSelected(i); }}
+                  onPointerDown={(event) => { pointerFocus.current = event.currentTarget; }}
+                  onPointerUp={(event) => {
+                    const rect = event.currentTarget.getBoundingClientRect();
+                    // Touch compatibility focus can follow pointerup. Preserve inside releases.
+                    if (event.clientX < rect.left || event.clientX >= rect.right || event.clientY < rect.top || event.clientY >= rect.bottom) clearPointerFocus(event.currentTarget);
+                  }}
+                  onPointerCancel={(event) => clearPointerFocus(event.currentTarget)}
+                  onBlur={(event) => clearPointerFocus(event.currentTarget)}
+                  onFocus={(event) => {
+                    const pointerInitiated = pointerFocus.current === event.currentTarget;
+                    pointerFocus.current = null;
+                    if (!pointerInitiated) keepMapSelectionVisible(event.currentTarget);
+                  }}
                 >
                   <span>{String(i + 1).padStart(2, "0")}</span>
                   <TrajectoryMark slug={p.slug} compact className="bk-map-button-signature" />
@@ -263,7 +310,7 @@ export function MapPage({ locale: l }: { locale: Locale }) {
           </p>
         )}
       </section>
-      <section className="bk-map-selected" aria-live="polite">
+      <section className="bk-map-selected">
         <ProjectImage project={p} locale={l} />
         <div>
           <EvidenceLabel project={p} locale={l} />
