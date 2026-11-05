@@ -34,6 +34,7 @@ Shared project evidence is exported as `public/portfolio-catalog.json`. After ap
 1. quality installs from the frozen lockfile, validates existing evidence, checks the original source, runs unit tests and creates the Atlas artifact.
 2. e2e and accessibility download that exact `atlas-dist`. They verify all SHA-256 checksums before and after testing. They do not rebuild a potentially different artifact.
 3. deploy needs all three jobs and is restricted to main. A PR does not modify production or DNS.
+4. The same serialized deploy job checks Cloudflare configuration, publishes Pages, invalidates only `book.izignamx.com`, then verifies the ordinary `/release.json` identifies the deployed commit and remains indexable. The purge cannot run after a failed Pages step or on a PR. Offline CDN regression tests run in quality without credentials or network requests.
 
 The main workflow intentionally preserves its original job IDs. The independent evidence workflow also retains its evidence, public-link and capture audits, now using frozen dependency installation.
 
@@ -47,4 +48,14 @@ Static CSP uses generated script hashes rather than a reusable server nonce. Arb
 
 The prerendered BookPage island is enclosed by Cloudflare's documented [`email_off` HTML comments](https://developers.cloudflare.com/waf/tools/scrape-shield/email-address-obfuscation/#prevent-cloudflare-from-obfuscating-email). Keep these comments outside the React island and emit them with `Fragment set:html`, because Astro strips ordinary source comments in production. Email obfuscation otherwise rewrites public email text and mailto links before hydration; a slow decoder can cause React error #418. This preserves the original public contact markup and native mailto behavior without changing zone settings or CSP. The static artifact validator checks this delivery boundary.
 
-Production checks after an authorized merge: release.json has the new revision and indexable true, all /es/ and /en/ routes respond, homepage no longer contains noindex, and the 3D/contact controls work without a Higgsfield session. A stale Cloudflare copy may need a targeted cache purge. DNS and Cloudflare settings are not altered by this integration.
+## Cloudflare invalidation after Pages
+
+Repository Actions configuration uses `vars.CLOUDFLARE_ZONE_ID` (the zone's 32-character ID) and `secrets.CLOUDFLARE_API_TOKEN` (a token with **Cache Purge** permission for that zone). Values are passed only to configuration and purge steps in the main-only deploy job; they are never written to the artifact or logged. Missing configuration fails before publishing. API authorization is verified by the actual post-deployment request.
+
+`.github/scripts/book_cdn.py` sends `POST /zones/{zone_id}/purge_cache` with exactly `{"hosts":["book.izignamx.com"]}`. This invalidates the Book's cached HTML, assets and aliases, including paths removed by a release. It does not purge `izignamx.com` or other subdomains, change DNS/cache rules, or clear visitors' browser caches. The existing `pages` concurrency group covers publication, invalidation and verification together.
+
+API acceptance and successful publication are separate results: HTTP 200 with `success: true` and no errors is required, then the ordinary HTTPS release URL must match `GITHUB_SHA` and `indexable: true`, with bounded retries and no cache-busting query or request headers. An API rejection or persistently stale release fails the deploy job; it is not silently skipped. After fixing configuration or a transient service failure, re-run that deploy job to repeat Pages, invalidation and verification for the same commit. The existing main-only `workflow_dispatch` also follows this sequence.
+
+References: [Cloudflare purge by hostname](https://developers.cloudflare.com/cache/how-to/purge-cache/purge-by-hostname/) and [Cache Purge API](https://developers.cloudflare.com/api/resources/cache/methods/purge/).
+
+Production checks after an authorized merge: release.json has the new revision and indexable true, all /es/ and /en/ routes respond, homepage no longer contains noindex, and the 3D/contact controls work without a Higgsfield session. Cache invalidation and release identity are now automated after publication; the broader visual checks remain separate. DNS and Cloudflare settings are not altered by this integration.
