@@ -65,7 +65,7 @@ const check = (name, passed, detail) => {
       await page.screenshot({path:output+`/map-context-eighth-${width}.png`});
       await page.close();
     }
-    for (const [width, height] of [[320,568],[390,568],[390,844]]) {
+    for (const [width, height] of [320,390].flatMap(width => [568,720,768,844].map(height => [width,height]))) {
       const page = await browser.newPage({viewport:{width,height}});
       page.on('pageerror', error => errors.push(error.message));
       await page.goto(base+'/es/constelacion/',{waitUntil:'networkidle'});

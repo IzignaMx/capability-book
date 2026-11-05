@@ -43,9 +43,9 @@
   .bk-map-inspector .bk-map-projects button .bk-map-button-signature{display:none}
   .bk-map-inspector .bk-map-projects button>.bk-icon{width:8px;height:10px}
 }
-/* A short viewport keeps the active case in the reading area while the native
-   two-column index scrolls. Focus spacing reserves the full variable-height plate. */
-@media(max-width:600px) and (max-height:700px){
+/* The phone index keeps its active case in the reading area while the native
+   document scrolls. Focus spacing reserves the full variable-height plate. */
+@media(max-width:600px){
   .book .bk-map-workspace{overflow:clip}
   .book .bk-map-inspector{display:block}
   .bk-map-inspector .bk-map-context{position:sticky;top:84px;z-index:4;background:var(--bk-panel);box-shadow:0 -12px 0 var(--bk-panel),0 12px 0 var(--bk-panel);margin-bottom:23px}
