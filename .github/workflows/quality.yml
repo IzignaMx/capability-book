@@ -14,6 +14,8 @@ jobs:
       ATLAS_INDEXABLE: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && 'true' || 'false' }}
     steps:
       - uses: actions/checkout@v4
+      - name: Test Book CDN delivery offline
+        run: python3 -B .github/scripts/test_book_cdn.py
       - uses: pnpm/action-setup@v4
         with:
           version: 10.13.1
@@ -104,6 +106,7 @@ jobs:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: [quality, e2e, accessibility]
     permissions:
+      contents: read
       pages: write
       id-token: write
     environment:
@@ -113,7 +116,23 @@ jobs:
       group: pages
       cancel-in-progress: false
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check Cloudflare configuration without displaying credentials
+        env:
+          CLOUDFLARE_ZONE_ID: ${{ vars.CLOUDFLARE_ZONE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: python3 .github/scripts/book_cdn.py --check-config
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+      - name: Invalidate only book.izignamx.com in Cloudflare
+        env:
+          CLOUDFLARE_ZONE_ID: ${{ vars.CLOUDFLARE_ZONE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: python3 .github/scripts/book_cdn.py
+      - name: Verify the ordinary production release after invalidation
+        run: python3 .github/scripts/book_cdn.py --verify-release
