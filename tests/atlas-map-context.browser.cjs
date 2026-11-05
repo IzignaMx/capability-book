@@ -53,6 +53,10 @@ const check = (name, passed, detail) => {
         const image=document.querySelector('.bk-map-context img');
         return image?.complete && image.naturalWidth>0 && image.currentSrc.includes('/nexo/');
       });
+      await page.locator('.bk-map-context img').evaluate(async image => {
+        await image.decode();
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      });
       check(`${width}x${height}: eighth selection leaves its preview and native case link in view`, await page.locator('.bk-map-context').evaluate(e => {
         const title=e.querySelector('.bk-map-context-title').getBoundingClientRect();
         const link=e.querySelector('a').getBoundingClientRect();
